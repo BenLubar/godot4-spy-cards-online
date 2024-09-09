@@ -1,0 +1,175 @@
+name: Build GDExtension
+on:
+  workflow_call:
+  push:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          #- platform: linux
+          #  arch: x86_32
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          - platform: linux
+            arch: x86_64
+            target-type: template_debug
+            os: ubuntu-latest
+          #- platform: linux
+          #  arch: arm32
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          #- platform: linux
+          #  arch: arm64
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          #- platform: linux
+          #  arch: rv64
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          #- platform: windows
+          #  arch: x86_32
+          #  target-type: template_debug
+          #  os: windows-latest
+          - platform: windows
+            arch: x86_64
+            target-type: template_debug
+            os: windows-latest
+          #- platform: windows
+          #  arch: arm64
+          #  target-type: template_debug
+          #  os: windows-latest
+          #- platform: macos
+          #  arch: universal
+          #  target-type: template_debug
+          #  os: macos-latest
+          #- platform: android
+          #  arch: x86_64
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          #- platform: android
+          #  arch: arm64
+          #  target-type: template_debug
+          #  os: ubuntu-latest
+          #- platform: ios
+          #  arch: arm64
+          #  target-type: template_debug
+          #  os: macos-latest
+          - platform: web
+            arch: wasm32 threads=yes
+            target-type: template_debug
+            os: ubuntu-latest
+          - platform: web
+            arch: wasm32 threads=no
+            target-type: template_debug
+            os: ubuntu-latest
+          #- platform: linux
+          #  arch: x86_32
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          - platform: linux
+            arch: x86_64
+            target-type: template_release
+            os: ubuntu-latest
+          #- platform: linux
+          #  arch: arm32
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          #- platform: linux
+          #  arch: arm64
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          #- platform: linux
+          #  arch: rv64
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          #- platform: windows
+          #  arch: x86_32
+          #  target-type: template_release
+          #  os: windows-latest
+          - platform: windows
+            arch: x86_64
+            target-type: template_release
+            os: windows-latest
+          #- platform: windows
+          #  arch: arm64
+          #  target-type: template_release
+          #  os: windows-latest
+          #- platform: macos
+          #  arch: universal
+          #  target-type: template_release
+          #  os: macos-latest
+          #- platform: android
+          #  arch: x86_64
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          #- platform: android
+          #  arch: arm64
+          #  target-type: template_release
+          #  os: ubuntu-latest
+          #- platform: ios
+          #  arch: arm64
+          #  target-type: template_release
+          #  os: macos-latest
+          - platform: web
+            arch: wasm32 threads=yes
+            target-type: template_release
+            os: ubuntu-latest
+          - platform: web
+            arch: wasm32 threads=no
+            target-type: template_release
+            os: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: 🔗 GDExtension Build
+        uses: godotengine/godot-cpp-template/.github/actions/build@main
+        with:
+          platform: ${{ matrix.platform }}
+          arch: ${{ matrix.arch }}
+          build-target-type: ${{ matrix.target-type }}
+          em_version: 3.1.62 # temp https://github.com/godotengine/godot-cpp/pull/1566
+      - name: Mac Sign
+        if: ${{ matrix.platform == 'macos' && env.APPLE_CERT_BASE64 }}
+        env:
+          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
+        uses: godotengine/godot-cpp-template/.github/actions/sign@main
+        with:
+          FRAMEWORK_PATH: bin/macos/macos.framework
+          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
+          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
+          APPLE_DEV_PASSWORD: ${{ secrets.APPLE_DEV_PASSWORD }}
+          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
+          APPLE_DEV_TEAM_ID: ${{ secrets.APPLE_DEV_TEAM_ID }}
+          APPLE_DEV_APP_ID: ${{ secrets.APPLE_DEV_APP_ID }}
+      - name: Windows - Delete compilation files
+        if: ${{ matrix.platform == 'windows' }}
+        shell: pwsh
+        run: |
+          Remove-Item bin/windows/* -Include *.exp,*.lib,*.pdb -Force
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot4-spy-cards-online-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.target-type }}
+          path: |
+            ${{ github.workspace }}/bin/**
+
+  # Merges all the build artifacts together into a single godot4-spy-cards-online artifact.
+  # If you comment out this step, all the builds will be uploaded individually.
+  merge:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: godot4-spy-cards-online
+          pattern: godot4-spy-cards-online-*
+          delete-merged: true
