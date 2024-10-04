@@ -22,11 +22,11 @@ void Recording::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, spoiler_guard_p1);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, spoiler_guard_p2);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, shared_seed);
-	BIND_PROPERTY(Variant::ARRAY, private_seeds);
-	BIND_PROPERTY(Variant::OBJECT, mode);
+	BIND_PROPERTY(Variant::ARRAY, private_seeds, PROPERTY_HINT_TYPE_STRING, String::num(Variant::PACKED_BYTE_ARRAY) + ":");
+	BIND_PROPERTY(Variant::OBJECT, mode, PROPERTY_HINT_RESOURCE_TYPE, "GameMode");
 	BIND_PROPERTY(Variant::INT, variant);
-	BIND_PROPERTY(Variant::ARRAY, initial_decks);
-	BIND_PROPERTY(Variant::ARRAY, rounds);
+	BIND_PROPERTY(Variant::ARRAY, initial_decks, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":Deck");
+	BIND_PROPERTY(Variant::ARRAY, rounds, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":RecordingRound");
 }
 Recording::Recording() {}
 Recording::~Recording() {}

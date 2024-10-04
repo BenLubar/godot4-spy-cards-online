@@ -21,7 +21,7 @@
 		</member>
 		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
-		<member name="hidden" type="bool" setter="set_hidden" getter="get_hidden" default="false">
+		<member name="hidden" type="bool" setter="set_hidden" getter="is_hidden" default="false">
 		</member>
 		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
 		</member>

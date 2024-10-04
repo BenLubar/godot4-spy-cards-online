@@ -1,5 +1,8 @@
 #include "register_types.h"
 
+#include "format_helper.h"
+#include "rng.h"
+
 #include "jigsaw_command_list.h"
 #include "jigsaw_reusable_command_list.h"
 #include "jigsaw_trigger.h"
@@ -48,6 +51,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+
+	GDREGISTER_CLASS(FormatHelper);
+	GDREGISTER_CLASS(RNG);
 
 	GDREGISTER_CLASS(JigsawCommandList);
 	GDREGISTER_CLASS(JigsawReusableCommandList);

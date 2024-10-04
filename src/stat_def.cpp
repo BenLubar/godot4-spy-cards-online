@@ -16,7 +16,7 @@ void StatDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY(Variant::INT, icon);
-	BIND_PROPERTY(Variant::OBJECT, format_quantity);
+	BIND_PROPERTY(Variant::OBJECT, format_quantity, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
 }
 StatDef::StatDef() {}
 StatDef::~StatDef() {}

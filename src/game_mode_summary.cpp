@@ -6,21 +6,11 @@
 using namespace godot;
 
 void GameModeSummary::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("get_author"), &GameModeSummary::get_author);
-	ClassDB::bind_method(D_METHOD("set_author", "author"), &GameModeSummary::set_author);
-	ADD_PROPERTY(PropertyInfo(Variant::STRING, "author"), "set_author", "get_author");
-	ClassDB::bind_method(D_METHOD("get_mode_thumbnail"), &GameModeSummary::get_mode_thumbnail);
-	ClassDB::bind_method(D_METHOD("set_mode_thumbnail", "mode_thumbnail"), &GameModeSummary::set_mode_thumbnail);
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "mode_thumbnail"), "set_mode_thumbnail", "get_mode_thumbnail");
-	ClassDB::bind_method(D_METHOD("get_description"), &GameModeSummary::get_description);
-	ClassDB::bind_method(D_METHOD("set_description", "description"), &GameModeSummary::set_description);
-	ADD_PROPERTY(PropertyInfo(Variant::STRING, "description", PROPERTY_HINT_MULTILINE_TEXT), "set_description", "get_description");
-	ClassDB::bind_method(D_METHOD("get_latest_changes"), &GameModeSummary::get_latest_changes);
-	ClassDB::bind_method(D_METHOD("set_latest_changes", "latest_changes"), &GameModeSummary::set_latest_changes);
-	ADD_PROPERTY(PropertyInfo(Variant::STRING, "latest_changes", PROPERTY_HINT_MULTILINE_TEXT), "set_latest_changes", "get_latest_changes");
-	ClassDB::bind_method(D_METHOD("get_custom_icons"), &GameModeSummary::get_custom_icons);
-	ClassDB::bind_method(D_METHOD("set_custom_icons", "custom_icons"), &GameModeSummary::set_custom_icons);
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "custom_icons", PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":IconDef"), "set_custom_icons", "get_custom_icons");
+	BIND_PROPERTY(Variant::STRING, author);
+	BIND_PROPERTY(Variant::INT, mode_thumbnail);
+	BIND_PROPERTY(Variant::STRING, description, PROPERTY_HINT_MULTILINE_TEXT);
+	BIND_PROPERTY(Variant::STRING, latest_changes, PROPERTY_HINT_MULTILINE_TEXT);
+	BIND_PROPERTY(Variant::ARRAY, custom_icons, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":IconDef");
 
 	ClassDB::bind_method(D_METHOD("get_icon_texture", "icon"), &GameModeSummary::get_icon_texture);
 }
@@ -28,51 +18,11 @@ void GameModeSummary::_bind_methods() {
 GameModeSummary::GameModeSummary() {}
 GameModeSummary::~GameModeSummary() {}
 
-String GameModeSummary::get_author() const {
-	return author;
-}
-void GameModeSummary::set_author(String new_author) {
-	if (author != new_author) {
-		author = new_author;
-		emit_changed();
-	}
-}
-IconDef::Icon GameModeSummary::get_mode_thumbnail() const {
-	return mode_thumbnail;
-}
-void GameModeSummary::set_mode_thumbnail(IconDef::Icon new_mode_thumbnail) {
-	if (mode_thumbnail != new_mode_thumbnail) {
-		mode_thumbnail = new_mode_thumbnail;
-		emit_changed();
-	}
-}
-String GameModeSummary::get_description() const {
-	return description;
-}
-void GameModeSummary::set_description(String new_description) {
-	if (description != new_description) {
-		description = new_description;
-		emit_changed();
-	}
-}
-String GameModeSummary::get_latest_changes() const {
-	return latest_changes;
-}
-void GameModeSummary::set_latest_changes(String new_latest_changes) {
-	if (latest_changes != new_latest_changes) {
-		latest_changes = new_latest_changes;
-		emit_changed();
-	}
-}
-TypedArray<IconDef> GameModeSummary::get_custom_icons() const {
-	return custom_icons;
-}
-void GameModeSummary::set_custom_icons(TypedArray<IconDef> new_custom_icons) {
-	if (custom_icons != new_custom_icons) {
-		custom_icons = new_custom_icons;
-		emit_changed();
-	}
-}
+IMPLEMENT_PROPERTY(GameModeSummary, String, author);
+IMPLEMENT_PROPERTY(GameModeSummary, IconDef::Icon, mode_thumbnail);
+IMPLEMENT_PROPERTY(GameModeSummary, String, description);
+IMPLEMENT_PROPERTY(GameModeSummary, String, latest_changes);
+IMPLEMENT_PROPERTY(GameModeSummary, TypedArray<IconDef>, custom_icons);
 
 Ref<Texture2D> GameModeSummary::get_icon_texture(IconDef::Icon icon) const {
 	if (icon == IconDef::Icon::NONE) {

@@ -8,7 +8,7 @@ void CharacterDef::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, id);
 	BIND_PROPERTY(Variant::STRING, display_name);
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, tags);
-	BIND_PROPERTY(Variant::BOOL, hidden);
+	BIND_PROPERTY_IS(Variant::BOOL, hidden);
 
 	BIND_PROPERTY(Variant::INT, idle0);
 	BIND_PROPERTY(Variant::INT, idle1);
@@ -32,7 +32,7 @@ CharacterDef::~CharacterDef() {}
 IMPLEMENT_PROPERTY(CharacterDef, String, id);
 IMPLEMENT_PROPERTY(CharacterDef, String, display_name);
 IMPLEMENT_PROPERTY(CharacterDef, PackedStringArray, tags);
-IMPLEMENT_PROPERTY(CharacterDef, bool, hidden);
+IMPLEMENT_PROPERTY_IS(CharacterDef, bool, hidden);
 
 IMPLEMENT_PROPERTY(CharacterDef, IconDef::Icon, idle0);
 IMPLEMENT_PROPERTY(CharacterDef, IconDef::Icon, idle1);

@@ -22,7 +22,7 @@ public:
 	DECLARE_PROPERTY(String, id);
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(PackedStringArray, tags);
-	DECLARE_PROPERTY(bool, hidden, = false);
+	DECLARE_PROPERTY_IS(bool, hidden, = false);
 
 	DECLARE_PROPERTY(IconDef::Icon, idle0, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(IconDef::Icon, idle1, = IconDef::Icon::NONE);

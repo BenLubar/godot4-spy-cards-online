@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FormatHelper" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_eof" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid_eof" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="peek_byte" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="offset" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read" qualifiers="static">
+			<return type="FormatHelper" />
+			<param index="0" name="name" type="String" />
+			<param index="1" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="read_bool">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="read_bytes">
+			<return type="PackedByteArray" />
+			<param index="0" name="count" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_bytesvar">
+			<return type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="read_color_rgb888">
+			<return type="Color" />
+			<description>
+			</description>
+		</method>
+		<method name="read_float32">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="read_float64">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="read_sint8">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_sint16">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_sint32">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_sint64">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_string1">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="read_stringvar">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="read_svarint">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uint8">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uint16">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uint32">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uint64">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uvarint">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="remaining_len" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write" qualifiers="static">
+			<return type="FormatHelper" />
+			<param index="0" name="name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="write_bool">
+			<return type="void" />
+			<param index="0" name="b" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="write_bytes">
+			<return type="void" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="write_bytesvar">
+			<return type="void" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="write_color_rgb888">
+			<return type="void" />
+			<param index="0" name="c" type="Color" />
+			<description>
+			</description>
+		</method>
+		<method name="write_float32">
+			<return type="void" />
+			<param index="0" name="x" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="write_float64">
+			<return type="void" />
+			<param index="0" name="x" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="write_sint8">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_sint16">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_sint32">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_sint64">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_string1">
+			<return type="void" />
+			<param index="0" name="s" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="write_stringvar">
+			<return type="void" />
+			<param index="0" name="s" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="write_svarint">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_uint8">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_uint16">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_uint32">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_uint64">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="write_uvarint">
+			<return type="void" />
+			<param index="0" name="x" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="buffer" type="PackedByteArray" setter="set_buffer" getter="get_buffer" default="PackedByteArray()">
+		</member>
+		<member name="debug_name" type="String" setter="set_debug_name" getter="get_debug_name" default="&quot;unnamed buffer&quot;">
+		</member>
+		<member name="offset" type="int" setter="set_offset" getter="get_offset" default="0">
+		</member>
+		<member name="valid" type="bool" setter="set_valid" getter="get_valid" default="true">
+		</member>
+	</members>
+</class>

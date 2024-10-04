@@ -16,10 +16,22 @@ public: \
 	m_type get_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
 
+#define DECLARE_PROPERTY_IS(m_type, m_name, ...) \
+private: \
+	m_type m_name __VA_ARGS__; \
+public: \
+	m_type is_##m_name() const; \
+	void set_##m_name(m_type new_##m_name)
+
 #define BIND_PROPERTY(m_type, m_name, ...) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_IS(m_type, m_name, ...) \
+	ClassDB::bind_method(D_METHOD("is_" #m_name), &self_type::is_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "is_" #m_name)
 
 #define IMPLEMENT_PROPERTY(m_class, m_type, m_name) \
 	m_type m_class::get_##m_name() const { return m_name; } \
@@ -29,5 +41,19 @@ public: \
 			emit_changed(); \
 		} \
 	}
+#define IMPLEMENT_PROPERTY_IS(m_class, m_type, m_name) \
+	m_type m_class::is_##m_name() const { return m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		if (m_name != new_##m_name) { \
+			m_name = new_##m_name; \
+			emit_changed(); \
+		} \
+	}
+#define IMPLEMENT_PROPERTY_SIMPLE(m_class, m_type, m_name) \
+	m_type m_class::get_##m_name() const { return m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { m_name = new_##m_name; }
+#define IMPLEMENT_PROPERTY_SIMPLE_IS(m_class, m_type, m_name) \
+	m_type m_class::is_##m_name() const { return m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { m_name = new_##m_name; }
 
 #endif // DRY_H

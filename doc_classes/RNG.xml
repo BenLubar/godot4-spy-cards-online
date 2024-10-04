@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="RNG" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="duplicate" qualifiers="const">
+			<return type="RNG" />
+			<description>
+			</description>
+		</method>
+		<method name="fintn">
+			<return type="int" />
+			<param index="0" name="n" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="next_cheap_float">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="next_float">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="next_range_float">
+			<return type="float" />
+			<param index="0" name="min" type="float" />
+			<param index="1" name="max" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="next_range_int">
+			<return type="int" />
+			<param index="0" name="min" type="int" />
+			<param index="1" name="max" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="next_range_int_float">
+			<return type="float" />
+			<param index="0" name="min" type="float" />
+			<param index="1" name="max" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="with_seed" qualifiers="static">
+			<return type="RNG" />
+			<param index="0" name="seed" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="bug_max_value_fencepost" type="bool" setter="set_bug_max_value_fencepost" getter="get_bug_max_value_fencepost" default="false">
+		</member>
+		<member name="bug_max_value_shift" type="bool" setter="set_bug_max_value_shift" getter="get_bug_max_value_shift" default="false">
+		</member>
+		<member name="bug_reverse_float" type="bool" setter="set_bug_reverse_float" getter="get_bug_reverse_float" default="false">
+		</member>
+		<member name="bug_separate_update_seed" type="PackedByteArray" setter="set_bug_separate_update_seed" getter="get_bug_separate_update_seed" default="PackedByteArray()">
+		</member>
+	</members>
+</class>

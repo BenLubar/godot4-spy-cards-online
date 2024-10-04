@@ -23,7 +23,7 @@ public:
 	DECLARE_PROPERTY(Vector2, hue_range, = Vector2(0.0f, 1.0f));
 	DECLARE_PROPERTY(double, weight, = 1.0);
 	DECLARE_PROPERTY(double, pixel_size, = 0.01);
-	DECLARE_PROPERTY(bool, very_tall, = false);
+	DECLARE_PROPERTY_IS(bool, very_tall, = false);
 };
 
 #endif // AUDIENCE_DEF_H
