@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawCommand" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_type">
+			<return type="int" enum="JigsawCommand.Type" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="CRASH" value="0" enum="Type">
+		</constant>
+		<constant name="COMMENT" value="1" enum="Type">
+		</constant>
+		<constant name="REUSABLE_COMMAND_LIST" value="2" enum="Type">
+		</constant>
+		<constant name="MATH" value="3" enum="Type">
+		</constant>
+	</constants>
+</class>

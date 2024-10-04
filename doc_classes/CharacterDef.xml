@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CharacterDef" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create_portrait" qualifiers="const">
+			<return type="AtlasTexture" />
+			<param index="0" name="mode" type="GameMode" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="angry" type="int" setter="set_angry" getter="get_angry" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="angry_center_px" type="float" setter="set_angry_center_px" getter="get_angry_center_px" default="0.0">
+		</member>
+		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
+		</member>
+		<member name="hidden" type="bool" setter="set_hidden" getter="get_hidden" default="false">
+		</member>
+		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
+		</member>
+		<member name="idle0" type="int" setter="set_idle0" getter="get_idle0" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="idle0_center_px" type="float" setter="set_idle0_center_px" getter="get_idle0_center_px" default="0.0">
+		</member>
+		<member name="idle1" type="int" setter="set_idle1" getter="get_idle1" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="idle1_center_px" type="float" setter="set_idle1_center_px" getter="get_idle1_center_px" default="0.0">
+		</member>
+		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size" default="0.01">
+		</member>
+		<member name="portrait_crop_front" type="bool" setter="set_portrait_crop_front" getter="get_portrait_crop_front" default="false">
+		</member>
+		<member name="portrait_crop_top" type="bool" setter="set_portrait_crop_top" getter="get_portrait_crop_top" default="false">
+		</member>
+		<member name="portrait_offset" type="Vector2" setter="set_portrait_offset" getter="get_portrait_offset" default="Vector2(0, 0)">
+		</member>
+		<member name="portrait_scale" type="float" setter="set_portrait_scale" getter="get_portrait_scale" default="1.0">
+		</member>
+		<member name="tags" type="PackedStringArray" setter="set_tags" getter="get_tags" default="PackedStringArray()">
+		</member>
+	</members>
+</class>

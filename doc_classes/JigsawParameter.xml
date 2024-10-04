@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawParameter" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_type">
+			<return type="int" enum="JigsawParameter.Type" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="SPRITE_INSTANCE" value="-8" enum="Type">
+		</constant>
+		<constant name="SCENE_INSTANCE" value="-7" enum="Type">
+		</constant>
+		<constant name="QUEUED_EFFECT" value="-6" enum="Type">
+		</constant>
+		<constant name="MODIFIER_INSTANCE" value="-5" enum="Type">
+		</constant>
+		<constant name="CARD_INSTANCE" value="-4" enum="Type">
+		</constant>
+		<constant name="FORMATTED_TEXT" value="-3" enum="Type">
+		</constant>
+		<constant name="ORDERED_LIST" value="-2" enum="Type">
+		</constant>
+		<constant name="LOCAL_VARIABLE" value="-1" enum="Type">
+		</constant>
+		<constant name="VARIABLE" value="0" enum="Type">
+		</constant>
+		<constant name="BOOLEAN" value="1" enum="Type">
+		</constant>
+		<constant name="AMOUNT" value="2" enum="Type">
+		</constant>
+		<constant name="REAL" value="3" enum="Type">
+		</constant>
+		<constant name="STRING" value="4" enum="Type">
+		</constant>
+		<constant name="EFFECT_INSTANCE" value="5" enum="Type">
+		</constant>
+		<constant name="CARD_FILTER" value="6" enum="Type">
+		</constant>
+		<constant name="CARD" value="7" enum="Type">
+		</constant>
+		<constant name="STAT" value="8" enum="Type">
+		</constant>
+		<constant name="RANK" value="9" enum="Type">
+		</constant>
+		<constant name="TRIBE" value="10" enum="Type">
+		</constant>
+		<constant name="MODIFIER" value="11" enum="Type">
+		</constant>
+		<constant name="LOCATION" value="12" enum="Type">
+		</constant>
+		<constant name="ICON" value="13" enum="Type">
+		</constant>
+		<constant name="CID_OPUS" value="14" enum="Type">
+		</constant>
+		<constant name="FILE_ID_OPUS" value="15" enum="Type">
+		</constant>
+		<constant name="FILE_ID_GLTF" value="16" enum="Type">
+		</constant>
+		<constant name="COLOR" value="17" enum="Type">
+		</constant>
+		<constant name="CHOICE" value="18" enum="Type">
+		</constant>
+	</constants>
+</class>

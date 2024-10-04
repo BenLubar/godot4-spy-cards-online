@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AudienceDef" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="back_cheer" type="int" setter="set_back_cheer" getter="get_back_cheer" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="hue_range" type="Vector2" setter="set_hue_range" getter="get_hue_range" default="Vector2(0, 1)">
+		</member>
+		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size" default="0.01">
+		</member>
+		<member name="very_tall" type="bool" setter="set_very_tall" getter="get_very_tall" default="false">
+		</member>
+		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">
+		</member>
+	</members>
+</class>

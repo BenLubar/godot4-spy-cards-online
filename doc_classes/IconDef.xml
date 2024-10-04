@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="IconDef" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="convert_legacy_portrait" qualifiers="static">
+			<return type="IconDef" />
+			<param index="0" name="portrait" type="int" enum="IconDef.Icon" />
+			<param index="1" name="data" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
+		</member>
+		<member name="image" type="Image" setter="set_image" getter="get_image">
+		</member>
+		<member name="texture" type="ImageTexture" setter="" getter="get_texture">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZOMBIANT" value="0" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_JELLYSHROOM" value="1" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SPIDER" value="2" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZASP" value="3" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CACTILING" value="4" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PSICORP" value="5" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THIEF" value="6" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BANDIT" value="7" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_INICHAS" value="8" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SEEDLING" value="9" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BLANK" value="10" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ACORNLING" value="11" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WEEVIL" value="12" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VENUS_BUD" value="13" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_NUMBNAIL" value="14" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MOTHIVA" value="15" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CHOMPER" value="16" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KABBU" value="17" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ACOLYTE_ARIA" value="18" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_TROOPER" value="19" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MIDGE" value="20" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VENUS_GUARDIAN" value="21" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_UNDERLING" value="22" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MONSIEUR_SCARLET" value="23" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GOLDEN_SEEDLING" value="24" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MOTHER_CHOMPER" value="25" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BURGLAR" value="26" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BEE_BOOP" value="27" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ABOMIHONEY" value="28" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CARMINA" value="29" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SECURITY_TURRET" value="30" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DENMUKI" value="31" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HEAVY_DRONE_B33" value="32" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_SCOUT" value="33" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ARROW_WORM" value="34" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_AHONEYNATION" value="35" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MENDER" value="36" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DUNE_SCORPION" value="37" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ASTOTHELES" value="38" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KALI" value="39" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KRAWLER" value="40" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HAUNTED_CLOTH" value="41" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WARDEN" value="42" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_WATCHER" value="43" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SEEDLING_KING" value="44" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FLOWERLING" value="45" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PLUMPLING" value="46" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_JUMPING_SPIDER" value="47" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEAFBUG_NINJA" value="48" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEAFBUG_ARCHER" value="49" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEAFBUG_CLUBBER" value="50" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MADESPHY" value="51" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MIMIC_SPIDER" value="52" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_BEAST" value="53" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CHOMPER_BRUTE" value="54" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_DRILLER" value="55" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GENERAL_ULTIMAX" value="56" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_BOMBER" value="57" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WILD_CHOMPER" value="58" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZOMBEE" value="59" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZOMBEETLE" value="60" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BLOATSHROOM" value="61" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PRIMAL_WEEVIL" value="62" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CROSS" value="63" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_POI" value="64" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MANTIDFLY" value="65" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FALSE_MONARCH" value="66" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MOTHFLY" value="67" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MOTHFLY_CLUSTER" value="68" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BROODMOTHER" value="69" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MAKI" value="70" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KINA" value="71" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_KING" value="72" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_IRONNAIL" value="73" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BELOSTOSS" value="74" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WATER_STRIDER" value="75" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIVING_SPIDER" value="76" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CENN" value="77" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PISCI" value="78" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RUFFIAN" value="79" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_INNKEEPER" value="80" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TOD" value="81" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEBY" value="82" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_YATANTA" value="83" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CHUCK" value="84" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LAYNA" value="85" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MM" value="86" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEVI" value="87" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TANJERIN" value="88" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PROFESSOR_NEOLITH" value="89" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ISAU" value="90" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GS_TECHNICIAN" value="91" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CRISBEE" value="92" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KUT" value="93" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FRY" value="94" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEIF" value="95" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BOOK" value="96" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PROFESSOR_HONEYCOMB" value="97" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DOCTOR_HB" value="98" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZASP_DISGUISED" value="99" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ACOLYTE_ARIA_QUEST" value="100" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MADELEINE" value="101" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VI" value="102" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ALI" value="103" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BEE_KINGDOM" value="104" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VIVI" value="105" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MALBEE" value="106" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SPY_CARDS" value="107" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TAKKUN" value="108" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BOMBY" value="109" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BUTOMU" value="110" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MAYOR" value="111" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_EETL" value="112" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VEN" value="113" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GEN_AND_ERI" value="114" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ARTIA" value="115" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MUN" value="116" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ALEX" value="117" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MAKI_AND_KINA" value="118" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FALSE_MONARCH_BOUNTY" value="119" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SEEDLING_KING_BOUNTY" value="120" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FABRI" value="121" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TIDAL_WYRM" value="122" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TIDAL_WYRM_BOUNTY" value="123" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RIZ" value="124" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RIZZA" value="125" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ZOMMOTH" value="126" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PEACOCK_SPIDER" value="127" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_UNKNOWN" value="128" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SNAKEMOUTH_DEN" value="129" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SNAKEMOUTH_DEPTHS" value="130" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_EXPLORERS_MESSAGE" value="131" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_ROACHES_VILLAGE" value="132" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_INN_FOREMOTHERS" value="133" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_SETTLER_STATUE" value="134" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_ANTS" value="135" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_BEES" value="136" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_TERMITES" value="137" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_WASPS" value="138" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_QUEEN_ELIZANT_I" value="139" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_ANTHILL_PALACE" value="140" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_APHIDS_AND_COCHNEALS" value="141" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_GOLDEN_FESTIVAL" value="142" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_GODDESS_STATUE" value="143" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PEACOCK_SPIDER_BOUNTY" value="144" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_WIZARD" value="145" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ULTIMAX_TANK" value="146" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ELOM" value="147" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SAND_CASTLE_MURAL" value="148" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_EREMI" value="149" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VI_DEED" value="150" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_LEIF_DEED" value="151" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MASK" value="152" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TABLET" value="153" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KEY_1" value="154" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KEY_2" value="155" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_QUEEN_ELIZANT_II" value="156" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BROACH" value="157" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_KING_CROWN" value="158" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GREEN_BUG_RANGER" value="159" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEAD_LANDER_ALPHA" value="160" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEAD_LANDER_BETA" value="161" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEAD_LANDER_GAMMA" value="162" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_COMPLETIONIST" value="163" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_QUESTS" value="164" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DISCOVERIES" value="165" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MEDALS" value="166" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CHOMPY" value="167" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RANK" value="168" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_MUSIC" value="169" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CRYSTAL" value="170" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HIGHSCORES" value="171" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RECIPES" value="172" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BESTIARY" value="173" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_EVERLASTING_KING" value="174" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_EVERLASTING_KING_HARD" value="175" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SPIDER_HARD" value="176" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_VENUS_GUARDIAN_HARD" value="177" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HEAVY_DRONE_B33_HARD" value="178" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_WATCHER_HARD" value="179" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_BEAST_HARD" value="180" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ULTIMAX_TANK_HARD" value="181" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BOUNTIES" value="182" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KABBU_DEED" value="183" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_YIN" value="184" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEVOURER" value="185" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEVOURER_BOUNTY" value="186" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TARAR" value="187" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HONORED_EMPLOYEE" value="188" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SNAKEMOUTHS_LAB" value="189" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HEALING_SOPHIE" value="190" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SEEDLING_HAVEN" value="191" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_UNDERGROUND_TAVERN" value="192" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_ANT_MINES" value="193" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_CHOMPER_CAVERN" value="194" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_POWER_PLANT" value="195" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_BEE_KINGDOM" value="196" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BALCONY_TELESCOPE" value="197" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_B_O_S_S" value="198" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DEFIANT_ROOT" value="199" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_THE_LOST_SANDS" value="200" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TARDIGRADE_IDOL" value="201" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BANDIT_HIDEOUT" value="202" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_STREAM_MOUNTAIN" value="203" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FAR_GRASSLANDS" value="204" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WIZARDS_TOWER" value="205" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TERMITE_KINGDOM" value="206" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TERMITE_COLOSSEUM" value="207" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_METAL_ISLAND" value="208" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RUBBER_PRISON" value="209" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_BUMBLE" value="210" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ENGIRA" value="211" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KABBU_QUEST" value="212" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_REEVES" value="213" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_RELIC_MUSEUM" value="214" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TERMITE_STATUE" value="215" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_GIANTS_LAIR" value="216" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_PEACOCK_ISLAND" value="217" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WILD_SWAMPLANDS" value="218" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WASP_KINGDOM" value="219" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FISHING_VILLAGE" value="220" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_FORSAKEN_LANDS" value="221" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_SAILORS_STATUE" value="222" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ANCIENT_CITY" value="223" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_TERMACADE" value="224" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_HAUNTED_CLOTH_FIRE" value="225" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_KRAWLER_FIRE" value="226" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_WARDEN_FIRE" value="227" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_REBECCA" value="228" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_ROY" value="229" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_STRATOS_AND_DELILAH" value="230" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_STRATOS" value="231" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DELILAH" value="232" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_1" value="247" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_2" value="248" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_3" value="249" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_4" value="250" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_5" value="251" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_6" value="252" enum="Icon">
+		</constant>
+		<constant name="PORTRAIT_DIGIT_7" value="253" enum="Icon">
+		</constant>
+		<constant name="LEGACY_PORTRAIT_EMBEDDED" value="254" enum="Icon">
+		</constant>
+		<constant name="LEGACY_PORTRAIT_EXTERNAL" value="255" enum="Icon">
+		</constant>
+		<constant name="STAT_ATK" value="256" enum="Icon">
+		</constant>
+		<constant name="STAT_DEF" value="257" enum="Icon">
+		</constant>
+		<constant name="STAT_HP" value="258" enum="Icon">
+		</constant>
+		<constant name="STAT_TP" value="259" enum="Icon">
+		</constant>
+		<constant name="STAT_TP_INF" value="260" enum="Icon">
+		</constant>
+		<constant name="STAT_BERRIES" value="261" enum="Icon">
+		</constant>
+		<constant name="STAT_CRYSTAL" value="262" enum="Icon">
+		</constant>
+		<constant name="STAT_EXP" value="263" enum="Icon">
+		</constant>
+		<constant name="STAT_MP" value="264" enum="Icon">
+		</constant>
+		<constant name="STATUS_FREEZE" value="265" enum="Icon">
+		</constant>
+		<constant name="STATUS_POISON" value="266" enum="Icon">
+		</constant>
+		<constant name="STATUS_NUMB" value="267" enum="Icon">
+		</constant>
+		<constant name="STATUS_SLEEP" value="268" enum="Icon">
+		</constant>
+		<constant name="STATUS_UNSTEADY" value="269" enum="Icon">
+		</constant>
+		<constant name="STATUS_FLIPPED" value="270" enum="Icon">
+		</constant>
+		<constant name="STATUS_DEF_UP" value="271" enum="Icon">
+		</constant>
+		<constant name="STATUS_DEF_DOWN" value="272" enum="Icon">
+		</constant>
+		<constant name="STATUS_ATK_UP" value="273" enum="Icon">
+		</constant>
+		<constant name="STATUS_ATK_DOWN" value="274" enum="Icon">
+		</constant>
+		<constant name="STATUS_TAUNT" value="275" enum="Icon">
+		</constant>
+		<constant name="STATUS_DANGER" value="276" enum="Icon">
+		</constant>
+		<constant name="STATUS_TP_REGEN" value="277" enum="Icon">
+		</constant>
+		<constant name="STATUS_HP_REGEN" value="278" enum="Icon">
+		</constant>
+		<constant name="STATUS_MOTHFLY" value="279" enum="Icon">
+		</constant>
+		<constant name="STATUS_CHARGE" value="280" enum="Icon">
+		</constant>
+		<constant name="STATUS_BURN" value="281" enum="Icon">
+		</constant>
+		<constant name="STATUS_INK" value="282" enum="Icon">
+		</constant>
+		<constant name="STATUS_STICKY" value="283" enum="Icon">
+		</constant>
+		<constant name="STATUS_TALK" value="284" enum="Icon">
+		</constant>
+		<constant name="STATUS_THINK" value="285" enum="Icon">
+		</constant>
+		<constant name="STATUS_JANET" value="286" enum="Icon">
+		</constant>
+		<constant name="BACK_ATTACKER" value="287" enum="Icon">
+		</constant>
+		<constant name="BACK_EFFECT" value="288" enum="Icon">
+		</constant>
+		<constant name="BACK_MINI_BOSS" value="289" enum="Icon">
+		</constant>
+		<constant name="BACK_BOSS" value="290" enum="Icon">
+		</constant>
+		<constant name="BACK_TOKEN" value="291" enum="Icon">
+		</constant>
+		<constant name="FRONT_ATTACKER" value="292" enum="Icon">
+		</constant>
+		<constant name="FRONT_EFFECT" value="293" enum="Icon">
+		</constant>
+		<constant name="FRONT_MINI_BOSS" value="294" enum="Icon">
+		</constant>
+		<constant name="FRONT_BOSS" value="295" enum="Icon">
+		</constant>
+		<constant name="FRONT_TOKEN" value="296" enum="Icon">
+		</constant>
+		<constant name="COIN" value="297" enum="Icon">
+		</constant>
+		<constant name="COIN_HAPPY" value="298" enum="Icon">
+		</constant>
+		<constant name="COIN_SAD" value="299" enum="Icon">
+		</constant>
+		<constant name="DIGIT_0" value="300" enum="Icon">
+		</constant>
+		<constant name="DIGIT_1" value="301" enum="Icon">
+		</constant>
+		<constant name="DIGIT_2" value="302" enum="Icon">
+		</constant>
+		<constant name="DIGIT_3" value="303" enum="Icon">
+		</constant>
+		<constant name="DIGIT_4" value="304" enum="Icon">
+		</constant>
+		<constant name="DIGIT_5" value="305" enum="Icon">
+		</constant>
+		<constant name="DIGIT_6" value="306" enum="Icon">
+		</constant>
+		<constant name="DIGIT_7" value="307" enum="Icon">
+		</constant>
+		<constant name="DIGIT_8" value="308" enum="Icon">
+		</constant>
+		<constant name="DIGIT_9" value="309" enum="Icon">
+		</constant>
+		<constant name="CARD_FRONT" value="310" enum="Icon">
+		</constant>
+		<constant name="CARD_FRONT_WINDOW" value="311" enum="Icon">
+		</constant>
+		<constant name="CARD_DESC" value="312" enum="Icon">
+		</constant>
+		<constant name="CARD_TRIBE_BUBBLE" value="313" enum="Icon">
+		</constant>
+		<constant name="CARD_TRIBE_BUBBLE_WIDE" value="314" enum="Icon">
+		</constant>
+		<constant name="WHITE_BAR" value="315" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_MOTH_FRONT" value="316" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_MOTH_BACK" value="317" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_MOTH_FRONT_CHEER" value="318" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_MOTH_BACK_CHEER" value="319" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_ANT_FRONT" value="320" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_ANT_BACK" value="321" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_ANT_FRONT_CHEER" value="322" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_ANT_BACK_CHEER" value="323" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEETLE_FRONT" value="324" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEETLE_BACK" value="325" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEETLE_FRONT_CHEER" value="326" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEE_FRONT" value="327" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEE_BACK" value="328" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEE_FRONT_CHEER" value="329" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_BEE_BACK_CHEER" value="330" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE1_FRONT" value="331" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE1_BACK" value="332" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE1_FRONT_CHEER" value="333" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE1_BACK_CHEER" value="334" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE2_FRONT" value="335" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE2_BACK" value="336" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE2_FRONT_CHEER" value="337" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TERMITE2_BACK_CHEER" value="338" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_AMBER_IDLE0" value="339" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_AMBER_IDLE1" value="340" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_AMBER_ANGRY" value="341" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIA_IDLE0" value="342" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIA_IDLE1" value="343" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIA_ANGRY" value="344" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIE_IDLE0" value="345" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIE_IDLE1" value="346" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ARIE_ANGRY" value="347" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ASTOTHELES_IDLE0" value="348" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ASTOTHELES_IDLE1" value="349" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ASTOTHELES_ANGRY" value="350" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BOMBY_IDLE0" value="351" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BOMBY_IDLE1" value="352" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BOMBY_ANGRY" value="353" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BUGI_IDLE0" value="354" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BUGI_IDLE1" value="355" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_BUGI_ANGRY" value="356" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CARMINA_IDLE0" value="357" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CARMINA_IDLE1" value="358" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CARMINA_ANGRY" value="359" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CELIA_IDLE0" value="360" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CELIA_IDLE1" value="361" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CELIA_ANGRY" value="362" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CENN_IDLE0" value="363" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CENN_IDLE1" value="364" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CENN_ANGRY" value="365" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CERISE_IDLE0" value="366" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CERISE_IDLE1" value="367" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CERISE_ANGRY" value="368" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHOMPY_IDLE0" value="369" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHOMPY_IDLE1" value="370" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHOMPY_ANGRY" value="371" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUBEE_IDLE0" value="372" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUBEE_IDLE1" value="373" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUBEE_ANGRY" value="374" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUCK_IDLE0" value="375" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUCK_IDLE1" value="376" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CHUCK_ANGRY" value="377" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CRISBEE_IDLE0" value="378" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CRISBEE_IDLE1" value="379" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CRISBEE_ANGRY" value="380" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CROW_IDLE0" value="381" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CROW_IDLE1" value="382" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_CROW_ANGRY" value="383" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_DIANA_IDLE0" value="384" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_DIANA_IDLE1" value="385" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_DIANA_ANGRY" value="386" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_EREMI_IDLE0" value="387" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_EREMI_IDLE1" value="388" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_EREMI_ANGRY" value="389" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_FUTES_IDLE0" value="390" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_FUTES_IDLE1" value="391" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_FUTES_ANGRY" value="392" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_GENOW_IDLE0" value="393" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_GENOW_IDLE1" value="394" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_GENOW_ANGRY" value="395" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HB_IDLE0" value="396" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HB_IDLE1" value="397" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HB_ANGRY" value="398" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HONEYCOMB_IDLE0" value="399" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HONEYCOMB_IDLE1" value="400" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_HONEYCOMB_ANGRY" value="401" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JANET_IDLE0" value="402" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JANET_IDLE1" value="403" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JANET_ANGRY" value="404" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAUNE_IDLE0" value="405" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAUNE_IDLE1" value="406" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAUNE_ANGRY" value="407" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAYDE_IDLE0" value="408" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAYDE_IDLE1" value="409" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JAYDE_ANGRY" value="410" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JOHNNY_IDLE0" value="411" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JOHNNY_IDLE1" value="412" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_JOHNNY_ANGRY" value="413" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KABBU_IDLE0" value="414" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KABBU_IDLE1" value="415" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KABBU_ANGRY" value="416" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KAGE_IDLE0" value="417" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KAGE_IDLE1" value="418" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KAGE_ANGRY" value="419" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KALI_IDLE0" value="420" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KALI_IDLE1" value="421" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KALI_ANGRY" value="422" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KENNY_IDLE0" value="423" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KENNY_IDLE1" value="424" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KENNY_ANGRY" value="425" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KINA_IDLE0" value="426" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KINA_IDLE1" value="427" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_KINA_ANGRY" value="428" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LAYNA_IDLE0" value="429" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LAYNA_IDLE1" value="430" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LAYNA_ANGRY" value="431" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEIF_IDLE0" value="432" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEIF_IDLE1" value="433" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEIF_ANGRY" value="434" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEVI_IDLE0" value="435" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEVI_IDLE1" value="436" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_LEVI_ANGRY" value="437" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAKI_IDLE0" value="438" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAKI_IDLE1" value="439" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAKI_ANGRY" value="440" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MALBEE_IDLE0" value="441" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MALBEE_IDLE1" value="442" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MALBEE_ANGRY" value="443" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAR_IDLE0" value="444" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAR_IDLE1" value="445" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MAR_ANGRY" value="446" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MOTHIVA_IDLE0" value="447" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MOTHIVA_IDLE1" value="448" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_MOTHIVA_ANGRY" value="449" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NEOLITH_IDLE0" value="450" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NEOLITH_IDLE1" value="451" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NEOLITH_ANGRY" value="452" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NERO_IDLE0" value="453" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NERO_IDLE1" value="454" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_NERO_ANGRY" value="455" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PIBU_IDLE0" value="456" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PIBU_IDLE1" value="457" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PIBU_ANGRY" value="458" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PISCI_IDLE0" value="459" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PISCI_IDLE1" value="460" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_PISCI_ANGRY" value="461" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RITCHEE_IDLE0" value="462" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RITCHEE_IDLE1" value="463" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RITCHEE_ANGRY" value="464" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RIZ_IDLE0" value="465" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RIZ_IDLE1" value="466" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_RIZ_ANGRY" value="467" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SAMIRA_IDLE0" value="468" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SAMIRA_IDLE1" value="469" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SAMIRA_ANGRY" value="470" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SCARLET_IDLE0" value="471" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SCARLET_IDLE1" value="472" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SCARLET_ANGRY" value="473" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SERENE_IDLE0" value="474" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SERENE_IDLE1" value="475" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SERENE_ANGRY" value="476" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SHAY_IDLE0" value="477" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SHAY_IDLE1" value="478" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SHAY_ANGRY" value="479" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SKIRBY_IDLE0" value="480" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SKIRBY_IDLE1" value="481" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_SKIRBY_ANGRY" value="482" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_TANJERIN_IDLE0" value="483" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_TANJERIN_IDLE1" value="484" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_TANJERIN_ANGRY" value="485" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ULTIMAX_IDLE0" value="486" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ULTIMAX_IDLE1" value="487" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ULTIMAX_ANGRY" value="488" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VANESSA_IDLE0" value="489" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VANESSA_IDLE1" value="490" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VANESSA_ANGRY" value="491" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VI_IDLE0" value="492" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VI_IDLE1" value="493" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_VI_ANGRY" value="494" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_YIN_IDLE0" value="495" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_YIN_IDLE1" value="496" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_YIN_ANGRY" value="497" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZARYANT_IDLE0" value="498" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZARYANT_IDLE1" value="499" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZARYANT_ANGRY" value="500" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZASP_IDLE0" value="501" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZASP_IDLE1" value="502" enum="Icon">
+		</constant>
+		<constant name="CHARACTER_ZASP_ANGRY" value="503" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_KABBU_FRONT" value="504" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_KABBU_BACK" value="505" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_KABBU_FRONT_CHEER" value="506" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TANJERIN_BACK" value="507" enum="Icon">
+		</constant>
+		<constant name="AUDIENCE_TANJERIN_FRONT_CHEER" value="508" enum="Icon">
+		</constant>
+		<constant name="CARD_BATTLE_BACKGROUND" value="509" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_MASK" value="510" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_TABLET" value="511" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_TABLET_CRACK_1" value="512" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_TABLET_CRACK_2" value="513" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_KEY_HANDLE" value="514" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_KEY_TEETH" value="515" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_KEY_FULL" value="516" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_ELIZANT" value="517" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_BROACH" value="518" enum="Icon">
+		</constant>
+		<constant name="ARTIFACT_CROWN" value="519" enum="Icon">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="2048" enum="Icon">
+		</constant>
+	</constants>
+</class>
