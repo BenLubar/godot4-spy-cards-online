@@ -6,4 +6,36 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="color_alt" type="Color" setter="set_color_alt" getter="get_color_alt" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Rank">
+		</constant>
+		<constant name="ATTACKER" value="0" enum="Rank">
+		</constant>
+		<constant name="EFFECT" value="1" enum="Rank">
+		</constant>
+		<constant name="MINI_BOSS" value="2" enum="Rank">
+		</constant>
+		<constant name="BOSS" value="3" enum="Rank">
+		</constant>
+		<constant name="TOKEN" value="4" enum="Rank">
+		</constant>
+		<constant name="LEGACY_ENEMY" value="5" enum="Rank">
+		</constant>
+		<constant name="LEGACY_NONE" value="7" enum="Rank">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="8" enum="Rank">
+		</constant>
+	</constants>
 </class>

@@ -6,4 +6,26 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="format_quantity" type="JigsawCommandList" setter="set_format_quantity" getter="get_format_quantity">
+		</member>
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Stat">
+		</constant>
+		<constant name="ATK" value="0" enum="Stat">
+		</constant>
+		<constant name="DEF" value="1" enum="Stat">
+		</constant>
+		<constant name="HP" value="2" enum="Stat">
+		</constant>
+		<constant name="TP" value="3" enum="Stat">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="256" enum="Stat">
+		</constant>
+	</constants>
 </class>

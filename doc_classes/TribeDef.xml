@@ -6,4 +6,56 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="display" type="int" setter="set_display" getter="get_display" enum="TribeDef.DisplayMode" default="0">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Tribe">
+		</constant>
+		<constant name="SEEDLING" value="0" enum="Tribe">
+		</constant>
+		<constant name="WASP" value="1" enum="Tribe">
+		</constant>
+		<constant name="FUNGI" value="2" enum="Tribe">
+		</constant>
+		<constant name="ZOMBIE" value="3" enum="Tribe">
+		</constant>
+		<constant name="PLANT" value="4" enum="Tribe">
+		</constant>
+		<constant name="BUG" value="5" enum="Tribe">
+		</constant>
+		<constant name="BOT" value="6" enum="Tribe">
+		</constant>
+		<constant name="THUG" value="7" enum="Tribe">
+		</constant>
+		<constant name="UNKNOWN" value="8" enum="Tribe">
+		</constant>
+		<constant name="CHOMPER" value="9" enum="Tribe">
+		</constant>
+		<constant name="LEAFBUG" value="10" enum="Tribe">
+		</constant>
+		<constant name="DEAD_LANDER" value="11" enum="Tribe">
+		</constant>
+		<constant name="MOTHFLY" value="12" enum="Tribe">
+		</constant>
+		<constant name="SPIDER" value="13" enum="Tribe">
+		</constant>
+		<constant name="LEGACY_CUSTOM" value="14" enum="Tribe">
+		</constant>
+		<constant name="LEGACY_NONE" value="15" enum="Tribe">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="16" enum="Tribe">
+		</constant>
+		<constant name="NORMAL" value="0" enum="DisplayMode">
+		</constant>
+		<constant name="HIDDEN" value="1" enum="DisplayMode">
+		</constant>
+		<constant name="WIDE" value="2" enum="DisplayMode">
+		</constant>
+	</constants>
 </class>
