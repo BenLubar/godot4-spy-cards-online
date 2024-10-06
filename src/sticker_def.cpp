@@ -3,7 +3,7 @@
 void StickerDef::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, icon);
 	BIND_PROPERTY(Variant::RECT2, position);
-	BIND_PROPERTY(Variant::OBJECT, should_show, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, should_show);
 }
 
 IMPLEMENT_PROPERTY(StickerDef, IconDef::Icon, icon);

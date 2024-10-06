@@ -99,11 +99,11 @@ void CardDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::INT, id);
 	BIND_PROPERTY(Variant::INT, rank);
-	BIND_PROPERTY(Variant::ARRAY, costs, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":StatValue");
+	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY(Variant::INT, portrait);
 	BIND_PROPERTY(Variant::ARRAY, tribes);
-	BIND_PROPERTY(Variant::ARRAY, effects, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":EffectInstance");
+	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
 	BIND_PROPERTY(Variant::FLOAT, curve_adjust);
 }
 

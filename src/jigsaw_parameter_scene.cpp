@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_scene.h"
 
 void JigsawParameterScene::_bind_methods() {
-	BIND_PROPERTY(Variant::OBJECT, scene, PROPERTY_HINT_RESOURCE_TYPE, "GLTFState", PROPERTY_USAGE_NONE);
+	BIND_PROPERTY_RESOURCE_NOT_SAVED(GLTFState, scene);
 	BIND_PROPERTY(Variant::DICTIONARY, json_data);
 }
 

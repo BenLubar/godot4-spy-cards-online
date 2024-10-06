@@ -10,8 +10,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	RecordingRound();
-	~RecordingRound();
+	RecordingRound() = default;
+	~RecordingRound() = default;
 
 	DECLARE_PROPERTY(PackedByteArray, turn_seed);
 	DECLARE_PROPERTY(PackedByteArray, turn_seed2);

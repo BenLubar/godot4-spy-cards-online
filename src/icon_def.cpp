@@ -521,14 +521,9 @@ void IconDef::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
 
-	ClassDB::bind_method(D_METHOD("get_file_id"), &IconDef::get_file_id);
-	ClassDB::bind_method(D_METHOD("set_file_id", "file_id"), &IconDef::set_file_id);
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_BYTE_ARRAY, "file_id"), "set_file_id", "get_file_id");
-	ClassDB::bind_method(D_METHOD("get_image"), &IconDef::get_image);
-	ClassDB::bind_method(D_METHOD("set_image", "image"), &IconDef::set_image);
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "image", PROPERTY_HINT_RESOURCE_TYPE, "Image"), "set_image", "get_image");
-	ClassDB::bind_method(D_METHOD("get_texture"), &IconDef::get_texture);
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture", PROPERTY_USAGE_NONE), "", "get_texture");
+	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, file_id);
+	BIND_PROPERTY_RESOURCE_NOT_SAVED(Image, image);
+	BIND_PROPERTY_RESOURCE_NOT_SAVED(ImageTexture, image);
 
 	ClassDB::bind_static_method("IconDef", D_METHOD("convert_legacy_portrait", "portrait", "data"), &IconDef::convert_legacy_portrait);
 }

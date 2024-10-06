@@ -3,7 +3,7 @@
 void EffectInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, effect);
 	BIND_PROPERTY(Variant::INT, priority);
-	BIND_PROPERTY(Variant::ARRAY, params, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawParameter");
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, params);
 }
 
 IMPLEMENT_PROPERTY(EffectInstance, EffectDef::Effect, effect);

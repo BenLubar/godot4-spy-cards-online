@@ -3,9 +3,9 @@
 void GameModeSummary::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, author);
 	BIND_PROPERTY(Variant::INT, mode_thumbnail);
-	BIND_PROPERTY(Variant::STRING, description, PROPERTY_HINT_MULTILINE_TEXT);
-	BIND_PROPERTY(Variant::STRING, latest_changes, PROPERTY_HINT_MULTILINE_TEXT);
-	BIND_PROPERTY(Variant::ARRAY, custom_icons, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":IconDef");
+	BIND_PROPERTY_MULTILINE_TEXT(description);
+	BIND_PROPERTY_MULTILINE_TEXT(latest_changes);
+	BIND_PROPERTY_RESOURCE_ARRAY(IconDef, custom_icons);
 
 	ClassDB::bind_method(D_METHOD("get_icon_texture", "icon"), &GameModeSummary::get_icon_texture);
 }

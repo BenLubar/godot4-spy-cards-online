@@ -8,11 +8,8 @@ using namespace godot;
 void RecordingRound::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, turn_seed);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, turn_seed2);
-	BIND_PROPERTY(Variant::ARRAY, ready, PROPERTY_HINT_TYPE_STRING, String::num(Variant::PACKED_INT64_ARRAY) + ":");
+	BIND_PROPERTY_VARIANT_ARRAY(Variant::PACKED_INT64_ARRAY, ready);
 }
-
-RecordingRound::RecordingRound() {}
-RecordingRound::~RecordingRound() {}
 
 IMPLEMENT_PROPERTY(RecordingRound, PackedByteArray, turn_seed);
 IMPLEMENT_PROPERTY(RecordingRound, PackedByteArray, turn_seed2);

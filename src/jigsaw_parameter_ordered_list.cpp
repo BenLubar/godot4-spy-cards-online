@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_ordered_list.h"
 
 void JigsawParameterOrderedList::_bind_methods() {
-	BIND_PROPERTY(Variant::ARRAY, list, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawParameter");
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, list);
 
 	ClassDB::bind_method(D_METHOD("is_homogenous", "type"), &JigsawParameterOrderedList::is_homogenous);
 }

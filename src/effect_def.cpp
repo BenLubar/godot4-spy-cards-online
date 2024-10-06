@@ -58,12 +58,12 @@ void EffectDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, editor_name);
 	BIND_PROPERTY(Variant::INT, default_priority);
-	BIND_PROPERTY(Variant::ARRAY, default_parameters, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawParameter");
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, default_parameters);
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, parameter_names);
-	BIND_PROPERTY(Variant::ARRAY, triggers, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawTrigger");
-	BIND_PROPERTY(Variant::OBJECT, describe, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
-	BIND_PROPERTY(Variant::OBJECT, simple_describe, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
-	BIND_PROPERTY(Variant::OBJECT, curve, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTrigger, triggers);
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, describe);
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, simple_describe);
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, curve);
 }
 
 IMPLEMENT_PROPERTY(EffectDef, String, editor_name);

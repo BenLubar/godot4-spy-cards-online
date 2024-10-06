@@ -29,7 +29,7 @@ void VariableDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, editor_name);
 	BIND_PROPERTY(Variant::INT, uniqueness);
-	BIND_PROPERTY(Variant::OBJECT, default_value, PROPERTY_HINT_RESOURCE_TYPE, "JigsawParameter");
+	BIND_PROPERTY_RESOURCE(JigsawParameter, default_value);
 }
 
 IMPLEMENT_PROPERTY(VariableDef, String, editor_name);

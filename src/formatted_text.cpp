@@ -36,7 +36,7 @@ void FormattedText::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, command);
 	BIND_PROPERTY(Variant::STRING, text);
 	BIND_PROPERTY(Variant::INT, icon);
-	BIND_PROPERTY(Variant::OBJECT, instance, PROPERTY_HINT_RESOURCE_TYPE, "EffectInstance");
+	BIND_PROPERTY_RESOURCE(EffectInstance, instance);
 	BIND_PROPERTY(Variant::COLOR, color);
 	BIND_PROPERTY(Variant::FLOAT, font_size);
 	BIND_PROPERTY(Variant::INT, table_columns);

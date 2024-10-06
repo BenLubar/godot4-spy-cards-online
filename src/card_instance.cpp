@@ -6,14 +6,14 @@
 
 void CardInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::OBJECT, global);
-	BIND_PROPERTY(Variant::OBJECT, def, PROPERTY_HINT_RESOURCE_TYPE, "CardDef");
-	BIND_PROPERTY(Variant::ARRAY, name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FormattedText");
+	BIND_PROPERTY_RESOURCE(CardDef, def);
+	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, name);
 	BIND_PROPERTY(Variant::INT, rank);
 	BIND_PROPERTY(Variant::INT, back);
-	BIND_PROPERTY(Variant::ARRAY, costs, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":StatValue");
+	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY(Variant::INT, portrait);
 	BIND_PROPERTY(Variant::ARRAY, tribes);
-	BIND_PROPERTY(Variant::ARRAY, description, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FormattedText");
+	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
 	BIND_PROPERTY(Variant::ARRAY, modifiers);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);

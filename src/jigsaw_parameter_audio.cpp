@@ -3,7 +3,7 @@
 void JigsawParameterAudio::_bind_methods() {
 	BIND_PROPERTY(Variant::FLOAT, loop_start);
 	BIND_PROPERTY(Variant::FLOAT, loop_end);
-	BIND_PROPERTY(Variant::OBJECT, audio, PROPERTY_HINT_RESOURCE_TYPE, "AudioStreamWAV", PROPERTY_USAGE_NONE);
+	BIND_PROPERTY_RESOURCE_NOT_SAVED(AudioStreamWAV, audio);
 }
 
 IMPLEMENT_PROPERTY(JigsawParameterAudio, double, loop_start);

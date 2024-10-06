@@ -19,9 +19,9 @@ void NPCDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, display_name);
 	BIND_PROPERTY(Variant::INT, character);
-	BIND_PROPERTY(Variant::OBJECT, build_deck, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
-	BIND_PROPERTY(Variant::OBJECT, play_cards, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
-	BIND_PROPERTY(Variant::ARRAY, triggers, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawTrigger");
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, build_deck);
+	BIND_PROPERTY_RESOURCE(JigsawCommandList, play_cards);
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTrigger, triggers);
 }
 
 IMPLEMENT_PROPERTY(NPCDef, String, display_name);

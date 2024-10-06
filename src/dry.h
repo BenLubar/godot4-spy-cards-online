@@ -25,15 +25,40 @@ public: \
 	m_type is_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
 
-#define BIND_PROPERTY(m_type, m_name, ...) \
+#define BIND_PROPERTY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "get_" #m_name)
 
-#define BIND_PROPERTY_IS(m_type, m_name, ...) \
+#define BIND_PROPERTY_RESOURCE(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_RESOURCE_NOT_SAVED(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_NONE), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_MULTILINE_TEXT(m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, #m_name, PROPERTY_HINT_MULTILINE_TEXT), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_VARIANT_ARRAY(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(m_type) + ":", "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_RESOURCE_ARRAY(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_IS(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("is_" #m_name), &self_type::is_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "is_" #m_name)
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "is_" #m_name)
 
 #define IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, m_onchange) \
 	m_type m_class::get_##m_name() const { return m_name; } \

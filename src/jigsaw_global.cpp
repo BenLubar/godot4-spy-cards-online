@@ -1,9 +1,9 @@
 #include "jigsaw_global.h"
 
 void JigsawGlobal::_bind_methods() {
-	BIND_PROPERTY(Variant::OBJECT, mode, PROPERTY_HINT_RESOURCE_TYPE, "GameMode");
+	BIND_PROPERTY_RESOURCE(GameMode, mode);
 	BIND_PROPERTY(Variant::OBJECT, current_card_instance);
-	BIND_PROPERTY(Variant::OBJECT, current_effect_instance, PROPERTY_HINT_RESOURCE_TYPE, "EffectInstance");
+	BIND_PROPERTY_RESOURCE(EffectInstance, current_effect_instance);
 	BIND_PROPERTY(Variant::ARRAY, scene_nodes);
 	BIND_PROPERTY(Variant::ARRAY, sprite_nodes);
 }

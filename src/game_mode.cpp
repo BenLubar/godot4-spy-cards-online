@@ -5,11 +5,11 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, visual_effect_highlight_color);
 	BIND_PROPERTY(Variant::COLOR, visual_description_background_color);
 
-	BIND_PROPERTY(Variant::ARRAY, audience, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":AudienceDef");
-	BIND_PROPERTY(Variant::ARRAY, characters, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":CharacterDef");
+	BIND_PROPERTY_RESOURCE_ARRAY(AudienceDef, audience);
+	BIND_PROPERTY_RESOURCE_ARRAY(CharacterDef, characters);
 
-	BIND_PROPERTY(Variant::OBJECT, base_variant, PROPERTY_HINT_RESOURCE_TYPE, "VariantDef");
-	BIND_PROPERTY(Variant::ARRAY, variants, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":VariantDef");
+	BIND_PROPERTY_RESOURCE(VariantDef, base_variant);
+	BIND_PROPERTY_RESOURCE_ARRAY(VariantDef, variants);
 
 	BIND_PROPERTY(Variant::INT, ranks);
 	BIND_PROPERTY(Variant::INT, tribes);
@@ -18,18 +18,18 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, effects);
 	BIND_PROPERTY(Variant::INT, npcs);
 
-	BIND_PROPERTY(Variant::ARRAY, custom_ranks, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":RankDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_tribes, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":TribeDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_stats, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":StatDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_modifiers, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":ModifierDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_effects, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":EffectDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_npcs, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":NPCDef");
+	BIND_PROPERTY_RESOURCE_ARRAY(RankDef, custom_ranks);
+	BIND_PROPERTY_RESOURCE_ARRAY(TribeDef, custom_tribes);
+	BIND_PROPERTY_RESOURCE_ARRAY(StatDef, custom_stats);
+	BIND_PROPERTY_RESOURCE_ARRAY(ModifierDef, custom_modifiers);
+	BIND_PROPERTY_RESOURCE_ARRAY(EffectDef, custom_effects);
+	BIND_PROPERTY_RESOURCE_ARRAY(NPCDef, custom_npcs);
 
-	BIND_PROPERTY(Variant::ARRAY, custom_variables, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":VariableDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_choices, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":ChoicesDef");
-	BIND_PROPERTY(Variant::ARRAY, custom_functions, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawReusableCommandList");
+	BIND_PROPERTY_RESOURCE_ARRAY(VariableDef, custom_variables);
+	BIND_PROPERTY_RESOURCE_ARRAY(ChoicesDef, custom_choices);
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawReusableCommandList, custom_functions);
 
-	BIND_PROPERTY(Variant::ARRAY, card_defs, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":CardDef");
+	BIND_PROPERTY_RESOURCE_ARRAY(CardDef, card_defs);
 
 	ClassDB::bind_method(D_METHOD("get_card", "id"), &GameMode::get_card);
 	ClassDB::bind_method(D_METHOD("get_rank", "id"), &GameMode::get_rank);
