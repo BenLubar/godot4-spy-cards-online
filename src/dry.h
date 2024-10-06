@@ -28,12 +28,12 @@ public: \
 #define BIND_PROPERTY(m_type, m_name, ...) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name, ## __VA_ARGS__), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_IS(m_type, m_name, ...) \
 	ClassDB::bind_method(D_METHOD("is_" #m_name), &self_type::is_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "is_" #m_name)
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name, ## __VA_ARGS__), "set_" #m_name, "is_" #m_name)
 
 #define IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, m_onchange) \
 	m_type m_class::get_##m_name() const { return m_name; } \
