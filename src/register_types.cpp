@@ -1,5 +1,6 @@
 #include "format_helper.h"
 #include "rng.h"
+#include "base32.h"
 
 #include "formatted_text.h"
 #include "squish_label.h"
@@ -46,9 +47,17 @@
 #include "jigsaw_parameter_color.h"
 #include "jigsaw_parameter_choice.h"
 
+#include "card_filter.h"
+#include "card_filter_and.h"
+#include "card_filter_or.h"
+#include "card_filter_card.h"
+#include "card_filter_rank.h"
+#include "card_filter_tribe.h"
+#include "card_filter_cost.h"
+#include "card_filter_param.h"
+
 #include "audience_def.h"
 #include "card_def.h"
-#include "card_filter.h"
 #include "character_def.h"
 #include "choices_def.h"
 #include "effect_def.h"
@@ -85,6 +94,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(FormatHelper);
 	GDREGISTER_CLASS(RNG);
+	GDREGISTER_CLASS(Base32);
 
 	GDREGISTER_CLASS(FormattedText);
 	GDREGISTER_CLASS(SquishLabel);
@@ -131,9 +141,17 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterColor);
 	GDREGISTER_CLASS(JigsawParameterChoice);
 
+	GDREGISTER_ABSTRACT_CLASS(CardFilter);
+	GDREGISTER_CLASS(CardFilterAnd);
+	GDREGISTER_CLASS(CardFilterOr);
+	GDREGISTER_CLASS(CardFilterCard);
+	GDREGISTER_CLASS(CardFilterRank);
+	GDREGISTER_CLASS(CardFilterTribe);
+	GDREGISTER_CLASS(CardFilterCost);
+	GDREGISTER_CLASS(CardFilterParam);
+
 	GDREGISTER_CLASS(AudienceDef);
 	GDREGISTER_CLASS(CardDef);
-	GDREGISTER_CLASS(CardFilter);
 	GDREGISTER_CLASS(CharacterDef);
 	GDREGISTER_CLASS(ChoicesDef);
 	GDREGISTER_CLASS(EffectDef);

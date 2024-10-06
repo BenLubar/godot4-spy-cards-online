@@ -19,8 +19,7 @@ public:
 
 	Type get_type() const override { return AMOUNT; }
 
-	static JigsawParameterAmount *make(int64_t amount);
-	static JigsawParameterAmount *make_inf(int64_t amount_inf);
+	static JigsawParameterAmount *make(int64_t amount, int64_t amount_inf);
 	static JigsawParameterAmount *make_nan();
 };
 

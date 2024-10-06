@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CardFilterCard" inherits="CardFilter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="card" type="int" setter="set_card" getter="get_card" enum="CardDef.Card" default="-1">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="CardFilter" enum="CardFilter.Type" default="2" />
+	</members>
+</class>

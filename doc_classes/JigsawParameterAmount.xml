@@ -10,12 +10,7 @@
 		<method name="make" qualifiers="static">
 			<return type="JigsawParameterAmount" />
 			<param index="0" name="amount" type="int" />
-			<description>
-			</description>
-		</method>
-		<method name="make_inf" qualifiers="static">
-			<return type="JigsawParameterAmount" />
-			<param index="0" name="amount_inf" type="int" />
+			<param index="1" name="amount_inf" type="int" />
 			<description>
 			</description>
 		</method>

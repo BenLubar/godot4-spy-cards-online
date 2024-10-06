@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CardFilterRank" inherits="CardFilter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="CardFilter" enum="CardFilter.Type" default="3" />
+	</members>
+</class>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Base32" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="clean_crockford" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="decode" qualifiers="const">
+			<return type="PackedByteArray" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="decode_cid" qualifiers="static">
+			<return type="PackedByteArray" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="decode_crockford" qualifiers="static">
+			<return type="PackedByteArray" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="decoded_len" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="len" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="encode" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="data" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="encode_cid" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="data" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="encode_crockford" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="data" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="encoded_len" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="len" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid_cid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid_crockford" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="alphabet" type="String" setter="set_alphabet" getter="get_alphabet" default="&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&quot;">
+		</member>
+		<member name="padding" type="String" setter="set_padding" getter="get_padding" default="&quot;=&quot;">
+		</member>
+	</members>
+</class>

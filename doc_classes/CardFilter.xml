@@ -6,4 +6,85 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="_matches_def" qualifiers="virtual const">
+			<return type="bool" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="card" type="int" enum="CardDef.Card" />
+			<description>
+			</description>
+		</method>
+		<method name="_matches_instance" qualifiers="virtual const">
+			<return type="bool" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="instance" type="CardInstance" />
+			<description>
+			</description>
+		</method>
+		<method name="make_and" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="list" type="CardFilter[]" />
+			<description>
+			</description>
+		</method>
+		<method name="make_card" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="card" type="int" enum="CardDef.Card" />
+			<description>
+			</description>
+		</method>
+		<method name="make_cost" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="stat" type="int" enum="StatDef.Stat" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="make_or" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="list" type="CardFilter[]" />
+			<description>
+			</description>
+		</method>
+		<method name="make_param" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="param" type="JigsawParameter" />
+			<description>
+			</description>
+		</method>
+		<method name="make_rank" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="rank" type="int" enum="RankDef.Rank" />
+			<description>
+			</description>
+		</method>
+		<method name="make_tribe" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="tribe" type="int" enum="TribeDef.Tribe" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="negate" type="bool" setter="set_negate" getter="get_negate" default="false">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" enum="CardFilter.Type" default="0">
+		</member>
+	</members>
+	<constants>
+		<constant name="AND" value="0" enum="Type">
+		</constant>
+		<constant name="OR" value="1" enum="Type">
+		</constant>
+		<constant name="CARD" value="2" enum="Type">
+		</constant>
+		<constant name="RANK" value="3" enum="Type">
+		</constant>
+		<constant name="TRIBE" value="4" enum="Type">
+		</constant>
+		<constant name="COST" value="5" enum="Type">
+		</constant>
+		<constant name="PARAM" value="6" enum="Type">
+		</constant>
+	</constants>
 </class>
