@@ -2,6 +2,14 @@
 
 void JigsawParameterFormattedText::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, text);
+
+	ClassDB::bind_static_method("JigsawParameterFormattedText", D_METHOD("make", "text"), &JigsawParameterFormattedText::make);
 }
 
 IMPLEMENT_PROPERTY(JigsawParameterFormattedText, TypedArray<FormattedText>, text);
+
+JigsawParameterFormattedText *JigsawParameterFormattedText::make(const TypedArray<FormattedText> &text) {
+	JigsawParameterFormattedText *param = memnew(JigsawParameterFormattedText);
+	param->set_text(text);
+	return param;
+}

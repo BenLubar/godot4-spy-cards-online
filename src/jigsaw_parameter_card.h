@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(CardDef::Card, card, = CardDef::Card::NONE);
 
 	Type get_type() const override { return CARD; }
+
+	static JigsawParameterCard *make(CardDef::Card card);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_H

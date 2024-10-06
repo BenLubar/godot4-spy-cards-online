@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterVariable" />
+			<param index="0" name="variable" type="int" enum="VariableDef.Variable" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="variable" type="int" setter="set_variable" getter="get_variable" enum="VariableDef.Variable" default="-1">
 		</member>

@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterSceneInstance" />
+			<param index="0" name="scene" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="scene" type="int" setter="set_scene" getter="get_scene" default="-1">
 		</member>

@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterCard" />
+			<param index="0" name="card" type="int" enum="CardDef.Card" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="card" type="int" setter="set_card" getter="get_card" enum="CardDef.Card" default="-1">
 		</member>

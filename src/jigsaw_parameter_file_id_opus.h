@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 
 	Type get_type() const override { return FILE_ID_OPUS; }
+
+	static JigsawParameterFileIDOpus *make(PackedByteArray file_id, double loop_start, double loop_end);
 };
 
 #endif // JIGSAW_PARAMETER_FILE_ID_OPUS_H

@@ -6,6 +6,16 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterCIDOpus" />
+			<param index="0" name="cid" type="PackedByteArray" />
+			<param index="1" name="loop_start" type="float" />
+			<param index="2" name="loop_end" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="cid" type="PackedByteArray" setter="set_cid" getter="get_cid" default="PackedByteArray()">
 		</member>

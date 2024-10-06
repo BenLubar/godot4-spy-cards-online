@@ -524,7 +524,7 @@ void IconDef::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, file_id);
 	BIND_PROPERTY_RESOURCE_NOT_SAVED(Image, image);
 	ClassDB::bind_method(D_METHOD("get_texture"), &IconDef::get_texture);
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"), "", "get_texture");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture", PROPERTY_USAGE_NONE), "", "get_texture");
 
 	ClassDB::bind_static_method("IconDef", D_METHOD("convert_legacy_portrait", "portrait", "data"), &IconDef::convert_legacy_portrait);
 }

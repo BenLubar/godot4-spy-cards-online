@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(int64_t, scene, = -1);
 
 	Type get_type() const override { return SCENE_INSTANCE; }
+
+	static JigsawParameterSceneInstance *make(int64_t scene);
 };
 
 #endif // JIGSAW_PARAMETER_SCENE_INSTANCE_H

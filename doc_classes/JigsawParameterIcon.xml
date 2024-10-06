@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterIcon" />
+			<param index="0" name="icon" type="int" enum="IconDef.Icon" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
 		</member>

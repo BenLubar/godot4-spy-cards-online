@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterCardInstance" />
+			<param index="0" name="instance" type="CardInstance" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="instance" type="CardInstance" setter="set_instance" getter="get_instance">
 		</member>

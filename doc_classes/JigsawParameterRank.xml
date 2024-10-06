@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterRank" />
+			<param index="0" name="rank" type="int" enum="RankDef.Rank" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
 		</member>

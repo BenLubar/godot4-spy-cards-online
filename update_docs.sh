@@ -8,5 +8,6 @@ godot-latest --doctool .. --gdextension-docs
 if ! test -f ../doc_classes/CardDef.xml; then
 	cd ..
 	git status
+	git checkout ./doc_classes
 	false
 fi

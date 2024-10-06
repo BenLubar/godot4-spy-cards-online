@@ -13,6 +13,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterOrderedList" />
+			<param index="0" name="list" type="JigsawParameter[]" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="list" type="JigsawParameter[]" setter="set_list" getter="get_list" default="[]">

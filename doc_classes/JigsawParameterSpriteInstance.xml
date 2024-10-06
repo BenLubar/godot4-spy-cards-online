@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterSpriteInstance" />
+			<param index="0" name="sprite" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="sprite" type="int" setter="set_sprite" getter="get_sprite" default="-1">
 		</member>

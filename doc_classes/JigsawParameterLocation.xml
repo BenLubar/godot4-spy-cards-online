@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterLocation" />
+			<param index="0" name="location" type="int" enum="LocationDef.Location" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="location" type="int" setter="set_location" getter="get_location" enum="LocationDef.Location" default="-1">
 		</member>

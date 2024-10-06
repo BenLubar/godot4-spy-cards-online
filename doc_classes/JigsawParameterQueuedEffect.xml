@@ -6,7 +6,17 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterQueuedEffect" />
+			<param index="0" name="effect" type="QueuedEffect" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
+		<member name="effect" type="QueuedEffect" setter="set_effect" getter="get_effect">
+		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-6" />
 	</members>
 </class>

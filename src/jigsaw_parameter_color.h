@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(Color, color);
 
 	Type get_type() const override { return COLOR; }
+
+	static JigsawParameterColor *make(Color color);
 };
 
 #endif // JIGSAW_PARAMETER_COLOR_H

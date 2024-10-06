@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
 
 	Type get_type() const override { return FORMATTED_TEXT; }
+
+	static JigsawParameterFormattedText *make(const TypedArray<FormattedText> &text);
 };
 
 #endif // JIGSAW_PARAMETER_FORMATTED_TEXT_H

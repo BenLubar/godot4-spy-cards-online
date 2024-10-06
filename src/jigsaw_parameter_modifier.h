@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(ModifierDef::Modifier, modifier, = ModifierDef::Modifier::NONE);
 
 	Type get_type() const override { return MODIFIER; }
+
+	static JigsawParameterModifier *make(ModifierDef::Modifier modifier);
 };
 
 #endif // JIGSAW_PARAMETER_MODIFIER_H

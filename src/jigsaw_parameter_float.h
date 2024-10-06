@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(double, value, = 0.0);
 
 	Type get_type() const override { return FLOAT; }
+
+	static JigsawParameterFloat *make(double value);
 };
 
 #endif // JIGSAW_PARAMETER_FLOAT_H

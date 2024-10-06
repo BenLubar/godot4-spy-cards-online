@@ -6,7 +6,17 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterModifierInstance" />
+			<param index="0" name="instance" type="ModifierInstance" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
+		<member name="instance" type="ModifierInstance" setter="set_instance" getter="get_instance">
+		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-5" />
 	</members>
 </class>

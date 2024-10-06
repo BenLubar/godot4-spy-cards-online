@@ -21,6 +21,8 @@ public:
 	DECLARE_PROPERTY(int64_t, index, = -1);
 
 	Type get_type() const override { return CHOICE; }
+
+	static JigsawParameterChoice *make(ChoicesDef::Choices choices, int64_t index);
 };
 
 #endif // JIGSAW_PARAMETER_CHOICE_H

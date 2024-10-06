@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(String, string);
 
 	Type get_type() const override { return STRING; }
+
+	static JigsawParameterString *make(const String &string);
 };
 
 #endif // JIGSAW_PARAMETER_STRING_H

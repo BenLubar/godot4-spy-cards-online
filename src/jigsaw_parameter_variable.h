@@ -17,6 +17,8 @@ public:
 	DECLARE_PROPERTY(VariableDef::Variable, variable, = VariableDef::Variable::NONE);
 
 	Type get_type() const override { return VARIABLE; }
+
+	static JigsawParameterVariable *make(VariableDef::Variable variable);
 };
 
 #endif // JIGSAW_PARAMETER_VARIABLE_H

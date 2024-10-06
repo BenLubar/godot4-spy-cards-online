@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(LocationDef::Location, location, = LocationDef::Location::NONE);
 
 	Type get_type() const override { return LOCATION; }
+
+	static JigsawParameterLocation *make(LocationDef::Location location);
 };
 
 #endif // JIGSAW_PARAMETER_LOCATION_H

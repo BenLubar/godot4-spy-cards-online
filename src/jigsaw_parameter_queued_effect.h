@@ -3,6 +3,10 @@
 
 #include "jigsaw_parameter.h"
 
+class JigsawParameterQueuedEffect;
+
+#include "queued_effect.h"
+
 class JigsawParameterQueuedEffect : public JigsawParameter {
 	GDCLASS(JigsawParameterQueuedEffect, JigsawParameter);
 
@@ -13,7 +17,11 @@ public:
 	JigsawParameterQueuedEffect() = default;
 	~JigsawParameterQueuedEffect() = default;
 
+	DECLARE_PROPERTY(Ref<QueuedEffect>, effect);
+
 	Type get_type() const override { return QUEUED_EFFECT; }
+
+	static JigsawParameterQueuedEffect *make(const Ref<QueuedEffect> &effect);
 };
 
 #endif // JIGSAW_PARAMETER_QUEUED_EFFECT_H

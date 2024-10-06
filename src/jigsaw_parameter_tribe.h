@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(TribeDef::Tribe, tribe, = TribeDef::Tribe::NONE);
 
 	Type get_type() const override { return TRIBE; }
+
+	static JigsawParameterTribe *make(TribeDef::Tribe tribe);
 };
 
 #endif // JIGSAW_PARAMETER_TRIBE_H

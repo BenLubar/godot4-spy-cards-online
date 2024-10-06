@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterString" />
+			<param index="0" name="string" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="string" type="String" setter="set_string" getter="get_string" default="&quot;&quot;">
 		</member>

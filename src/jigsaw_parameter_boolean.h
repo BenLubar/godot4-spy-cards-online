@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(bool, boolean, = false);
 
 	Type get_type() const override { return BOOLEAN; }
+
+	static JigsawParameterBoolean *make(bool boolean);
 };
 
 #endif // JIGSAW_PARAMETER_BOOLEAN_H

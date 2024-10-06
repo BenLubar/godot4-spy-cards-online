@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterTribe" />
+			<param index="0" name="tribe" type="int" enum="TribeDef.Tribe" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="tribe" type="int" setter="set_tribe" getter="get_tribe" enum="TribeDef.Tribe" default="-1">
 		</member>

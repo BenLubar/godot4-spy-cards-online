@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterStat" />
+			<param index="0" name="stat" type="int" enum="StatDef.Stat" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat" default="-1">
 		</member>

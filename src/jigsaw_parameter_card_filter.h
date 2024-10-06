@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(Ref<CardFilter>, filter);
 
 	Type get_type() const override { return CARD_FILTER; }
+
+	static JigsawParameterCardFilter *make(const Ref<CardFilter> &filter);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_FILTER_H

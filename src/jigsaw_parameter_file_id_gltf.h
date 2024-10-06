@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 
 	Type get_type() const override { return FILE_ID_GLTF; }
+
+	static JigsawParameterFileIDGLTF *make(PackedByteArray file_id, Dictionary json_data);
 };
 
 #endif // JIGSAW_PARAMETER_FILE_ID_GLTF_H

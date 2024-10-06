@@ -6,6 +6,15 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterFileIDGLTF" />
+			<param index="0" name="file_id" type="PackedByteArray" />
+			<param index="1" name="json_data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
 		</member>

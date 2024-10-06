@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterModifier" />
+			<param index="0" name="modifier" type="int" enum="ModifierDef.Modifier" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="modifier" type="int" setter="set_modifier" getter="get_modifier" enum="ModifierDef.Modifier" default="-1">
 		</member>

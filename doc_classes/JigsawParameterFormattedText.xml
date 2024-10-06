@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterFormattedText" />
+			<param index="0" name="text" type="FormattedText[]" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="text" type="FormattedText[]" setter="set_text" getter="get_text" default="[]">
 		</member>

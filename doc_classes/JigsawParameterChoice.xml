@@ -6,6 +6,15 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterChoice" />
+			<param index="0" name="choices" type="int" enum="ChoicesDef.Choices" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="choices" type="int" setter="set_choices" getter="get_choices" enum="ChoicesDef.Choices" default="-1">
 		</member>

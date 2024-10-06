@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterCardFilter" />
+			<param index="0" name="filter" type="CardFilter" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="filter" type="CardFilter" setter="set_filter" getter="get_filter">
 		</member>

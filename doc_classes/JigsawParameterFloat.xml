@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterFloat" />
+			<param index="0" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="3" />
 		<member name="value" type="float" setter="set_value" getter="get_value" default="0.0">

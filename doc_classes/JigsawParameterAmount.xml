@@ -6,6 +6,25 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterAmount" />
+			<param index="0" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="make_inf" qualifiers="static">
+			<return type="JigsawParameterAmount" />
+			<param index="0" name="amount_inf" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="make_nan" qualifiers="static">
+			<return type="JigsawParameterAmount" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
 		</member>

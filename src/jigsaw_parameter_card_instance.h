@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(Ref<CardInstance>, instance);
 
 	Type get_type() const override { return CARD_INSTANCE; }
+
+	static JigsawParameterCardInstance *make(const Ref<CardInstance> &instance);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_INSTANCE_H
