@@ -1,6 +1,45 @@
 #include "game_mode.h"
 
 void GameMode::_bind_methods() {
+	BIND_ENUM_CONSTANT(GROW_LEFT);
+	BIND_ENUM_CONSTANT(GROW_RIGHT);
+	BIND_ENUM_CONSTANT(GROW_UP);
+	BIND_ENUM_CONSTANT(GROW_DOWN);
+	BIND_ENUM_CONSTANT(GROW_HORIZONTAL);
+	BIND_ENUM_CONSTANT(GROW_VERTICAL);
+	BIND_ENUM_CONSTANT(SHRINK_HORIZONTAL);
+	BIND_ENUM_CONSTANT(SHRINK_VERTICAL);
+
+	BIND_PROPERTY(Variant::FLOAT, visual_pixel_size);
+	BIND_PROPERTY(Variant::TRANSFORM3D, visual_base_transform);
+	BIND_PROPERTY(Variant::TRANSFORM3D, visual_portrait_transform);
+	BIND_PROPERTY(Variant::TRANSFORM3D, visual_rank_decoration_transform);
+	BIND_PROPERTY(Variant::VECTOR3, visual_smooth_corners);
+
+	BIND_PROPERTY_ENUM(IconDef::Icon, visual_card_front);
+	BIND_PROPERTY_ENUM(IconDef::Icon, visual_card_front_window);
+	BIND_PROPERTY_ENUM(IconDef::Icon, visual_tribe_bubble);
+	BIND_PROPERTY_ENUM(IconDef::Icon, visual_tribe_bubble_wide);
+
+	BIND_PROPERTY(Variant::RECT2, visual_card_name_pos);
+	BIND_PROPERTY(Variant::VECTOR2, visual_card_name_scale);
+	BIND_PROPERTY(Variant::RECT2, visual_card_description_pos);
+	BIND_PROPERTY(Variant::VECTOR2, visual_card_description_scale);
+
+	BIND_PROPERTY(Variant::RECT2, visual_card_costs_pos);
+	BIND_PROPERTY_ENUM(GrowMode, visual_card_costs_grow_mode);
+	BIND_PROPERTY(Variant::BOOL, visual_card_costs_shrink_name);
+	BIND_PROPERTY(Variant::FLOAT, visual_card_costs_spacing);
+	BIND_PROPERTY(Variant::VECTOR2, visual_card_costs_text_scale);
+
+	BIND_PROPERTY(Variant::RECT2, visual_card_tribes_pos);
+	BIND_PROPERTY_ENUM(GrowMode, visual_card_tribes_grow_mode);
+	BIND_PROPERTY(Variant::BOOL, visual_card_tribes_shrink_name);
+	BIND_PROPERTY(Variant::FLOAT, visual_card_tribes_spacing);
+	BIND_PROPERTY(Variant::VECTOR2, visual_card_tribes_text_scale);
+
+	BIND_PROPERTY_RESOURCE_ARRAY(StickerDef, visual_card_stickers);
+
 	BIND_PROPERTY(Variant::INT, visual_effect_highlight_width);
 	BIND_PROPERTY(Variant::COLOR, visual_effect_highlight_color);
 	BIND_PROPERTY(Variant::COLOR, visual_description_background_color);
@@ -37,6 +76,36 @@ void GameMode::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stat", "id"), &GameMode::get_stat);
 	ClassDB::bind_method(D_METHOD("get_modifier", "id"), &GameMode::get_modifier);
 }
+
+IMPLEMENT_PROPERTY(GameMode, float, visual_pixel_size);
+IMPLEMENT_PROPERTY(GameMode, Transform3D, visual_base_transform);
+IMPLEMENT_PROPERTY(GameMode, Transform3D, visual_portrait_transform);
+IMPLEMENT_PROPERTY(GameMode, Transform3D, visual_rank_decoration_transform);
+IMPLEMENT_PROPERTY(GameMode, Vector3, visual_smooth_corners);
+
+IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_card_front);
+IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_card_front_window);
+IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_tribe_bubble);
+IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_tribe_bubble_wide);
+
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_card_name_pos);
+IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_name_scale);
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_card_description_pos);
+IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_description_scale);
+
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_card_costs_pos);
+IMPLEMENT_PROPERTY(GameMode, GameMode::GrowMode, visual_card_costs_grow_mode);
+IMPLEMENT_PROPERTY(GameMode, bool, visual_card_costs_shrink_name);
+IMPLEMENT_PROPERTY(GameMode, float, visual_card_costs_spacing);
+IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_costs_text_scale);
+
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_card_tribes_pos);
+IMPLEMENT_PROPERTY(GameMode, GameMode::GrowMode, visual_card_tribes_grow_mode);
+IMPLEMENT_PROPERTY(GameMode, bool, visual_card_tribes_shrink_name);
+IMPLEMENT_PROPERTY(GameMode, float, visual_card_tribes_spacing);
+IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_tribes_text_scale);
+
+IMPLEMENT_PROPERTY(GameMode, TypedArray<StickerDef>, visual_card_stickers);
 
 IMPLEMENT_PROPERTY(GameMode, int64_t, visual_effect_highlight_width);
 IMPLEMENT_PROPERTY(GameMode, Color, visual_effect_highlight_color);

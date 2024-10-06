@@ -79,11 +79,77 @@
 		</member>
 		<member name="variants" type="VariantDef[]" setter="set_variants" getter="get_variants" default="[]">
 		</member>
+		<member name="visual_base_transform" type="Transform3D" setter="set_visual_base_transform" getter="get_visual_base_transform" default="Transform3D(2.32, 0, 0, 0, 3.16, 0, 0, 0, 1, 0, 0, 0)">
+		</member>
+		<member name="visual_card_costs_grow_mode" type="int" setter="set_visual_card_costs_grow_mode" getter="get_visual_card_costs_grow_mode" enum="GameMode.GrowMode" default="0">
+		</member>
+		<member name="visual_card_costs_pos" type="Rect2" setter="set_visual_card_costs_pos" getter="get_visual_card_costs_pos" default="Rect2(139, 4, 32, 32)">
+		</member>
+		<member name="visual_card_costs_shrink_name" type="bool" setter="set_visual_card_costs_shrink_name" getter="get_visual_card_costs_shrink_name" default="true">
+		</member>
+		<member name="visual_card_costs_spacing" type="float" setter="set_visual_card_costs_spacing" getter="get_visual_card_costs_spacing" default="0.0">
+		</member>
+		<member name="visual_card_costs_text_scale" type="Vector2" setter="set_visual_card_costs_text_scale" getter="get_visual_card_costs_text_scale" default="Vector2(1, 1.2)">
+		</member>
+		<member name="visual_card_description_pos" type="Rect2" setter="set_visual_card_description_pos" getter="get_visual_card_description_pos" default="Rect2(18, 140, 136, 76)">
+		</member>
+		<member name="visual_card_description_scale" type="Vector2" setter="set_visual_card_description_scale" getter="get_visual_card_description_scale" default="Vector2(1, 1.25)">
+		</member>
+		<member name="visual_card_front" type="int" setter="set_visual_card_front" getter="get_visual_card_front" enum="IconDef.Icon" default="310">
+		</member>
+		<member name="visual_card_front_window" type="int" setter="set_visual_card_front_window" getter="get_visual_card_front_window" enum="IconDef.Icon" default="311">
+		</member>
+		<member name="visual_card_name_pos" type="Rect2" setter="set_visual_card_name_pos" getter="get_visual_card_name_pos" default="Rect2(12, 9, 146, 0)">
+		</member>
+		<member name="visual_card_name_scale" type="Vector2" setter="set_visual_card_name_scale" getter="get_visual_card_name_scale" default="Vector2(1, 1)">
+		</member>
+		<member name="visual_card_stickers" type="StickerDef[]" setter="set_visual_card_stickers" getter="get_visual_card_stickers" default="[]">
+		</member>
+		<member name="visual_card_tribes_grow_mode" type="int" setter="set_visual_card_tribes_grow_mode" getter="get_visual_card_tribes_grow_mode" enum="GameMode.GrowMode" default="6">
+		</member>
+		<member name="visual_card_tribes_pos" type="Rect2" setter="set_visual_card_tribes_pos" getter="get_visual_card_tribes_pos" default="Rect2(5, 217, 164, 15)">
+		</member>
+		<member name="visual_card_tribes_shrink_name" type="bool" setter="set_visual_card_tribes_shrink_name" getter="get_visual_card_tribes_shrink_name" default="false">
+		</member>
+		<member name="visual_card_tribes_spacing" type="float" setter="set_visual_card_tribes_spacing" getter="get_visual_card_tribes_spacing" default="0.0">
+		</member>
+		<member name="visual_card_tribes_text_scale" type="Vector2" setter="set_visual_card_tribes_text_scale" getter="get_visual_card_tribes_text_scale" default="Vector2(1, 1)">
+		</member>
 		<member name="visual_description_background_color" type="Color" setter="set_visual_description_background_color" getter="get_visual_description_background_color" default="Color(1, 1, 1, 1)">
 		</member>
 		<member name="visual_effect_highlight_color" type="Color" setter="set_visual_effect_highlight_color" getter="get_visual_effect_highlight_color" default="Color(0.266667, 0.666667, 1, 1)">
 		</member>
 		<member name="visual_effect_highlight_width" type="int" setter="set_visual_effect_highlight_width" getter="get_visual_effect_highlight_width" default="5">
 		</member>
+		<member name="visual_pixel_size" type="float" setter="set_visual_pixel_size" getter="get_visual_pixel_size" default="75.0">
+		</member>
+		<member name="visual_portrait_transform" type="Transform3D" setter="set_visual_portrait_transform" getter="get_visual_portrait_transform" default="Transform3D(1.28, 0, 0, 0, 1.28, 0, 0, 0, 1, 0, 0.45, -0.05)">
+		</member>
+		<member name="visual_rank_decoration_transform" type="Transform3D" setter="set_visual_rank_decoration_transform" getter="get_visual_rank_decoration_transform" default="Transform3D(0.533333, 0, 0, 0, 1.46667, 0, 0, 0, 1, 0.83, 0.44, 0)">
+		</member>
+		<member name="visual_smooth_corners" type="Vector3" setter="set_visual_smooth_corners" getter="get_visual_smooth_corners" default="Vector3(34.8, 47.4, 1)">
+		</member>
+		<member name="visual_tribe_bubble" type="int" setter="set_visual_tribe_bubble" getter="get_visual_tribe_bubble" enum="IconDef.Icon" default="313">
+		</member>
+		<member name="visual_tribe_bubble_wide" type="int" setter="set_visual_tribe_bubble_wide" getter="get_visual_tribe_bubble_wide" enum="IconDef.Icon" default="314">
+		</member>
 	</members>
+	<constants>
+		<constant name="GROW_LEFT" value="0" enum="GrowMode">
+		</constant>
+		<constant name="GROW_RIGHT" value="1" enum="GrowMode">
+		</constant>
+		<constant name="GROW_UP" value="2" enum="GrowMode">
+		</constant>
+		<constant name="GROW_DOWN" value="3" enum="GrowMode">
+		</constant>
+		<constant name="GROW_HORIZONTAL" value="4" enum="GrowMode">
+		</constant>
+		<constant name="GROW_VERTICAL" value="5" enum="GrowMode">
+		</constant>
+		<constant name="SHRINK_HORIZONTAL" value="6" enum="GrowMode">
+		</constant>
+		<constant name="SHRINK_VERTICAL" value="7" enum="GrowMode">
+		</constant>
+	</constants>
 </class>
