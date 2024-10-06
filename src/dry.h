@@ -48,7 +48,7 @@ public: \
 #define BIND_PROPERTY_VARIANT_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(m_type) + ":", "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(m_type) + ":"), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_RESOURCE_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \

@@ -183,11 +183,11 @@
 		</constant>
 		<constant name="PISCI" value="86" enum="Card">
 		</constant>
-		<constant name="DEAD_LANDER_Î" value="87" enum="Card">
+		<constant name="DEAD_LANDER_ALPHA" value="87" enum="Card">
 		</constant>
-		<constant name="DEAD_LANDER_Î" value="88" enum="Card">
+		<constant name="DEAD_LANDER_BETA" value="88" enum="Card">
 		</constant>
-		<constant name="DEAD_LANDER_Î" value="89" enum="Card">
+		<constant name="DEAD_LANDER_GAMMA" value="89" enum="Card">
 		</constant>
 		<constant name="WASP_KING" value="90" enum="Card">
 		</constant>

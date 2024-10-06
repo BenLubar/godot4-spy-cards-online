@@ -57,7 +57,9 @@
 		</constant>
 		<constant name="CARD_EFFECT_INSTANCE" value="0" enum="Uniqueness">
 		</constant>
-		<constant name="SIDE" value="1" enum="Uniqueness">
+		<constant name="EFFECT_QUEUE_TREE" value="1" enum="Uniqueness">
+		</constant>
+		<constant name="SIDE" value="2" enum="Uniqueness">
 		</constant>
 	</constants>
 </class>

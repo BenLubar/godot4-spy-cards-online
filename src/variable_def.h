@@ -37,7 +37,8 @@ public:
 	};
 	enum Uniqueness {
 		CARD_EFFECT_INSTANCE = 0,
-		SIDE = 1,
+		EFFECT_QUEUE_TREE = 1,
+		SIDE = 2,
 	};
 
 protected:
