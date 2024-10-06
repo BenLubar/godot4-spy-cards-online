@@ -6,4 +6,28 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="describe" type="JigsawCommandList" setter="set_describe" getter="get_describe">
+		</member>
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		</member>
+		<member name="simple_describe" type="JigsawCommandList" setter="set_simple_describe" getter="get_simple_describe">
+		</member>
+		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Modifier">
+		</constant>
+		<constant name="EMPOWER_ATK" value="0" enum="Modifier">
+		</constant>
+		<constant name="EMPOWER_DEF" value="1" enum="Modifier">
+		</constant>
+		<constant name="NUMB" value="2" enum="Modifier">
+		</constant>
+		<constant name="PREVENT_NUMB" value="3" enum="Modifier">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="256" enum="Modifier">
+		</constant>
+	</constants>
 </class>

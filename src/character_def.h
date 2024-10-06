@@ -2,12 +2,13 @@
 #define CHARACTER_DEF_H
 
 #include "dry.h"
+
+class CharacterDef;
+
 #include "icon_def.h"
 #include "game_mode.h"
 
 #include <godot_cpp/classes/atlas_texture.hpp>
-
-using namespace godot;
 
 class CharacterDef : public Resource {
 	GDCLASS(CharacterDef, Resource);

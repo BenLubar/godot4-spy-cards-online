@@ -30,3 +30,4 @@ compile_commands.json
 *.exp
 *.wasm
 *.tmp
+*.swp

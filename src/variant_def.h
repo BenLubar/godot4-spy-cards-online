@@ -1,13 +1,10 @@
 #ifndef VARIANT_DEF_H
 #define VARIANT_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "npc_def.h"
+#include "jigsaw_trigger.h"
 
 class VariantDef : public Resource {
 	GDCLASS(VariantDef, Resource);
@@ -15,11 +12,14 @@ class VariantDef : public Resource {
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	VariantDef();
-	~VariantDef();
+	VariantDef() = default;
+	~VariantDef() = default;
+
+	DECLARE_PROPERTY(String, title);
+	DECLARE_PROPERTY(int64_t, player_count, = 2);
+	DECLARE_PROPERTY(TypedArray<NPCDef::NPC>, npcs);
+	DECLARE_PROPERTY(TypedArray<JigsawTrigger>, triggers);
 };
 
 #endif // VARIANT_DEF_H

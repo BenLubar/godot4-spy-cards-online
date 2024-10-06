@@ -6,4 +6,18 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<constants>
+		<constant name="NONE" value="-1" enum="Location">
+		</constant>
+		<constant name="FIELD" value="0" enum="Location">
+		</constant>
+		<constant name="DECK" value="1" enum="Location">
+		</constant>
+		<constant name="HAND" value="2" enum="Location">
+		</constant>
+		<constant name="DISCARD" value="3" enum="Location">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="256" enum="Location">
+		</constant>
+	</constants>
 </class>

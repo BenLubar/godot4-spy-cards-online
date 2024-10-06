@@ -1,9 +1,5 @@
 #include "tribe_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void TribeDef::_bind_methods() {
 	BIND_ENUM_CONSTANT(NONE);
 
@@ -34,8 +30,6 @@ void TribeDef::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, color);
 	BIND_PROPERTY(Variant::INT, display);
 }
-TribeDef::TribeDef() {}
-TribeDef::~TribeDef() {}
 
 IMPLEMENT_PROPERTY(TribeDef, String, name);
 IMPLEMENT_PROPERTY(TribeDef, Color, color);

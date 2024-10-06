@@ -6,4 +6,212 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs" default="[]">
+		</member>
+		<member name="curve_adjust" type="float" setter="set_curve_adjust" getter="get_curve_adjust" default="0.0">
+		</member>
+		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects" default="[]">
+		</member>
+		<member name="id" type="int" setter="set_id" getter="get_id" enum="CardDef.Card" default="-1">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		</member>
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Card">
+		</constant>
+		<constant name="ZOMBIANT" value="0" enum="Card">
+		</constant>
+		<constant name="JELLYSHROOM" value="1" enum="Card">
+		</constant>
+		<constant name="SPIDER" value="2" enum="Card">
+		</constant>
+		<constant name="ZASP" value="3" enum="Card">
+		</constant>
+		<constant name="CACTILING" value="4" enum="Card">
+		</constant>
+		<constant name="PSICORP" value="5" enum="Card">
+		</constant>
+		<constant name="THIEF" value="6" enum="Card">
+		</constant>
+		<constant name="BANDIT" value="7" enum="Card">
+		</constant>
+		<constant name="INICHAS" value="8" enum="Card">
+		</constant>
+		<constant name="SEEDLING" value="9" enum="Card">
+		</constant>
+		<constant name="NUMBNAIL" value="14" enum="Card">
+		</constant>
+		<constant name="MOTHIVA" value="15" enum="Card">
+		</constant>
+		<constant name="ACORNLING" value="16" enum="Card">
+		</constant>
+		<constant name="WEEVIL" value="17" enum="Card">
+		</constant>
+		<constant name="VENUS_BUD" value="19" enum="Card">
+		</constant>
+		<constant name="CHOMPER" value="20" enum="Card">
+		</constant>
+		<constant name="ACOLYTE_ARIA" value="21" enum="Card">
+		</constant>
+		<constant name="KABBU" value="23" enum="Card">
+		</constant>
+		<constant name="VENUS_GUARDIAN" value="24" enum="Card">
+		</constant>
+		<constant name="WASP_TROOPER" value="25" enum="Card">
+		</constant>
+		<constant name="WASP_BOMBER" value="26" enum="Card">
+		</constant>
+		<constant name="WASP_DRILLER" value="27" enum="Card">
+		</constant>
+		<constant name="WASP_SCOUT" value="28" enum="Card">
+		</constant>
+		<constant name="MIDGE" value="29" enum="Card">
+		</constant>
+		<constant name="UNDERLING" value="30" enum="Card">
+		</constant>
+		<constant name="MONSIEUR_SCARLET" value="31" enum="Card">
+		</constant>
+		<constant name="GOLDEN_SEEDLING" value="32" enum="Card">
+		</constant>
+		<constant name="ARROW_WORM" value="33" enum="Card">
+		</constant>
+		<constant name="CARMINA" value="34" enum="Card">
+		</constant>
+		<constant name="SEEDLING_KING" value="35" enum="Card">
+		</constant>
+		<constant name="BROODMOTHER" value="36" enum="Card">
+		</constant>
+		<constant name="PLUMPLING" value="37" enum="Card">
+		</constant>
+		<constant name="FLOWERLING" value="38" enum="Card">
+		</constant>
+		<constant name="BURGLAR" value="39" enum="Card">
+		</constant>
+		<constant name="ASTOTHELES" value="40" enum="Card">
+		</constant>
+		<constant name="MOTHER_CHOMPER" value="41" enum="Card">
+		</constant>
+		<constant name="AHONEYNATION" value="42" enum="Card">
+		</constant>
+		<constant name="BEE_BOOP" value="43" enum="Card">
+		</constant>
+		<constant name="SECURITY_TURRET" value="44" enum="Card">
+		</constant>
+		<constant name="DENMUKI" value="45" enum="Card">
+		</constant>
+		<constant name="HEAVY_DRONE_B33" value="46" enum="Card">
+		</constant>
+		<constant name="MENDER" value="47" enum="Card">
+		</constant>
+		<constant name="ABOMIHONEY" value="48" enum="Card">
+		</constant>
+		<constant name="DUNE_SCORPION" value="49" enum="Card">
+		</constant>
+		<constant name="TIDAL_WYRM" value="50" enum="Card">
+		</constant>
+		<constant name="KALI" value="51" enum="Card">
+		</constant>
+		<constant name="ZOMBEE" value="52" enum="Card">
+		</constant>
+		<constant name="ZOMBEETLE" value="53" enum="Card">
+		</constant>
+		<constant name="THE_WATCHER" value="54" enum="Card">
+		</constant>
+		<constant name="PEACOCK_SPIDER" value="55" enum="Card">
+		</constant>
+		<constant name="BLOATSHROOM" value="56" enum="Card">
+		</constant>
+		<constant name="KRAWLER" value="57" enum="Card">
+		</constant>
+		<constant name="HAUNTED_CLOTH" value="58" enum="Card">
+		</constant>
+		<constant name="WARDEN" value="61" enum="Card">
+		</constant>
+		<constant name="JUMPING_SPIDER" value="63" enum="Card">
+		</constant>
+		<constant name="MIMIC_SPIDER" value="64" enum="Card">
+		</constant>
+		<constant name="LEAFBUG_NINJA" value="65" enum="Card">
+		</constant>
+		<constant name="LEAFBUG_ARCHER" value="66" enum="Card">
+		</constant>
+		<constant name="LEAFBUG_CLUBBER" value="67" enum="Card">
+		</constant>
+		<constant name="MADESPHY" value="68" enum="Card">
+		</constant>
+		<constant name="THE_BEAST" value="69" enum="Card">
+		</constant>
+		<constant name="CHOMPER_BRUTE" value="70" enum="Card">
+		</constant>
+		<constant name="MANTIDFLY" value="71" enum="Card">
+		</constant>
+		<constant name="GENERAL_ULTIMAX" value="72" enum="Card">
+		</constant>
+		<constant name="WILD_CHOMPER" value="73" enum="Card">
+		</constant>
+		<constant name="CROSS" value="74" enum="Card">
+		</constant>
+		<constant name="POI" value="75" enum="Card">
+		</constant>
+		<constant name="PRIMAL_WEEVIL" value="76" enum="Card">
+		</constant>
+		<constant name="FALSE_MONARCH" value="77" enum="Card">
+		</constant>
+		<constant name="MOTHFLY" value="78" enum="Card">
+		</constant>
+		<constant name="MOTHFLY_CLUSTER" value="79" enum="Card">
+		</constant>
+		<constant name="IRONNAIL" value="80" enum="Card">
+		</constant>
+		<constant name="BELOSTOSS" value="81" enum="Card">
+		</constant>
+		<constant name="RUFFIAN" value="82" enum="Card">
+		</constant>
+		<constant name="WATER_STRIDER" value="83" enum="Card">
+		</constant>
+		<constant name="DIVING_SPIDER" value="84" enum="Card">
+		</constant>
+		<constant name="CENN" value="85" enum="Card">
+		</constant>
+		<constant name="PISCI" value="86" enum="Card">
+		</constant>
+		<constant name="DEAD_LANDER_Î" value="87" enum="Card">
+		</constant>
+		<constant name="DEAD_LANDER_Î" value="88" enum="Card">
+		</constant>
+		<constant name="DEAD_LANDER_Î" value="89" enum="Card">
+		</constant>
+		<constant name="WASP_KING" value="90" enum="Card">
+		</constant>
+		<constant name="THE_EVERLASTING_KING" value="91" enum="Card">
+		</constant>
+		<constant name="MAKI" value="92" enum="Card">
+		</constant>
+		<constant name="KINA" value="93" enum="Card">
+		</constant>
+		<constant name="YIN" value="94" enum="Card">
+		</constant>
+		<constant name="ULTIMAX_TANK" value="95" enum="Card">
+		</constant>
+		<constant name="ZOMMOTH" value="96" enum="Card">
+		</constant>
+		<constant name="RIZ" value="97" enum="Card">
+		</constant>
+		<constant name="DEVOURER" value="98" enum="Card">
+		</constant>
+		<constant name="STRATOS" value="111" enum="Card">
+		</constant>
+		<constant name="DELILAH" value="112" enum="Card">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="128" enum="Card">
+		</constant>
+	</constants>
 </class>

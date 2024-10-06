@@ -1,10 +1,110 @@
 #include "card_instance.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
+#include "jigsaw_parameter_boolean.h"
+#include "jigsaw_parameter_color.h"
+#include "jigsaw_parameter_string.h"
 
 void CardInstance::_bind_methods() {
+	BIND_PROPERTY(Variant::OBJECT, global);
+	BIND_PROPERTY(Variant::OBJECT, def, PROPERTY_HINT_RESOURCE_TYPE, "CardDef");
+	BIND_PROPERTY(Variant::ARRAY, name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FormattedText");
+	BIND_PROPERTY(Variant::INT, rank);
+	BIND_PROPERTY(Variant::INT, back);
+	BIND_PROPERTY(Variant::ARRAY, costs, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":StatValue");
+	BIND_PROPERTY(Variant::INT, portrait);
+	BIND_PROPERTY(Variant::ARRAY, tribes);
+	BIND_PROPERTY(Variant::ARRAY, description, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FormattedText");
+	BIND_PROPERTY(Variant::ARRAY, modifiers);
+
+	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
-CardInstance::CardInstance() {}
-CardInstance::~CardInstance() {}
+
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, JigsawGlobal *, global);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, Ref<CardDef>, def);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, name);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, RankDef::Rank, rank);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, IconDef::Icon, back);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<StatValue>, costs);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, IconDef::Icon, portrait);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, description);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<ModifierInstance>, modifiers);
+
+CardInstance *CardInstance::make(JigsawGlobal *global, CardDef *def) {
+	ERR_FAIL_NULL_V(global, nullptr);
+	ERR_FAIL_NULL_V(def, nullptr);
+	Ref<GameMode> mode = global->get_mode();
+	ERR_FAIL_COND_V(mode.is_null(), nullptr);
+
+	CardInstance *inst = memnew(CardInstance);
+	inst->set_global(global);
+	inst->set_def(def);
+	inst->set_name(FormattedText::make_plain(def->get_name()));
+
+	inst->set_rank(def->get_rank());
+	Ref<RankDef> rank = mode->get_rank(def->get_rank());
+	inst->set_back(rank.is_valid() ? rank->get_back() : IconDef::Icon::NONE);
+	inst->set_costs(Array(def->get_costs()));
+	inst->set_portrait(def->get_portrait());
+	inst->set_tribes(Array(def->get_tribes()));
+
+	// TODO
+	TypedArray<FormattedText> description;
+	bool first = true;
+	TypedArray<EffectInstance> effects = def->get_effects();
+	for (int64_t i = 0; i < effects.size(); i++) {
+		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		if (first) {
+			first = false;
+		} else {
+			description.append_array(FormattedText::make_plain("\n"));
+		}
+
+		FormattedText *before = memnew(FormattedText);
+		before->set_command(FormattedText::PUSH_EFFECT_INSTANCE);
+		before->set_instance(e);
+		description.append(before);
+
+		if (e->get_effect() == EffectDef::FLAVOR_TEXT) {
+			FormattedText *flavor = memnew(FormattedText);
+			flavor->set_command(FormattedText::PUSH_TEXT_COLOR);
+			// TODO: this is unsafe and could cause crashes on malformed effects but also it's temporary
+			flavor->set_color(Object::cast_to<JigsawParameterColor>(e->get_params()[1])->get_color());
+			description.append(flavor);
+
+			flavor = memnew(FormattedText);
+			flavor->set_command(FormattedText::ADD_TEXT);
+			// TODO: this is also unsafe and also temporary
+			flavor->set_text(Object::cast_to<JigsawParameterString>(e->get_params()[0])->get_string());
+			description.append(flavor);
+
+			flavor = memnew(FormattedText);
+			flavor->set_command(FormattedText::POP);
+			description.append(flavor);
+
+			// TODO: again
+			if (Object::cast_to<JigsawParameterBoolean>(e->get_params()[2])->get_boolean()) {
+				flavor = memnew(FormattedText);
+				flavor->set_command(FormattedText::FORCE_END_OF_TEXT);
+				description.append(flavor);
+			}
+		} else {
+			FormattedText *TODO = memnew(FormattedText);
+			TODO->set_command(FormattedText::PUSH_SHAKE);
+			description.append(TODO);
+
+			description.append_array(FormattedText::make_plain(String::num(e->get_effect())));
+
+			TODO = memnew(FormattedText);
+			TODO->set_command(FormattedText::POP);
+			description.append(TODO);
+		}
+
+		FormattedText *after = memnew(FormattedText);
+		after->set_command(FormattedText::POP);
+		description.append(after);
+	}
+	inst->set_description(description);
+
+	return inst;
+}

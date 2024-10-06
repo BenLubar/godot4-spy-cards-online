@@ -3,7 +3,9 @@
 
 #include "dry.h"
 
-using namespace godot;
+class Deck;
+
+#include "card_def.h"
 
 class Deck : public Resource {
 	GDCLASS(Deck, Resource);
@@ -12,10 +14,10 @@ protected:
 	static void _bind_methods();
 
 public:
-	Deck();
-	~Deck();
+	Deck() = default;
+	~Deck() = default;
 
-	DECLARE_PROPERTY(PackedInt64Array, cards);
+	DECLARE_PROPERTY(TypedArray<CardDef::Card>, cards);
 };
 
 #endif // DECK_H

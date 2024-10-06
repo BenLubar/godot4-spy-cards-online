@@ -1,9 +1,4 @@
 #include "game_mode_summary.h"
-#include "predefined.hpp"
-
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
 
 void GameModeSummary::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, author);
@@ -30,7 +25,7 @@ Ref<Texture2D> GameModeSummary::get_icon_texture(IconDef::Icon icon) const {
 	}
 
 	if (icon < IconDef::Icon::FIRST_CUSTOM) {
-		return get_predefined<Texture2D>("ICON", icon);
+		return get_predefined<Texture2D>(icon);
 	}
 
 	ERR_FAIL_INDEX_V_MSG(icon - IconDef::Icon::FIRST_CUSTOM, custom_icons.size(), nullptr, "icon outside of custom range");

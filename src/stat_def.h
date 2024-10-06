@@ -32,6 +32,7 @@ public:
 	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, format_quantity);
 };
-VARIANT_ENUM_CAST(StatDef::Stat);
+DECLARE_ENUM(StatDef::Stat);
+DECLARE_PREDEFINED_KEY(StatDef, STAT);
 
 #endif // STAT_DEF_H

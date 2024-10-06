@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawParameterFileIDGLTF" inherits="JigsawParameterScene" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
+		</member>
+	</members>
+</class>

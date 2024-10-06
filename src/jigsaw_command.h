@@ -1,13 +1,7 @@
 #ifndef JIGSAW_COMMAND_H
 #define JIGSAW_COMMAND_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "dry.h"
 
 class JigsawCommand : public Resource {
 	GDCLASS(JigsawCommand, Resource);
@@ -24,8 +18,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	virtual Type get_type() = 0;
+	virtual Type get_type() const = 0;
 };
-VARIANT_ENUM_CAST(JigsawCommand::Type);
+DECLARE_ENUM(JigsawCommand::Type);
 
 #endif // JIGSAW_COMMAND_H

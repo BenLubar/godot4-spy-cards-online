@@ -1,9 +1,5 @@
 #include "audience_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void AudienceDef::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, front);
 	BIND_PROPERTY(Variant::INT, front_cheer);

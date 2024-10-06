@@ -43,6 +43,6 @@ public:
 	DECLARE_PROPERTY(TypedArray<Deck>, initial_decks);
 	DECLARE_PROPERTY(TypedArray<RecordingRound>, rounds);
 };
-VARIANT_ENUM_CAST(Recording::FormatVersion);
+DECLARE_ENUM(Recording::FormatVersion);
 
 #endif // RECORDING_H

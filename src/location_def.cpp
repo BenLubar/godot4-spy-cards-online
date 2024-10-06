@@ -1,10 +1,11 @@
 #include "location_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void LocationDef::_bind_methods() {
+	BIND_ENUM_CONSTANT(NONE);
+	BIND_ENUM_CONSTANT(FIELD);
+	BIND_ENUM_CONSTANT(DECK);
+	BIND_ENUM_CONSTANT(HAND);
+	BIND_ENUM_CONSTANT(DISCARD);
+
+	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
 }
-LocationDef::LocationDef() {}
-LocationDef::~LocationDef() {}

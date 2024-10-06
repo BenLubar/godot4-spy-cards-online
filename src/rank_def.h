@@ -38,6 +38,7 @@ public:
 	DECLARE_PROPERTY(IconDef::Icon, front, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(IconDef::Icon, back, = IconDef::Icon::NONE);
 };
-VARIANT_ENUM_CAST(RankDef::Rank);
+DECLARE_ENUM(RankDef::Rank);
+DECLARE_PREDEFINED_KEY(RankDef, RANK);
 
 #endif // RANK_DEF_H

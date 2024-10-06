@@ -1,13 +1,11 @@
 #ifndef STAT_VALUE_H
 #define STAT_VALUE_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
+class StatValue;
 
-using namespace godot;
+#include "stat_def.h"
 
 class StatValue : public Resource {
 	GDCLASS(StatValue, Resource);
@@ -15,11 +13,14 @@ class StatValue : public Resource {
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	StatValue();
-	~StatValue();
+	StatValue() = default;
+	~StatValue() = default;
+
+	DECLARE_PROPERTY(StatDef::Stat, stat, = StatDef::Stat::NONE);
+	DECLARE_PROPERTY(int64_t, amount, = 0);
+	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
+	DECLARE_PROPERTY_IS(bool, nan, = false);
 };
 
 #endif // STAT_VALUE_H

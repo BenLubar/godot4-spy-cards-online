@@ -1,9 +1,5 @@
 #include "jigsaw_parameter.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void JigsawParameter::_bind_methods() {
 	BIND_ENUM_CONSTANT(SPRITE_INSTANCE);
 	BIND_ENUM_CONSTANT(SCENE_INSTANCE);
@@ -16,7 +12,7 @@ void JigsawParameter::_bind_methods() {
 	BIND_ENUM_CONSTANT(VARIABLE);
 	BIND_ENUM_CONSTANT(BOOLEAN);
 	BIND_ENUM_CONSTANT(AMOUNT);
-	BIND_ENUM_CONSTANT(REAL);
+	BIND_ENUM_CONSTANT(FLOAT);
 	BIND_ENUM_CONSTANT(STRING);
 	BIND_ENUM_CONSTANT(EFFECT_INSTANCE);
 	BIND_ENUM_CONSTANT(CARD_FILTER);
@@ -34,4 +30,5 @@ void JigsawParameter::_bind_methods() {
 	BIND_ENUM_CONSTANT(CHOICE);
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawParameter::get_type);
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");
 }

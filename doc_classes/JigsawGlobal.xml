@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawGlobal" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="current_card_instance" type="CardInstance" setter="set_current_card_instance" getter="get_current_card_instance">
+		</member>
+		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
+		</member>
+		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
+		</member>
+		<member name="scene_nodes" type="Node3D[]" setter="set_scene_nodes" getter="get_scene_nodes" default="[]">
+		</member>
+		<member name="sprite_nodes" type="Sprite3D[]" setter="set_sprite_nodes" getter="get_sprite_nodes" default="[]">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "spycardsonlinenative_library_init"
+compatibility_minimum = "4.4"
+reloadable = "true"
+
+[libraries]
+
+linux = "res://bin/linux/libspycardsonlinenative.linux.template_debug.dev.x86_64.so"

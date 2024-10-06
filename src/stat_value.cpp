@@ -1,10 +1,13 @@
 #include "stat_value.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void StatValue::_bind_methods() {
+	BIND_PROPERTY(Variant::INT, stat);
+	BIND_PROPERTY(Variant::INT, amount);
+	BIND_PROPERTY(Variant::INT, amount_inf);
+	BIND_PROPERTY_IS(Variant::BOOL, nan);
 }
-StatValue::StatValue() {}
-StatValue::~StatValue() {}
+
+IMPLEMENT_PROPERTY(StatValue, StatDef::Stat, stat);
+IMPLEMENT_PROPERTY(StatValue, int64_t, amount);
+IMPLEMENT_PROPERTY(StatValue, int64_t, amount_inf);
+IMPLEMENT_PROPERTY_IS(StatValue, bool, nan);

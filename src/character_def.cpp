@@ -1,9 +1,5 @@
 #include "character_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void CharacterDef::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, id);
 	BIND_PROPERTY(Variant::STRING, display_name);

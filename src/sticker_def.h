@@ -1,13 +1,12 @@
 #ifndef STICKER_DEF_H
 #define STICKER_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
+class StickerDef;
 
-using namespace godot;
+#include "icon_def.h"
+#include "jigsaw_command_list.h"
 
 class StickerDef : public Resource {
 	GDCLASS(StickerDef, Resource);
@@ -15,11 +14,13 @@ class StickerDef : public Resource {
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	StickerDef();
-	~StickerDef();
+	StickerDef() = default;
+	~StickerDef() = default;
+
+	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(Rect2, position, = Rect2(0, 0, 30, 10));
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, should_show);
 };
 
 #endif // STICKER_DEF_H

@@ -3,8 +3,6 @@
 
 #include "dry.h"
 
-using namespace godot;
-
 class TribeDef : public Resource {
 	GDCLASS(TribeDef, Resource);
 
@@ -31,6 +29,7 @@ public:
 
 		FIRST_CUSTOM = 16,
 	};
+
 	enum DisplayMode {
 		NORMAL = 0,
 		HIDDEN = 1,
@@ -41,14 +40,15 @@ protected:
 	static void _bind_methods();
 
 public:
-	TribeDef();
-	~TribeDef();
+	TribeDef() = default;
+	~TribeDef() = default;
 
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(Color, color);
 	DECLARE_PROPERTY(DisplayMode, display, = DisplayMode::NORMAL);
 };
-VARIANT_ENUM_CAST(TribeDef::Tribe);
-VARIANT_ENUM_CAST(TribeDef::DisplayMode);
+DECLARE_ENUM(TribeDef::Tribe);
+DECLARE_ENUM(TribeDef::DisplayMode);
+DECLARE_PREDEFINED_KEY(TribeDef, TRIBE);
 
 #endif // TRIBE_DEF_H

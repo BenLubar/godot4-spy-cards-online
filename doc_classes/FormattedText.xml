@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FormattedText" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="make_plain" qualifiers="static">
+			<return type="FormattedText[]" />
+			<param index="0" name="string" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command" default="0">
+		</member>
+		<member name="font_size" type="float" setter="set_font_size" getter="get_font_size" default="1.0">
+		</member>
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="instance" type="EffectInstance" setter="set_instance" getter="get_instance">
+		</member>
+		<member name="table_columns" type="int" setter="set_table_columns" getter="get_table_columns" default="0">
+		</member>
+		<member name="text" type="String" setter="set_text" getter="get_text" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="ADD_TEXT" value="0" enum="Command">
+			plain text, but \n characters create either newlines or new list items depending on whether we're in a list
+		</constant>
+		<constant name="ADD_ICON" value="1" enum="Command">
+			inserts a text-height icon texture
+		</constant>
+		<constant name="POP" value="2" enum="Command">
+			removes the last formatting command added to the stack
+		</constant>
+		<constant name="FORCE_END_OF_TEXT" value="3" enum="Command">
+			end of text; all future commands are ignored
+		</constant>
+		<constant name="PUSH_EFFECT_INSTANCE" value="4" enum="Command">
+			starts an OutlineCurrentEffect formatting command
+		</constant>
+		<constant name="PUSH_TEXT_COLOR" value="5" enum="Command">
+			changes the text color
+		</constant>
+		<constant name="PUSH_FG_COLOR" value="6" enum="Command">
+			puts a colored rectangle in front of the text
+		</constant>
+		<constant name="PUSH_BG_COLOR" value="7" enum="Command">
+			puts a colored rectangle behind the text
+		</constant>
+		<constant name="PUSH_FONT_NORMAL" value="8" enum="Command">
+			changes the font to the default font
+		</constant>
+		<constant name="PUSH_FONT_BOLD" value="9" enum="Command">
+			changes the font to the bold font
+		</constant>
+		<constant name="PUSH_FONT_ITALIC" value="10" enum="Command">
+			changes the font to the italic font
+		</constant>
+		<constant name="PUSH_FONT_BOLD_ITALIC" value="11" enum="Command">
+			changes the font to the bold italic font
+		</constant>
+		<constant name="PUSH_FONT_MONO" value="12" enum="Command">
+			changes the font to the monospaced font
+		</constant>
+		<constant name="PUSH_FONT_SIZE" value="13" enum="Command">
+			changes the font size to a multiple of the default size
+		</constant>
+		<constant name="PUSH_STRIKETHROUGH" value="14" enum="Command">
+			starts crossing out text
+		</constant>
+		<constant name="PUSH_UNDERLINE" value="15" enum="Command">
+			starts underlining text
+		</constant>
+		<constant name="PUSH_ALIGN_LEFT" value="16" enum="Command">
+			starts a new paragraph that is left-justified
+		</constant>
+		<constant name="PUSH_ALIGN_CENTER" value="17" enum="Command">
+			starts a new paragraph that is center-aligned
+		</constant>
+		<constant name="PUSH_ALIGN_RIGHT" value="18" enum="Command">
+			starts a new paragraph that is right-justified
+		</constant>
+		<constant name="PUSH_ALIGN_FILL" value="19" enum="Command">
+			starts a new paragraph that is flush-justified
+		</constant>
+		<constant name="PUSH_TABLE" value="20" enum="Command">
+			starts a new table with a certain number of cells per row
+		</constant>
+		<constant name="PUSH_TABLE_CELL" value="21" enum="Command">
+			starts a new table cell
+		</constant>
+		<constant name="PUSH_LIST_NUMBERED" value="22" enum="Command">
+			starts a new list with items 1, 2, 3, etc.
+		</constant>
+		<constant name="PUSH_LIST_LETTERED_UPPER" value="23" enum="Command">
+			starts a new list with items A, B, C, etc.
+		</constant>
+		<constant name="PUSH_LIST_LETTERED_LOWER" value="24" enum="Command">
+			starts a new list with items a, b, c, etc.
+		</constant>
+		<constant name="PUSH_LIST_ROMAN_UPPER" value="25" enum="Command">
+			starts a new list with items I, II, III, etc.
+		</constant>
+		<constant name="PUSH_LIST_ROMAN_LOWER" value="26" enum="Command">
+			starts a new list with items i, ii, iii, etc.
+		</constant>
+		<constant name="PUSH_LIST_BULLETED" value="27" enum="Command">
+			starts a new list with dots.
+		</constant>
+		<constant name="PUSH_RAINBOW" value="28" enum="Command">
+			animated effect: individual letters cycle through the rainbow
+		</constant>
+		<constant name="PUSH_SHAKE" value="29" enum="Command">
+			animated effect: letters shake individually
+		</constant>
+		<constant name="PUSH_GLITCH" value="30" enum="Command">
+			animated effect: glyphs are randomly replaced with other glyphs multiple times per second
+		</constant>
+	</constants>
+</class>

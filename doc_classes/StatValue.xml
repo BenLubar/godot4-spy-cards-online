@@ -6,4 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		</member>
+		<member name="amount_inf" type="int" setter="set_amount_inf" getter="get_amount_inf" default="0">
+		</member>
+		<member name="nan" type="bool" setter="set_nan" getter="is_nan" default="false">
+		</member>
+		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat" default="-1">
+		</member>
+	</members>
 </class>

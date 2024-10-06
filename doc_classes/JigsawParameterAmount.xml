@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawParameterAmount" inherits="JigsawParameter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		</member>
+		<member name="amount_inf" type="int" setter="set_amount_inf" getter="get_amount_inf" default="0">
+		</member>
+		<member name="nan" type="bool" setter="set_nan" getter="is_nan" default="false">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="2" />
+	</members>
+</class>

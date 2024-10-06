@@ -6,4 +6,16 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="editor_choice_names" type="PackedStringArray" setter="set_editor_choice_names" getter="get_editor_choice_names" default="PackedStringArray()">
+		</member>
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Choices">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="256" enum="Choices">
+		</constant>
+	</constants>
 </class>

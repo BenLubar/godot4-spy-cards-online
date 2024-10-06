@@ -4,8 +4,6 @@
 #include "dry.h"
 #include "icon_def.h"
 
-using namespace godot;
-
 class AudienceDef : public Resource {
 	GDCLASS(AudienceDef, Resource);
 

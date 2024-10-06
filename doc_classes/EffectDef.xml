@@ -6,4 +6,126 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="curve" type="JigsawCommandList" setter="set_curve" getter="get_curve">
+		</member>
+		<member name="default_parameters" type="JigsawParameter[]" setter="set_default_parameters" getter="get_default_parameters" default="[]">
+		</member>
+		<member name="default_priority" type="int" setter="set_default_priority" getter="get_default_priority" default="65">
+		</member>
+		<member name="describe" type="JigsawCommandList" setter="set_describe" getter="get_describe">
+		</member>
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		</member>
+		<member name="parameter_names" type="PackedStringArray" setter="set_parameter_names" getter="get_parameter_names" default="PackedStringArray()">
+		</member>
+		<member name="simple_describe" type="JigsawCommandList" setter="set_simple_describe" getter="get_simple_describe">
+		</member>
+		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Effect">
+		</constant>
+		<constant name="FLAVOR_TEXT" value="0" enum="Effect">
+		</constant>
+		<constant name="STAT" value="1" enum="Effect">
+		</constant>
+		<constant name="EMPOWER" value="2" enum="Effect">
+		</constant>
+		<constant name="SUMMON" value="3" enum="Effect">
+		</constant>
+		<constant name="HEAL" value="4" enum="Effect">
+		</constant>
+		<constant name="TP" value="5" enum="Effect">
+		</constant>
+		<constant name="NUMB" value="6" enum="Effect">
+		</constant>
+		<constant name="RAW_STAT" value="7" enum="Effect">
+		</constant>
+		<constant name="MULTIPLY_HEALING" value="8" enum="Effect">
+		</constant>
+		<constant name="PREVENT_NUMB" value="9" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_ADD" value="10" enum="Effect">
+		</constant>
+		<constant name="MODIFY_CARD_COST" value="11" enum="Effect">
+		</constant>
+		<constant name="DRAW_CARD" value="12" enum="Effect">
+		</constant>
+		<constant name="MODIFY_GAME_RULE" value="13" enum="Effect">
+		</constant>
+		<constant name="DELAY_SETUP" value="14" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REMOVE" value="15" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_MOVE" value="16" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REPLACE" value="17" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_ADD_HAND" value="18" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REMOVE_HAND" value="19" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_MOVE_HAND" value="20" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REPLACE_HAND" value="21" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_ADD_DECK" value="22" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REMOVE_DECK" value="23" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_MOVE_DECK" value="24" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REPLACE_DECK" value="25" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_ADD_FIELD" value="26" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REMOVE_FIELD" value="27" enum="Effect">
+		</constant>
+		<constant name="MODIFY_AVAILABLE_CARDS_REPLACE_FIELD" value="28" enum="Effect">
+		</constant>
+		<constant name="LEGACY_SET_MUSIC" value="64" enum="Effect">
+		</constant>
+		<constant name="LEGACY_PLAY_SOUND" value="65" enum="Effect">
+		</constant>
+		<constant name="SET_STAGE" value="66" enum="Effect">
+		</constant>
+		<constant name="SET_MUSIC" value="67" enum="Effect">
+		</constant>
+		<constant name="PLAY_SOUND" value="68" enum="Effect">
+		</constant>
+		<constant name="COND_CARD" value="128" enum="Effect">
+		</constant>
+		<constant name="COND_LIMIT" value="129" enum="Effect">
+		</constant>
+		<constant name="COND_WINNER" value="130" enum="Effect">
+		</constant>
+		<constant name="COND_APPLY" value="131" enum="Effect">
+		</constant>
+		<constant name="COND_COIN" value="132" enum="Effect">
+		</constant>
+		<constant name="COND_STAT" value="133" enum="Effect">
+		</constant>
+		<constant name="COND_IN_HAND" value="134" enum="Effect">
+		</constant>
+		<constant name="COND_LAST_EFFECT" value="135" enum="Effect">
+		</constant>
+		<constant name="COND_ON_NUMB" value="136" enum="Effect">
+		</constant>
+		<constant name="COND_MULTIPLE_EFFECTS" value="137" enum="Effect">
+		</constant>
+		<constant name="COND_ON_DISCARD" value="138" enum="Effect">
+		</constant>
+		<constant name="COND_COMPARE_TARGET_CARD" value="139" enum="Effect">
+		</constant>
+		<constant name="COND_ON_EXILE" value="140" enum="Effect">
+		</constant>
+		<constant name="COND_TIE" value="141" enum="Effect">
+		</constant>
+		<constant name="COND_STAT_MATH" value="142" enum="Effect">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="256" enum="Effect">
+		</constant>
+	</constants>
 </class>

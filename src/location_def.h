@@ -1,25 +1,29 @@
 #ifndef LOCATION_DEF_H
 #define LOCATION_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "dry.h"
 
 class LocationDef : public Resource {
 	GDCLASS(LocationDef, Resource);
 
+public:
+	enum Location {
+		NONE = -1,
+		FIELD = 0,
+		DECK = 1,
+		HAND = 2,
+		DISCARD = 3,
+
+		FIRST_CUSTOM = 256,
+	};
+
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	LocationDef();
-	~LocationDef();
+	LocationDef() = default;
+	~LocationDef() = default;
 };
+DECLARE_ENUM(LocationDef::Location);
 
 #endif // LOCATION_DEF_H

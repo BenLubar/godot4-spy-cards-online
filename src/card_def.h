@@ -1,13 +1,12 @@
 #ifndef CARD_DEF_H
 #define CARD_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "rank_def.h"
+#include "tribe_def.h"
+#include "stat_value.h"
+#include "effect_instance.h"
 
 class CardDef : public Resource {
 	GDCLASS(CardDef, Resource);
@@ -114,12 +113,19 @@ public:
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	CardDef();
-	~CardDef();
+	CardDef() = default;
+	~CardDef() = default;
+
+	DECLARE_PROPERTY(Card, id, = Card::NONE);
+	DECLARE_PROPERTY(RankDef::Rank, rank, = RankDef::Rank::NONE);
+	DECLARE_PROPERTY(TypedArray<StatValue>, costs);
+	DECLARE_PROPERTY(String, name);
+	DECLARE_PROPERTY(IconDef::Icon, portrait, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(TypedArray<TribeDef::Tribe>, tribes);
+	DECLARE_PROPERTY(TypedArray<EffectInstance>, effects);
+	DECLARE_PROPERTY(double, curve_adjust, = 0.0);
 };
-VARIANT_ENUM_CAST(CardDef::Card);
+DECLARE_ENUM(CardDef::Card);
 
 #endif // CARD_DEF_H

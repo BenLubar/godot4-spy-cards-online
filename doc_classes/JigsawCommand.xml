@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="get_type">
+		<method name="get_type" qualifiers="const">
 			<return type="int" enum="JigsawCommand.Type" />
 			<description>
 			</description>

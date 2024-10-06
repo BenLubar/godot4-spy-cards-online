@@ -6,4 +6,12 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="effect" type="int" setter="set_effect" getter="get_effect" enum="EffectDef.Effect" default="-1">
+		</member>
+		<member name="params" type="JigsawParameter[]" setter="set_params" getter="get_params" default="[]">
+		</member>
+		<member name="priority" type="int" setter="set_priority" getter="get_priority" default="65">
+		</member>
+	</members>
 </class>

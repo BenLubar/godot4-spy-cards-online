@@ -1,13 +1,11 @@
 #ifndef MODIFIER_INSTANCE_H
 #define MODIFIER_INSTANCE_H
 
-#include <godot_cpp/classes/ref_counted.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
+class ModifierInstance;
 
-using namespace godot;
+#include "modifier_def.h"
 
 class ModifierInstance : public RefCounted {
 	GDCLASS(ModifierInstance, RefCounted);
@@ -15,11 +13,14 @@ class ModifierInstance : public RefCounted {
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	ModifierInstance();
-	~ModifierInstance();
+	ModifierInstance() = default;
+	~ModifierInstance() = default;
+
+	DECLARE_PROPERTY(ModifierDef::Modifier, modifier, = ModifierDef::Modifier::NONE);
+	DECLARE_PROPERTY(int64_t, amount, = 0);
+	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
+	DECLARE_PROPERTY_IS(bool, nan, = false);
 };
 
 #endif // MODIFIER_INSTANCE_H

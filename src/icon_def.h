@@ -1,15 +1,10 @@
 #ifndef ICON_DEF_H
 #define ICON_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
+#include "dry.h"
+
 #include <godot_cpp/classes/image.hpp>
 #include <godot_cpp/classes/image_texture.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
 
 class IconDef : public Resource {
 	GDCLASS(IconDef, Resource);
@@ -571,6 +566,7 @@ public:
 
 	static IconDef *convert_legacy_portrait(Icon portrait, PackedByteArray data);
 };
-VARIANT_ENUM_CAST(IconDef::Icon);
+DECLARE_ENUM(IconDef::Icon);
+DECLARE_PREDEFINED_KEY(Texture2D, ICON);
 
 #endif // ICON_DEF_H

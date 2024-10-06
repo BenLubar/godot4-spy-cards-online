@@ -6,13 +6,10 @@
 	</description>
 	<tutorials>
 	</tutorials>
-	<methods>
-		<method name="get_type">
-			<return type="int" enum="JigsawParameter.Type" />
-			<description>
-			</description>
-		</method>
-	</methods>
+	<members>
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawParameter.Type" default="0">
+		</member>
+	</members>
 	<constants>
 		<constant name="SPRITE_INSTANCE" value="-8" enum="Type">
 		</constant>
@@ -36,7 +33,7 @@
 		</constant>
 		<constant name="AMOUNT" value="2" enum="Type">
 		</constant>
-		<constant name="REAL" value="3" enum="Type">
+		<constant name="FLOAT" value="3" enum="Type">
 		</constant>
 		<constant name="STRING" value="4" enum="Type">
 		</constant>

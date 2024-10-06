@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="RichTextShakeEffect" inherits="RichTextEffect" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="bbcode" type="String" setter="set_bbcode" getter="get_bbcode" default="&quot;sc_shake&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="DEFAULT_RATE" value="20">
+		</constant>
+		<constant name="DEFAULT_STRENGTH" value="5">
+		</constant>
+	</constants>
+</class>

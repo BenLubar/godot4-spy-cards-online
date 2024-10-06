@@ -1,13 +1,7 @@
 #ifndef JIGSAW_PARAMETER_H
 #define JIGSAW_PARAMETER_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "dry.h"
 
 class JigsawParameter : public Resource {
 	GDCLASS(JigsawParameter, Resource);
@@ -25,7 +19,7 @@ public:
 		VARIABLE = 0,
 		BOOLEAN = 1,
 		AMOUNT = 2,
-		REAL = 3,
+		FLOAT = 3,
 		STRING = 4,
 		EFFECT_INSTANCE = 5,
 		CARD_FILTER = 6,
@@ -47,8 +41,11 @@ protected:
 	static void _bind_methods();
 
 public:
-	virtual Type get_type() = 0;
+	JigsawParameter() = default;
+	~JigsawParameter() = default;
+
+	virtual Type get_type() const = 0;
 };
-VARIANT_ENUM_CAST(JigsawParameter::Type);
+DECLARE_ENUM(JigsawParameter::Type);
 
 #endif // JIGSAW_PARAMETER_H

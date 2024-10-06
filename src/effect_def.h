@@ -1,13 +1,11 @@
 #ifndef EFFECT_DEF_H
 #define EFFECT_DEF_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-
-using namespace godot;
+#include "jigsaw_parameter.h"
+#include "jigsaw_command_list.h"
+#include "jigsaw_trigger.h"
 
 class EffectDef : public Resource {
 	GDCLASS(EffectDef, Resource);
@@ -73,11 +71,20 @@ public:
 protected:
 	static void _bind_methods();
 
-private:
-
 public:
-	EffectDef();
-	~EffectDef();
+	EffectDef() = default;
+	~EffectDef() = default;
+
+	DECLARE_PROPERTY(String, editor_name);
+	DECLARE_PROPERTY(int64_t, default_priority, = 65);
+	DECLARE_PROPERTY(TypedArray<JigsawParameter>, default_parameters);
+	DECLARE_PROPERTY(PackedStringArray, parameter_names);
+	DECLARE_PROPERTY(TypedArray<JigsawTrigger>, triggers);
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, describe);
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, simple_describe);
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, curve);
 };
+DECLARE_ENUM(EffectDef::Effect);
+DECLARE_PREDEFINED_KEY(EffectDef, EFFECT);
 
 #endif // EFFECT_DEF_H

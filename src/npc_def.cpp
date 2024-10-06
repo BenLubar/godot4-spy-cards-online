@@ -1,10 +1,31 @@
 #include "npc_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void NPCDef::_bind_methods() {
+	BIND_ENUM_CONSTANT(NONE);
+	BIND_ENUM_CONSTANT(GENERIC);
+	BIND_ENUM_CONSTANT(JANET);
+	BIND_ENUM_CONSTANT(BU_GI);
+	BIND_ENUM_CONSTANT(JOHNNY);
+	BIND_ENUM_CONSTANT(KAGE);
+	BIND_ENUM_CONSTANT(RITCHEE);
+	BIND_ENUM_CONSTANT(SERENE);
+	BIND_ENUM_CONSTANT(CARMINA);
+	BIND_ENUM_CONSTANT(CHUCK);
+	BIND_ENUM_CONSTANT(ARIE);
+	BIND_ENUM_CONSTANT(SHAY);
+	BIND_ENUM_CONSTANT(CROW);
+
+	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
+
+	BIND_PROPERTY(Variant::STRING, display_name);
+	BIND_PROPERTY(Variant::INT, character);
+	BIND_PROPERTY(Variant::OBJECT, build_deck, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
+	BIND_PROPERTY(Variant::OBJECT, play_cards, PROPERTY_HINT_RESOURCE_TYPE, "JigsawCommandList");
+	BIND_PROPERTY(Variant::ARRAY, triggers, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":JigsawTrigger");
 }
-NPCDef::NPCDef() {}
-NPCDef::~NPCDef() {}
+
+IMPLEMENT_PROPERTY(NPCDef, String, display_name);
+IMPLEMENT_PROPERTY(NPCDef, int64_t, character);
+IMPLEMENT_PROPERTY(NPCDef, Ref<JigsawCommandList>, build_deck);
+IMPLEMENT_PROPERTY(NPCDef, Ref<JigsawCommandList>, play_cards);
+IMPLEMENT_PROPERTY(NPCDef, TypedArray<JigsawTrigger>, triggers);
