@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameModeSummary" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_icon_texture" qualifiers="const">
+			<return type="Texture2D" />
+			<param index="0" name="icon" type="int" enum="IconDef.Icon" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="author" type="String" setter="set_author" getter="get_author" default="&quot;&quot;">
+		</member>
+		<member name="custom_icons" type="IconDef[]" setter="set_custom_icons" getter="get_custom_icons" default="[]">
+		</member>
+		<member name="description" type="String" setter="set_description" getter="get_description" default="&quot;&quot;">
+		</member>
+		<member name="latest_changes" type="String" setter="set_latest_changes" getter="get_latest_changes" default="&quot;&quot;">
+		</member>
+		<member name="mode_thumbnail" type="int" setter="set_mode_thumbnail" getter="get_mode_thumbnail" enum="IconDef.Icon" default="-1">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="VariantDef" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs" default="[]">
+		</member>
+		<member name="player_count" type="int" setter="set_player_count" getter="get_player_count" default="2">
+		</member>
+		<member name="title" type="String" setter="set_title" getter="get_title" default="&quot;&quot;">
+		</member>
+		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
+		</member>
+	</members>
+</class>

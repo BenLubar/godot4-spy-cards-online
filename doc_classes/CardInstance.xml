@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CardInstance" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="CardInstance" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="def" type="CardDef" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs" default="[]">
+		</member>
+		<member name="def" type="CardDef" setter="set_def" getter="get_def">
+		</member>
+		<member name="description" type="FormattedText[]" setter="set_description" getter="get_description" default="[]">
+		</member>
+		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
+		</member>
+		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers" default="[]">
+		</member>
+		<member name="name" type="FormattedText[]" setter="set_name" getter="get_name" default="[]">
+		</member>
+		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		</member>
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		</member>
+	</members>
+</class>

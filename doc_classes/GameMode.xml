@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameMode" inherits="GameModeSummary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_card" qualifiers="const">
+			<return type="CardDef" />
+			<param index="0" name="id" type="int" enum="CardDef.Card" />
+			<description>
+			</description>
+		</method>
+		<method name="get_modifier" qualifiers="const">
+			<return type="ModifierDef" />
+			<param index="0" name="id" type="int" enum="ModifierDef.Modifier" />
+			<description>
+			</description>
+		</method>
+		<method name="get_rank" qualifiers="const">
+			<return type="RankDef" />
+			<param index="0" name="id" type="int" enum="RankDef.Rank" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stat" qualifiers="const">
+			<return type="StatDef" />
+			<param index="0" name="id" type="int" enum="StatDef.Stat" />
+			<description>
+			</description>
+		</method>
+		<method name="get_tribe" qualifiers="const">
+			<return type="TribeDef" />
+			<param index="0" name="id" type="int" enum="TribeDef.Tribe" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="audience" type="AudienceDef[]" setter="set_audience" getter="get_audience" default="[]">
+		</member>
+		<member name="base_variant" type="VariantDef" setter="set_base_variant" getter="get_base_variant">
+		</member>
+		<member name="card_defs" type="CardDef[]" setter="set_card_defs" getter="get_card_defs" default="[]">
+		</member>
+		<member name="characters" type="CharacterDef[]" setter="set_characters" getter="get_characters" default="[]">
+		</member>
+		<member name="custom_choices" type="ChoicesDef[]" setter="set_custom_choices" getter="get_custom_choices" default="[]">
+		</member>
+		<member name="custom_effects" type="EffectDef[]" setter="set_custom_effects" getter="get_custom_effects" default="[]">
+		</member>
+		<member name="custom_functions" type="JigsawReusableCommandList[]" setter="set_custom_functions" getter="get_custom_functions" default="[]">
+		</member>
+		<member name="custom_modifiers" type="ModifierDef[]" setter="set_custom_modifiers" getter="get_custom_modifiers" default="[]">
+		</member>
+		<member name="custom_npcs" type="NPCDef[]" setter="set_custom_npcs" getter="get_custom_npcs" default="[]">
+		</member>
+		<member name="custom_ranks" type="RankDef[]" setter="set_custom_ranks" getter="get_custom_ranks" default="[]">
+		</member>
+		<member name="custom_stats" type="StatDef[]" setter="set_custom_stats" getter="get_custom_stats" default="[]">
+		</member>
+		<member name="custom_tribes" type="TribeDef[]" setter="set_custom_tribes" getter="get_custom_tribes" default="[]">
+		</member>
+		<member name="custom_variables" type="VariableDef[]" setter="set_custom_variables" getter="get_custom_variables" default="[]">
+		</member>
+		<member name="effects" type="int[]" setter="set_effects" getter="get_effects" default="[]">
+		</member>
+		<member name="modifiers" type="int[]" setter="set_modifiers" getter="get_modifiers" default="[]">
+		</member>
+		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs" default="[]">
+		</member>
+		<member name="ranks" type="int[]" setter="set_ranks" getter="get_ranks" default="[]">
+		</member>
+		<member name="stats" type="int[]" setter="set_stats" getter="get_stats" default="[]">
+		</member>
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		</member>
+		<member name="variants" type="VariantDef[]" setter="set_variants" getter="get_variants" default="[]">
+		</member>
+		<member name="visual_description_background_color" type="Color" setter="set_visual_description_background_color" getter="get_visual_description_background_color" default="Color(1, 1, 1, 1)">
+		</member>
+		<member name="visual_effect_highlight_color" type="Color" setter="set_visual_effect_highlight_color" getter="get_visual_effect_highlight_color" default="Color(0.266667, 0.666667, 1, 1)">
+		</member>
+		<member name="visual_effect_highlight_width" type="int" setter="set_visual_effect_highlight_width" getter="get_visual_effect_highlight_width" default="5">
+		</member>
+	</members>
+</class>
