@@ -22,7 +22,7 @@ public:
 	CardInstance() = default;
 	~CardInstance() = default;
 
-	DECLARE_PROPERTY(JigsawGlobal *, global);
+	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 	DECLARE_PROPERTY(Ref<CardDef>, def);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, name);
 	DECLARE_PROPERTY(RankDef::Rank, rank, = RankDef::Rank::NONE);
