@@ -8,8 +8,10 @@ void JigsawParameterQueuedEffect::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterQueuedEffect, Ref<QueuedEffect>, effect);
 
-JigsawParameterQueuedEffect *JigsawParameterQueuedEffect::make(const Ref<QueuedEffect> &effect) {
+JigsawParameterQueuedEffect *JigsawParameterQueuedEffect::make(QueuedEffect *effect) {
 	JigsawParameterQueuedEffect *param = memnew(JigsawParameterQueuedEffect);
-	param->set_effect(effect);
+	if (effect) {
+		param->set_effect(effect);
+	}
 	return param;
 }

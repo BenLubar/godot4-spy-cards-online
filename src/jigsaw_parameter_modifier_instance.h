@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return MODIFIER_INSTANCE; }
 
-	static JigsawParameterModifierInstance *make(const Ref<ModifierInstance> &instance);
+	static JigsawParameterModifierInstance *make(ModifierInstance *instance);
 };
 
 #endif // JIGSAW_PARAMETER_MODIFIER_INSTANCE_H

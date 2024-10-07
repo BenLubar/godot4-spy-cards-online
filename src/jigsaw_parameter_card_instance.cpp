@@ -8,8 +8,10 @@ void JigsawParameterCardInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterCardInstance, Ref<CardInstance>, instance);
 
-JigsawParameterCardInstance *JigsawParameterCardInstance::make(const Ref<CardInstance> &instance) {
+JigsawParameterCardInstance *JigsawParameterCardInstance::make(CardInstance *instance) {
 	JigsawParameterCardInstance *param = memnew(JigsawParameterCardInstance);
-	param->set_instance(instance);
+	if (instance) {
+		param->set_instance(instance);
+	}
 	return param;
 }

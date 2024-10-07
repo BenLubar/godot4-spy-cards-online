@@ -8,8 +8,10 @@ void JigsawParameterCardFilter::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterCardFilter, Ref<CardFilter>, filter);
 
-JigsawParameterCardFilter *JigsawParameterCardFilter::make(const Ref<CardFilter> &filter) {
+JigsawParameterCardFilter *JigsawParameterCardFilter::make(CardFilter *filter) {
 	JigsawParameterCardFilter *param = memnew(JigsawParameterCardFilter);
-	param->set_filter(filter);
+	if (filter) {
+		param->set_filter(filter);
+	}
 	return param;
 }
