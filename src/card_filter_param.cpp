@@ -11,7 +11,8 @@ Ref<CardFilter> CardFilter::make_param(const Ref<JigsawParameter> &param) {
 		return Ref<CardFilter>();
 	}
 
-	CardFilterParam *filter = memnew(CardFilterParam);
+	Ref<CardFilterParam> filter;
+	filter.instantiate();
 	filter->set_param(param);
 	return filter;
 }

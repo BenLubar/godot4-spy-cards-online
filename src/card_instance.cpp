@@ -30,13 +30,14 @@ IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<ModifierInstance>, modifiers);
 
-CardInstance *CardInstance::make(JigsawGlobal *global, CardDef *def) {
+Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &def) {
 	ERR_FAIL_NULL_V(global, nullptr);
-	ERR_FAIL_NULL_V(def, nullptr);
+	ERR_FAIL_COND_V(def.is_null(), nullptr);
 	Ref<GameMode> mode = global->get_mode();
 	ERR_FAIL_COND_V(mode.is_null(), nullptr);
 
-	CardInstance *inst = memnew(CardInstance);
+	Ref<CardInstance> inst;
+	inst.instantiate();
 	inst->set_global(global);
 	inst->set_def(def);
 	inst->set_name(FormattedText::make_plain(def->get_name()));

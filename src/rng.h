@@ -42,7 +42,7 @@ public:
 	double next_range_float(double min, double max);
 	int64_t fintn(double n);
 
-	static RNG *with_seed(PackedByteArray seed);
+	static Ref<RNG> with_seed(PackedByteArray seed);
 };
 
 #endif

@@ -66,17 +66,16 @@ int64_t FormatHelper::_reserve_write(int64_t length) {
 	return off;
 }
 
-FormatHelper::FormatHelper() {}
-FormatHelper::~FormatHelper() {}
-
-FormatHelper *FormatHelper::read(String name, PackedByteArray buf) {
-	FormatHelper *fh = memnew(FormatHelper);
+Ref<FormatHelper> FormatHelper::read(String name, PackedByteArray buf) {
+	Ref<FormatHelper> fh;
+	fh.instantiate();
 	fh->set_debug_name(name);
 	fh->set_buffer(buf);
 	return fh;
 }
-FormatHelper *FormatHelper::write(String name) {
-	FormatHelper *fh = memnew(FormatHelper);
+Ref<FormatHelper> FormatHelper::write(String name) {
+	Ref<FormatHelper> fh;
+	fh.instantiate();
 	fh->set_debug_name(name);
 	return fh;
 }

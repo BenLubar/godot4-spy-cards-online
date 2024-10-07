@@ -13,11 +13,11 @@ private:
 	int64_t _reserve_write(int64_t length);
 
 public:
-	FormatHelper();
-	~FormatHelper();
+	FormatHelper() = default;
+	~FormatHelper() = default;
 
-	static FormatHelper *read(String name, PackedByteArray buf);
-	static FormatHelper *write(String name);
+	static Ref<FormatHelper> read(String name, PackedByteArray buf);
+	static Ref<FormatHelper> write(String name);
 
 	DECLARE_PROPERTY(String, debug_name, = "unnamed buffer");
 	DECLARE_PROPERTY(PackedByteArray, buffer);

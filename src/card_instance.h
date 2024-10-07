@@ -33,7 +33,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<FormattedText>, description);
 	DECLARE_PROPERTY(TypedArray<ModifierInstance>, modifiers);
 
-	static CardInstance *make(JigsawGlobal *global, CardDef *def);
+	static Ref<CardInstance> make(JigsawGlobal *global, const Ref<CardDef> &def);
 };
 
 #endif // CARD_INSTANCE_H

@@ -560,7 +560,7 @@ Ref<ImageTexture> IconDef::get_texture() const {
 	return texture;
 }
 
-IconDef *IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray data) {
+Ref<IconDef> IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray data) {
 	ERR_FAIL_COND_V_MSG(portrait != LEGACY_PORTRAIT_EMBEDDED && portrait != LEGACY_PORTRAIT_EXTERNAL, nullptr, "invalid portrait ID for legacy");
 
 	if (portrait == LEGACY_PORTRAIT_EMBEDDED) {
@@ -570,12 +570,14 @@ IconDef *IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray data) {
 		Error err = image->load_png_from_buffer(data);
 		ERR_FAIL_COND_V_MSG(err != OK, nullptr, "failed to decode PNG");
 
-		IconDef *def = memnew(IconDef);
+		Ref<IconDef> def;
+		def.instantiate();
 		def->set_image(image);
 		return def;
 	}
 
-	IconDef *def = memnew(IconDef);
+	Ref<IconDef> def;
+	def.instantiate();
 	def->set_file_id(data);
 	return def;
 }

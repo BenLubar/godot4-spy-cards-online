@@ -162,6 +162,6 @@ int64_t RNG::fintn(double n) {
 	return int64_t(Math::floor(next_float() * n));
 }
 
-RNG *RNG::with_seed(PackedByteArray seed) {
+Ref<RNG> RNG::with_seed(PackedByteArray seed) {
 	return memnew(RNG(seed));
 }

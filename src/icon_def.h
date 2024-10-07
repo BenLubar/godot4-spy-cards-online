@@ -564,7 +564,7 @@ public:
 	void set_image(Ref<Image> new_image);
 	Ref<ImageTexture> get_texture() const;
 
-	static IconDef *convert_legacy_portrait(Icon portrait, PackedByteArray data);
+	static Ref<IconDef> convert_legacy_portrait(Icon portrait, PackedByteArray data);
 };
 DECLARE_ENUM(IconDef::Icon);
 DECLARE_PREDEFINED_KEY(Texture2D, ICON);
