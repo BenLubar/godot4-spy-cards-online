@@ -53,7 +53,10 @@ CardInstance *CardInstance::make(JigsawGlobal *global, CardDef *def) {
 	bool first = true;
 	TypedArray<EffectInstance> effects = def->get_effects();
 	for (int64_t i = 0; i < effects.size(); i++) {
-		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		EffectInstance *e = Object::cast_to<EffectInstance>(effects[i]);
+		if (!e) {
+			continue;
+		}
 		if (first) {
 			first = false;
 		} else {
@@ -93,7 +96,13 @@ CardInstance *CardInstance::make(JigsawGlobal *global, CardDef *def) {
 			TODO->set_command(FormattedText::PUSH_SHAKE);
 			description.append(TODO);
 
-			description.append_array(FormattedText::make_plain(String::num(e->get_effect())));
+			PackedStringArray names = ClassDB::class_get_enum_constants("EffectDef", "Effect");
+			for (int64_t j = 0; j < names.size(); j++) {
+				if (ClassDB::class_get_integer_constant("EffectDef", names[j]) == e->get_effect()) {
+					description.append_array(FormattedText::make_plain(names[j]));
+					break;
+				}
+			}
 
 			TODO = memnew(FormattedText);
 			TODO->set_command(FormattedText::POP);

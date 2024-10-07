@@ -8,7 +8,7 @@ IMPLEMENT_PROPERTY(CardFilterParam, Ref<JigsawParameter>, param);
 
 Ref<CardFilter> CardFilter::make_param(const Ref<JigsawParameter> &param) {
 	if (param.is_null()) {
-		return nullptr;
+		return Ref<CardFilter>();
 	}
 
 	CardFilterParam *filter = memnew(CardFilterParam);

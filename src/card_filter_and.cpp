@@ -16,7 +16,7 @@ Ref<CardFilter> CardFilter::make_and(const TypedArray<CardFilter> &list) {
 	}
 
 	if (filtered_filters.size() == 0) {
-		return nullptr;
+		return Ref<CardFilter>();
 	}
 	if (filtered_filters.size() == 1) {
 		return Object::cast_to<CardFilter>(filtered_filters[0]);

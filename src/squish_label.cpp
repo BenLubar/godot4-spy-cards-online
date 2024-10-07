@@ -109,7 +109,7 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 			case FormattedText::ADD_ICON:
 				copy_font_size = false;
 				copy_list_level = false;
-				add_image(mode.is_valid() ? mode->get_icon_texture(command->get_icon()) : get_predefined<Texture2D>(command->get_icon()), 0, font_size_stack[-1]);
+				add_image(mode.is_valid() ? mode->get_icon_texture(command->get_icon()) : get_predefined<Texture2D>(command->get_icon()), 0, font_size_stack[font_size_stack.size() - 1]);
 				break;
 			case FormattedText::POP:
 				copy_font_size = false;
@@ -154,8 +154,8 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 				break;
 			case FormattedText::PUSH_FONT_SIZE:
 				copy_font_size = false;
-				font_size_stack.append(int32_t(Math::round(font_size_stack[-1] * command->get_font_size())));
-				push_font_size(font_size_stack[-1]);
+				font_size_stack.append(int32_t(Math::round(font_size_stack[font_size_stack.size() - 1] * command->get_font_size())));
+				push_font_size(font_size_stack[font_size_stack.size() - 1]);
 				break;
 			case FormattedText::PUSH_STRIKETHROUGH:
 				push_strikethrough();
@@ -183,33 +183,33 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 				break;
 			case FormattedText::PUSH_LIST_NUMBERED:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_NUMBERS, false);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_NUMBERS, false);
 				break;
 			case FormattedText::PUSH_LIST_LETTERED_UPPER:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_LETTERS, true);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_LETTERS, true);
 				break;
 			case FormattedText::PUSH_LIST_LETTERED_LOWER:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_LETTERS, false);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_LETTERS, false);
 				break;
 			case FormattedText::PUSH_LIST_ROMAN_UPPER:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_ROMAN, true);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_ROMAN, true);
 				break;
 			case FormattedText::PUSH_LIST_ROMAN_LOWER:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_ROMAN, false);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_ROMAN, false);
 				break;
 			case FormattedText::PUSH_LIST_BULLETED:
 				copy_list_level = false;
-				list_level_stack.append(list_level_stack[-1] + 1);
-				push_list(list_level_stack[-1], LIST_DOTS, false);
+				list_level_stack.append(list_level_stack[list_level_stack.size() - 1] + 1);
+				push_list(list_level_stack[list_level_stack.size() - 1], LIST_DOTS, false);
 				break;
 			case FormattedText::PUSH_RAINBOW:
 				push_customfx(_rainbow_effect, Dictionary());
@@ -226,10 +226,10 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 		}
 
 		if (copy_font_size) {
-			font_size_stack.append(font_size_stack[-1]);
+			font_size_stack.append(font_size_stack[font_size_stack.size() - 1]);
 		}
 		if (copy_list_level) {
-			list_level_stack.append(list_level_stack[-1]);
+			list_level_stack.append(list_level_stack[list_level_stack.size() - 1]);
 		}
 	}
 

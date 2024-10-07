@@ -21,17 +21,17 @@ IMPLEMENT_PROPERTY(GameModeSummary, TypedArray<IconDef>, custom_icons);
 
 Ref<Texture2D> GameModeSummary::get_icon_texture(IconDef::Icon icon) const {
 	if (icon == IconDef::Icon::NONE) {
-		return nullptr;
+		return Ref<Texture2D>();
 	}
 
 	if (icon < IconDef::Icon::FIRST_CUSTOM) {
 		return get_predefined<Texture2D>(icon);
 	}
 
-	ERR_FAIL_INDEX_V_MSG(icon - IconDef::Icon::FIRST_CUSTOM, custom_icons.size(), nullptr, "icon outside of custom range");
+	ERR_FAIL_INDEX_V_MSG(icon - IconDef::Icon::FIRST_CUSTOM, custom_icons.size(), Ref<Texture2D>(), "icon outside of custom range");
 
 	Ref<IconDef> def = custom_icons[icon - IconDef::Icon::FIRST_CUSTOM];
-	ERR_FAIL_NULL_V_MSG(def, nullptr, "custom icon is null");
+	ERR_FAIL_NULL_V_MSG(def, Ref<Texture2D>(), "custom icon is null");
 
 	return def->get_texture();
 }

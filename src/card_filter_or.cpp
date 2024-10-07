@@ -11,12 +11,12 @@ Ref<CardFilter> CardFilter::make_or(const TypedArray<CardFilter> &list) {
 	for (int64_t i = 0; i < list.size(); i++) {
 		CardFilter *f = Object::cast_to<CardFilter>(list[i]);
 		if (!f) {
-			return nullptr;
+			return Ref<CardFilter>();
 		}
 	}
 
 	if (filtered_filters.size() == 0) {
-		return nullptr;
+		return Ref<CardFilter>();
 	}
 	if (filtered_filters.size() == 1) {
 		return Object::cast_to<CardFilter>(filtered_filters[0]);

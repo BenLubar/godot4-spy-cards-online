@@ -50,12 +50,12 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(VariantDef, base_variant);
 	BIND_PROPERTY_RESOURCE_ARRAY(VariantDef, variants);
 
-	BIND_PROPERTY(Variant::INT, ranks);
-	BIND_PROPERTY(Variant::INT, tribes);
-	BIND_PROPERTY(Variant::INT, stats);
-	BIND_PROPERTY(Variant::INT, modifiers);
-	BIND_PROPERTY(Variant::INT, effects);
-	BIND_PROPERTY(Variant::INT, npcs);
+	BIND_PROPERTY_ENUM_ARRAY(RankDef::Rank, ranks);
+	BIND_PROPERTY_ENUM_ARRAY(TribeDef::Tribe, tribes);
+	BIND_PROPERTY_ENUM_ARRAY(StatDef::Stat, stats);
+	BIND_PROPERTY_ENUM_ARRAY(ModifierDef::Modifier, modifiers);
+	BIND_PROPERTY_ENUM_ARRAY(EffectDef::Effect, effects);
+	BIND_PROPERTY_ENUM_ARRAY(NPCDef::NPC, npcs);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(RankDef, custom_ranks);
 	BIND_PROPERTY_RESOURCE_ARRAY(TribeDef, custom_tribes);
@@ -149,17 +149,21 @@ Ref<CardDef> GameMode::get_card(CardDef::Card id) const {
 		}
 	}
 
-	ERR_FAIL_V_MSG(nullptr, "Custom card not defined");
+	ERR_FAIL_V_MSG(Ref<CardDef>(), String("custom card %d not defined") % Array::make(id));
 }
 
 #define IMPLEMENT_TYPE_GETTER(Type, type) \
 	Ref<Type##Def> GameMode::get_##type(Type##Def::Type id) const { \
-		ERR_FAIL_COND_V_MSG(!type##s.has(id), nullptr, #type " not part of this mode"); \
+		ERR_FAIL_COND_V_MSG(!type##s.has(id), Ref<Type##Def>(), String("%s %d not part of this mode") % Array::make(String(#type), id)); \
 		if (id < Type##Def::FIRST_CUSTOM) { \
 			return get_predefined<Type##Def>(id); \
 		} \
-		ERR_FAIL_INDEX_V_MSG(id - Type##Def::FIRST_CUSTOM, custom_##type##s.size(), nullptr, "custom " #type " not defined"); \
-		return Object::cast_to<Type##Def>(custom_##type##s[id - Type##Def::FIRST_CUSTOM]); \
+		ERR_FAIL_INDEX_V_MSG(id - Type##Def::FIRST_CUSTOM, custom_##type##s.size(), Ref<Type##Def>(), String("custom %s %d not defined") % Array::make(String(#type), id)); \
+		Type##Def *obj = Object::cast_to<Type##Def>(custom_##type##s[id - Type##Def::FIRST_CUSTOM]); \
+		if (obj) { \
+			return obj; \
+		} \
+		return Ref<Type##Def>(); \
 	}
 
 IMPLEMENT_TYPE_GETTER(Rank, rank);
