@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return LOCATION; }
 
-	static JigsawParameterLocation *make(LocationDef::Location location);
+	static Ref<JigsawParameterLocation> make(LocationDef::Location location);
 };
 
 #endif // JIGSAW_PARAMETER_LOCATION_H

@@ -8,8 +8,9 @@ void JigsawParameterRank::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterRank, RankDef::Rank, rank);
 
-JigsawParameterRank *JigsawParameterRank::make(RankDef::Rank rank) {
-	JigsawParameterRank *param = memnew(JigsawParameterRank);
+Ref<JigsawParameterRank> JigsawParameterRank::make(RankDef::Rank rank) {
+	Ref<JigsawParameterRank> param;
+	param.instantiate();
 	param->set_rank(rank);
 	return param;
 }

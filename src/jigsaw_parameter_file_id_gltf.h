@@ -17,7 +17,7 @@ public:
 
 	Type get_type() const override { return FILE_ID_GLTF; }
 
-	static JigsawParameterFileIDGLTF *make(PackedByteArray file_id, Dictionary json_data);
+	static Ref<JigsawParameterFileIDGLTF> make(PackedByteArray file_id, Dictionary json_data);
 };
 
 #endif // JIGSAW_PARAMETER_FILE_ID_GLTF_H

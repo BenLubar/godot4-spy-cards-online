@@ -19,7 +19,7 @@ public:
 
 	bool is_homogenous(Type type) const;
 
-	static JigsawParameterOrderedList *make(const TypedArray<JigsawParameter> &list);
+	static Ref<JigsawParameterOrderedList> make(const TypedArray<JigsawParameter> &list);
 };
 
 #endif // JIGSAW_PARAMETER_ORDERED_LIST_H

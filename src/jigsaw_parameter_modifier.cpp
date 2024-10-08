@@ -8,8 +8,9 @@ void JigsawParameterModifier::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterModifier, ModifierDef::Modifier, modifier);
 
-JigsawParameterModifier *JigsawParameterModifier::make(ModifierDef::Modifier modifier) {
-	JigsawParameterModifier *param = memnew(JigsawParameterModifier);
+Ref<JigsawParameterModifier> JigsawParameterModifier::make(ModifierDef::Modifier modifier) {
+	Ref<JigsawParameterModifier> param;
+	param.instantiate();
 	param->set_modifier(modifier);
 	return param;
 }

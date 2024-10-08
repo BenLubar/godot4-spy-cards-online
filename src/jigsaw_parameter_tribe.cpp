@@ -8,8 +8,9 @@ void JigsawParameterTribe::_bind_methods() {
 	
 IMPLEMENT_PROPERTY(JigsawParameterTribe, TribeDef::Tribe, tribe);
 
-JigsawParameterTribe *JigsawParameterTribe::make(TribeDef::Tribe tribe) {
-	JigsawParameterTribe *param = memnew(JigsawParameterTribe);
+Ref<JigsawParameterTribe> JigsawParameterTribe::make(TribeDef::Tribe tribe) {
+	Ref<JigsawParameterTribe> param;
+	param.instantiate();
 	param->set_tribe(tribe);
 	return param;
 }

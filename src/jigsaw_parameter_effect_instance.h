@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return EFFECT_INSTANCE; }
 
-	static JigsawParameterEffectInstance *make(EffectInstance *instance);
+	static Ref<JigsawParameterEffectInstance> make(const Ref<EffectInstance> &instance);
 };
 
 #endif // JIGSAW_PARAMETER_EFFECT_INSTANCE_H

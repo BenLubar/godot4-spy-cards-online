@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return QUEUED_EFFECT; }
 
-	static JigsawParameterQueuedEffect *make(QueuedEffect *effect);
+	static Ref<JigsawParameterQueuedEffect> make(const Ref<QueuedEffect> &effect);
 };
 
 #endif // JIGSAW_PARAMETER_QUEUED_EFFECT_H

@@ -17,7 +17,7 @@ public:
 
 	Type get_type() const override { return BOOLEAN; }
 
-	static JigsawParameterBoolean *make(bool boolean);
+	static Ref<JigsawParameterBoolean> make(bool boolean);
 };
 
 #endif // JIGSAW_PARAMETER_BOOLEAN_H

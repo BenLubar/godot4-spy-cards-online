@@ -7,7 +7,8 @@ void CardFilterRank::_bind_methods() {
 IMPLEMENT_PROPERTY(CardFilterRank, RankDef::Rank, rank);
 
 Ref<CardFilter> CardFilter::make_rank(RankDef::Rank rank) {
-	CardFilterRank *filter = memnew(CardFilterRank);
+	Ref<CardFilterRank> filter;
+	filter.instantiate();
 	filter->set_rank(rank);
 	return filter;
 }

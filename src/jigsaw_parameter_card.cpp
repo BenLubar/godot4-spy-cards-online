@@ -8,8 +8,9 @@ void JigsawParameterCard::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterCard, CardDef::Card, card);
 
-JigsawParameterCard *JigsawParameterCard::make(CardDef::Card card) {
-	JigsawParameterCard *param = memnew(JigsawParameterCard);
+Ref<JigsawParameterCard> JigsawParameterCard::make(CardDef::Card card) {
+	Ref<JigsawParameterCard> param;
+	param.instantiate();
 	param->set_card(card);
 	return param;
 }

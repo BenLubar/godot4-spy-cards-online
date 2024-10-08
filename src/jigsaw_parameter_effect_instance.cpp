@@ -8,10 +8,9 @@ void JigsawParameterEffectInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterEffectInstance, Ref<EffectInstance>, instance);
 
-JigsawParameterEffectInstance *JigsawParameterEffectInstance::make(EffectInstance *instance) {
-	JigsawParameterEffectInstance *param = memnew(JigsawParameterEffectInstance);
-	if (instance) {
-		param->set_instance(instance);
-	}
+Ref<JigsawParameterEffectInstance> JigsawParameterEffectInstance::make(const Ref<EffectInstance> &instance) {
+	Ref<JigsawParameterEffectInstance> param;
+	param.instantiate();
+	param->set_instance(instance);
 	return param;
 }

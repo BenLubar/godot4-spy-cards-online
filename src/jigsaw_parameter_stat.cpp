@@ -8,8 +8,9 @@ void JigsawParameterStat::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterStat, StatDef::Stat, stat);
 
-JigsawParameterStat *JigsawParameterStat::make(StatDef::Stat stat) {
-	JigsawParameterStat *param = memnew(JigsawParameterStat);
+Ref<JigsawParameterStat> JigsawParameterStat::make(StatDef::Stat stat) {
+	Ref<JigsawParameterStat> param;
+	param.instantiate();
 	param->set_stat(stat);
 	return param;
 }

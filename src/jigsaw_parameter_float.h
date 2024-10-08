@@ -17,7 +17,7 @@ public:
 
 	Type get_type() const override { return FLOAT; }
 
-	static JigsawParameterFloat *make(double value);
+	static Ref<JigsawParameterFloat> make(double value);
 };
 
 #endif // JIGSAW_PARAMETER_FLOAT_H

@@ -64,38 +64,44 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 			description.append_array(FormattedText::make_plain("\n"));
 		}
 
-		FormattedText *before = memnew(FormattedText);
+		Ref<FormattedText> before;
+		before.instantiate();
 		before->set_command(FormattedText::PUSH_EFFECT_INSTANCE);
 		before->set_instance(e);
 		description.append(before);
 
 		if (e->get_effect() == EffectDef::FLAVOR_TEXT) {
-			FormattedText *flavor = memnew(FormattedText);
-			flavor->set_command(FormattedText::PUSH_TEXT_COLOR);
+			Ref<FormattedText> flavor0;
+			flavor0.instantiate();
+			flavor0->set_command(FormattedText::PUSH_TEXT_COLOR);
 			// TODO: this is unsafe and could cause crashes on malformed effects but also it's temporary
-			flavor->set_color(Object::cast_to<JigsawParameterColor>(e->get_params()[1])->get_color());
-			description.append(flavor);
+			flavor0->set_color(Object::cast_to<JigsawParameterColor>(e->get_params()[1])->get_color());
+			description.append(flavor0);
 
-			flavor = memnew(FormattedText);
-			flavor->set_command(FormattedText::ADD_TEXT);
+			Ref<FormattedText> flavor1;
+			flavor1.instantiate();
+			flavor1->set_command(FormattedText::ADD_TEXT);
 			// TODO: this is also unsafe and also temporary
-			flavor->set_text(Object::cast_to<JigsawParameterString>(e->get_params()[0])->get_string());
-			description.append(flavor);
+			flavor1->set_text(Object::cast_to<JigsawParameterString>(e->get_params()[0])->get_string());
+			description.append(flavor1);
 
-			flavor = memnew(FormattedText);
-			flavor->set_command(FormattedText::POP);
-			description.append(flavor);
+			Ref<FormattedText> flavor2;
+			flavor2.instantiate();
+			flavor2->set_command(FormattedText::POP);
+			description.append(flavor2);
 
 			// TODO: again
 			if (Object::cast_to<JigsawParameterBoolean>(e->get_params()[2])->get_boolean()) {
-				flavor = memnew(FormattedText);
-				flavor->set_command(FormattedText::FORCE_END_OF_TEXT);
-				description.append(flavor);
+				Ref<FormattedText> flavor3;
+				flavor3.instantiate();
+				flavor3->set_command(FormattedText::FORCE_END_OF_TEXT);
+				description.append(flavor3);
 			}
 		} else {
-			FormattedText *TODO = memnew(FormattedText);
-			TODO->set_command(FormattedText::PUSH_SHAKE);
-			description.append(TODO);
+			Ref<FormattedText> TODO1;
+			TODO1.instantiate();
+			TODO1->set_command(FormattedText::PUSH_SHAKE);
+			description.append(TODO1);
 
 			PackedStringArray names = ClassDB::class_get_enum_constants("EffectDef", "Effect");
 			for (int64_t j = 0; j < names.size(); j++) {
@@ -105,12 +111,14 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 				}
 			}
 
-			TODO = memnew(FormattedText);
-			TODO->set_command(FormattedText::POP);
-			description.append(TODO);
+			Ref<FormattedText> TODO2;
+			TODO2.instantiate();
+			TODO2->set_command(FormattedText::POP);
+			description.append(TODO2);
 		}
 
-		FormattedText *after = memnew(FormattedText);
+		Ref<FormattedText> after;
+		after.instantiate();
 		after->set_command(FormattedText::POP);
 		description.append(after);
 	}

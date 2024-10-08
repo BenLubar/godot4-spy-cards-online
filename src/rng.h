@@ -34,7 +34,7 @@ private:
 
 public:
 
-	RNG *duplicate() const;
+	Ref<RNG> duplicate() const;
 	double next_cheap_float();
 	double next_float();
 	int64_t next_range_int(int64_t min, int64_t max);

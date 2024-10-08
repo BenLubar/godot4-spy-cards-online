@@ -17,7 +17,7 @@ public:
 
 	Type get_type() const override { return SCENE_INSTANCE; }
 
-	static JigsawParameterSceneInstance *make(int64_t scene);
+	static Ref<JigsawParameterSceneInstance> make(int64_t scene);
 };
 
 #endif // JIGSAW_PARAMETER_SCENE_INSTANCE_H

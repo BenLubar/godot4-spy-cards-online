@@ -8,8 +8,9 @@ void JigsawParameterString::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterString, String, string);
 
-JigsawParameterString *JigsawParameterString::make(const String &string) {
-	JigsawParameterString *param = memnew(JigsawParameterString);
+Ref<JigsawParameterString> JigsawParameterString::make(const String &string) {
+	Ref<JigsawParameterString> param;
+	param.instantiate();
 	param->set_string(string);
 	return param;
 }

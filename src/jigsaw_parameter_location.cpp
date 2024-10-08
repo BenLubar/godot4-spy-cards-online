@@ -8,8 +8,9 @@ void JigsawParameterLocation::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterLocation, LocationDef::Location, location);
 
-JigsawParameterLocation *JigsawParameterLocation::make(LocationDef::Location location) {
-	JigsawParameterLocation *param = memnew(JigsawParameterLocation);
+Ref<JigsawParameterLocation> JigsawParameterLocation::make(LocationDef::Location location) {
+	Ref<JigsawParameterLocation> param;
+	param.instantiate();
 	param->set_location(location);
 	return param;
 }

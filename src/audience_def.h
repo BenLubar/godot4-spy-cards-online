@@ -11,8 +11,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	AudienceDef();
-	~AudienceDef();
+	AudienceDef() = default;
+	~AudienceDef() = default;
 
 	DECLARE_PROPERTY(IconDef::Icon, front, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(IconDef::Icon, front_cheer, = IconDef::Icon::NONE);

@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return TRIBE; }
 
-	static JigsawParameterTribe *make(TribeDef::Tribe tribe);
+	static Ref<JigsawParameterTribe> make(TribeDef::Tribe tribe);
 };
 
 #endif // JIGSAW_PARAMETER_TRIBE_H

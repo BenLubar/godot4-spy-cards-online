@@ -8,8 +8,9 @@ void JigsawParameterIcon::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterIcon, IconDef::Icon, icon);
 
-JigsawParameterIcon *JigsawParameterIcon::make(IconDef::Icon icon) {
-	JigsawParameterIcon *param = memnew(JigsawParameterIcon);
+Ref<JigsawParameterIcon> JigsawParameterIcon::make(IconDef::Icon icon) {
+	Ref<JigsawParameterIcon> param;
+	param.instantiate();
 	param->set_icon(icon);
 	return param;
 }

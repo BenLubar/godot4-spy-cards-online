@@ -8,8 +8,9 @@ void JigsawParameterFileIDGLTF::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterFileIDGLTF, PackedByteArray, file_id);
 
-JigsawParameterFileIDGLTF *JigsawParameterFileIDGLTF::make(PackedByteArray file_id, Dictionary json_data) {
-	JigsawParameterFileIDGLTF *param = memnew(JigsawParameterFileIDGLTF);
+Ref<JigsawParameterFileIDGLTF> JigsawParameterFileIDGLTF::make(PackedByteArray file_id, Dictionary json_data) {
+	Ref<JigsawParameterFileIDGLTF> param;
+	param.instantiate();
 	param->set_file_id(file_id);
 	param->set_json_data(json_data);
 	return param;

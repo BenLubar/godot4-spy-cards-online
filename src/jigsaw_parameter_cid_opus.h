@@ -17,7 +17,7 @@ public:
 
 	Type get_type() const override { return CID_OPUS; }
 
-	static JigsawParameterCIDOpus *make(PackedByteArray cid, double loop_start, double loop_end);
+	static Ref<JigsawParameterCIDOpus> make(PackedByteArray cid, double loop_start, double loop_end);
 };
 
 #endif // JIGSAW_PARAMETER_CID_OPUS_H

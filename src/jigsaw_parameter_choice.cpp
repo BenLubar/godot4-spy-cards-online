@@ -10,8 +10,9 @@ void JigsawParameterChoice::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawParameterChoice, ChoicesDef::Choices, choices);
 IMPLEMENT_PROPERTY(JigsawParameterChoice, int64_t, index);
 
-JigsawParameterChoice *JigsawParameterChoice::make(ChoicesDef::Choices choices, int64_t index) {
-	JigsawParameterChoice *param = memnew(JigsawParameterChoice);
+Ref<JigsawParameterChoice> JigsawParameterChoice::make(ChoicesDef::Choices choices, int64_t index) {
+	Ref<JigsawParameterChoice> param;
+	param.instantiate();
 	param->set_choices(choices);
 	param->set_index(index);
 	return param;

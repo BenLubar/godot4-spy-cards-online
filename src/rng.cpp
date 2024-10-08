@@ -72,8 +72,8 @@ uint8_t RNG::_next() {
 	return n;
 }
 
-RNG *RNG::duplicate() const {
-	RNG *dupe = memnew(RNG(_seed));
+Ref<RNG> RNG::duplicate() const {
+	Ref<RNG> dupe = memnew(RNG(_seed));
 	dupe->_buf = _buf;
 	dupe->_index = _index;
 

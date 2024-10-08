@@ -7,7 +7,8 @@ void CardFilterTribe::_bind_methods() {
 IMPLEMENT_PROPERTY(CardFilterTribe, TribeDef::Tribe, tribe);
 
 Ref<CardFilter> CardFilter::make_tribe(TribeDef::Tribe tribe) {
-	CardFilterTribe *filter = memnew(CardFilterTribe);
+	Ref<CardFilterTribe> filter;
+	filter.instantiate();
 	filter->set_tribe(tribe);
 	return filter;
 }

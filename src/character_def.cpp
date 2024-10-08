@@ -22,8 +22,6 @@ void CharacterDef::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("create_portrait", "mode"), &CharacterDef::create_portrait);
 }
-CharacterDef::CharacterDef() {}
-CharacterDef::~CharacterDef() {}
 
 IMPLEMENT_PROPERTY(CharacterDef, String, id);
 IMPLEMENT_PROPERTY(CharacterDef, String, display_name);
@@ -44,10 +42,11 @@ IMPLEMENT_PROPERTY(CharacterDef, double, portrait_scale);
 IMPLEMENT_PROPERTY(CharacterDef, bool, portrait_crop_top);
 IMPLEMENT_PROPERTY(CharacterDef, bool, portrait_crop_front);
 
-AtlasTexture *CharacterDef::create_portrait(Ref<GameMode> mode) const {
-	ERR_FAIL_COND_V_MSG(mode.is_null(), nullptr, "game mode is null");
+Ref<AtlasTexture> CharacterDef::create_portrait(const Ref<GameMode> &mode) const {
+	ERR_FAIL_COND_V_MSG(mode.is_null(), Ref<AtlasTexture>(), "game mode is null");
 
-	AtlasTexture *portrait = memnew(AtlasTexture);
+	Ref<AtlasTexture> portrait;
+	portrait.instantiate();
 	portrait->set_atlas(mode->get_icon_texture(idle0));
 
 	double half_square = portrait_scale / pixel_size / 2.0;

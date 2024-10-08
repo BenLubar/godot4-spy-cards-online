@@ -8,8 +8,9 @@ void JigsawParameterFloat::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterFloat, double, value);
 
-JigsawParameterFloat *JigsawParameterFloat::make(double value) {
-	JigsawParameterFloat *param = memnew(JigsawParameterFloat);
+Ref<JigsawParameterFloat> JigsawParameterFloat::make(double value) {
+	Ref<JigsawParameterFloat> param;
+	param.instantiate();
 	param->set_value(value);
 	return param;
 }

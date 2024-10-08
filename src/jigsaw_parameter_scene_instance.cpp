@@ -8,8 +8,9 @@ void JigsawParameterSceneInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterSceneInstance, int64_t, scene);
 
-JigsawParameterSceneInstance *JigsawParameterSceneInstance::make(int64_t scene) {
-	JigsawParameterSceneInstance *param = memnew(JigsawParameterSceneInstance);
+Ref<JigsawParameterSceneInstance> JigsawParameterSceneInstance::make(int64_t scene) {
+	Ref<JigsawParameterSceneInstance> param;
+	param.instantiate();
 	param->set_scene(scene);
 	return param;
 }

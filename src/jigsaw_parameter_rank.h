@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return RANK; }
 
-	static JigsawParameterRank *make(RankDef::Rank rank);
+	static Ref<JigsawParameterRank> make(RankDef::Rank rank);
 };
 
 #endif // JIGSAW_PARAMETER_RANK_H

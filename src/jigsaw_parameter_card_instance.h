@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return CARD_INSTANCE; }
 
-	static JigsawParameterCardInstance *make(CardInstance *instance);
+	static Ref<JigsawParameterCardInstance> make(const Ref<CardInstance> &instance);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_INSTANCE_H

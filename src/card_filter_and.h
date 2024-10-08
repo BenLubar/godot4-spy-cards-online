@@ -15,7 +15,7 @@ public:
 	CardFilterAnd() = default;
 	~CardFilterAnd() = default;
 
-	DECLARE_PROPERTY(TypedArray<CardFilter>, sub);
+	DECLARE_PROPERTY(TypedArray<CardFilter>, list);
 
 	Type get_type() const override { return AND; }
 };

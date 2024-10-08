@@ -11,9 +11,6 @@ void AudienceDef::_bind_methods() {
 	BIND_PROPERTY_IS(Variant::BOOL, very_tall);
 }
 
-AudienceDef::AudienceDef() {}
-AudienceDef::~AudienceDef() {}
-
 IMPLEMENT_PROPERTY(AudienceDef, IconDef::Icon, front);
 IMPLEMENT_PROPERTY(AudienceDef, IconDef::Icon, front_cheer);
 IMPLEMENT_PROPERTY(AudienceDef, IconDef::Icon, back);

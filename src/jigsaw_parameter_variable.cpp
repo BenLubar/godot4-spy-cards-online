@@ -8,8 +8,9 @@ void JigsawParameterVariable::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterVariable, VariableDef::Variable, variable);
 
-JigsawParameterVariable *JigsawParameterVariable::make(VariableDef::Variable variable) {
-	JigsawParameterVariable *param = memnew(JigsawParameterVariable);
+Ref<JigsawParameterVariable> JigsawParameterVariable::make(VariableDef::Variable variable) {
+	Ref<JigsawParameterVariable> param;
+	param.instantiate();
 	param->set_variable(variable);
 	return param;
 }

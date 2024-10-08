@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return ICON; }
 
-	static JigsawParameterIcon *make(IconDef::Icon icon);
+	static Ref<JigsawParameterIcon> make(IconDef::Icon icon);
 };
 
 #endif // JIGSAW_PARAMETER_ICON_H

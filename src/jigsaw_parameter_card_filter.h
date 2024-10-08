@@ -21,7 +21,7 @@ public:
 
 	Type get_type() const override { return CARD_FILTER; }
 
-	static Ref<JigsawParameterCardFilter> make(CardFilter *filter);
+	static Ref<JigsawParameterCardFilter> make(const Ref<CardFilter> &filter);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_FILTER_H

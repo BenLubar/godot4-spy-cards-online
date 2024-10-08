@@ -7,7 +7,8 @@ void CardFilterCard::_bind_methods() {
 IMPLEMENT_PROPERTY(CardFilterCard, CardDef::Card, card);
 
 Ref<CardFilter> CardFilter::make_card(CardDef::Card card) {
-	CardFilterCard *filter = memnew(CardFilterCard);
+	Ref<CardFilterCard> filter;
+	filter.instantiate();
 	filter->set_card(card);
 	return filter;
 }

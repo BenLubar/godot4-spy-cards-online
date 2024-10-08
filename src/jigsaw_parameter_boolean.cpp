@@ -8,8 +8,9 @@ void JigsawParameterBoolean::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterBoolean, bool, boolean);
 
-JigsawParameterBoolean *JigsawParameterBoolean::make(bool boolean) {
-	JigsawParameterBoolean *param = memnew(JigsawParameterBoolean);
+Ref<JigsawParameterBoolean> JigsawParameterBoolean::make(bool boolean) {
+	Ref<JigsawParameterBoolean> param;
+	param.instantiate();
 	param->set_boolean(boolean);
 	return param;
 }

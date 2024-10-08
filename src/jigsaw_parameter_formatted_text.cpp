@@ -8,8 +8,9 @@ void JigsawParameterFormattedText::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterFormattedText, TypedArray<FormattedText>, text);
 
-JigsawParameterFormattedText *JigsawParameterFormattedText::make(const TypedArray<FormattedText> &text) {
-	JigsawParameterFormattedText *param = memnew(JigsawParameterFormattedText);
+Ref<JigsawParameterFormattedText> JigsawParameterFormattedText::make(const TypedArray<FormattedText> &text) {
+	Ref<JigsawParameterFormattedText> param;
+	param.instantiate();
 	param->set_text(text);
 	return param;
 }

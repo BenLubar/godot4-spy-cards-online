@@ -17,8 +17,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	CharacterDef();
-	~CharacterDef();
+	CharacterDef() = default;
+	~CharacterDef() = default;
 
 	DECLARE_PROPERTY(String, id);
 	DECLARE_PROPERTY(String, display_name);
@@ -39,7 +39,7 @@ public:
 	DECLARE_PROPERTY(bool, portrait_crop_top, = false);
 	DECLARE_PROPERTY(bool, portrait_crop_front, = false);
 
-	AtlasTexture *create_portrait(Ref<GameMode> mode) const;
+	Ref<AtlasTexture> create_portrait(const Ref<GameMode> &mode) const;
 };
 
 #endif // CHARACTER_DEF_H

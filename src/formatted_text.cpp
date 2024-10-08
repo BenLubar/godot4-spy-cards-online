@@ -55,7 +55,8 @@ IMPLEMENT_PROPERTY(FormattedText, double, font_size);
 IMPLEMENT_PROPERTY(FormattedText, int64_t, table_columns);
 
 TypedArray<FormattedText> FormattedText::make_plain(String string) {
-	FormattedText *ft = memnew(FormattedText);
+	Ref<FormattedText> ft;
+	ft.instantiate();
 	ft->set_command(ADD_TEXT);
 	ft->set_text(string);
 	return Array::make(ft);

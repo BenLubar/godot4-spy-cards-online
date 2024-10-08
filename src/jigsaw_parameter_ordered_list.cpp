@@ -21,8 +21,9 @@ bool JigsawParameterOrderedList::is_homogenous(Type type) const {
 	return true;
 }
 
-JigsawParameterOrderedList *JigsawParameterOrderedList::make(const TypedArray<JigsawParameter> &list) {
-	JigsawParameterOrderedList *param = memnew(JigsawParameterOrderedList);
+Ref<JigsawParameterOrderedList> JigsawParameterOrderedList::make(const TypedArray<JigsawParameter> &list) {
+	Ref<JigsawParameterOrderedList> param;
+	param.instantiate();
 	param->set_list(list);
 	return param;
 }

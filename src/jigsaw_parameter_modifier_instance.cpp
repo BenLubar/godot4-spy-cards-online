@@ -8,10 +8,9 @@ void JigsawParameterModifierInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterModifierInstance, Ref<ModifierInstance>, instance);
 
-JigsawParameterModifierInstance *JigsawParameterModifierInstance::make(ModifierInstance *instance) {
-	JigsawParameterModifierInstance *param = memnew(JigsawParameterModifierInstance);
-	if (instance) {
-		param->set_instance(instance);
-	}
+Ref<JigsawParameterModifierInstance> JigsawParameterModifierInstance::make(const Ref<ModifierInstance> &instance) {
+	Ref<JigsawParameterModifierInstance> param;
+	param.instantiate();
+	param->set_instance(instance);
 	return param;
 }

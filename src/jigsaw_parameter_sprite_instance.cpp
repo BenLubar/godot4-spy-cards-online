@@ -8,8 +8,9 @@ void JigsawParameterSpriteInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterSpriteInstance, int64_t, sprite);
 
-JigsawParameterSpriteInstance *JigsawParameterSpriteInstance::make(int64_t sprite) {
-	JigsawParameterSpriteInstance *param = memnew(JigsawParameterSpriteInstance);
+Ref<JigsawParameterSpriteInstance> JigsawParameterSpriteInstance::make(int64_t sprite) {
+	Ref<JigsawParameterSpriteInstance> param;
+	param.instantiate();
 	param->set_sprite(sprite);
 	return param;
 }

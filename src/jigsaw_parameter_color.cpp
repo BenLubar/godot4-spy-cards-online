@@ -8,8 +8,9 @@ void JigsawParameterColor::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterColor, Color, color);
 
-JigsawParameterColor *JigsawParameterColor::make(Color color) {
-	JigsawParameterColor *param = memnew(JigsawParameterColor);
+Ref<JigsawParameterColor> JigsawParameterColor::make(Color color) {
+	Ref<JigsawParameterColor> param;
+	param.instantiate();
 	param->set_color(color);
 	return param;
 }
