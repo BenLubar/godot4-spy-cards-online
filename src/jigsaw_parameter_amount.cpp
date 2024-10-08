@@ -5,7 +5,7 @@ void JigsawParameterAmount::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, amount_inf);
 	BIND_PROPERTY_IS(Variant::BOOL, nan);
 
-	ClassDB::bind_static_method("JigsawParameterAmount", D_METHOD("make", "amount", "amount_inf"), &JigsawParameterAmount::make);
+	ClassDB::bind_static_method("JigsawParameterAmount", D_METHOD("make", "amount", "amount_inf"), &JigsawParameterAmount::make, DEFVAL(int64_t(0)));
 	ClassDB::bind_static_method("JigsawParameterAmount", D_METHOD("make_nan"), &JigsawParameterAmount::make_nan);
 }
 
