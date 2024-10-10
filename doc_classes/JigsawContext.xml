@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawContext" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create_error" qualifiers="const">
+			<return type="JigsawError" />
+			<param index="0" name="message" type="String" />
+			<param index="1" name="params" type="JigsawParameter[]" default="[]" />
+			<param index="2" name="include_global_snapshot" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="make" qualifiers="static">
+			<return type="JigsawContext" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="parent" type="JigsawContext" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="run">
+			<return type="JigsawError" />
+			<param index="0" name="commands" type="JigsawCommandList" />
+			<param index="1" name="env" type="JigsawParameter[]" />
+			<param index="2" name="args" type="JigsawParameter[]" />
+			<param index="3" name="results" type="JigsawParameter[]" />
+			<description>
+			</description>
+		</method>
+		<method name="validate" qualifiers="const">
+			<return type="JigsawError[]" />
+			<param index="0" name="commands" type="JigsawCommandList" />
+			<param index="1" name="env" type="JigsawParameter[]" />
+			<param index="2" name="args" type="JigsawParameter[]" />
+			<param index="3" name="results" type="JigsawParameter[]" />
+			<param index="4" name="debug_name" type="String" />
+			<param index="5" name="arg_names" type="PackedStringArray" default="PackedStringArray()" />
+			<param index="6" name="result_names" type="PackedStringArray" default="PackedStringArray()" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
+		</member>
+		<member name="command_stack" type="JigsawCommandList[]" setter="set_command_stack" getter="get_command_stack" default="[]">
+		</member>
+		<member name="environment" type="JigsawParameter[]" setter="set_environment" getter="get_environment" default="[]">
+		</member>
+		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
+		</member>
+		<member name="parent" type="JigsawContext" setter="set_parent" getter="get_parent">
+		</member>
+		<member name="read_only" type="bool" setter="set_read_only" getter="get_read_only" default="false">
+		</member>
+		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results" default="[]">
+		</member>
+		<member name="stack" type="JigsawStackFrame[]" setter="set_stack" getter="get_stack" default="[]">
+		</member>
+	</members>
+</class>

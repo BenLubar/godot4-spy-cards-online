@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_modifier.h"
 
 void JigsawParameterModifier::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, modifier);
+	BIND_PROPERTY_ENUM(ModifierDef::Modifier, modifier);
 
 	ClassDB::bind_static_method("JigsawParameterModifier", D_METHOD("make", "modifier"), &JigsawParameterModifier::make);
 }

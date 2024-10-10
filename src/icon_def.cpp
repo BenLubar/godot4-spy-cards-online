@@ -532,30 +532,9 @@ void IconDef::_bind_methods() {
 IconDef::IconDef() {
 	texture.instantiate();
 }
-IconDef::~IconDef() {}
 
-PackedByteArray IconDef::get_file_id() const {
-	return file_id;
-}
-void IconDef::set_file_id(PackedByteArray new_file_id) {
-	if (file_id != new_file_id) {
-		file_id = new_file_id;
-		emit_changed();
-	}
-}
-Ref<Image> IconDef::get_image() const {
-	return image;
-}
-void IconDef::set_image(Ref<Image> new_image) {
-	if (image != new_image) {
-		image = new_image;
-		if (image.is_valid() && !image->has_mipmaps()) {
-			image->generate_mipmaps();
-		}
-		texture->set_image(image);
-		emit_changed();
-	}
-}
+IMPLEMENT_PROPERTY(IconDef, PackedByteArray, file_id);
+IMPLEMENT_PROPERTY(IconDef, Ref<Image>, image);
 Ref<ImageTexture> IconDef::get_texture() const {
 	return texture;
 }
@@ -568,11 +547,14 @@ Ref<IconDef> IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray dat
 		image.instantiate();
 
 		Error err = image->load_png_from_buffer(data);
-		ERR_FAIL_COND_V_MSG(err != OK, nullptr, "failed to decode PNG");
+		ERR_FAIL_COND_V_MSG(err != OK, Ref<IconDef>(), "failed to decode PNG");
+
+		image->generate_mipmaps();
 
 		Ref<IconDef> def;
 		def.instantiate();
 		def->set_image(image);
+		def->get_texture()->set_image(image);
 		return def;
 	}
 

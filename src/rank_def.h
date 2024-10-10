@@ -4,8 +4,6 @@
 #include "dry.h"
 #include "icon_def.h"
 
-using namespace godot;
-
 class RankDef : public Resource {
 	GDCLASS(RankDef, Resource);
 
@@ -29,8 +27,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	RankDef();
-	~RankDef();
+	RankDef() = default;
+	~RankDef() = default;
 
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(Color, color);

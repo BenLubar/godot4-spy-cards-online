@@ -5,16 +5,20 @@
 #include "jigsaw_parameter_string.h"
 
 void CardInstance::_bind_methods() {
-	BIND_PROPERTY(Variant::OBJECT, global);
+	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
 	BIND_PROPERTY_RESOURCE(CardDef, def);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, name);
-	BIND_PROPERTY(Variant::INT, rank);
-	BIND_PROPERTY(Variant::INT, back);
+	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
+	BIND_PROPERTY_ENUM(IconDef::Icon, back);
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
-	BIND_PROPERTY(Variant::INT, portrait);
-	BIND_PROPERTY(Variant::ARRAY, tribes);
+	BIND_PROPERTY_ENUM(IconDef::Icon, portrait);
+	BIND_PROPERTY_ENUM_ARRAY(TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
-	BIND_PROPERTY(Variant::ARRAY, modifiers);
+	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
+	BIND_PROPERTY_RESOURCE_ARRAY(ModifierInstance, modifiers);
+
+	ClassDB::bind_method(D_METHOD("update_description"), &CardInstance::update_description);
+	ClassDB::bind_method(D_METHOD("update_simple_description"), &CardInstance::update_simple_description);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
@@ -28,6 +32,7 @@ IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<StatValue>, costs);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, IconDef::Icon, portrait);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, description);
+IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
 IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<ModifierInstance>, modifiers);
 
 Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &def) {
@@ -49,80 +54,60 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 	inst->set_portrait(def->get_portrait());
 	inst->set_tribes(Array(def->get_tribes()));
 
-	// TODO
+	if (!inst->update_simple_description()) {
+		inst->update_description();
+	}
+
+	return inst;
+}
+
+void CardInstance::update_description() {
+	Ref<CardDef> card_def = get_def();
+	TypedArray<EffectInstance> effects = card_def->get_effects();
+
 	TypedArray<FormattedText> description;
 	bool first = true;
-	TypedArray<EffectInstance> effects = def->get_effects();
 	for (int64_t i = 0; i < effects.size(); i++) {
-		EffectInstance *e = Object::cast_to<EffectInstance>(effects[i]);
-		if (!e) {
-			continue;
-		}
+		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		ERR_CONTINUE(e.is_null());
+
 		if (first) {
 			first = false;
 		} else {
 			description.append_array(FormattedText::make_plain("\n"));
 		}
 
-		Ref<FormattedText> before;
-		before.instantiate();
-		before->set_command(FormattedText::PUSH_EFFECT_INSTANCE);
-		before->set_instance(e);
-		description.append(before);
+		description.append_array(e->format_description(this));
+	}
+	
+	set_description(description);
+}
 
-		if (e->get_effect() == EffectDef::FLAVOR_TEXT) {
-			Ref<FormattedText> flavor0;
-			flavor0.instantiate();
-			flavor0->set_command(FormattedText::PUSH_TEXT_COLOR);
-			// TODO: this is unsafe and could cause crashes on malformed effects but also it's temporary
-			flavor0->set_color(Object::cast_to<JigsawParameterColor>(e->get_params()[1])->get_color());
-			description.append(flavor0);
+bool CardInstance::update_simple_description() {
+	Ref<CardDef> card_def = get_def();
+	TypedArray<EffectInstance> effects = card_def->get_effects();
 
-			Ref<FormattedText> flavor1;
-			flavor1.instantiate();
-			flavor1->set_command(FormattedText::ADD_TEXT);
-			// TODO: this is also unsafe and also temporary
-			flavor1->set_text(Object::cast_to<JigsawParameterString>(e->get_params()[0])->get_string());
-			description.append(flavor1);
+	TypedArray<FormattedTextWithIcon> simple_description;
+	for (int64_t i = 0; i < effects.size(); i++) {
+		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		ERR_CONTINUE(e.is_null());
 
-			Ref<FormattedText> flavor2;
-			flavor2.instantiate();
-			flavor2->set_command(FormattedText::POP);
-			description.append(flavor2);
-
-			// TODO: again
-			if (Object::cast_to<JigsawParameterBoolean>(e->get_params()[2])->get_boolean()) {
-				Ref<FormattedText> flavor3;
-				flavor3.instantiate();
-				flavor3->set_command(FormattedText::FORCE_END_OF_TEXT);
-				description.append(flavor3);
-			}
-		} else {
-			Ref<FormattedText> TODO1;
-			TODO1.instantiate();
-			TODO1->set_command(FormattedText::PUSH_SHAKE);
-			description.append(TODO1);
-
-			PackedStringArray names = ClassDB::class_get_enum_constants("EffectDef", "Effect");
-			for (int64_t j = 0; j < names.size(); j++) {
-				if (ClassDB::class_get_integer_constant("EffectDef", names[j]) == e->get_effect()) {
-					description.append_array(FormattedText::make_plain(names[j]));
-					break;
-				}
-			}
-
-			Ref<FormattedText> TODO2;
-			TODO2.instantiate();
-			TODO2->set_command(FormattedText::POP);
-			description.append(TODO2);
+		Ref<FormattedTextWithIcon> simple_desc = e->format_simple_description(this);
+		if (simple_desc.is_null()) {
+			set_simple_description(TypedArray<FormattedTextWithIcon>());
+			return false;
 		}
 
-		Ref<FormattedText> after;
-		after.instantiate();
-		after->set_command(FormattedText::POP);
-		description.append(after);
-	}
-	inst->set_description(description);
+		simple_description.append(simple_desc);
 
-	return inst;
+		for (int64_t j = 0; j < simple_desc->get_text().size(); j++) {
+			if (Object::cast_to<FormattedText>(simple_desc->get_text()[j])->get_command() == FormattedText::FORCE_END_OF_TEXT) {
+				set_simple_description(simple_description);
+				return true;
+			}
+		}
+	}
+	
+	set_simple_description(simple_description);
+	return true;
 }

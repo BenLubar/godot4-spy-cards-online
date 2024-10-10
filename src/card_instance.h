@@ -31,7 +31,11 @@ public:
 	DECLARE_PROPERTY(IconDef::Icon, portrait, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<TribeDef::Tribe>, tribes);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, description);
+	DECLARE_PROPERTY(TypedArray<FormattedTextWithIcon>, simple_description);
 	DECLARE_PROPERTY(TypedArray<ModifierInstance>, modifiers);
+
+	void update_description();
+	bool update_simple_description();
 
 	static Ref<CardInstance> make(JigsawGlobal *global, const Ref<CardDef> &def);
 };

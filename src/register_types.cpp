@@ -11,21 +11,36 @@
 
 #include "jigsaw_command_list.h"
 #include "jigsaw_reusable_command_list.h"
-#include "jigsaw_trigger.h"
 #include "jigsaw_global.h"
+#include "jigsaw_context.h"
+#include "jigsaw_stack_frame.h"
+#include "jigsaw_error.h"
+
+#include "jigsaw_trigger.h"
 
 #include "jigsaw_command.h"
+#include "jigsaw_command_crash.h"
+#include "jigsaw_command_comment.h"
+#include "jigsaw_command_reusable_command_list.h"
+#include "jigsaw_command_math.h"
+#include "jigsaw_command_log.h"
+#include "jigsaw_command_format_text.h"
+#include "jigsaw_command_if.h"
 
 #include "jigsaw_parameter.h"
+#include "jigsaw_parameter_ui_label_instance.h"
+#include "jigsaw_parameter_ui_icon_instance.h"
+#include "jigsaw_parameter_audience_instance.h"
+#include "jigsaw_parameter_character_instance.h"
 #include "jigsaw_parameter_sprite_instance.h"
 #include "jigsaw_parameter_scene_instance.h"
 #include "jigsaw_parameter_queued_effect.h"
 #include "jigsaw_parameter_modifier_instance.h"
 #include "jigsaw_parameter_card_instance.h"
 #include "jigsaw_parameter_formatted_text.h"
-#include "jigsaw_parameter_ordered_list.h"
-#include "jigsaw_parameter_local_variable.h"
 #include "jigsaw_parameter_variable.h"
+#include "jigsaw_parameter_local_variable.h"
+#include "jigsaw_parameter_ordered_list.h"
 #include "jigsaw_parameter_boolean.h"
 #include "jigsaw_parameter_amount.h"
 #include "jigsaw_parameter_float.h"
@@ -46,6 +61,8 @@
 #include "jigsaw_parameter_file_id_gltf.h"
 #include "jigsaw_parameter_color.h"
 #include "jigsaw_parameter_choice.h"
+#include "jigsaw_parameter_character.h"
+#include "jigsaw_parameter_audience.h"
 
 #include "card_filter.h"
 #include "card_filter_and.h"
@@ -83,6 +100,7 @@
 #include "card_instance.h"
 #include "modifier_instance.h"
 #include "queued_effect.h"
+#include "audience.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -97,6 +115,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Base32);
 
 	GDREGISTER_CLASS(FormattedText);
+	GDREGISTER_CLASS(FormattedTextWithIcon);
 	GDREGISTER_CLASS(SquishLabel);
 	GDREGISTER_CLASS(OutlineCurrentEffect);
 	GDREGISTER_CLASS(RichTextRainbowEffect);
@@ -105,21 +124,36 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(JigsawCommandList);
 	GDREGISTER_CLASS(JigsawReusableCommandList);
-	GDREGISTER_CLASS(JigsawTrigger);
 	GDREGISTER_CLASS(JigsawGlobal);
+	GDREGISTER_CLASS(JigsawContext);
+	GDREGISTER_CLASS(JigsawStackFrame);
+	GDREGISTER_CLASS(JigsawError);
+
+	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawCommand);
+	GDREGISTER_CLASS(JigsawCommandCrash);
+	GDREGISTER_CLASS(JigsawCommandComment);
+	GDREGISTER_CLASS(JigsawCommandReusableCommandList);
+	GDREGISTER_CLASS(JigsawCommandMath);
+	GDREGISTER_CLASS(JigsawCommandLog);
+	GDREGISTER_CLASS(JigsawCommandFormatText);
+	GDREGISTER_CLASS(JigsawCommandIf);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
+	GDREGISTER_CLASS(JigsawParameterUILabelInstance);
+	GDREGISTER_CLASS(JigsawParameterUIIconInstance);
+	GDREGISTER_CLASS(JigsawParameterCharacterInstance);
+	GDREGISTER_CLASS(JigsawParameterAudienceInstance);
 	GDREGISTER_CLASS(JigsawParameterSpriteInstance);
 	GDREGISTER_CLASS(JigsawParameterSceneInstance);
 	GDREGISTER_CLASS(JigsawParameterQueuedEffect);
 	GDREGISTER_CLASS(JigsawParameterModifierInstance);
 	GDREGISTER_CLASS(JigsawParameterCardInstance);
 	GDREGISTER_CLASS(JigsawParameterFormattedText);
-	GDREGISTER_CLASS(JigsawParameterOrderedList);
 	GDREGISTER_CLASS(JigsawParameterLocalVariable);
+	GDREGISTER_CLASS(JigsawParameterOrderedList);
 	GDREGISTER_CLASS(JigsawParameterBoolean);
 	GDREGISTER_CLASS(JigsawParameterAmount);
 	GDREGISTER_CLASS(JigsawParameterFloat);
@@ -140,6 +174,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterFileIDGLTF);
 	GDREGISTER_CLASS(JigsawParameterColor);
 	GDREGISTER_CLASS(JigsawParameterChoice);
+	GDREGISTER_CLASS(JigsawParameterCharacter);
+	GDREGISTER_CLASS(JigsawParameterAudience);
 
 	GDREGISTER_ABSTRACT_CLASS(CardFilter);
 	GDREGISTER_CLASS(CardFilterAnd);
@@ -177,6 +213,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CardInstance);
 	GDREGISTER_CLASS(ModifierInstance);
 	GDREGISTER_CLASS(QueuedEffect);
+	GDREGISTER_CLASS(Audience);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

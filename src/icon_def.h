@@ -556,7 +556,7 @@ private:
 
 public:
 	IconDef();
-	~IconDef();
+	~IconDef() = default;
 
 	PackedByteArray get_file_id() const;
 	void set_file_id(PackedByteArray new_file_id);

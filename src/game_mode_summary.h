@@ -11,9 +11,10 @@ protected:
 	static void _bind_methods();
 
 public:
-	GameModeSummary();
-	~GameModeSummary();
+	GameModeSummary() = default;
+	~GameModeSummary() = default;
 
+	DECLARE_PROPERTY(String, title);
 	DECLARE_PROPERTY(String, author);
 	DECLARE_PROPERTY(IconDef::Icon, mode_thumbnail, = IconDef::Icon::NONE);
 	DECLARE_PROPERTY(String, description);

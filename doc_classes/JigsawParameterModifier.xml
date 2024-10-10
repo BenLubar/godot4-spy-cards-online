@@ -17,6 +17,6 @@
 	<members>
 		<member name="modifier" type="int" setter="set_modifier" getter="get_modifier" enum="ModifierDef.Modifier" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="11" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="13" />
 	</members>
 </class>

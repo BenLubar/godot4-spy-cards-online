@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawParameterAudienceInstance" inherits="JigsawParameter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="group" type="int" setter="set_group" getter="get_group" default="-1">
+		</member>
+		<member name="member" type="int" setter="set_member" getter="get_member" default="-1">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-9" />
+	</members>
+</class>

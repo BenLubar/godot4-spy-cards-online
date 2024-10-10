@@ -6,13 +6,10 @@
 	</description>
 	<tutorials>
 	</tutorials>
-	<methods>
-		<method name="get_type" qualifiers="const">
-			<return type="int" enum="JigsawCommand.Type" />
-			<description>
-			</description>
-		</method>
-	</methods>
+	<members>
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawCommand.Type" default="0">
+		</member>
+	</members>
 	<constants>
 		<constant name="CRASH" value="0" enum="Type">
 		</constant>
@@ -21,6 +18,12 @@
 		<constant name="REUSABLE_COMMAND_LIST" value="2" enum="Type">
 		</constant>
 		<constant name="MATH" value="3" enum="Type">
+		</constant>
+		<constant name="LOG" value="4" enum="Type">
+		</constant>
+		<constant name="FORMAT_TEXT" value="5" enum="Type">
+		</constant>
+		<constant name="IF" value="6" enum="Type">
 		</constant>
 	</constants>
 </class>

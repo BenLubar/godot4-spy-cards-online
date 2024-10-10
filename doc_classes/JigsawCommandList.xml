@@ -6,4 +6,12 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="list" type="JigsawCommand[]" setter="set_list" getter="get_list" default="[]">
+		</member>
+		<member name="local_variable_names" type="PackedStringArray" setter="set_local_variable_names" getter="get_local_variable_names" default="PackedStringArray()">
+		</member>
+		<member name="local_variables" type="JigsawParameter[]" setter="set_local_variables" getter="get_local_variables" default="[]">
+		</member>
+	</members>
 </class>

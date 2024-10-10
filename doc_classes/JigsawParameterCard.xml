@@ -17,6 +17,6 @@
 	<members>
 		<member name="card" type="int" setter="set_card" getter="get_card" enum="CardDef.Card" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="7" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="9" />
 	</members>
 </class>

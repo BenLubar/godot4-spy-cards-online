@@ -23,6 +23,6 @@
 	<members>
 		<member name="list" type="JigsawParameter[]" setter="set_list" getter="get_list" default="[]">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-2" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="2" />
 	</members>
 </class>

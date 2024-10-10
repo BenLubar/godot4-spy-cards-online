@@ -13,6 +13,6 @@
 		</member>
 		<member name="loop_start" type="float" setter="set_loop_start" getter="get_loop_start" default="0.0">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="14" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="16" />
 	</members>
 </class>

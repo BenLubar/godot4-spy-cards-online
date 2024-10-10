@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawError" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="flags1" type="int" setter="set_flags1" getter="get_flags1" enum="JigsawError.Flags1" is_bitfield="true" default="2157450598">
+		</member>
+		<member name="message" type="String" setter="set_message" getter="get_message" default="&quot;&quot;">
+		</member>
+		<member name="params" type="JigsawParameter[]" setter="set_params" getter="get_params" default="[]">
+		</member>
+		<member name="stack" type="JigsawStackFrame[]" setter="set_stack" getter="get_stack" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="MAGIC" value="2157450598" enum="Flags1" is_bitfield="true">
+		</constant>
+		<constant name="MAGIC_MASK" value="2164260863" enum="Flags1" is_bitfield="true">
+		</constant>
+		<constant name="CONTAINS_GLOBAL_SNAPSHOT" value="16777216" enum="Flags1" is_bitfield="true">
+		</constant>
+	</constants>
+</class>

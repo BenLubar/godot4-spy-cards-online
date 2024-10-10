@@ -6,9 +6,9 @@ void CharacterDef::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, tags);
 	BIND_PROPERTY_IS(Variant::BOOL, hidden);
 
-	BIND_PROPERTY(Variant::INT, idle0);
-	BIND_PROPERTY(Variant::INT, idle1);
-	BIND_PROPERTY(Variant::INT, angry);
+	BIND_PROPERTY_ENUM(IconDef::Icon, idle0);
+	BIND_PROPERTY_ENUM(IconDef::Icon, idle1);
+	BIND_PROPERTY_ENUM(IconDef::Icon, angry);
 
 	BIND_PROPERTY(Variant::FLOAT, idle0_center_px);
 	BIND_PROPERTY(Variant::FLOAT, idle1_center_px);

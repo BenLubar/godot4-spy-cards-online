@@ -7,6 +7,10 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-1" />
+		<member name="frame" type="int" setter="set_frame" getter="get_frame" default="0">
+		</member>
+		<member name="slot" type="int" setter="set_slot" getter="get_slot" default="-1">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="0" />
 	</members>
 </class>

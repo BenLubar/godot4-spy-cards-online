@@ -7,63 +7,77 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" enum="JigsawParameter.Type" default="0">
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawParameter.Type" default="1">
 		</member>
 	</members>
 	<constants>
-		<constant name="SPRITE_INSTANCE" value="-8" enum="Type">
+		<constant name="UI_LABEL_INSTANCE" value="-11" enum="Type">
 		</constant>
-		<constant name="SCENE_INSTANCE" value="-7" enum="Type">
+		<constant name="UI_ICON_INSTANCE" value="-10" enum="Type">
 		</constant>
-		<constant name="QUEUED_EFFECT" value="-6" enum="Type">
+		<constant name="AUDIENCE_INSTANCE" value="-9" enum="Type">
 		</constant>
-		<constant name="MODIFIER_INSTANCE" value="-5" enum="Type">
+		<constant name="CHARACTER_INSTANCE" value="-8" enum="Type">
 		</constant>
-		<constant name="CARD_INSTANCE" value="-4" enum="Type">
+		<constant name="SPRITE_INSTANCE" value="-7" enum="Type">
 		</constant>
-		<constant name="FORMATTED_TEXT" value="-3" enum="Type">
+		<constant name="SCENE_INSTANCE" value="-6" enum="Type">
 		</constant>
-		<constant name="ORDERED_LIST" value="-2" enum="Type">
+		<constant name="QUEUED_EFFECT" value="-5" enum="Type">
 		</constant>
-		<constant name="LOCAL_VARIABLE" value="-1" enum="Type">
+		<constant name="MODIFIER_INSTANCE" value="-4" enum="Type">
 		</constant>
-		<constant name="VARIABLE" value="0" enum="Type">
+		<constant name="CARD_INSTANCE" value="-3" enum="Type">
 		</constant>
-		<constant name="BOOLEAN" value="1" enum="Type">
+		<constant name="FORMATTED_TEXT" value="-2" enum="Type">
 		</constant>
-		<constant name="AMOUNT" value="2" enum="Type">
+		<constant name="NONE" value="-1" enum="Type">
 		</constant>
-		<constant name="FLOAT" value="3" enum="Type">
+		<constant name="VARIABLE" value="1" enum="Type">
 		</constant>
-		<constant name="STRING" value="4" enum="Type">
+		<constant name="LOCAL_VARIABLE" value="0" enum="Type">
 		</constant>
-		<constant name="EFFECT_INSTANCE" value="5" enum="Type">
+		<constant name="ORDERED_LIST" value="2" enum="Type">
 		</constant>
-		<constant name="CARD_FILTER" value="6" enum="Type">
+		<constant name="BOOLEAN" value="3" enum="Type">
 		</constant>
-		<constant name="CARD" value="7" enum="Type">
+		<constant name="AMOUNT" value="4" enum="Type">
 		</constant>
-		<constant name="STAT" value="8" enum="Type">
+		<constant name="FLOAT" value="5" enum="Type">
 		</constant>
-		<constant name="RANK" value="9" enum="Type">
+		<constant name="STRING" value="6" enum="Type">
 		</constant>
-		<constant name="TRIBE" value="10" enum="Type">
+		<constant name="EFFECT_INSTANCE" value="7" enum="Type">
 		</constant>
-		<constant name="MODIFIER" value="11" enum="Type">
+		<constant name="CARD_FILTER" value="8" enum="Type">
 		</constant>
-		<constant name="LOCATION" value="12" enum="Type">
+		<constant name="CARD" value="9" enum="Type">
 		</constant>
-		<constant name="ICON" value="13" enum="Type">
+		<constant name="STAT" value="10" enum="Type">
 		</constant>
-		<constant name="CID_OPUS" value="14" enum="Type">
+		<constant name="RANK" value="11" enum="Type">
 		</constant>
-		<constant name="FILE_ID_OPUS" value="15" enum="Type">
+		<constant name="TRIBE" value="12" enum="Type">
 		</constant>
-		<constant name="FILE_ID_GLTF" value="16" enum="Type">
+		<constant name="MODIFIER" value="13" enum="Type">
 		</constant>
-		<constant name="COLOR" value="17" enum="Type">
+		<constant name="LOCATION" value="14" enum="Type">
 		</constant>
-		<constant name="CHOICE" value="18" enum="Type">
+		<constant name="ICON" value="15" enum="Type">
+		</constant>
+		<constant name="CID_OPUS" value="16" enum="Type">
+		</constant>
+		<constant name="FILE_ID_OPUS" value="17" enum="Type">
+		</constant>
+		<constant name="FILE_ID_GLTF" value="18" enum="Type">
+		</constant>
+		<constant name="COLOR" value="19" enum="Type">
+		</constant>
+		<constant name="CHOICE" value="20" enum="Type">
+		</constant>
+		<constant name="CHARACTER" value="21" enum="Type">
+		</constant>
+		<constant name="AUDIENCE" value="22" enum="Type">
 		</constant>
 	</constants>
 </class>

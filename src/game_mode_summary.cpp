@@ -2,16 +2,13 @@
 
 void GameModeSummary::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, author);
-	BIND_PROPERTY(Variant::INT, mode_thumbnail);
+	BIND_PROPERTY_ENUM(IconDef::Icon, mode_thumbnail);
 	BIND_PROPERTY_MULTILINE_TEXT(description);
 	BIND_PROPERTY_MULTILINE_TEXT(latest_changes);
 	BIND_PROPERTY_RESOURCE_ARRAY(IconDef, custom_icons);
 
 	ClassDB::bind_method(D_METHOD("get_icon_texture", "icon"), &GameModeSummary::get_icon_texture);
 }
-
-GameModeSummary::GameModeSummary() {}
-GameModeSummary::~GameModeSummary() {}
 
 IMPLEMENT_PROPERTY(GameModeSummary, String, author);
 IMPLEMENT_PROPERTY(GameModeSummary, IconDef::Icon, mode_thumbnail);

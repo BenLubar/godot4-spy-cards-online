@@ -17,6 +17,6 @@
 	<members>
 		<member name="filter" type="CardFilter" setter="set_filter" getter="get_filter">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="6" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="8" />
 	</members>
 </class>

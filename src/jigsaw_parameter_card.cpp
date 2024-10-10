@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_card.h"
 
 void JigsawParameterCard::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, card);
+	BIND_PROPERTY_ENUM(CardDef::Card, card);
 
 	ClassDB::bind_static_method("JigsawParameterCard", D_METHOD("make", "card"), &JigsawParameterCard::make);
 }

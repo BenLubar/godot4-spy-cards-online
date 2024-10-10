@@ -5,13 +5,18 @@
 
 class JigsawGlobal;
 
-#include "game_mode.h"
 #include "card_instance.h"
+#include "game_mode.h"
 #include "effect_instance.h"
+#include "jigsaw_context.h"
+#include "audience.h"
 
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/sprite3d.hpp>
+#include <godot_cpp/classes/label.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
 
 class JigsawGlobal : public Node {
 	GDCLASS(JigsawGlobal, Node);
@@ -20,11 +25,21 @@ protected:
 	static void _bind_methods();
 
 public:
+	JigsawGlobal() = default;
+	~JigsawGlobal() = default;
+
 	DECLARE_PROPERTY(Ref<GameMode>, mode);
 	DECLARE_PROPERTY(Ref<CardInstance>, current_card_instance);
 	DECLARE_PROPERTY(Ref<EffectInstance>, current_effect_instance);
+
+	DECLARE_PROPERTY(TypedArray<JigsawContext>, context_stack);
+
 	DECLARE_PROPERTY(TypedArray<Node3D>, scene_nodes);
 	DECLARE_PROPERTY(TypedArray<Sprite3D>, sprite_nodes);
+	DECLARE_PROPERTY(TypedArray<Label>, label_nodes);
+	DECLARE_PROPERTY(TypedArray<TextureRect>, icon_nodes);
+	DECLARE_PROPERTY(Ref<Audience>, audience);
+	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes);
 };
 
 #endif // JIGSAW_GLOBAL_H

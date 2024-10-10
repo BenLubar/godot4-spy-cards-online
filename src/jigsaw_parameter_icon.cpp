@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_icon.h"
 
 void JigsawParameterIcon::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, icon);
+	BIND_PROPERTY_ENUM(IconDef::Icon, icon);
 
 	ClassDB::bind_static_method("JigsawParameterIcon", D_METHOD("make", "icon"), &JigsawParameterIcon::make);
 }

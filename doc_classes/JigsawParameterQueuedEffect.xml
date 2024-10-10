@@ -17,6 +17,6 @@
 	<members>
 		<member name="effect" type="QueuedEffect" setter="set_effect" getter="get_effect">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-6" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-5" />
 	</members>
 </class>

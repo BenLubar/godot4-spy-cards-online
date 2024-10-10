@@ -1,10 +1,10 @@
 #include "audience_def.h"
 
 void AudienceDef::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, front);
-	BIND_PROPERTY(Variant::INT, front_cheer);
-	BIND_PROPERTY(Variant::INT, back);
-	BIND_PROPERTY(Variant::INT, back_cheer);
+	BIND_PROPERTY_ENUM(IconDef::Icon, front);
+	BIND_PROPERTY_ENUM(IconDef::Icon, front_cheer);
+	BIND_PROPERTY_ENUM(IconDef::Icon, back);
+	BIND_PROPERTY_ENUM(IconDef::Icon, back_cheer);
 	BIND_PROPERTY(Variant::VECTOR2, hue_range);
 	BIND_PROPERTY(Variant::FLOAT, weight);
 	BIND_PROPERTY(Variant::FLOAT, pixel_size);

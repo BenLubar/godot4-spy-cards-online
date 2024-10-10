@@ -12,6 +12,9 @@ public:
 		COMMENT = 1,
 		REUSABLE_COMMAND_LIST = 2,
 		MATH = 3,
+		LOG = 4,
+		FORMAT_TEXT = 5,
+		IF = 6,
 	};
 
 protected:

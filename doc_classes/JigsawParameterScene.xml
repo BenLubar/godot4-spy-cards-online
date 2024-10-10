@@ -11,6 +11,6 @@
 		</member>
 		<member name="scene" type="GLTFState" setter="set_scene" getter="get_scene">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="16" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="18" />
 	</members>
 </class>

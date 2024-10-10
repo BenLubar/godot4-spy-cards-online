@@ -97,12 +97,12 @@ void CardDef::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
 
-	BIND_PROPERTY(Variant::INT, id);
-	BIND_PROPERTY(Variant::INT, rank);
+	BIND_PROPERTY_ENUM(CardDef::Card, id);
+	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY(Variant::STRING, name);
-	BIND_PROPERTY(Variant::INT, portrait);
-	BIND_PROPERTY(Variant::ARRAY, tribes);
+	BIND_PROPERTY_ENUM(IconDef::Icon, portrait);
+	BIND_PROPERTY_ENUM_ARRAY(TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
 	BIND_PROPERTY(Variant::FLOAT, curve_adjust);
 }

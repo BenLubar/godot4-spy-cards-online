@@ -17,6 +17,6 @@
 	<members>
 		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="8" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="10" />
 	</members>
 </class>

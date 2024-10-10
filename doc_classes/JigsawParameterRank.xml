@@ -17,6 +17,6 @@
 	<members>
 		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="9" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="11" />
 	</members>
 </class>

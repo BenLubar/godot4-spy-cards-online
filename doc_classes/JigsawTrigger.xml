@@ -6,4 +6,10 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="commands" type="JigsawCommandList" setter="set_commands" getter="get_commands">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawTrigger.Type">
+		</member>
+	</members>
 </class>

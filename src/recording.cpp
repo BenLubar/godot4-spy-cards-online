@@ -6,7 +6,7 @@ void Recording::_bind_methods() {
 	BIND_ENUM_CONSTANT(RECORDING_2);
 	BIND_ENUM_CONSTANT(RECORDING_3);
 
-	BIND_PROPERTY(Variant::INT, format_version);
+	BIND_PROPERTY_ENUM(Recording::FormatVersion, format_version);
 	BIND_PROPERTY(Variant::VECTOR3I, game_version);
 	BIND_PROPERTY(Variant::STRING, mode_name);
 	BIND_PROPERTY(Variant::INT, perspective);

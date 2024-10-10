@@ -3,6 +3,8 @@
 
 #include "dry.h"
 
+class CardDef;
+
 #include "rank_def.h"
 #include "tribe_def.h"
 #include "stat_value.h"

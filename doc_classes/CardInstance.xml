@@ -14,6 +14,16 @@
 			<description>
 			</description>
 		</method>
+		<method name="update_description">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="update_simple_description">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
@@ -33,6 +43,8 @@
 		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
 		</member>
 		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		</member>
+		<member name="simple_description" type="FormattedTextWithIcon[]" setter="set_simple_description" getter="get_simple_description" default="[]">
 		</member>
 		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
 		</member>

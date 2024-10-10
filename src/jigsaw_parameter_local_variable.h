@@ -13,6 +13,9 @@ public:
 	JigsawParameterLocalVariable() = default;
 	~JigsawParameterLocalVariable() = default;
 
+	DECLARE_PROPERTY(int64_t, frame, = 0);
+	DECLARE_PROPERTY(int64_t, slot, = -1);
+
 	Type get_type() const override { return LOCAL_VARIABLE; }
 };
 

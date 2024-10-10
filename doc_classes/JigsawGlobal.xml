@@ -7,9 +7,19 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
+		</member>
+		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
+		</member>
+		<member name="context_stack" type="JigsawContext[]" setter="set_context_stack" getter="get_context_stack" default="[]">
+		</member>
 		<member name="current_card_instance" type="CardInstance" setter="set_current_card_instance" getter="get_current_card_instance">
 		</member>
 		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
+		</member>
+		<member name="icon_nodes" type="TextureRect[]" setter="set_icon_nodes" getter="get_icon_nodes" default="[]">
+		</member>
+		<member name="label_nodes" type="Label[]" setter="set_label_nodes" getter="get_label_nodes" default="[]">
 		</member>
 		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
 		</member>

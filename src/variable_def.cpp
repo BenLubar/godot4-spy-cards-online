@@ -29,7 +29,7 @@ void VariableDef::_bind_methods() {
 	BIND_ENUM_CONSTANT(SIDE);
 
 	BIND_PROPERTY(Variant::STRING, editor_name);
-	BIND_PROPERTY(Variant::INT, uniqueness);
+	BIND_PROPERTY_ENUM(VariableDef::Uniqueness, uniqueness);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, default_value);
 }
 

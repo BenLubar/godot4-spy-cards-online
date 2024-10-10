@@ -19,6 +19,6 @@
 	<members>
 		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="15" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="17" />
 	</members>
 </class>

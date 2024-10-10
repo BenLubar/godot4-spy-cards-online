@@ -28,7 +28,7 @@ void TribeDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY(Variant::COLOR, color);
-	BIND_PROPERTY(Variant::INT, display);
+	BIND_PROPERTY_ENUM(TribeDef::DisplayMode, display);
 }
 
 IMPLEMENT_PROPERTY(TribeDef, String, name);

@@ -3,6 +3,9 @@
 
 #include "dry.h"
 
+class FormattedText;
+class FormattedTextWithIcon;
+
 #include "icon_def.h"
 #include "effect_instance.h"
 
@@ -48,8 +51,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	FormattedText();
-	~FormattedText();
+	FormattedText() = default;
+	~FormattedText() = default;
 
 	DECLARE_PROPERTY(Command, command, = ADD_TEXT);
 	DECLARE_PROPERTY(String, text);
@@ -62,5 +65,19 @@ public:
 	static TypedArray<FormattedText> make_plain(String string);
 };
 DECLARE_ENUM(FormattedText::Command);
+
+class FormattedTextWithIcon : public Resource {
+	GDCLASS(FormattedTextWithIcon, Resource);
+
+protected:
+	static void _bind_methods();
+
+public:
+	FormattedTextWithIcon() = default;
+	~FormattedTextWithIcon() = default;
+
+	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
+};
 
 #endif // FORMATTED_TEXT_H

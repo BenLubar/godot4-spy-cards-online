@@ -17,6 +17,6 @@
 	<members>
 		<member name="boolean" type="bool" setter="set_boolean" getter="get_boolean" default="false">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="1" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="3" />
 	</members>
 </class>

@@ -20,6 +20,6 @@
 		</member>
 		<member name="index" type="int" setter="set_index" getter="get_index" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="18" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="20" />
 	</members>
 </class>

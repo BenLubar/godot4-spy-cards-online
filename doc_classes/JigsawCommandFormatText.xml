@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawCommandFormatText" inherits="JigsawCommand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="after" type="JigsawParameter" setter="set_after" getter="get_after">
+		</member>
+		<member name="before" type="JigsawParameter" setter="set_before" getter="get_before">
+		</member>
+		<member name="color" type="JigsawParameter" setter="set_color" getter="get_color">
+		</member>
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command" default="0">
+		</member>
+		<member name="font_size" type="JigsawParameter" setter="set_font_size" getter="get_font_size">
+		</member>
+		<member name="icon" type="JigsawParameter" setter="set_icon" getter="get_icon">
+		</member>
+		<member name="result" type="JigsawParameterLocalVariable" setter="set_result" getter="get_result">
+		</member>
+		<member name="table_columns" type="int" setter="set_table_columns" getter="get_table_columns" default="1">
+		</member>
+		<member name="text" type="JigsawParameter" setter="set_text" getter="get_text">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="5" />
+	</members>
+</class>

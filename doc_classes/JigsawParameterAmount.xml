@@ -10,7 +10,7 @@
 		<method name="make" qualifiers="static">
 			<return type="JigsawParameterAmount" />
 			<param index="0" name="amount" type="int" />
-			<param index="1" name="amount_inf" type="int" />
+			<param index="1" name="amount_inf" type="int" default="0" />
 			<description>
 			</description>
 		</method>
@@ -27,6 +27,6 @@
 		</member>
 		<member name="nan" type="bool" setter="set_nan" getter="is_nan" default="false">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="2" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="4" />
 	</members>
 </class>

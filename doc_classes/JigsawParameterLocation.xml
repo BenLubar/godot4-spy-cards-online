@@ -17,6 +17,6 @@
 	<members>
 		<member name="location" type="int" setter="set_location" getter="get_location" enum="LocationDef.Location" default="-1">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="12" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="14" />
 	</members>
 </class>

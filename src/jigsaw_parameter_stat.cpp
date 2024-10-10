@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_stat.h"
 
 void JigsawParameterStat::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, stat);
+	BIND_PROPERTY_ENUM(StatDef::Stat, stat);
 
 	ClassDB::bind_static_method("JigsawParameterStat", D_METHOD("make", "stat"), &JigsawParameterStat::make);
 }

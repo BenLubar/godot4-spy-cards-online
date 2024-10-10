@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawCommandReusableCommandList" inherits="JigsawCommand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="args" type="JigsawParameter[]" setter="set_args" getter="get_args" default="[]">
+		</member>
+		<member name="command_list_index" type="int" setter="set_command_list_index" getter="get_command_list_index" default="-1">
+		</member>
+		<member name="results" type="JigsawParameterLocalVariable[]" setter="set_results" getter="get_results" default="[]">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="2" />
+	</members>
+</class>

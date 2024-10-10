@@ -1,7 +1,7 @@
 #include "jigsaw_parameter_rank.h"
 
 void JigsawParameterRank::_bind_methods() {
-	BIND_PROPERTY(Variant::INT, rank);
+	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
 
 	ClassDB::bind_static_method("JigsawParameterRank", D_METHOD("make", "rank"), &JigsawParameterRank::make);
 }

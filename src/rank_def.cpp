@@ -1,9 +1,5 @@
 #include "rank_def.h"
 
-#include <godot_cpp/core/class_db.hpp>
-
-using namespace godot;
-
 void RankDef::_bind_methods() {
 	BIND_ENUM_CONSTANT(NONE);
 
@@ -23,8 +19,6 @@ void RankDef::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, front);
 	BIND_PROPERTY(Variant::INT, back);
 }
-RankDef::RankDef() {}
-RankDef::~RankDef() {}
 
 IMPLEMENT_PROPERTY(RankDef, String, name);
 IMPLEMENT_PROPERTY(RankDef, Color, color);

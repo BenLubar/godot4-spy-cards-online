@@ -33,9 +33,9 @@ void FormattedText::_bind_methods() {
 	BIND_ENUM_CONSTANT(PUSH_SHAKE);
 	BIND_ENUM_CONSTANT(PUSH_GLITCH);
 
-	BIND_PROPERTY(Variant::INT, command);
+	BIND_PROPERTY_ENUM(FormattedText::Command, command);
 	BIND_PROPERTY(Variant::STRING, text);
-	BIND_PROPERTY(Variant::INT, icon);
+	BIND_PROPERTY_ENUM(IconDef::Icon, icon);
 	BIND_PROPERTY_RESOURCE(EffectInstance, instance);
 	BIND_PROPERTY(Variant::COLOR, color);
 	BIND_PROPERTY(Variant::FLOAT, font_size);
@@ -43,8 +43,6 @@ void FormattedText::_bind_methods() {
 
 	ClassDB::bind_static_method("FormattedText", D_METHOD("make_plain", "string"), &FormattedText::make_plain);
 }
-FormattedText::FormattedText() {}
-FormattedText::~FormattedText() {}
 
 IMPLEMENT_PROPERTY(FormattedText, FormattedText::Command, command);
 IMPLEMENT_PROPERTY(FormattedText, String, text);
@@ -61,3 +59,11 @@ TypedArray<FormattedText> FormattedText::make_plain(String string) {
 	ft->set_text(string);
 	return Array::make(ft);
 }
+
+void FormattedTextWithIcon::_bind_methods() {
+	BIND_PROPERTY_ENUM(IconDef::Icon, icon);
+	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, text);
+}
+
+IMPLEMENT_PROPERTY(FormattedTextWithIcon, IconDef::Icon, icon);
+IMPLEMENT_PROPERTY(FormattedTextWithIcon, TypedArray<FormattedText>, text);

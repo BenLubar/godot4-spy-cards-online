@@ -1,19 +1,27 @@
 #ifndef JIGSAW_TRIGGER_H
 #define JIGSAW_TRIGGER_H
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/variant.hpp>
+#include "dry.h"
 
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
+class JigsawTrigger;
 
-using namespace godot;
+#include "jigsaw_command_list.h"
 
 class JigsawTrigger : public Resource {
 	GDCLASS(JigsawTrigger, Resource);
 
+public:
+	enum Type {
+	};
+
 protected:
 	static void _bind_methods();
+
+public:
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, commands);
+
+	virtual Type get_type() const = 0;
 };
+DECLARE_ENUM(JigsawTrigger::Type);
 
 #endif // JIGSAW_TRIGGER_H

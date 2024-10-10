@@ -17,6 +17,6 @@
 	<members>
 		<member name="text" type="FormattedText[]" setter="set_text" getter="get_text" default="[]">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-3" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-2" />
 	</members>
 </class>
