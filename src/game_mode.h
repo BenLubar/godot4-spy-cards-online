@@ -1,24 +1,26 @@
 #ifndef GAME_MODE_H
 #define GAME_MODE_H
 
-#include "dry.h"
+#include "game_mode_summary.h"
+
+#include "enums_icon_def.h"
 
 class GameMode;
 
-#include "game_mode_summary.h"
-#include "sticker_def.h"
-#include "variant_def.h"
 #include "audience_def.h"
-#include "character_def.h"
 #include "card_def.h"
-#include "effect_def.h"
-#include "rank_def.h"
-#include "tribe_def.h"
-#include "stat_def.h"
-#include "modifier_def.h"
+#include "character_def.h"
 #include "choices_def.h"
+#include "effect_def.h"
+#include "jigsaw_function.h"
+#include "modifier_def.h"
+#include "npc_def.h"
+#include "rank_def.h"
+#include "stat_def.h"
+#include "sticker_def.h"
+#include "tribe_def.h"
 #include "variable_def.h"
-#include "jigsaw_reusable_command_list.h"
+#include "variant_def.h"
 
 class GameMode : public GameModeSummary {
 	GDCLASS(GameMode, GameModeSummary);
@@ -48,10 +50,10 @@ public:
 	DECLARE_PROPERTY(Transform3D, visual_rank_decoration_transform, = Transform3D(Basis(Vector3(0.533333f, 0.0f, 0.0f), Vector3(0.0f, 1.466667f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)), Vector3(0.83f, 0.44f, 0.0f)));
 	DECLARE_PROPERTY(Vector3, visual_smooth_corners, = Vector3(174.0f / 5.0f, 237.0f / 5.0f, 1.0f));
 
-	DECLARE_PROPERTY(IconDef::Icon, visual_card_front, = IconDef::Icon::CARD_FRONT);
-	DECLARE_PROPERTY(IconDef::Icon, visual_card_front_window, = IconDef::Icon::CARD_FRONT_WINDOW);
-	DECLARE_PROPERTY(IconDef::Icon, visual_tribe_bubble, = IconDef::Icon::CARD_TRIBE_BUBBLE);
-	DECLARE_PROPERTY(IconDef::Icon, visual_tribe_bubble_wide, = IconDef::Icon::CARD_TRIBE_BUBBLE_WIDE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, visual_card_front, = enums::IconDef::Icon::CARD_FRONT);
+	DECLARE_PROPERTY(enums::IconDef::Icon, visual_card_front_window, = enums::IconDef::Icon::CARD_FRONT_WINDOW);
+	DECLARE_PROPERTY(enums::IconDef::Icon, visual_tribe_bubble, = enums::IconDef::Icon::CARD_TRIBE_BUBBLE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, visual_tribe_bubble_wide, = enums::IconDef::Icon::CARD_TRIBE_BUBBLE_WIDE);
 
 	DECLARE_PROPERTY(Rect2, visual_card_name_pos, = Rect2(12, 9, 146, 0));
 	DECLARE_PROPERTY(Vector2, visual_card_name_scale, = Vector2(1.0f, 1.0f));
@@ -82,12 +84,12 @@ public:
 	DECLARE_PROPERTY(Ref<VariantDef>, base_variant);
 	DECLARE_PROPERTY(TypedArray<VariantDef>, variants);
 
-	DECLARE_PROPERTY(TypedArray<RankDef::Rank>, ranks);
-	DECLARE_PROPERTY(TypedArray<TribeDef::Tribe>, tribes);
-	DECLARE_PROPERTY(TypedArray<StatDef::Stat>, stats);
-	DECLARE_PROPERTY(TypedArray<ModifierDef::Modifier>, modifiers);
-	DECLARE_PROPERTY(TypedArray<EffectDef::Effect>, effects);
-	DECLARE_PROPERTY(TypedArray<NPCDef::NPC>, npcs);
+	DECLARE_PROPERTY(TypedArray<enums::RankDef::Rank>, ranks);
+	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
+	DECLARE_PROPERTY(TypedArray<enums::StatDef::Stat>, stats);
+	DECLARE_PROPERTY(TypedArray<enums::ModifierDef::Modifier>, modifiers);
+	DECLARE_PROPERTY(TypedArray<enums::EffectDef::Effect>, effects);
+	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, npcs);
 
 	DECLARE_PROPERTY(TypedArray<RankDef>, custom_ranks);
 	DECLARE_PROPERTY(TypedArray<TribeDef>, custom_tribes);
@@ -98,17 +100,17 @@ public:
 
 	DECLARE_PROPERTY(TypedArray<VariableDef>, custom_variables);
 	DECLARE_PROPERTY(TypedArray<ChoicesDef>, custom_choices);
-	DECLARE_PROPERTY(TypedArray<JigsawReusableCommandList>, custom_functions);
+	DECLARE_PROPERTY(TypedArray<JigsawFunction>, custom_functions);
 
 	DECLARE_PROPERTY(TypedArray<CardDef>, card_defs);
 
-	Ref<CardDef> get_card(CardDef::Card id) const;
-	Ref<RankDef> get_rank(RankDef::Rank id) const;
-	Ref<TribeDef> get_tribe(TribeDef::Tribe id) const;
-	Ref<StatDef> get_stat(StatDef::Stat id) const;
-	Ref<ModifierDef> get_modifier(ModifierDef::Modifier id) const;
-	Ref<EffectDef> get_effect(EffectDef::Effect id) const;
-	Ref<NPCDef> get_npc(NPCDef::NPC id) const;
+	Ref<CardDef> get_card(enums::CardDef::Card id) const;
+	Ref<RankDef> get_rank(enums::RankDef::Rank id) const;
+	Ref<TribeDef> get_tribe(enums::TribeDef::Tribe id) const;
+	Ref<StatDef> get_stat(enums::StatDef::Stat id) const;
+	Ref<ModifierDef> get_modifier(enums::ModifierDef::Modifier id) const;
+	Ref<EffectDef> get_effect(enums::EffectDef::Effect id) const;
+	Ref<NPCDef> get_npc(enums::NPCDef::NPC id) const;
 };
 DECLARE_ENUM(GameMode::GrowMode);
 

@@ -5,8 +5,6 @@
 
 class JigsawCommandFormatText;
 
-#include "jigsaw_parameter.h"
-#include "jigsaw_parameter_local_variable.h"
 #include "formatted_text.h"
 
 class JigsawCommandFormatText : public JigsawCommand {

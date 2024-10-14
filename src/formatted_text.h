@@ -3,10 +3,11 @@
 
 #include "dry.h"
 
+#include "enums_icon_def.h"
+
 class FormattedText;
 class FormattedTextWithIcon;
 
-#include "icon_def.h"
 #include "effect_instance.h"
 
 class FormattedText : public Resource {
@@ -56,7 +57,7 @@ public:
 
 	DECLARE_PROPERTY(Command, command, = ADD_TEXT);
 	DECLARE_PROPERTY(String, text);
-	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<EffectInstance>, instance);
 	DECLARE_PROPERTY(Color, color);
 	DECLARE_PROPERTY(double, font_size, = 1.0f);
@@ -76,7 +77,7 @@ public:
 	FormattedTextWithIcon() = default;
 	~FormattedTextWithIcon() = default;
 
-	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
 };
 

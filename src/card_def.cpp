@@ -1,7 +1,13 @@
 #include "card_def.h"
 
+#include "effect_instance.h"
+#include "stat_value.h"
+
 void CardDef::_bind_methods() {
+	using namespace enums::CardDef;
+
 	BIND_ENUM_CONSTANT(NONE);
+
 	BIND_ENUM_CONSTANT(ZOMBIANT);
 	BIND_ENUM_CONSTANT(JELLYSHROOM);
 	BIND_ENUM_CONSTANT(SPIDER);
@@ -97,21 +103,21 @@ void CardDef::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
 
-	BIND_PROPERTY_ENUM(CardDef::Card, id);
-	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
+	BIND_PROPERTY_ENUM(enums::CardDef::Card, id);
+	BIND_PROPERTY_ENUM(enums::RankDef::Rank, rank);
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY(Variant::STRING, name);
-	BIND_PROPERTY_ENUM(IconDef::Icon, portrait);
-	BIND_PROPERTY_ENUM_ARRAY(TribeDef::Tribe, tribes);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, portrait);
+	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
 	BIND_PROPERTY(Variant::FLOAT, curve_adjust);
 }
 
-IMPLEMENT_PROPERTY(CardDef, CardDef::Card, id);
-IMPLEMENT_PROPERTY(CardDef, RankDef::Rank, rank);
+IMPLEMENT_PROPERTY(CardDef, enums::CardDef::Card, id);
+IMPLEMENT_PROPERTY(CardDef, enums::RankDef::Rank, rank);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<StatValue>, costs);
 IMPLEMENT_PROPERTY(CardDef, String, name);
-IMPLEMENT_PROPERTY(CardDef, IconDef::Icon, portrait);
-IMPLEMENT_PROPERTY(CardDef, TypedArray<TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(CardDef, enums::IconDef::Icon, portrait);
+IMPLEMENT_PROPERTY(CardDef, TypedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<EffectInstance>, effects);
 IMPLEMENT_PROPERTY(CardDef, double, curve_adjust);

@@ -15,13 +15,17 @@
 		</member>
 		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon" default="-1">
 		</member>
-		<member name="hue_range" type="Vector2" setter="set_hue_range" getter="get_hue_range" default="Vector2(0, 1)">
+		<member name="json_data" type="Dictionary" setter="set_json_data" getter="get_json_data" default="{}">
 		</member>
 		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size" default="0.01">
-		</member>
-		<member name="very_tall" type="bool" setter="set_very_tall" getter="is_very_tall" default="false">
 		</member>
 		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">
 		</member>
 	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Audience">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="0" enum="Audience">
+		</constant>
+	</constants>
 </class>

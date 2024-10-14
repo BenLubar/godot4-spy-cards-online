@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="JigsawReusableCommandList" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="JigsawFunction" inherits="JigsawProcedure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
 	</brief_description>
 	<description>
@@ -10,8 +10,6 @@
 		<member name="argument_names" type="PackedStringArray" setter="set_argument_names" getter="get_argument_names" default="PackedStringArray()">
 		</member>
 		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
-		</member>
-		<member name="commands" type="JigsawCommandList" setter="set_commands" getter="get_commands">
 		</member>
 		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>

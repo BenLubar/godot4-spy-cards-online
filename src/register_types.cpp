@@ -10,18 +10,19 @@
 #include "rich_text_glitch_effect.h"
 
 #include "jigsaw_command_list.h"
-#include "jigsaw_reusable_command_list.h"
 #include "jigsaw_global.h"
 #include "jigsaw_context.h"
 #include "jigsaw_stack_frame.h"
 #include "jigsaw_error.h"
 
+#include "jigsaw_procedure.h"
 #include "jigsaw_trigger.h"
+#include "jigsaw_function.h"
 
 #include "jigsaw_command.h"
 #include "jigsaw_command_crash.h"
 #include "jigsaw_command_comment.h"
-#include "jigsaw_command_reusable_command_list.h"
+#include "jigsaw_command_function.h"
 #include "jigsaw_command_math.h"
 #include "jigsaw_command_log.h"
 #include "jigsaw_command_format_text.h"
@@ -91,7 +92,6 @@
 #include "variable_def.h"
 #include "variant_def.h"
 
-#include "deck.h"
 #include "game_mode_summary.h"
 #include "game_mode.h"
 #include "recording.h"
@@ -123,18 +123,20 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(RichTextGlitchEffect);
 
 	GDREGISTER_CLASS(JigsawCommandList);
-	GDREGISTER_CLASS(JigsawReusableCommandList);
 	GDREGISTER_CLASS(JigsawGlobal);
 	GDREGISTER_CLASS(JigsawContext);
 	GDREGISTER_CLASS(JigsawStackFrame);
 	GDREGISTER_CLASS(JigsawError);
 
+	// TODO
+	GDREGISTER_ABSTRACT_CLASS(JigsawProcedure);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
+	GDREGISTER_CLASS(JigsawFunction);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawCommand);
 	GDREGISTER_CLASS(JigsawCommandCrash);
 	GDREGISTER_CLASS(JigsawCommandComment);
-	GDREGISTER_CLASS(JigsawCommandReusableCommandList);
+	GDREGISTER_CLASS(JigsawCommandFunction);
 	GDREGISTER_CLASS(JigsawCommandMath);
 	GDREGISTER_CLASS(JigsawCommandLog);
 	GDREGISTER_CLASS(JigsawCommandFormatText);
@@ -204,7 +206,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(VariableDef);
 	GDREGISTER_CLASS(VariantDef);
 
-	GDREGISTER_CLASS(Deck);
 	GDREGISTER_CLASS(GameModeSummary);
 	GDREGISTER_CLASS(GameMode);
 	GDREGISTER_CLASS(Recording);

@@ -1,7 +1,10 @@
 #include "variable_def.h"
 
 void VariableDef::_bind_methods() {
+	using namespace enums::VariableDef;
+
 	BIND_ENUM_CONSTANT(NONE);
+
 	BIND_ENUM_CONSTANT(TARGET_CARD);
 	BIND_ENUM_CONSTANT(LIMIT_COUNT);
 

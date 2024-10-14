@@ -1,6 +1,8 @@
 #include "choices_def.h"
 
 void ChoicesDef::_bind_methods() {
+	using namespace enums::ChoicesDef;
+
 	BIND_ENUM_CONSTANT(NONE);
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);

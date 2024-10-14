@@ -3,6 +3,8 @@
 
 #include "jigsaw_parameter.h"
 
+#include "enums_character_def.h"
+
 class JigsawParameterCharacter : public JigsawParameter {
 	GDCLASS(JigsawParameterCharacter, JigsawParameter);
 
@@ -13,11 +15,11 @@ public:
 	JigsawParameterCharacter() = default;
 	~JigsawParameterCharacter() = default;
 
-	DECLARE_PROPERTY(int64_t, character, = -1);
+	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
 
 	Type get_type() const override { return CHARACTER; }
 
-	static Ref<JigsawParameterCharacter> make(int64_t character);
+	static Ref<JigsawParameterCharacter> make(enums::CharacterDef::Character character);
 };
 
 #endif // JIGSAW_PARAMETER_CHARACTER_H

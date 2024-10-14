@@ -19,13 +19,15 @@
 		</member>
 		<member name="icon_nodes" type="TextureRect[]" setter="set_icon_nodes" getter="get_icon_nodes" default="[]">
 		</member>
-		<member name="label_nodes" type="Label[]" setter="set_label_nodes" getter="get_label_nodes" default="[]">
+		<member name="label_nodes" type="SquishLabel[]" setter="set_label_nodes" getter="get_label_nodes" default="[]">
 		</member>
 		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
 		</member>
 		<member name="scene_nodes" type="Node3D[]" setter="set_scene_nodes" getter="get_scene_nodes" default="[]">
 		</member>
 		<member name="sprite_nodes" type="Sprite3D[]" setter="set_sprite_nodes" getter="get_sprite_nodes" default="[]">
+		</member>
+		<member name="time_scale" type="float" setter="set_time_scale" getter="get_time_scale" default="1.0">
 		</member>
 	</members>
 </class>

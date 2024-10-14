@@ -52,6 +52,9 @@ public:
 	~JigsawParameter() = default;
 
 	virtual Type get_type() const = 0;
+
+	static bool is_concrete_type(Type type) { return type != NONE && type != VARIABLE && type != LOCAL_VARIABLE; }
+	static bool is_saved_type(Type type) { return type > NONE; }
 };
 DECLARE_ENUM(JigsawParameter::Type);
 

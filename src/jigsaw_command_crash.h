@@ -1,12 +1,7 @@
 #ifndef JIGSAW_COMMAND_CRASH_H
 #define JIGSAW_COMMAND_CRASH_H
 
-#include "dry.h"
-
-class JigsawCommandCrash;
-
 #include "jigsaw_command.h"
-#include "jigsaw_parameter.h"
 
 class JigsawCommandCrash : public JigsawCommand {
 	GDCLASS(JigsawCommandCrash, JigsawCommand);

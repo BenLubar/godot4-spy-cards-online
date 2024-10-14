@@ -3,9 +3,7 @@
 
 #include "dry.h"
 
-class ModifierInstance;
-
-#include "modifier_def.h"
+#include "enums_modifier_def.h"
 
 class ModifierInstance : public RefCounted {
 	GDCLASS(ModifierInstance, RefCounted);
@@ -17,7 +15,7 @@ public:
 	ModifierInstance() = default;
 	~ModifierInstance() = default;
 
-	DECLARE_PROPERTY(ModifierDef::Modifier, modifier, = ModifierDef::Modifier::NONE);
+	DECLARE_PROPERTY(enums::ModifierDef::Modifier, modifier, = enums::ModifierDef::Modifier::NONE);
 	DECLARE_PROPERTY(int64_t, amount, = 0);
 	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
 	DECLARE_PROPERTY_IS(bool, nan, = false);

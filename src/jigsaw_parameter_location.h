@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterLocation;
-
-#include "location_def.h"
+#include "enums_location_def.h"
 
 class JigsawParameterLocation : public JigsawParameter {
 	GDCLASS(JigsawParameterLocation, JigsawParameter);
@@ -17,11 +15,11 @@ public:
 	JigsawParameterLocation() = default;
 	~JigsawParameterLocation() = default;
 
-	DECLARE_PROPERTY(LocationDef::Location, location, = LocationDef::Location::NONE);
+	DECLARE_PROPERTY(enums::LocationDef::Location, location, = enums::LocationDef::Location::NONE);
 
 	Type get_type() const override { return LOCATION; }
 
-	static Ref<JigsawParameterLocation> make(LocationDef::Location location);
+	static Ref<JigsawParameterLocation> make(enums::LocationDef::Location location);
 };
 
 #endif // JIGSAW_PARAMETER_LOCATION_H

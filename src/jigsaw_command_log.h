@@ -1,12 +1,7 @@
 #ifndef JIGSAW_COMMAND_LOG_H
 #define JIGSAW_COMMAND_LOG_H
 
-#include "dry.h"
-
-class JigsawCommandLog;
-
 #include "jigsaw_command.h"
-#include "jigsaw_parameter.h"
 
 class JigsawCommandLog : public JigsawCommand {
 	GDCLASS(JigsawCommandLog, JigsawCommand);

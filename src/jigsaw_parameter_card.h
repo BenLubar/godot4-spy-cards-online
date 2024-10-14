@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterCard;
-
-#include "card_def.h"
+#include "enums_card_def.h"
 
 class JigsawParameterCard : public JigsawParameter {
 	GDCLASS(JigsawParameterCard, JigsawParameter);
@@ -17,11 +15,11 @@ public:
 	JigsawParameterCard() = default;
 	~JigsawParameterCard() = default;
 
-	DECLARE_PROPERTY(CardDef::Card, card, = CardDef::Card::NONE);
+	DECLARE_PROPERTY(enums::CardDef::Card, card, = enums::CardDef::Card::NONE);
 
 	Type get_type() const override { return CARD; }
 
-	static Ref<JigsawParameterCard> make(CardDef::Card card);
+	static Ref<JigsawParameterCard> make(enums::CardDef::Card card);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_H

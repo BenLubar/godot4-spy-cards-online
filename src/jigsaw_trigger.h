@@ -4,6 +4,11 @@
 #include "dry.h"
 
 class JigsawTrigger;
+// TODO
+using JigsawTriggerEffect = JigsawTrigger;
+using JigsawTriggerModifier = JigsawTrigger;
+using JigsawTriggerNPC = JigsawTrigger;
+using JigsawTriggerVariant = JigsawTrigger;
 
 #include "jigsaw_command_list.h"
 

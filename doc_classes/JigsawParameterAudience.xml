@@ -6,8 +6,16 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterAudience" />
+			<param index="0" name="audience" type="int" enum="AudienceDef.Audience" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
-		<member name="audience" type="int" setter="set_audience" getter="get_audience" default="-1">
+		<member name="audience" type="int" setter="set_audience" getter="get_audience" enum="AudienceDef.Audience" default="-1">
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="22" />
 	</members>

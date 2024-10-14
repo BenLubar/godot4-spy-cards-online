@@ -3,8 +3,9 @@
 
 #include "dry.h"
 
+class Recording;
+
 #include "game_mode.h"
-#include "deck.h"
 #include "recording_round.h"
 
 class Recording : public Resource {
@@ -40,7 +41,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<PackedByteArray>, private_seeds);
 	DECLARE_PROPERTY(Ref<GameMode>, mode);
 	DECLARE_PROPERTY(int64_t, variant, = -1);
-	DECLARE_PROPERTY(TypedArray<Deck>, initial_decks);
+	DECLARE_PROPERTY(TypedArray<PackedInt64Array>, initial_decks);
 	DECLARE_PROPERTY(TypedArray<RecordingRound>, rounds);
 };
 DECLARE_ENUM(Recording::FormatVersion);

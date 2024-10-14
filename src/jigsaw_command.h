@@ -3,6 +3,12 @@
 
 #include "dry.h"
 
+class JigsawCommand;
+
+#include "jigsaw_context.h"
+#include "jigsaw_parameter.h"
+#include "jigsaw_parameter_local_variable.h"
+
 class JigsawCommand : public Resource {
 	GDCLASS(JigsawCommand, Resource);
 
@@ -10,7 +16,7 @@ public:
 	enum Type {
 		CRASH = 0,
 		COMMENT = 1,
-		REUSABLE_COMMAND_LIST = 2,
+		FUNCTION = 2,
 		MATH = 3,
 		LOG = 4,
 		FORMAT_TEXT = 5,

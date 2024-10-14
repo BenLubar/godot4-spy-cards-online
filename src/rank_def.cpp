@@ -1,6 +1,8 @@
 #include "rank_def.h"
 
 void RankDef::_bind_methods() {
+	using namespace enums::RankDef;
+
 	BIND_ENUM_CONSTANT(NONE);
 
 	BIND_ENUM_CONSTANT(ATTACKER);
@@ -16,12 +18,12 @@ void RankDef::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY(Variant::COLOR, color);
 	BIND_PROPERTY(Variant::COLOR, color_alt);
-	BIND_PROPERTY(Variant::INT, front);
-	BIND_PROPERTY(Variant::INT, back);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, front);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
 }
 
 IMPLEMENT_PROPERTY(RankDef, String, name);
 IMPLEMENT_PROPERTY(RankDef, Color, color);
 IMPLEMENT_PROPERTY(RankDef, Color, color_alt);
-IMPLEMENT_PROPERTY(RankDef, IconDef::Icon, front);
-IMPLEMENT_PROPERTY(RankDef, IconDef::Icon, back);
+IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, front);
+IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, back);

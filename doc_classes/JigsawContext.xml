@@ -7,11 +7,21 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="continue_run">
+			<return type="JigsawError" />
+			<description>
+			</description>
+		</method>
 		<method name="create_error" qualifiers="const">
 			<return type="JigsawError" />
 			<param index="0" name="message" type="String" />
 			<param index="1" name="params" type="JigsawParameter[]" default="[]" />
 			<param index="2" name="include_global_snapshot" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="in_progress" qualifiers="const">
+			<return type="bool" />
 			<description>
 			</description>
 		</method>
@@ -55,7 +65,7 @@
 		</member>
 		<member name="parent" type="JigsawContext" setter="set_parent" getter="get_parent">
 		</member>
-		<member name="read_only" type="bool" setter="set_read_only" getter="get_read_only" default="false">
+		<member name="read_only" type="bool" setter="set_read_only" getter="is_read_only" default="false">
 		</member>
 		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results" default="[]">
 		</member>

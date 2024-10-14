@@ -2,7 +2,8 @@
 #define JIGSAW_PARAMETER_VARIABLE_H
 
 #include "jigsaw_parameter.h"
-#include "variable_def.h"
+
+#include "enums_variable_def.h"
 
 class JigsawParameterVariable : public JigsawParameter {
 	GDCLASS(JigsawParameterVariable, JigsawParameter);
@@ -14,11 +15,11 @@ public:
 	JigsawParameterVariable() = default;
 	~JigsawParameterVariable() = default;
 
-	DECLARE_PROPERTY(VariableDef::Variable, variable, = VariableDef::Variable::NONE);
+	DECLARE_PROPERTY(enums::VariableDef::Variable, variable, = enums::VariableDef::Variable::NONE);
 
 	Type get_type() const override { return VARIABLE; }
 
-	static Ref<JigsawParameterVariable> make(VariableDef::Variable variable);
+	static Ref<JigsawParameterVariable> make(enums::VariableDef::Variable variable);
 };
 
 #endif // JIGSAW_PARAMETER_VARIABLE_H

@@ -3,32 +3,13 @@
 
 #include "dry.h"
 
+#include "enums_tribe_def.h"
+
 class TribeDef : public Resource {
 	GDCLASS(TribeDef, Resource);
 
 public:
-	enum Tribe {
-		NONE = -1,
-
-		SEEDLING = 0,
-		WASP = 1,
-		FUNGI = 2,
-		ZOMBIE = 3,
-		PLANT = 4,
-		BUG = 5,
-		BOT = 6,
-		THUG = 7,
-		UNKNOWN = 8,
-		CHOMPER = 9,
-		LEAFBUG = 10,
-		DEAD_LANDER = 11,
-		MOTHFLY = 12,
-		SPIDER = 13,
-		LEGACY_CUSTOM = 14,
-		LEGACY_NONE = 15,
-
-		FIRST_CUSTOM = 16,
-	};
+	using Tribe = enums::TribeDef::Tribe;
 
 	enum DisplayMode {
 		NORMAL = 0,
@@ -47,7 +28,6 @@ public:
 	DECLARE_PROPERTY(Color, color);
 	DECLARE_PROPERTY(DisplayMode, display, = DisplayMode::NORMAL);
 };
-DECLARE_ENUM(TribeDef::Tribe);
 DECLARE_ENUM(TribeDef::DisplayMode);
 DECLARE_PREDEFINED_KEY(TribeDef, TRIBE);
 

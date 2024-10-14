@@ -4,7 +4,7 @@
 void JigsawContext::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
 	BIND_PROPERTY_RESOURCE(JigsawContext, parent);
-	BIND_PROPERTY(Variant::BOOL, read_only);
+	BIND_PROPERTY_IS(Variant::BOOL, read_only);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawStackFrame, stack);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawCommandList, command_stack);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, environment);
@@ -13,6 +13,8 @@ void JigsawContext::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("validate", "commands", "env", "args", "results", "debug_name", "arg_names", "result_names"), &JigsawContext::validate, DEFVAL(PackedStringArray()), DEFVAL(PackedStringArray()));
 	ClassDB::bind_method(D_METHOD("run", "commands", "env", "args", "results"), &JigsawContext::run);
+	ClassDB::bind_method(D_METHOD("continue_run"), &JigsawContext::continue_run);
+	ClassDB::bind_method(D_METHOD("in_progress"), &JigsawContext::in_progress);
 	ClassDB::bind_method(D_METHOD("create_error", "message", "params", "include_global_snapshot"), &JigsawContext::create_error, DEFVAL(TypedArray<JigsawParameter>()), DEFVAL(false));
 
 	ClassDB::bind_static_method("JigsawContext", D_METHOD("make", "global", "parent"), &JigsawContext::make, DEFVAL(Ref<JigsawContext>()));
@@ -20,7 +22,7 @@ void JigsawContext::_bind_methods() {
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, JigsawGlobal *, global);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Ref<JigsawContext>, parent);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, bool, read_only);
+IMPLEMENT_PROPERTY_SIMPLE_IS(JigsawContext, bool, read_only);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawStackFrame>, stack);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawCommandList>, command_stack);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, environment);
@@ -29,11 +31,17 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, results);
 
 TypedArray<JigsawError> JigsawContext::validate(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, const String &debug_name, const PackedStringArray &arg_names, const PackedStringArray &result_names) const {
 	TypedArray<JigsawError> errors;
-	errors.append(create_error("TODO"));
+	errors.append(create_error("TODO")); // TODO
 	return errors;
 }
 Ref<JigsawError> JigsawContext::run(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results) {
-	return create_error("TODO");
+	return create_error("TODO"); // TODO
+}
+Ref<JigsawError> JigsawContext::continue_run() {
+	return create_error("TODO"); // TODO
+}
+bool JigsawContext::in_progress() const {
+	return false; // TODO
 }
 Ref<JigsawError> JigsawContext::create_error(const String &message, const TypedArray<JigsawParameter> &params, bool include_global_snapshot) const {
 	Ref<JigsawError> error;

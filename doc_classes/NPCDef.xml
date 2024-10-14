@@ -9,7 +9,7 @@
 	<members>
 		<member name="build_deck" type="JigsawCommandList" setter="set_build_deck" getter="get_build_deck">
 		</member>
-		<member name="character" type="int" setter="set_character" getter="get_character" default="-1">
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="-1">
 		</member>
 		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
@@ -45,7 +45,7 @@
 		</constant>
 		<constant name="CROW" value="11" enum="NPC">
 		</constant>
-		<constant name="FIRST_CUSTOM" value="256" enum="NPC">
+		<constant name="FIRST_CUSTOM" value="16" enum="NPC">
 		</constant>
 	</constants>
 </class>

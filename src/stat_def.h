@@ -2,22 +2,19 @@
 #define STAT_DEF_H
 
 #include "dry.h"
-#include "icon_def.h"
-#include "jigsaw_command_list.h"
+
+#include "enums_icon_def.h"
+#include "enums_stat_def.h"
+
+class StatDef;
+
+#include "jigsaw_procedure.h"
 
 class StatDef : public Resource {
 	GDCLASS(StatDef, Resource);
 
 public:
-	enum Stat {
-		NONE = -1,
-		ATK = 0,
-		DEF = 1,
-		HP = 2,
-		TP = 3,
-
-		FIRST_CUSTOM = 256,
-	};
+	using Stat = enums::StatDef::Stat;
 
 protected:
 	static void _bind_methods();
@@ -27,10 +24,9 @@ public:
 	~StatDef() = default;
 
 	DECLARE_PROPERTY(String, name);
-	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
-	DECLARE_PROPERTY(Ref<JigsawCommandList>, format_quantity);
+	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(Ref<JigsawProcedureStatFormatQuantity>, format_quantity);
 };
-DECLARE_ENUM(StatDef::Stat);
 DECLARE_PREDEFINED_KEY(StatDef, STAT);
 
 #endif // STAT_DEF_H

@@ -1,6 +1,8 @@
 #include "icon_def.h"
 
 void IconDef::_bind_methods() {
+	using namespace enums::IconDef;
+
 	BIND_ENUM_CONSTANT(NONE);
 
 	BIND_ENUM_CONSTANT(PORTRAIT_ZOMBIANT);
@@ -540,6 +542,8 @@ Ref<ImageTexture> IconDef::get_texture() const {
 }
 
 Ref<IconDef> IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray data) {
+	using namespace enums::IconDef;
+
 	ERR_FAIL_COND_V_MSG(portrait != LEGACY_PORTRAIT_EMBEDDED && portrait != LEGACY_PORTRAIT_EXTERNAL, nullptr, "invalid portrait ID for legacy");
 
 	if (portrait == LEGACY_PORTRAIT_EMBEDDED) {

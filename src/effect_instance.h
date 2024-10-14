@@ -3,10 +3,11 @@
 
 #include "dry.h"
 
+#include "enums_effect_def.h"
+
 class EffectInstance;
 
-class CardInstance;
-#include "effect_def.h"
+#include "card_instance.h"
 #include "formatted_text.h"
 #include "jigsaw_context.h"
 #include "jigsaw_parameter.h"
@@ -21,7 +22,7 @@ public:
 	EffectInstance() = default;
 	~EffectInstance() = default;
 
-	DECLARE_PROPERTY(EffectDef::Effect, effect, = EffectDef::Effect::NONE);
+	DECLARE_PROPERTY(enums::EffectDef::Effect, effect, = enums::EffectDef::Effect::NONE);
 	DECLARE_PROPERTY(int64_t, priority, = 65);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, params);
 

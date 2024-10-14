@@ -1,7 +1,10 @@
 #include "effect_def.h"
 
 void EffectDef::_bind_methods() {
+	using namespace enums::EffectDef;
+
 	BIND_ENUM_CONSTANT(NONE);
+
 	BIND_ENUM_CONSTANT(FLAVOR_TEXT);
 	BIND_ENUM_CONSTANT(STAT);
 	BIND_ENUM_CONSTANT(EMPOWER);
@@ -60,17 +63,17 @@ void EffectDef::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, default_priority);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, default_parameters);
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, parameter_names);
-	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTrigger, triggers);
-	BIND_PROPERTY_RESOURCE(JigsawCommandList, describe);
-	BIND_PROPERTY_RESOURCE(JigsawCommandList, simple_describe);
-	BIND_PROPERTY_RESOURCE(JigsawCommandList, curve);
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTriggerEffect, triggers);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectDescribe, describe);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectSimpleDescribe, simple_describe);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectCurve, curve);
 }
 
 IMPLEMENT_PROPERTY(EffectDef, String, editor_name);
 IMPLEMENT_PROPERTY(EffectDef, int64_t, default_priority);
 IMPLEMENT_PROPERTY(EffectDef, TypedArray<JigsawParameter>, default_parameters);
 IMPLEMENT_PROPERTY(EffectDef, PackedStringArray, parameter_names);
-IMPLEMENT_PROPERTY(EffectDef, TypedArray<JigsawTrigger>, triggers);
-IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawCommandList>, describe);
-IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawCommandList>, simple_describe);
-IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawCommandList>, curve);
+IMPLEMENT_PROPERTY(EffectDef, TypedArray<JigsawTriggerEffect>, triggers);
+IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectDescribe>, describe);
+IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectSimpleDescribe>, simple_describe);
+IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectCurve>, curve);

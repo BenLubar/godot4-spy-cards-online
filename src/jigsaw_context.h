@@ -4,11 +4,12 @@
 #include "dry.h"
 
 class JigsawContext;
+class JigsawGlobal;
 
-class JigsawGlobal; // including the header means CardDef::Card gets defined after GameMode, which causes an error
 #include "jigsaw_command_list.h"
-#include "jigsaw_stack_frame.h"
 #include "jigsaw_error.h"
+#include "jigsaw_parameter.h"
+#include "jigsaw_stack_frame.h"
 
 class JigsawContext : public RefCounted {
 	GDCLASS(JigsawContext, RefCounted);
@@ -22,7 +23,7 @@ public:
 
 	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 	DECLARE_PROPERTY(Ref<JigsawContext>, parent);
-	DECLARE_PROPERTY(bool, read_only, = false);
+	DECLARE_PROPERTY_IS(bool, read_only, = false);
 	DECLARE_PROPERTY(TypedArray<JigsawStackFrame>, stack);
 	DECLARE_PROPERTY(TypedArray<JigsawCommandList>, command_stack);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, environment);
@@ -31,6 +32,8 @@ public:
 
 	TypedArray<JigsawError> validate(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, const String &debug_name, const PackedStringArray &arg_names, const PackedStringArray &result_names) const;
 	Ref<JigsawError> run(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results);
+	Ref<JigsawError> continue_run();
+	bool in_progress() const;
 	Ref<JigsawError> create_error(const String &message, const TypedArray<JigsawParameter> &params = TypedArray<JigsawParameter>(), bool include_global_snapshot = false) const;
 
 	static Ref<JigsawContext> make(JigsawGlobal *global, const Ref<JigsawContext> &parent);

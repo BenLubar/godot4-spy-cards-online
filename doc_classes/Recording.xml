@@ -11,7 +11,7 @@
 		</member>
 		<member name="game_version" type="Vector3i" setter="set_game_version" getter="get_game_version" default="Vector3i(0, 0, 0)">
 		</member>
-		<member name="initial_decks" type="Deck[]" setter="set_initial_decks" getter="get_initial_decks" default="[]">
+		<member name="initial_decks" type="PackedInt64Array[]" setter="set_initial_decks" getter="get_initial_decks" default="[]">
 		</member>
 		<member name="match_start_time_ms" type="int" setter="set_match_start_time_ms" getter="get_match_start_time_ms" default="0">
 		</member>

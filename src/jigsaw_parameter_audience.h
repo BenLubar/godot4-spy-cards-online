@@ -3,6 +3,8 @@
 
 #include "jigsaw_parameter.h"
 
+#include "enums_audience_def.h"
+
 class JigsawParameterAudience : public JigsawParameter {
 	GDCLASS(JigsawParameterAudience, JigsawParameter);
 
@@ -13,11 +15,11 @@ public:
 	JigsawParameterAudience() = default;
 	~JigsawParameterAudience() = default;
 
-	DECLARE_PROPERTY(int64_t, audience, = -1);
+	DECLARE_PROPERTY(enums::AudienceDef::Audience, audience, = enums::AudienceDef::Audience::NONE);
 
 	Type get_type() const override { return AUDIENCE; }
 
-	static Ref<JigsawParameterAudience> make(int64_t audience);
+	static Ref<JigsawParameterAudience> make(enums::AudienceDef::Audience audience);
 };
 
 #endif // JIGSAW_PARAMETER_AUDIENCE_H

@@ -15,7 +15,7 @@
 	<constants>
 		<constant name="NONE" value="-1" enum="Choices">
 		</constant>
-		<constant name="FIRST_CUSTOM" value="256" enum="Choices">
+		<constant name="FIRST_CUSTOM" value="0" enum="Choices">
 		</constant>
 	</constants>
 </class>

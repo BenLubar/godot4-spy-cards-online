@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterChoice;
-
-#include "choices_def.h"
+#include "enums_choices_def.h"
 
 class JigsawParameterChoice : public JigsawParameter {
 	GDCLASS(JigsawParameterChoice, JigsawParameter);
@@ -17,12 +15,12 @@ public:
 	JigsawParameterChoice() = default;
 	~JigsawParameterChoice() = default;
 
-	DECLARE_PROPERTY(ChoicesDef::Choices, choices, = ChoicesDef::Choices::NONE);
+	DECLARE_PROPERTY(enums::ChoicesDef::Choices, choices, = enums::ChoicesDef::Choices::NONE);
 	DECLARE_PROPERTY(int64_t, index, = -1);
 
 	Type get_type() const override { return CHOICE; }
 
-	static Ref<JigsawParameterChoice> make(ChoicesDef::Choices choices, int64_t index);
+	static Ref<JigsawParameterChoice> make(enums::ChoicesDef::Choices choices, int64_t index);
 };
 
 #endif // JIGSAW_PARAMETER_CHOICE_H

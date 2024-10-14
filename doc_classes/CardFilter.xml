@@ -7,20 +7,6 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="_matches_def" qualifiers="virtual const">
-			<return type="bool" />
-			<param index="0" name="global" type="JigsawGlobal" />
-			<param index="1" name="card" type="int" enum="CardDef.Card" />
-			<description>
-			</description>
-		</method>
-		<method name="_matches_instance" qualifiers="virtual const">
-			<return type="bool" />
-			<param index="0" name="global" type="JigsawGlobal" />
-			<param index="1" name="instance" type="CardInstance" />
-			<description>
-			</description>
-		</method>
 		<method name="make_and" qualifiers="static">
 			<return type="CardFilter" />
 			<param index="0" name="list" type="CardFilter[]" />
@@ -37,6 +23,13 @@
 			<return type="CardFilter" />
 			<param index="0" name="stat" type="int" enum="StatDef.Stat" />
 			<param index="1" name="amount" type="int" />
+			<param index="2" name="amount_inf" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="make_cost_nan" qualifiers="static">
+			<return type="CardFilter" />
+			<param index="0" name="stat" type="int" enum="StatDef.Stat" />
 			<description>
 			</description>
 		</method>
@@ -61,6 +54,20 @@
 		<method name="make_tribe" qualifiers="static">
 			<return type="CardFilter" />
 			<param index="0" name="tribe" type="int" enum="TribeDef.Tribe" />
+			<description>
+			</description>
+		</method>
+		<method name="matches_def" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="ctx" type="JigsawContext" />
+			<param index="1" name="card" type="int" enum="CardDef.Card" />
+			<description>
+			</description>
+		</method>
+		<method name="matches_instance" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="ctx" type="JigsawContext" />
+			<param index="1" name="inst" type="CardInstance" />
 			<description>
 			</description>
 		</method>

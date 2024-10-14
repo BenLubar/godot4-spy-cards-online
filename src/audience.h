@@ -3,9 +3,6 @@
 
 #include "dry.h"
 
-class Audience;
-
-#include "game_mode.h"
 #include <godot_cpp/classes/multi_mesh.hpp>
 
 struct AudienceMember_t {

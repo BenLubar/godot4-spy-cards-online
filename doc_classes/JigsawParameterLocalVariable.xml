@@ -6,6 +6,15 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterLocalVariable" />
+			<param index="0" name="frame" type="int" />
+			<param index="1" name="slot" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="frame" type="int" setter="set_frame" getter="get_frame" default="0">
 		</member>
@@ -13,4 +22,12 @@
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="0" />
 	</members>
+	<constants>
+		<constant name="FRAME_ARGUMENTS" value="-1">
+		</constant>
+		<constant name="FRAME_RESULTS" value="-2">
+		</constant>
+		<constant name="FRAME_ENVIRONMENT" value="-3">
+		</constant>
+	</constants>
 </class>

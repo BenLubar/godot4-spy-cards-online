@@ -3,9 +3,7 @@
 
 #include "dry.h"
 
-class StatValue;
-
-#include "stat_def.h"
+#include "enums_stat_def.h"
 
 class StatValue : public Resource {
 	GDCLASS(StatValue, Resource);
@@ -17,7 +15,7 @@ public:
 	StatValue() = default;
 	~StatValue() = default;
 
-	DECLARE_PROPERTY(StatDef::Stat, stat, = StatDef::Stat::NONE);
+	DECLARE_PROPERTY(enums::StatDef::Stat, stat, = enums::StatDef::Stat::NONE);
 	DECLARE_PROPERTY(int64_t, amount, = 0);
 	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
 	DECLARE_PROPERTY_IS(bool, nan, = false);

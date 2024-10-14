@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterRank;
-
-#include "rank_def.h"
+#include "enums_rank_def.h"
 
 class JigsawParameterRank : public JigsawParameter {
 	GDCLASS(JigsawParameterRank, JigsawParameter);
@@ -17,11 +15,11 @@ public:
 	JigsawParameterRank() = default;
 	~JigsawParameterRank() = default;
 
-	DECLARE_PROPERTY(RankDef::Rank, rank, = RankDef::Rank::NONE);
+	DECLARE_PROPERTY(enums::RankDef::Rank, rank, = enums::RankDef::Rank::NONE);
 
 	Type get_type() const override { return RANK; }
 
-	static Ref<JigsawParameterRank> make(RankDef::Rank rank);
+	static Ref<JigsawParameterRank> make(enums::RankDef::Rank rank);
 };
 
 #endif // JIGSAW_PARAMETER_RANK_H

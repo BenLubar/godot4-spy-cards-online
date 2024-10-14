@@ -3,14 +3,16 @@
 
 #include "dry.h"
 
+#include "enums_icon_def.h"
+#include "enums_rank_def.h"
+
 class CardInstance;
 
-#include "jigsaw_global.h"
 #include "card_def.h"
-#include "rank_def.h"
-#include "tribe_def.h"
 #include "formatted_text.h"
+#include "jigsaw_global.h"
 #include "modifier_instance.h"
+#include "stat_value.h"
 
 class CardInstance : public RefCounted {
 	GDCLASS(CardInstance, RefCounted);
@@ -25,11 +27,11 @@ public:
 	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 	DECLARE_PROPERTY(Ref<CardDef>, def);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, name);
-	DECLARE_PROPERTY(RankDef::Rank, rank, = RankDef::Rank::NONE);
-	DECLARE_PROPERTY(IconDef::Icon, back, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::RankDef::Rank, rank, = enums::RankDef::Rank::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<StatValue>, costs);
-	DECLARE_PROPERTY(IconDef::Icon, portrait, = IconDef::Icon::NONE);
-	DECLARE_PROPERTY(TypedArray<TribeDef::Tribe>, tribes);
+	DECLARE_PROPERTY(enums::IconDef::Icon, portrait, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, description);
 	DECLARE_PROPERTY(TypedArray<FormattedTextWithIcon>, simple_description);
 	DECLARE_PROPERTY(TypedArray<ModifierInstance>, modifiers);

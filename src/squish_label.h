@@ -3,14 +3,15 @@
 
 #include "dry.h"
 
-#include "card_instance.h"
+#include <godot_cpp/classes/rich_text_label.hpp>
+
+class SquishLabel;
+
 #include "formatted_text.h"
 #include "outline_current_effect.h"
+#include "rich_text_glitch_effect.h"
 #include "rich_text_rainbow_effect.h"
 #include "rich_text_shake_effect.h"
-#include "rich_text_glitch_effect.h"
-
-#include <godot_cpp/classes/rich_text_label.hpp>
 
 class SquishLabel : public RichTextLabel {
 	GDCLASS(SquishLabel, RichTextLabel);

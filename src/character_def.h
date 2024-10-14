@@ -3,15 +3,20 @@
 
 #include "dry.h"
 
-class CharacterDef;
-
-#include "icon_def.h"
-#include "game_mode.h"
+#include "enums_character_def.h"
+#include "enums_icon_def.h"
 
 #include <godot_cpp/classes/atlas_texture.hpp>
 
+class CharacterDef;
+
+#include "game_mode.h"
+
 class CharacterDef : public Resource {
 	GDCLASS(CharacterDef, Resource);
+
+public:
+	using Character = enums::CharacterDef::Character;
 
 protected:
 	static void _bind_methods();
@@ -25,9 +30,9 @@ public:
 	DECLARE_PROPERTY(PackedStringArray, tags);
 	DECLARE_PROPERTY_IS(bool, hidden, = false);
 
-	DECLARE_PROPERTY(IconDef::Icon, idle0, = IconDef::Icon::NONE);
-	DECLARE_PROPERTY(IconDef::Icon, idle1, = IconDef::Icon::NONE);
-	DECLARE_PROPERTY(IconDef::Icon, angry, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, idle0, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, idle1, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, angry, = enums::IconDef::Icon::NONE);
 
 	DECLARE_PROPERTY(double, idle0_center_px, = 0.0);
 	DECLARE_PROPERTY(double, idle1_center_px, = 0.0);

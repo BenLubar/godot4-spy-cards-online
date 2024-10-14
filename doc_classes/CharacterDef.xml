@@ -46,4 +46,10 @@
 		<member name="tags" type="PackedStringArray" setter="set_tags" getter="get_tags" default="PackedStringArray()">
 		</member>
 	</members>
+	<constants>
+		<constant name="NONE" value="-1" enum="Character">
+		</constant>
+		<constant name="FIRST_CUSTOM" value="0" enum="Character">
+		</constant>
+	</constants>
 </class>

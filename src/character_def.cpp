@@ -1,14 +1,20 @@
 #include "character_def.h"
 
 void CharacterDef::_bind_methods() {
+	using namespace enums::CharacterDef;
+
+	BIND_ENUM_CONSTANT(NONE);
+
+	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
+
 	BIND_PROPERTY(Variant::STRING, id);
 	BIND_PROPERTY(Variant::STRING, display_name);
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, tags);
 	BIND_PROPERTY_IS(Variant::BOOL, hidden);
 
-	BIND_PROPERTY_ENUM(IconDef::Icon, idle0);
-	BIND_PROPERTY_ENUM(IconDef::Icon, idle1);
-	BIND_PROPERTY_ENUM(IconDef::Icon, angry);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, idle0);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, idle1);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, angry);
 
 	BIND_PROPERTY(Variant::FLOAT, idle0_center_px);
 	BIND_PROPERTY(Variant::FLOAT, idle1_center_px);
@@ -28,9 +34,9 @@ IMPLEMENT_PROPERTY(CharacterDef, String, display_name);
 IMPLEMENT_PROPERTY(CharacterDef, PackedStringArray, tags);
 IMPLEMENT_PROPERTY_IS(CharacterDef, bool, hidden);
 
-IMPLEMENT_PROPERTY(CharacterDef, IconDef::Icon, idle0);
-IMPLEMENT_PROPERTY(CharacterDef, IconDef::Icon, idle1);
-IMPLEMENT_PROPERTY(CharacterDef, IconDef::Icon, angry);
+IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, idle0);
+IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, idle1);
+IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, angry);
 
 IMPLEMENT_PROPERTY(CharacterDef, double, idle0_center_px);
 IMPLEMENT_PROPERTY(CharacterDef, double, idle1_center_px);

@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="format_quantity" type="JigsawCommandList" setter="set_format_quantity" getter="get_format_quantity">
+		<member name="format_quantity" type="JigsawProcedure" setter="set_format_quantity" getter="get_format_quantity">
 		</member>
 		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
 		</member>
@@ -25,7 +25,7 @@
 		</constant>
 		<constant name="TP" value="3" enum="Stat">
 		</constant>
-		<constant name="FIRST_CUSTOM" value="256" enum="Stat">
+		<constant name="FIRST_CUSTOM" value="4" enum="Stat">
 		</constant>
 	</constants>
 </class>

@@ -17,7 +17,7 @@
 		</constant>
 		<constant name="DISCARD" value="3" enum="Location">
 		</constant>
-		<constant name="FIRST_CUSTOM" value="256" enum="Location">
+		<constant name="FIRST_CUSTOM" value="4" enum="Location">
 		</constant>
 	</constants>
 </class>

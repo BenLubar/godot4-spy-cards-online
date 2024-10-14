@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterModifier;
-
-#include "modifier_def.h"
+#include "enums_modifier_def.h"
 
 class JigsawParameterModifier : public JigsawParameter {
 	GDCLASS(JigsawParameterModifier, JigsawParameter);
@@ -17,11 +15,11 @@ public:
 	JigsawParameterModifier() = default;
 	~JigsawParameterModifier() = default;
 
-	DECLARE_PROPERTY(ModifierDef::Modifier, modifier, = ModifierDef::Modifier::NONE);
+	DECLARE_PROPERTY(enums::ModifierDef::Modifier, modifier, = enums::ModifierDef::Modifier::NONE);
 
 	Type get_type() const override { return MODIFIER; }
 
-	static Ref<JigsawParameterModifier> make(ModifierDef::Modifier modifier);
+	static Ref<JigsawParameterModifier> make(enums::ModifierDef::Modifier modifier);
 };
 
 #endif // JIGSAW_PARAMETER_MODIFIER_H

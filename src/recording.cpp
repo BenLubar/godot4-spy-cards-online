@@ -21,7 +21,7 @@ void Recording::_bind_methods() {
 	BIND_PROPERTY_VARIANT_ARRAY(Variant::PACKED_BYTE_ARRAY, private_seeds);
 	BIND_PROPERTY_RESOURCE(GameMode, mode);
 	BIND_PROPERTY(Variant::INT, variant);
-	BIND_PROPERTY_RESOURCE_ARRAY(Deck, initial_decks);
+	BIND_PROPERTY_VARIANT_ARRAY(Variant::PACKED_INT64_ARRAY, initial_decks);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingRound, rounds);
 }
 
@@ -40,5 +40,5 @@ IMPLEMENT_PROPERTY(Recording, PackedByteArray, shared_seed);
 IMPLEMENT_PROPERTY(Recording, TypedArray<PackedByteArray>, private_seeds);
 IMPLEMENT_PROPERTY(Recording, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY(Recording, int64_t, variant);
-IMPLEMENT_PROPERTY(Recording, TypedArray<Deck>, initial_decks);
+IMPLEMENT_PROPERTY(Recording, TypedArray<PackedInt64Array>, initial_decks);
 IMPLEMENT_PROPERTY(Recording, TypedArray<RecordingRound>, rounds);

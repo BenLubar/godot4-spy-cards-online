@@ -15,7 +15,7 @@
 		</constant>
 		<constant name="COMMENT" value="1" enum="Type">
 		</constant>
-		<constant name="REUSABLE_COMMAND_LIST" value="2" enum="Type">
+		<constant name="FUNCTION" value="2" enum="Type">
 		</constant>
 		<constant name="MATH" value="3" enum="Type">
 		</constant>

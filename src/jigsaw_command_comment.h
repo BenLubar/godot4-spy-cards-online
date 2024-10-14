@@ -1,13 +1,7 @@
 #ifndef JIGSAW_COMMAND_COMMENT_H
 #define JIGSAW_COMMAND_COMMENT_H
 
-#include "dry.h"
-
-class JigsawCommandComment;
-
 #include "jigsaw_command.h"
-#include "jigsaw_command_list.h"
-#include "jigsaw_parameter.h"
 
 class JigsawCommandComment : public JigsawCommand {
 	GDCLASS(JigsawCommandComment, JigsawCommand);

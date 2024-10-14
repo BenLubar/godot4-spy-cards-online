@@ -3,11 +3,6 @@
 
 #include "jigsaw_command.h"
 
-class JigsawCommandIf;
-
-#include "jigsaw_parameter.h"
-#include "jigsaw_command_list.h"
-
 class JigsawCommandIf : public JigsawCommand {
 	GDCLASS(JigsawCommandIf, JigsawCommand);
 

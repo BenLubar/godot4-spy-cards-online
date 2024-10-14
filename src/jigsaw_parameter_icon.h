@@ -3,9 +3,7 @@
 
 #include "jigsaw_parameter.h"
 
-class JigsawParameterIcon;
-
-#include "icon_def.h"
+#include "enums_icon_def.h"
 
 class JigsawParameterIcon : public JigsawParameter {
 	GDCLASS(JigsawParameterIcon, JigsawParameter);
@@ -17,11 +15,11 @@ public:
 	JigsawParameterIcon() = default;
 	~JigsawParameterIcon() = default;
 
-	DECLARE_PROPERTY(IconDef::Icon, icon, = IconDef::Icon::NONE);
+	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 
 	Type get_type() const override { return ICON; }
 
-	static Ref<JigsawParameterIcon> make(IconDef::Icon icon);
+	static Ref<JigsawParameterIcon> make(enums::IconDef::Icon icon);
 };
 
 #endif // JIGSAW_PARAMETER_ICON_H
