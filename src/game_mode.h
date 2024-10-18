@@ -13,6 +13,7 @@ class GameMode;
 #include "choices_def.h"
 #include "effect_def.h"
 #include "jigsaw_function.h"
+#include "location_def.h"
 #include "modifier_def.h"
 #include "npc_def.h"
 #include "rank_def.h"
@@ -98,6 +99,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<EffectDef>, custom_effects);
 	DECLARE_PROPERTY(TypedArray<NPCDef>, custom_npcs);
 
+	DECLARE_PROPERTY(TypedArray<LocationDef>, custom_locations);
 	DECLARE_PROPERTY(TypedArray<VariableDef>, custom_variables);
 	DECLARE_PROPERTY(TypedArray<ChoicesDef>, custom_choices);
 	DECLARE_PROPERTY(TypedArray<JigsawFunction>, custom_functions);

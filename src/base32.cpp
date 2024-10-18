@@ -205,13 +205,19 @@ PackedByteArray Base32::decode(const String &data) const {
 	return dst;
 }
 
+Ref<Base32> Base32::base32_crockford;
 static Ref<Base32> Base32_crockford() {
-	static Ref<Base32> encoding = memnew(Base32("0123456789ABCDEFGHJKMNPQRSTVWXYZ", ""));
-	return encoding;
+	if (Base32::base32_crockford.is_null()) {
+		Base32::base32_crockford = Ref<Base32>(memnew(Base32("0123456789ABCDEFGHJKMNPQRSTVWXYZ", "")));
+	}
+	return Base32::base32_crockford;
 }
+Ref<Base32> Base32::base32_cid;
 static Ref<Base32> Base32_cid() {
-	static Ref<Base32> encoding = memnew(Base32("abcdefghijklmnopqrstuvwxyz234567", ""));
-	return encoding;
+	if (Base32::base32_cid.is_null()) {
+		Base32::base32_cid = Ref<Base32>(memnew(Base32("abcdefghijklmnopqrstuvwxyz234567", "")));
+	}
+	return Base32::base32_cid;
 }
 
 String Base32::clean_crockford(const String &data) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawSide" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="-1">
+		</member>
+		<member name="initial_deck" type="int[]" setter="set_initial_deck" getter="get_initial_deck" default="[]">
+		</member>
+		<member name="locations" type="JigsawSideLocation[]" setter="set_locations" getter="get_locations" default="[]">
+		</member>
+		<member name="player_name" type="String" setter="set_player_name" getter="get_player_name" default="&quot;&quot;">
+		</member>
+		<member name="stats" type="NumericValue[]" setter="set_stats" getter="get_stats" default="[]">
+		</member>
+	</members>
+</class>

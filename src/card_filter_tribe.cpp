@@ -1,5 +1,7 @@
 #include "card_filter_tribe.h"
 
+#include "jigsaw_global.h"
+
 void CardFilterTribe::_bind_methods() {
 	BIND_PROPERTY_ENUM(TribeDef::Tribe, tribe);
 }

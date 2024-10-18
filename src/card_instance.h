@@ -7,15 +7,15 @@
 #include "enums_rank_def.h"
 
 class CardInstance;
+class JigsawGlobal;
 
 #include "card_def.h"
 #include "formatted_text.h"
-#include "jigsaw_global.h"
 #include "modifier_instance.h"
 #include "stat_value.h"
 
-class CardInstance : public RefCounted {
-	GDCLASS(CardInstance, RefCounted);
+class CardInstance : public Resource {
+	GDCLASS(CardInstance, Resource);
 
 protected:
 	static void _bind_methods();

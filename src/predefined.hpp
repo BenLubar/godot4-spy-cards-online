@@ -25,10 +25,10 @@ Ref<T> get_predefined(E index)
 
 	Array predefined = predefined_defs->get(PredefinedScriptKey<T>::name);
 
-	ERR_FAIL_INDEX_V_MSG(index, predefined.size(), Ref<T>(), String(PredefinedScriptKey<T>::name) + " outside of predefined range");
+	ERR_FAIL_INDEX_V_MSG(index, predefined.size(), Ref<T>(), vformat("%s %d outside of predefined range", PredefinedScriptKey<T>::name, index));
 
 	Ref<T> def = predefined[index];
-	ERR_FAIL_COND_V_MSG(def.is_null(), Ref<T>(), String("predefined ") + PredefinedScriptKey<T>::name + " is null");
+	ERR_FAIL_COND_V_MSG(def.is_null(), Ref<T>(), vformat("predefined %s %d is null", PredefinedScriptKey<T>::name, index));
 
 	return def;
 }

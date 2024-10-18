@@ -1,5 +1,7 @@
 #include "card_filter_cost.h"
 
+#include "jigsaw_global.h"
+
 void CardFilterCost::_bind_methods() {
 	BIND_PROPERTY_ENUM(StatDef::Stat, stat);
 	BIND_PROPERTY(Variant::INT, amount);

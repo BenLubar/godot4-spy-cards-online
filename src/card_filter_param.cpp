@@ -1,5 +1,7 @@
 #include "card_filter_param.h"
 
+#include "jigsaw_global.h"
+
 void CardFilterParam::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, param);
 }

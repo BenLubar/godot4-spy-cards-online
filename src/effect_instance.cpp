@@ -1,5 +1,7 @@
 #include "effect_instance.h"
+
 #include "card_instance.h"
+#include "jigsaw_global.h"
 #include "jigsaw_parameter_formatted_text.h"
 #include "jigsaw_parameter_icon.h"
 

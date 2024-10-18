@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CardGridNative" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_insert_card" qualifiers="virtual">
+			<return type="Node3D" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="card" type="CardInstance" />
+			<description>
+			</description>
+		</method>
+		<method name="_remove_card" qualifiers="virtual">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="card" type="CardInstance" />
+			<param index="2" name="node" type="Node3D" />
+			<description>
+			</description>
+		</method>
+		<method name="_reorder_card" qualifiers="virtual">
+			<return type="void" />
+			<param index="0" name="old_index" type="int" />
+			<param index="1" name="new_index" type="int" />
+			<param index="2" name="card" type="CardInstance" />
+			<param index="3" name="node" type="Node3D" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_card" qualifiers="virtual">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="card" type="CardInstance" />
+			<param index="2" name="node" type="Node3D" />
+			<description>
+			</description>
+		</method>
+		<method name="get_impl_script" qualifiers="static">
+			<return type="GDScript" />
+			<description>
+			</description>
+		</method>
+		<method name="make" qualifiers="static">
+			<return type="CardGridNative" />
+			<description>
+			</description>
+		</method>
+		<method name="set_impl_script" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="script" type="GDScript" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

@@ -6,8 +6,17 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="init_sides">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
+		</member>
+		<member name="card_grids" type="CardGridNative[]" setter="set_card_grids" getter="get_card_grids" default="[]">
 		</member>
 		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
 		</member>
@@ -23,7 +32,13 @@
 		</member>
 		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
 		</member>
+		<member name="rng" type="RNG" setter="set_rng" getter="get_rng">
+		</member>
 		<member name="scene_nodes" type="Node3D[]" setter="set_scene_nodes" getter="get_scene_nodes" default="[]">
+		</member>
+		<member name="selected_variant" type="VariantDef" setter="set_selected_variant" getter="get_selected_variant">
+		</member>
+		<member name="sides" type="JigsawSide[]" setter="set_sides" getter="get_sides" default="[]">
 		</member>
 		<member name="sprite_nodes" type="Sprite3D[]" setter="set_sprite_nodes" getter="get_sprite_nodes" default="[]">
 		</member>

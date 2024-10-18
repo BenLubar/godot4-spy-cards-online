@@ -1,5 +1,7 @@
 #include "squish_label.h"
 
+#include "jigsaw_global.h"
+
 void SquishLabel::_bind_methods() {
 	BIND_PROPERTY(Variant::VECTOR2, max_size);
 	BIND_PROPERTY(Variant::VECTOR2, text_scale);

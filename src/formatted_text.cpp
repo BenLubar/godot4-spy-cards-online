@@ -35,7 +35,7 @@ void FormattedText::_bind_methods() {
 
 	BIND_PROPERTY_ENUM(FormattedText::Command, command);
 	BIND_PROPERTY(Variant::STRING, text);
-	BIND_PROPERTY_ENUM(IconDef::Icon, icon);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, icon);
 	BIND_PROPERTY_RESOURCE(EffectInstance, instance);
 	BIND_PROPERTY(Variant::COLOR, color);
 	BIND_PROPERTY(Variant::FLOAT, font_size);
@@ -46,7 +46,7 @@ void FormattedText::_bind_methods() {
 
 IMPLEMENT_PROPERTY(FormattedText, FormattedText::Command, command);
 IMPLEMENT_PROPERTY(FormattedText, String, text);
-IMPLEMENT_PROPERTY(FormattedText, IconDef::Icon, icon);
+IMPLEMENT_PROPERTY(FormattedText, enums::IconDef::Icon, icon);
 IMPLEMENT_PROPERTY(FormattedText, Ref<EffectInstance>, instance);
 IMPLEMENT_PROPERTY(FormattedText, Color, color);
 IMPLEMENT_PROPERTY(FormattedText, double, font_size);
@@ -61,9 +61,9 @@ TypedArray<FormattedText> FormattedText::make_plain(String string) {
 }
 
 void FormattedTextWithIcon::_bind_methods() {
-	BIND_PROPERTY_ENUM(IconDef::Icon, icon);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, icon);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, text);
 }
 
-IMPLEMENT_PROPERTY(FormattedTextWithIcon, IconDef::Icon, icon);
+IMPLEMENT_PROPERTY(FormattedTextWithIcon, enums::IconDef::Icon, icon);
 IMPLEMENT_PROPERTY(FormattedTextWithIcon, TypedArray<FormattedText>, text);

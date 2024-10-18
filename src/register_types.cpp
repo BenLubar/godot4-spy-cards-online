@@ -11,6 +11,8 @@
 
 #include "jigsaw_command_list.h"
 #include "jigsaw_global.h"
+#include "jigsaw_side.h"
+#include "jigsaw_side_location.h"
 #include "jigsaw_context.h"
 #include "jigsaw_stack_frame.h"
 #include "jigsaw_error.h"
@@ -29,6 +31,7 @@
 #include "jigsaw_command_if.h"
 
 #include "jigsaw_parameter.h"
+#include "jigsaw_parameter_card_grid.h"
 #include "jigsaw_parameter_ui_label_instance.h"
 #include "jigsaw_parameter_ui_icon_instance.h"
 #include "jigsaw_parameter_audience_instance.h"
@@ -84,6 +87,7 @@
 #include "location_def.h"
 #include "modifier_def.h"
 #include "npc_def.h"
+#include "numeric_value.h"
 #include "rank_def.h"
 #include "stat_def.h"
 #include "stat_value.h"
@@ -101,6 +105,7 @@
 #include "modifier_instance.h"
 #include "queued_effect.h"
 #include "audience.h"
+#include "card_grid_native.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -124,6 +129,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(JigsawCommandList);
 	GDREGISTER_CLASS(JigsawGlobal);
+	GDREGISTER_CLASS(JigsawSide);
+	GDREGISTER_CLASS(JigsawSideLocation);
 	GDREGISTER_CLASS(JigsawContext);
 	GDREGISTER_CLASS(JigsawStackFrame);
 	GDREGISTER_CLASS(JigsawError);
@@ -144,6 +151,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
+	GDREGISTER_CLASS(JigsawParameterCardGrid);
 	GDREGISTER_CLASS(JigsawParameterUILabelInstance);
 	GDREGISTER_CLASS(JigsawParameterUIIconInstance);
 	GDREGISTER_CLASS(JigsawParameterCharacterInstance);
@@ -198,6 +206,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(LocationDef);
 	GDREGISTER_CLASS(ModifierDef);
 	GDREGISTER_CLASS(NPCDef);
+	GDREGISTER_CLASS(NumericValue);
 	GDREGISTER_CLASS(RankDef);
 	GDREGISTER_CLASS(StatDef);
 	GDREGISTER_CLASS(StatValue);
@@ -215,12 +224,17 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(ModifierInstance);
 	GDREGISTER_CLASS(QueuedEffect);
 	GDREGISTER_CLASS(Audience);
+	GDREGISTER_ABSTRACT_CLASS(CardGridNative);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+
+	CardGridNative::impl_script = Ref<GDScript>();
+	Base32::base32_crockford = Ref<Base32>();
+	Base32::base32_cid = Ref<Base32>();
 }
 
 // Initialization

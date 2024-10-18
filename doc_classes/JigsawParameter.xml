@@ -11,6 +11,8 @@
 		</member>
 	</members>
 	<constants>
+		<constant name="CARD_GRID" value="-12" enum="Type">
+		</constant>
 		<constant name="UI_LABEL_INSTANCE" value="-11" enum="Type">
 		</constant>
 		<constant name="UI_ICON_INSTANCE" value="-10" enum="Type">

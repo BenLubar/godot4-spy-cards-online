@@ -2,6 +2,7 @@
 
 #include "card_instance.h"
 #include "effect_instance.h"
+#include "jigsaw_global.h"
 
 void OutlineCurrentEffect::_bind_methods() {
 }

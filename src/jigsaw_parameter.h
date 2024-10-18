@@ -8,6 +8,7 @@ class JigsawParameter : public Resource {
 
 public:
 	enum Type {
+		CARD_GRID = -12,
 		UI_LABEL_INSTANCE = -11,
 		UI_ICON_INSTANCE = -10,
 		AUDIENCE_INSTANCE = -9,

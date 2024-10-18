@@ -53,6 +53,8 @@
 		</member>
 		<member name="custom_functions" type="JigsawFunction[]" setter="set_custom_functions" getter="get_custom_functions" default="[]">
 		</member>
+		<member name="custom_locations" type="LocationDef[]" setter="set_custom_locations" getter="get_custom_locations" default="[]">
+		</member>
 		<member name="custom_modifiers" type="ModifierDef[]" setter="set_custom_modifiers" getter="get_custom_modifiers" default="[]">
 		</member>
 		<member name="custom_npcs" type="NPCDef[]" setter="set_custom_npcs" getter="get_custom_npcs" default="[]">

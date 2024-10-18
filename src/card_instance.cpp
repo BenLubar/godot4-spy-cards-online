@@ -1,5 +1,6 @@
 #include "card_instance.h"
 
+#include "jigsaw_global.h"
 #include "jigsaw_parameter_boolean.h"
 #include "jigsaw_parameter_color.h"
 #include "jigsaw_parameter_string.h"
@@ -23,17 +24,17 @@ void CardInstance::_bind_methods() {
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
 
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, JigsawGlobal *, global);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, Ref<CardDef>, def);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, name);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, RankDef::Rank, rank);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, IconDef::Icon, back);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<StatValue>, costs);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, IconDef::Icon, portrait);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedText>, description);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
-IMPLEMENT_PROPERTY_SIMPLE(CardInstance, TypedArray<ModifierInstance>, modifiers);
+IMPLEMENT_PROPERTY(CardInstance, JigsawGlobal *, global);
+IMPLEMENT_PROPERTY(CardInstance, Ref<CardDef>, def);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, name);
+IMPLEMENT_PROPERTY(CardInstance, RankDef::Rank, rank);
+IMPLEMENT_PROPERTY(CardInstance, IconDef::Icon, back);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<StatValue>, costs);
+IMPLEMENT_PROPERTY(CardInstance, IconDef::Icon, portrait);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<ModifierInstance>, modifiers);
 
 Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &def) {
 	ERR_FAIL_NULL_V(global, nullptr);

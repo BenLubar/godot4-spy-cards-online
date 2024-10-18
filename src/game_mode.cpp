@@ -64,6 +64,7 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(EffectDef, custom_effects);
 	BIND_PROPERTY_RESOURCE_ARRAY(NPCDef, custom_npcs);
 
+	BIND_PROPERTY_RESOURCE_ARRAY(LocationDef, custom_locations);
 	BIND_PROPERTY_RESOURCE_ARRAY(VariableDef, custom_variables);
 	BIND_PROPERTY_RESOURCE_ARRAY(ChoicesDef, custom_choices);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawFunction, custom_functions);
@@ -83,10 +84,10 @@ IMPLEMENT_PROPERTY(GameMode, Transform3D, visual_portrait_transform);
 IMPLEMENT_PROPERTY(GameMode, Transform3D, visual_rank_decoration_transform);
 IMPLEMENT_PROPERTY(GameMode, Vector3, visual_smooth_corners);
 
-IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_card_front);
-IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_card_front_window);
-IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_tribe_bubble);
-IMPLEMENT_PROPERTY(GameMode, IconDef::Icon, visual_tribe_bubble_wide);
+IMPLEMENT_PROPERTY(GameMode, enums::IconDef::Icon, visual_card_front);
+IMPLEMENT_PROPERTY(GameMode, enums::IconDef::Icon, visual_card_front_window);
+IMPLEMENT_PROPERTY(GameMode, enums::IconDef::Icon, visual_tribe_bubble);
+IMPLEMENT_PROPERTY(GameMode, enums::IconDef::Icon, visual_tribe_bubble_wide);
 
 IMPLEMENT_PROPERTY(GameMode, Rect2, visual_card_name_pos);
 IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_name_scale);
@@ -131,6 +132,7 @@ IMPLEMENT_PROPERTY(GameMode, TypedArray<ModifierDef>, custom_modifiers);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<EffectDef>, custom_effects);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<NPCDef>, custom_npcs);
 
+IMPLEMENT_PROPERTY(GameMode, TypedArray<LocationDef>, custom_locations);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<VariableDef>, custom_variables);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<ChoicesDef>, custom_choices);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<JigsawFunction>, custom_functions);
