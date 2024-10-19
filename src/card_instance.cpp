@@ -9,17 +9,18 @@ void CardInstance::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
 	BIND_PROPERTY_RESOURCE(CardDef, def);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, name);
-	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
-	BIND_PROPERTY_ENUM(IconDef::Icon, back);
+	BIND_PROPERTY_ENUM(enums::RankDef::Rank, rank);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
-	BIND_PROPERTY_ENUM(IconDef::Icon, portrait);
-	BIND_PROPERTY_ENUM_ARRAY(TribeDef::Tribe, tribes);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, portrait);
+	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
 	BIND_PROPERTY_RESOURCE_ARRAY(ModifierInstance, modifiers);
 
 	ClassDB::bind_method(D_METHOD("update_description"), &CardInstance::update_description);
 	ClassDB::bind_method(D_METHOD("update_simple_description"), &CardInstance::update_simple_description);
+	ClassDB::bind_method(D_METHOD("description_requires_update"), &CardInstance::description_requires_update);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
@@ -27,11 +28,11 @@ void CardInstance::_bind_methods() {
 IMPLEMENT_PROPERTY(CardInstance, JigsawGlobal *, global);
 IMPLEMENT_PROPERTY(CardInstance, Ref<CardDef>, def);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, name);
-IMPLEMENT_PROPERTY(CardInstance, RankDef::Rank, rank);
-IMPLEMENT_PROPERTY(CardInstance, IconDef::Icon, back);
+IMPLEMENT_PROPERTY(CardInstance, enums::RankDef::Rank, rank);
+IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, back);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<StatValue>, costs);
-IMPLEMENT_PROPERTY(CardInstance, IconDef::Icon, portrait);
-IMPLEMENT_PROPERTY(CardInstance, TypedArray<TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, portrait);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<ModifierInstance>, modifiers);
@@ -111,4 +112,38 @@ bool CardInstance::update_simple_description() {
 	
 	set_simple_description(simple_description);
 	return true;
+}
+
+bool CardInstance::description_requires_update() const {
+	for (int64_t i = 0; i < description.size(); i++) {
+		Ref<FormattedText> text = description[i];
+		if (text.is_null()) {
+			continue;
+		}
+		if (FormattedText::requires_update(text->get_command())) {
+			return true;
+		}
+		if (text->get_command() == FormattedText::FORCE_END_OF_TEXT) {
+			break;
+		}
+	}
+
+	for (int64_t i = 0; i < simple_description.size(); i++) {
+		Ref<FormattedTextWithIcon> text_with_icon = simple_description[i];
+		TypedArray<FormattedText> icon_text = text_with_icon->get_text();
+		for (int64_t j = 0; j < icon_text.size(); j++) {
+			Ref<FormattedText> text = icon_text[j];
+			if (text.is_null()) {
+				continue;
+			}
+			if (FormattedText::requires_update(text->get_command())) {
+				return true;
+			}
+			if (text->get_command() == FormattedText::FORCE_END_OF_TEXT) {
+				break;
+			}
+		}
+	}
+
+	return false;
 }

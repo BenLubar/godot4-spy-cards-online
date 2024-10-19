@@ -19,13 +19,15 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
 	BIND_PROPERTY_RESOURCE_ARRAY(CardGrid, card_grids);
 
+	ADD_SIGNAL(MethodInfo("current_effect_changed"));
+
 	ClassDB::bind_method(D_METHOD("init_sides"), &JigsawGlobal::init_sides);
 }
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<CardInstance>, current_card_instance);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<EffectInstance>, current_effect_instance);
+IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<CardInstance>, current_card_instance, emit_signal("current_effect_changed"));
+IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<EffectInstance>, current_effect_instance, emit_signal("current_effect_changed"));
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSide>, sides);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);

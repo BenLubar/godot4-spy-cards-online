@@ -13,6 +13,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="requires_update" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="command" type="int" enum="FormattedText.Command" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">

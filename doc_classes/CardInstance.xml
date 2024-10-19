@@ -7,6 +7,11 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="description_requires_update" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
 		<method name="make" qualifiers="static">
 			<return type="CardInstance" />
 			<param index="0" name="global" type="JigsawGlobal" />

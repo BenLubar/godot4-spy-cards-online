@@ -38,6 +38,7 @@ public:
 
 	void update_description();
 	bool update_simple_description();
+	bool description_requires_update() const;
 
 	static Ref<CardInstance> make(JigsawGlobal *global, const Ref<CardDef> &def);
 };

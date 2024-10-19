@@ -42,6 +42,7 @@ void FormattedText::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, table_columns);
 
 	ClassDB::bind_static_method("FormattedText", D_METHOD("make_plain", "string"), &FormattedText::make_plain);
+	ClassDB::bind_static_method("FormattedText", D_METHOD("requires_update", "command"), &FormattedText::requires_update);
 }
 
 IMPLEMENT_PROPERTY(FormattedText, FormattedText::Command, command);
@@ -58,6 +59,10 @@ TypedArray<FormattedText> FormattedText::make_plain(String string) {
 	ft->set_command(ADD_TEXT);
 	ft->set_text(string);
 	return Array::make(ft);
+}
+
+bool FormattedText::requires_update(Command command) {
+	return command == PUSH_RAINBOW || command == PUSH_SHAKE || command == PUSH_GLITCH;
 }
 
 void FormattedTextWithIcon::_bind_methods() {

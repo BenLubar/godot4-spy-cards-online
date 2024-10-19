@@ -64,6 +64,7 @@ public:
 	DECLARE_PROPERTY(int64_t, table_columns, = 0);
 
 	static TypedArray<FormattedText> make_plain(String string);
+	static bool requires_update(Command command);
 };
 DECLARE_ENUM(FormattedText::Command);
 
