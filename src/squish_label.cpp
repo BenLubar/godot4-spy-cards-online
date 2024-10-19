@@ -57,7 +57,7 @@ void SquishLabel::_resize() {
 		Control *parent = get_parent_control();
 		if (parent) {
 			Vector2 parent_size = parent->get_size();
-			Vector2 remaining_space = parent_size - get_size();
+			Vector2 remaining_space = parent_size - get_size() * get_scale();
 			set_position(remaining_space / 2.0f);
 		} else {
 			set_anchors_and_offsets_preset(PRESET_CENTER, PRESET_MODE_KEEP_SIZE);
