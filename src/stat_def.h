@@ -25,7 +25,7 @@ public:
 
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
-	DECLARE_PROPERTY(Ref<JigsawProcedureStatFormatQuantity>, format_quantity);
+	DECLARE_PROPERTY(Ref<JigsawProcedureStatFormatCost>, format_cost);
 };
 DECLARE_PREDEFINED_KEY(StatDef, STAT);
 

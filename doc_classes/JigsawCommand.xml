@@ -25,5 +25,9 @@
 		</constant>
 		<constant name="IF" value="6" enum="Type">
 		</constant>
+		<constant name="SET_VARIABLE" value="7" enum="Type">
+		</constant>
+		<constant name="LOOKUP_DEFINITION_PROPERTY" value="8" enum="Type">
+		</constant>
 	</constants>
 </class>

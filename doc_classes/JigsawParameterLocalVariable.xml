@@ -27,7 +27,5 @@
 		</constant>
 		<constant name="FRAME_RESULTS" value="-2">
 		</constant>
-		<constant name="FRAME_ENVIRONMENT" value="-3">
-		</constant>
 	</constants>
 </class>

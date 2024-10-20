@@ -7,20 +7,22 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
 
+#include <functional>
+
 using namespace godot;
 
 #include "predefined.hpp"
 
 #define DECLARE_PROPERTY(m_type, m_name, ...) \
 private: \
-	m_type m_name __VA_ARGS__; \
+	m_type _##m_name __VA_ARGS__; \
 public: \
 	m_type get_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
 
 #define DECLARE_PROPERTY_IS(m_type, m_name, ...) \
 private: \
-	m_type m_name __VA_ARGS__; \
+	m_type _##m_name __VA_ARGS__; \
 public: \
 	m_type is_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
@@ -71,18 +73,18 @@ public: \
 	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "is_" #m_name)
 
 #define IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, m_onchange) \
-	m_type m_class::get_##m_name() const { return m_name; } \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
 	void m_class::set_##m_name(m_type new_##m_name) { \
-		if (m_name != new_##m_name) { \
-			m_name = new_##m_name; \
+		if (_##m_name != new_##m_name) { \
+			_##m_name = new_##m_name; \
 			m_onchange; \
 		} \
 	}
 #define IMPLEMENT_PROPERTY_ONCHANGE_IS(m_class, m_type, m_name, m_onchange) \
-	m_type m_class::is_##m_name() const { return m_name; } \
+	m_type m_class::is_##m_name() const { return _##m_name; } \
 	void m_class::set_##m_name(m_type new_##m_name) { \
-		if (m_name != new_##m_name) { \
-			m_name = new_##m_name; \
+		if (_##m_name != new_##m_name) { \
+			_##m_name = new_##m_name; \
 			m_onchange; \
 		} \
 	}
@@ -140,5 +142,22 @@ public: \
 		} \
 	}; \
 	}
+
+extern Vector<std::function<void()>> _free_lazy_globals;
+template<typename T>
+class LazyGlobal
+{
+	Ref<T> (*_init)();
+	mutable Ref<T> _ref;
+
+	void _maybe_init() const { if (_ref.is_null()) { _ref = _init(); _free_lazy_globals.append([this]() -> void { _ref = Ref<T>(); }); } }
+public:
+	LazyGlobal(Ref<T> (*init)()) : _init(init) {}
+
+	operator Ref<T>() const { _maybe_init(); return _ref; }
+	T *operator*() const { _maybe_init(); return _ref.ptr(); }
+	T *operator->() const { _maybe_init(); return _ref.ptr(); }
+	void operator=(const Ref<T> &ref) { _ref = ref; }
+};
 
 #endif // DRY_H

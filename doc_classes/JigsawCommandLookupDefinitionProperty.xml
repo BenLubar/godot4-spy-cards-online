@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawCommandLookupDefinitionProperty" inherits="JigsawCommand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="definition" type="JigsawParameter" setter="set_definition" getter="get_definition">
+		</member>
+		<member name="property" type="int" setter="set_property" getter="get_property" enum="JigsawCommandLookupDefinitionProperty.Property" default="0">
+		</member>
+		<member name="result" type="JigsawParameterLocalVariable" setter="set_result" getter="get_result">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="8" />
+	</members>
+	<constants>
+		<constant name="CARD_NAME" value="0" enum="Property">
+		</constant>
+		<constant name="CARD_RANK" value="1" enum="Property">
+		</constant>
+		<constant name="CARD_COSTS" value="2" enum="Property">
+		</constant>
+		<constant name="CARD_PORTRAIT" value="3" enum="Property">
+		</constant>
+		<constant name="CARD_TRIBES" value="4" enum="Property">
+		</constant>
+		<constant name="CARD_EFFECTS" value="5" enum="Property">
+		</constant>
+		<constant name="RANK_NAME" value="6" enum="Property">
+		</constant>
+		<constant name="RANK_COLOR" value="7" enum="Property">
+		</constant>
+		<constant name="RANK_COLOR_ALT" value="8" enum="Property">
+		</constant>
+		<constant name="RANK_COLOR_BASED_ON_PREFERENCES" value="9" enum="Property">
+		</constant>
+		<constant name="RANK_FRONT" value="10" enum="Property">
+		</constant>
+		<constant name="RANK_BACK" value="11" enum="Property">
+		</constant>
+		<constant name="TRIBE_NAME" value="12" enum="Property">
+		</constant>
+		<constant name="TRIBE_COLOR" value="13" enum="Property">
+		</constant>
+		<constant name="TRIBE_IS_HIDDEN" value="14" enum="Property">
+		</constant>
+		<constant name="TRIBE_IS_WIDE" value="15" enum="Property">
+		</constant>
+		<constant name="STAT_NAME" value="16" enum="Property">
+		</constant>
+		<constant name="STAT_ICON" value="17" enum="Property">
+		</constant>
+	</constants>
+</class>

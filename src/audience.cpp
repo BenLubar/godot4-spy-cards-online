@@ -10,16 +10,16 @@ void Audience::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("cheer_right", "repeats"), &Audience::cheer_right);
 }
 
-IMPLEMENT_PROPERTY_ONCHANGE(Audience, TypedArray<MultiMesh>, meshes, members.resize(new_meshes.size()));
+IMPLEMENT_PROPERTY_ONCHANGE(Audience, TypedArray<MultiMesh>, meshes, _members.resize(new_meshes.size()));
 
 void Audience::update(Vector2i dir) {
-	for (int64_t i = 0; i < members.size(); i++) {
-		Ref<MultiMesh> mesh = Object::cast_to<MultiMesh>(meshes[i]);
+	for (int64_t i = 0; i < _members.size(); i++) {
+		Ref<MultiMesh> mesh = _meshes[i];
 		ERR_CONTINUE(mesh.is_null());
-		ERR_CONTINUE(mesh->get_instance_count() != members[i].size());
+		ERR_CONTINUE(mesh->get_instance_count() != _members[i].size());
 
-		for (int64_t j = 0; j < members[i].size(); j++) {
-			AudienceMember_t &member = members.write[i].write[j];
+		for (int64_t j = 0; j < _members[i].size(); j++) {
+			AudienceMember_t &member = _members.write[i].write[j];
 			int8_t d = member.left ? dir.x : dir.y;
 			if (d == 1 && member.hop < member.hop_time) {
 				member.hop += 3;
@@ -54,14 +54,14 @@ void Audience::update(Vector2i dir) {
 }
 
 void Audience::cheer(uint8_t repeats) {
-	for (Vector<AudienceMember_t> &group : members) {
+	for (Vector<AudienceMember_t> &group : _members) {
 		for (AudienceMember_t &member : group) {
 			member.want_cheer = repeats;
 		}
 	}
 }
 void Audience::cheer_left(uint8_t repeats) {
-	for (Vector<AudienceMember_t> &group : members) {
+	for (Vector<AudienceMember_t> &group : _members) {
 		for (AudienceMember_t &member : group) {
 			if (member.left) {
 				member.want_cheer = repeats;
@@ -70,7 +70,7 @@ void Audience::cheer_left(uint8_t repeats) {
 	}
 }
 void Audience::cheer_right(uint8_t repeats) {
-	for (Vector<AudienceMember_t> &group : members) {
+	for (Vector<AudienceMember_t> &group : _members) {
 		for (AudienceMember_t &member : group) {
 			if (!member.left) {
 				member.want_cheer = repeats;

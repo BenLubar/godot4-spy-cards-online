@@ -14,6 +14,7 @@ public:
 	~JigsawFunction() = default;
 
 	DECLARE_PROPERTY(String, editor_name);
+	DECLARE_PROPERTY(String, editor_description);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, arguments);
 	DECLARE_PROPERTY(PackedStringArray, argument_names);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, results);

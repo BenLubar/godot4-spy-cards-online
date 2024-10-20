@@ -7,11 +7,11 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="describe" type="JigsawProcedure" setter="set_describe" getter="get_describe">
+		<member name="describe" type="JigsawProcedureModifierDescribe" setter="set_describe" getter="get_describe">
 		</member>
 		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>
-		<member name="simple_describe" type="JigsawProcedure" setter="set_simple_describe" getter="get_simple_describe">
+		<member name="simple_describe" type="JigsawProcedureModifierSimpleDescribe" setter="set_simple_describe" getter="get_simple_describe">
 		</member>
 		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>

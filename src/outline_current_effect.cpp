@@ -13,11 +13,11 @@ bool OutlineCurrentEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 	}
 
 	Dictionary env = p_char_fx->get_environment();
-	CardInstance *card = Object::cast_to<CardInstance>(env["card"]);
-	EffectInstance *effect = Object::cast_to<EffectInstance>(env["effect"]);
+	Ref<CardInstance> card = env["card"];
+	Ref<EffectInstance> effect = env["effect"];
 
-	ERR_FAIL_NULL_V(card, false);
-	ERR_FAIL_NULL_V(effect, false);
+	ERR_FAIL_COND_V(card.is_null(), false);
+	ERR_FAIL_COND_V(effect.is_null(), false);
 
 	JigsawGlobal *global = card->get_global();
 	ERR_FAIL_NULL_V(global, false);

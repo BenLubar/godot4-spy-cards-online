@@ -21,6 +21,8 @@ public:
 		LOG = 4,
 		FORMAT_TEXT = 5,
 		IF = 6,
+		SET_VARIABLE = 7,
+		LOOKUP_DEFINITION_PROPERTY = 8,
 	};
 
 protected:

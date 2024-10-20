@@ -30,14 +30,14 @@ public:
 	bool is_valid_eof() const;
 
 	PackedByteArray read_bytes(int64_t count);
-	void write_bytes(PackedByteArray buf);
+	void write_bytes(const PackedByteArray &buf);
 	PackedByteArray read_bytesvar();
-	void write_bytesvar(PackedByteArray buf);
+	void write_bytesvar(const PackedByteArray &buf);
 
 	String read_string1();
-	void write_string1(String s);
+	void write_string1(const String &s);
 	String read_stringvar();
-	void write_stringvar(String s);
+	void write_stringvar(const String &s);
 
 	uint64_t read_uvarint();
 	void write_uvarint(uint64_t x);

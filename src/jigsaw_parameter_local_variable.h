@@ -9,7 +9,6 @@ class JigsawParameterLocalVariable : public JigsawParameter {
 public:
 	constexpr static int64_t FRAME_ARGUMENTS = -1;
 	constexpr static int64_t FRAME_RESULTS = -2;
-	constexpr static int64_t FRAME_ENVIRONMENT = -3;
 
 protected:
 	static void _bind_methods();

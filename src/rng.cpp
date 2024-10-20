@@ -49,8 +49,8 @@ uint8_t RNG::_next() {
 	if (_index >= _buf.size()) {
 		Error error = _hash->start(_hash_type);
 		ERR_FAIL_COND_V(error != OK, 0);
-		if (!bug_separate_update_seed.is_empty()) {
-			error = _hash->update(bug_separate_update_seed);
+		if (unlikely(!_bug_separate_update_seed.is_empty())) {
+			error = _hash->update(_bug_separate_update_seed);
 			ERR_FAIL_COND_V(error != OK, 0);
 			error = _hash->update(_buf);
 			ERR_FAIL_COND_V(error != OK, 0);
@@ -77,10 +77,10 @@ Ref<RNG> RNG::duplicate() const {
 	dupe->_buf = _buf;
 	dupe->_index = _index;
 
-	dupe->bug_separate_update_seed = bug_separate_update_seed;
-	dupe->bug_reverse_float = bug_reverse_float;
-	dupe->bug_max_value_fencepost = bug_max_value_fencepost;
-	dupe->bug_max_value_shift = bug_max_value_shift;
+	dupe->_bug_separate_update_seed = _bug_separate_update_seed;
+	dupe->_bug_reverse_float = _bug_reverse_float;
+	dupe->_bug_max_value_fencepost = _bug_max_value_fencepost;
+	dupe->_bug_max_value_shift = _bug_max_value_shift;
 
 	return dupe;
 }
@@ -88,7 +88,7 @@ double RNG::next_cheap_float() {
 	return double(_next()) / 256.0;
 }
 double RNG::next_float() {
-	if (bug_reverse_float) {
+	if (_bug_reverse_float) {
 		double a = double(_next());
 		double b = double(_next());
 		double c = double(_next());
@@ -109,7 +109,7 @@ int64_t RNG::next_range_int(int64_t min, int64_t max) {
 	}
 
 	int64_t max_max_value = num_bytes << 3;
-	if (likely(!bug_max_value_shift)) {
+	if (likely(!_bug_max_value_shift)) {
 		max_max_value = 1 << max_max_value;
 	}
 
@@ -119,7 +119,7 @@ int64_t RNG::next_range_int(int64_t min, int64_t max) {
 	}
 
 	int64_t value = _next_multi(num_bytes);
-	while (value >= max_value && (likely(!bug_max_value_fencepost) || value != max_max_value)) {
+	while (value >= max_value && (likely(!_bug_max_value_fencepost) || value != max_max_value)) {
 		value = _next_multi(num_bytes);
 	}
 

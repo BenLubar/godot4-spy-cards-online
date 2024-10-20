@@ -6,4 +6,40 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="get_argument_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<description>
+			</description>
+		</method>
+		<method name="get_arguments" qualifiers="const">
+			<return type="JigsawParameter[]" />
+			<description>
+			</description>
+		</method>
+		<method name="get_editor_description" qualifiers="const">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_editor_name" qualifiers="const">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_result_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<description>
+			</description>
+		</method>
+		<method name="get_results" qualifiers="const">
+			<return type="JigsawParameter[]" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="commands" type="JigsawCommandList" setter="set_commands" getter="get_commands">
+		</member>
+	</members>
 </class>

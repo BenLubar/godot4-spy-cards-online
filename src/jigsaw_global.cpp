@@ -43,20 +43,20 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_no
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative>, card_grids);
 
 void JigsawGlobal::init_sides() {
-	ERR_FAIL_COND(mode.is_null());
-	ERR_FAIL_COND(mode->get_base_variant().is_null());
-	ERR_FAIL_COND(mode->get_variants().is_empty());
-	ERR_FAIL_COND(selected_variant.is_null());
+	ERR_FAIL_COND(_mode.is_null());
+	ERR_FAIL_COND(_mode->get_base_variant().is_null());
+	ERR_FAIL_COND(_mode->get_variants().is_empty());
+	ERR_FAIL_COND(_selected_variant.is_null());
 
-	int64_t bug_players = selected_variant->get_player_count();
-	int64_t bot_players = selected_variant->get_npcs().size();
-	sides.resize(1 + bug_players + bot_players);
+	int64_t bug_players = _selected_variant->get_player_count();
+	int64_t bot_players = _selected_variant->get_npcs().size();
+	_sides.resize(1 + bug_players + bot_players);
 	for (int64_t i = 0; i < 1 + bug_players + bot_players; i++) {
 		Ref<JigsawSide> side;
 		side.instantiate();
 
 		TypedArray<JigsawSideLocation> locations;
-		locations.resize(enums::LocationDef::FIRST_CUSTOM + mode->get_custom_locations().size());
+		locations.resize(enums::LocationDef::FIRST_CUSTOM + _mode->get_custom_locations().size());
 		for (int64_t j = 0; j < locations.size(); j++) {
 			locations[i] = memnew(JigsawSideLocation);
 		}
@@ -64,8 +64,8 @@ void JigsawGlobal::init_sides() {
 		side->set_locations(locations);
 
 		TypedArray<NumericValue> stats;
-		stats.resize(enums::StatDef::FIRST_CUSTOM + mode->get_custom_stats().size());
-		TypedArray<enums::StatDef::Stat> used_stats = mode->get_stats();
+		stats.resize(enums::StatDef::FIRST_CUSTOM + _mode->get_custom_stats().size());
+		TypedArray<enums::StatDef::Stat> used_stats = _mode->get_stats();
 		for (int64_t j = 0; j < stats.size(); j++) {
 			if (used_stats.has(j)) {
 				stats[j] = memnew(NumericValue);
@@ -73,6 +73,6 @@ void JigsawGlobal::init_sides() {
 		}
 		side->set_stats(stats);
 
-		sides[i] = side;
+		_sides[i] = side;
 	}
 }

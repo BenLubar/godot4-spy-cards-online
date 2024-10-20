@@ -11,7 +11,7 @@
 		</member>
 		<member name="position" type="Rect2" setter="set_position" getter="get_position" default="Rect2(0, 0, 30, 10)">
 		</member>
-		<member name="should_show" type="JigsawProcedure" setter="set_should_show" getter="get_should_show">
+		<member name="should_show" type="JigsawProcedureStickerShouldShow" setter="set_should_show" getter="get_should_show">
 		</member>
 	</members>
 </class>

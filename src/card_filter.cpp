@@ -36,7 +36,7 @@ IMPLEMENT_PROPERTY(CardFilter, bool, negate);
 
 bool CardFilter::matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
 	bool match = _matches_def(ctx, card);
-	if (negate) {
+	if (_negate) {
 		match = !match;
 	}
 
@@ -45,7 +45,7 @@ bool CardFilter::matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card
 
 bool CardFilter::matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
 	bool match = _matches_instance(ctx, inst);
-	if (negate) {
+	if (_negate) {
 		match = !match;
 	}
 

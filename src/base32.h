@@ -12,8 +12,8 @@ protected:
 private:
 	uint8_t lut[256];
 public:
-	static Ref<Base32> base32_crockford;
-	static Ref<Base32> base32_cid;
+	static LazyGlobal<Base32> base32_crockford;
+	static LazyGlobal<Base32> base32_cid;
 
 	Base32();
 	explicit Base32(const String &predefined_alphabet, const String &predefined_padding);

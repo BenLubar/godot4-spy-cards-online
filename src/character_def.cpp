@@ -53,21 +53,21 @@ Ref<AtlasTexture> CharacterDef::create_portrait(const Ref<GameMode> &mode) const
 
 	Ref<AtlasTexture> portrait;
 	portrait.instantiate();
-	portrait->set_atlas(mode->get_icon_texture(idle0));
+	portrait->set_atlas(mode->get_icon_texture(_idle0));
 
-	double half_square = portrait_scale / pixel_size / 2.0;
+	double half_square = _portrait_scale / _pixel_size / 2.0;
 	Vector2 size = portrait->get_atlas()->get_size();
-	Vector2 center = Vector2(size.x / 2.0, half_square) + portrait_offset;
+	Vector2 center = Vector2(size.x / 2.0, half_square) + _portrait_offset;
 	Vector2 tl = center - Vector2(half_square, half_square);
 	Vector2 br = center + Vector2(half_square, half_square);
 
 	Rect2 region;
 	region.set_size(size);
-	if (portrait_crop_front) {
+	if (_portrait_crop_front) {
 		region.position.x = Math::max(tl.x, 0.0f);
 	}
 
-	if (portrait_crop_top) {
+	if (_portrait_crop_top) {
 		region.position.y = Math::max(tl.y, 0.0f);
 	}
 

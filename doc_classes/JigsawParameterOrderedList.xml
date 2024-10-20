@@ -19,9 +19,17 @@
 			<description>
 			</description>
 		</method>
+		<method name="make_template" qualifiers="static">
+			<return type="JigsawParameterOrderedList" />
+			<param index="0" name="list" type="JigsawParameter[]" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="list" type="JigsawParameter[]" setter="set_list" getter="get_list" default="[]">
+		</member>
+		<member name="template" type="bool" setter="set_template" getter="is_template" default="false">
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="2" />
 	</members>

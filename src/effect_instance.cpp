@@ -2,6 +2,8 @@
 
 #include "card_instance.h"
 #include "jigsaw_global.h"
+#include "jigsaw_parameter_card_instance.h"
+#include "jigsaw_parameter_effect_instance.h"
 #include "jigsaw_parameter_formatted_text.h"
 #include "jigsaw_parameter_icon.h"
 
@@ -29,25 +31,48 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 	ERR_FAIL_COND_V(card->get_global()->get_mode().is_null(), FormattedText::make_plain("MISSING MODE"));
 
 	Ref<EffectDef> def = card->get_global()->get_mode()->get_effect(get_effect());
+	Ref<JigsawProcedureEffectDescribe> describe = def.is_valid() ? def->get_describe() : Ref<JigsawProcedureEffectDescribe>();
 	if (def.is_null()) {
 		Ref<FormattedText> before_text;
 		before_text.instantiate();
 		before_text->set_command(FormattedText::PUSH_FONT_MONO);
 		description.append(before_text);
 
+		Ref<FormattedText> before_text2;
+		before_text2.instantiate();
+		before_text2->set_command(FormattedText::PUSH_TEXT_COLOR);
+		before_text2->set_color(Color(1.0, 0.0, 0.0, 1.0));
+		description.append(before_text2);
+
 		description.append_array(FormattedText::make_plain(vformat("missing effect #%d", get_effect())));
+
+		Ref<FormattedText> after_text2;
+		after_text2.instantiate();
+		after_text2->set_command(FormattedText::POP);
+		description.append(after_text2);
 
 		Ref<FormattedText> after_text;
 		after_text.instantiate();
 		after_text->set_command(FormattedText::POP);
 		description.append(after_text);
-	} else if (def->get_describe().is_null()) {
+	} else if (describe.is_null()) {
 		Ref<FormattedText> before_text;
 		before_text.instantiate();
 		before_text->set_command(FormattedText::PUSH_FONT_MONO);
 		description.append(before_text);
 
-		description.append_array(FormattedText::make_plain(def->get_editor_name()));
+		Ref<FormattedText> before_text2;
+		before_text2.instantiate();
+		before_text2->set_command(FormattedText::PUSH_TEXT_COLOR);
+		before_text2->set_color(Color(1.0, 0.0, 0.0, 1.0));
+		description.append(before_text2);
+
+		description.append_array(FormattedText::make_plain(vformat("missing 'describe' procedure for effect #%d '%s'", get_effect(), def->get_editor_name())));
+
+		Ref<FormattedText> after_text2;
+		after_text2.instantiate();
+		after_text2->set_command(FormattedText::POP);
+		description.append(after_text2);
 
 		Ref<FormattedText> after_text;
 		after_text.instantiate();
@@ -58,44 +83,47 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		effect_description.instantiate();
 
 		Ref<JigsawContext> ctx = JigsawContext::make(card->get_global(), parent_context);
-		ctx->set_read_only(true);
+		ctx->set_procedure(describe);
 
-		TypedArray<JigsawParameter> env; // TODO
 		TypedArray<JigsawParameter> results = Array::make(effect_description);
 
-		TypedArray<JigsawError> errors = ctx->validate(def->get_describe(), env, params, results, "describe effect " + def->get_editor_name() + " on " + card->get_def()->get_name(), def->get_parameter_names(), PackedStringArray{"formatted_text"});
-		if (!errors.is_empty()) {
-			Ref<FormattedText> before_text;
-			before_text.instantiate();
-			before_text->set_command(FormattedText::PUSH_FONT_MONO);
-			description.append(before_text);
-
-			description.append_array(FormattedText::make_plain("error in describe for " + def->get_editor_name()));
-
-			Ref<FormattedText> after_text;
-			after_text.instantiate();
-			after_text->set_command(FormattedText::POP);
-			description.append(after_text);
-		}
-
-		Ref<JigsawError> error = ctx->run(def->get_describe(), env, params, results);
+		Ref<JigsawError> error = ctx->evaluate(describe->get_commands(), Array::make(
+			JigsawParameterCardInstance::make(card),
+			JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
+		), results);
 		if (error.is_valid()) {
+			// TODO: log error
+			WARN_PRINT(vformat("error in card '%s' effect '%s' describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error->get_message()));
+
 			Ref<FormattedText> before_text;
 			before_text.instantiate();
 			before_text->set_command(FormattedText::PUSH_FONT_MONO);
 			description.append(before_text);
 
-			description.append_array(FormattedText::make_plain("error in describe for " + def->get_editor_name()));
+			Ref<FormattedText> before_text2;
+			before_text2.instantiate();
+			before_text2->set_command(FormattedText::PUSH_TEXT_COLOR);
+			before_text2->set_color(Color(1.0, 0.0, 0.0, 1.0));
+			description.append(before_text2);
+
+			description.append_array(FormattedText::make_plain(vformat("error in 'describe' procedure for effect #%d: '%s': %s", get_effect(), def->get_editor_name(), error->get_message())));
+
+			Ref<FormattedText> after_text2;
+			after_text2.instantiate();
+			after_text2->set_command(FormattedText::POP);
+			description.append(after_text2);
 
 			Ref<FormattedText> after_text;
 			after_text.instantiate();
 			after_text->set_command(FormattedText::POP);
 			description.append(after_text);
 		} else {
-			effect_description = results[0];
-			if (effect_description.is_valid()) {
-				description.append_array(effect_description->get_text());
+			effect_description = ctx->get_results()[0];
+			TypedArray<FormattedText> effect_description_text = effect_description->get_text();
+			if (effect_description_text.is_empty()) {
+				return TypedArray<FormattedText>();
 			}
+			description.append_array(effect_description_text);
 		}
 	}
 
@@ -115,6 +143,11 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 	Ref<EffectDef> def = card->get_global()->get_mode()->get_effect(get_effect());
 	ERR_FAIL_COND_V(def.is_null(), Ref<FormattedTextWithIcon>());
 
+	Ref<JigsawProcedureEffectSimpleDescribe> simple_describe = def->get_simple_describe();
+	if (simple_describe.is_null()) {
+		return Ref<FormattedTextWithIcon>();
+	}
+
 	TypedArray<FormattedText> description;
 
 	Ref<FormattedText> before;
@@ -123,33 +156,32 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 	before->set_instance(const_cast<EffectInstance *>(this));
 	description.append(before);
 
-	Ref<JigsawParameterIcon> icon;
-	icon.instantiate();
-
 	Ref<JigsawParameterFormattedText> effect_description;
 	effect_description.instantiate();
 
+	Ref<JigsawParameterIcon> icon;
+	icon.instantiate();
+
 	Ref<JigsawContext> ctx = JigsawContext::make(card->get_global(), parent_context);
-	ctx->set_read_only(true);
+	ctx->set_procedure(simple_describe);
 
-	TypedArray<JigsawParameter> env; // TODO
-	TypedArray<JigsawParameter> results = Array::make(icon, effect_description);
+	TypedArray<JigsawParameter> results = Array::make(effect_description, icon);
 
-	TypedArray<JigsawError> errors = ctx->validate(def->get_describe(), env, params, results, "simple describe effect " + def->get_editor_name() + " on " + card->get_def()->get_name(), def->get_parameter_names(), PackedStringArray{"icon", "formatted_text"});
-	if (!errors.is_empty()) {
-		return Ref<FormattedTextWithIcon>();
-	}
-
-	Ref<JigsawError> error = ctx->run(def->get_describe(), env, params, results);
+	Ref<JigsawError> error = ctx->evaluate(simple_describe, Array::make(
+		JigsawParameterCardInstance::make(card),
+		JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
+	), results);
 	if (error.is_valid()) {
+		// TODO: log error
+		WARN_PRINT(vformat("error in card '%s' effect '%s' simple describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error->get_message()));
 		return Ref<FormattedTextWithIcon>();
 	}
 
-	icon = results[0];
-	effect_description = results[1];
-	if (effect_description.is_valid()) {
-		description.append_array(effect_description->get_text());
-	}
+	icon = ctx->get_results()[0];
+	effect_description = ctx->get_results()[1];
+
+	TypedArray<FormattedText> effect_description_text = effect_description->get_text();
+	description.append_array(effect_description_text);
 
 	Ref<FormattedText> after;
 	after.instantiate();
@@ -158,9 +190,7 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 
 	Ref<FormattedTextWithIcon> with_icon;
 	with_icon.instantiate();
-	if (icon.is_valid()) {
-		with_icon->set_icon(icon->get_icon());
-	}
+	with_icon->set_icon(icon->get_icon());
 	with_icon->set_text(description);
 
 	return with_icon;

@@ -8,6 +8,8 @@ void JigsawCommand::_bind_methods() {
 	BIND_ENUM_CONSTANT(LOG);
 	BIND_ENUM_CONSTANT(FORMAT_TEXT);
 	BIND_ENUM_CONSTANT(IF);
+	BIND_ENUM_CONSTANT(SET_VARIABLE);
+	BIND_ENUM_CONSTANT(LOOKUP_DEFINITION_PROPERTY);
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawCommand::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");

@@ -37,23 +37,23 @@ IMPLEMENT_PROPERTY_ONCHANGE_IS(SquishLabel, bool, centered, _resize());
 void SquishLabel::_resize() {
 	Vector2 new_scale = get_scale();
 
-	if (max_size.x != 0.0f && text_scale.x != 0.0f) {
-		new_scale.x = Math::min(1.0f, max_size.x / text_scale.x / Math::max(get_content_width(), 1)) * text_scale.x;
+	if (_max_size.x != 0.0f && _text_scale.x != 0.0f) {
+		new_scale.x = Math::min(1.0f, _max_size.x / _text_scale.x / Math::max(get_content_width(), 1)) * _text_scale.x;
 	} else {
-		new_scale.x = text_scale.x;
+		new_scale.x = _text_scale.x;
 	}
 
-	if (max_size.y != 0.0f && text_scale.y != 0.0f) {
-		new_scale.y = Math::min(1.0f, max_size.y / text_scale.y / Math::max(get_content_height(), 1)) * text_scale.y;
+	if (_max_size.y != 0.0f && _text_scale.y != 0.0f) {
+		new_scale.y = Math::min(1.0f, _max_size.y / _text_scale.y / Math::max(get_content_height(), 1)) * _text_scale.y;
 		set_autowrap_mode(TextServer::AUTOWRAP_WORD_SMART);
 	} else {
-		new_scale.y = text_scale.y;
+		new_scale.y = _text_scale.y;
 		set_autowrap_mode(TextServer::AUTOWRAP_OFF);
 	}
 
 	set_scale(new_scale);
 
-	if (centered) {
+	if (_centered) {
 		Control *parent = get_parent_control();
 		if (parent) {
 			Vector2 parent_size = parent->get_size();

@@ -9,7 +9,7 @@
 	<members>
 		<member name="lhs" type="JigsawParameter" setter="set_lhs" getter="get_lhs">
 		</member>
-		<member name="op" type="JigsawParameter" setter="set_op" getter="get_op">
+		<member name="op" type="int" setter="set_op" getter="get_op" enum="JigsawCommandMath.Operation" default="0">
 		</member>
 		<member name="result" type="JigsawParameterLocalVariable" setter="set_result" getter="get_result">
 		</member>
@@ -17,4 +17,10 @@
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="3" />
 	</members>
+	<constants>
+		<constant name="EQUALS" value="0" enum="Operation">
+		</constant>
+		<constant name="LESS_THAN" value="1" enum="Operation">
+		</constant>
+	</constants>
 </class>

@@ -24,7 +24,7 @@ protected:
 	static void _bind_methods();
 
 private:
-	Vector<Vector<AudienceMember_t>> members;
+	Vector<Vector<AudienceMember_t>> _members;
 
 public:
 	Audience() = default;

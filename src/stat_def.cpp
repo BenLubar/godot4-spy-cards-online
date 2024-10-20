@@ -14,9 +14,9 @@ void StatDef::_bind_methods() {
 
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, icon);
-	BIND_PROPERTY_RESOURCE(JigsawProcedureStatFormatQuantity, format_quantity);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureStatFormatCost, format_cost);
 }
 
 IMPLEMENT_PROPERTY(StatDef, String, name);
 IMPLEMENT_PROPERTY(StatDef, enums::IconDef::Icon, icon);
-IMPLEMENT_PROPERTY(StatDef, Ref<JigsawProcedureStatFormatQuantity>, format_quantity);
+IMPLEMENT_PROPERTY(StatDef, Ref<JigsawProcedureStatFormatCost>, format_cost);

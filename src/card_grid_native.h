@@ -33,7 +33,7 @@ public:
 	GDVIRTUAL4(_reorder_card, int64_t, int64_t, const Ref<CardInstance> &, Node3D *);
 	GDVIRTUAL3(_remove_card, int64_t, const Ref<CardInstance> &, Node3D *);
 
-	static Ref<GDScript> impl_script;
+	static LazyGlobal<GDScript> impl_script;
 	static void set_impl_script(const Ref<GDScript> &script);
 	static Ref<GDScript> get_impl_script();
 	static CardGridNative *make();

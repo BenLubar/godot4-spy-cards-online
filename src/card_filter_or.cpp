@@ -9,7 +9,7 @@ IMPLEMENT_PROPERTY(CardFilterOr, TypedArray<CardFilter>, list);
 Ref<CardFilter> CardFilter::make_or(const TypedArray<CardFilter> &list) {
 	TypedArray<CardFilter> filtered_filters = list.duplicate();
 	for (int64_t i = 0; i < list.size(); i++) {
-		Ref<CardFilter> f = Object::cast_to<CardFilter>(list[i]);
+		Ref<CardFilter> f = list[i];
 		if (f.is_null()) {
 			return Ref<CardFilter>();
 		}
@@ -30,8 +30,8 @@ Ref<CardFilter> CardFilter::make_or(const TypedArray<CardFilter> &list) {
 }
 
 bool CardFilterOr::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
-	for (int64_t i = 0; i < list.size(); i++) {
-		Ref<CardFilter> sub_filter = list[i];
+	for (int64_t i = 0; i < _list.size(); i++) {
+		Ref<CardFilter> sub_filter = _list[i];
 		ERR_CONTINUE(sub_filter.is_null());
 
 		if (sub_filter->matches_def(ctx, card)) {
@@ -43,8 +43,8 @@ bool CardFilterOr::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::C
 }
 
 bool CardFilterOr::_matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
-	for (int64_t i = 0; i < list.size(); i++) {
-		Ref<CardFilter> sub_filter = list[i];
+	for (int64_t i = 0; i < _list.size(); i++) {
+		Ref<CardFilter> sub_filter = _list[i];
 		ERR_CONTINUE(sub_filter.is_null());
 
 		if (sub_filter->matches_instance(ctx, inst)) {

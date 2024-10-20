@@ -70,7 +70,7 @@ void CardInstance::update_description() {
 	TypedArray<FormattedText> description;
 	bool first = true;
 	for (int64_t i = 0; i < effects.size(); i++) {
-		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		Ref<EffectInstance> e = effects[i];
 		ERR_CONTINUE(e.is_null());
 
 		if (first) {
@@ -91,7 +91,7 @@ bool CardInstance::update_simple_description() {
 
 	TypedArray<FormattedTextWithIcon> simple_description;
 	for (int64_t i = 0; i < effects.size(); i++) {
-		Ref<EffectInstance> e = Object::cast_to<EffectInstance>(effects[i]);
+		Ref<EffectInstance> e = effects[i];
 		ERR_CONTINUE(e.is_null());
 
 		Ref<FormattedTextWithIcon> simple_desc = e->format_simple_description(this);
@@ -99,11 +99,15 @@ bool CardInstance::update_simple_description() {
 			set_simple_description(TypedArray<FormattedTextWithIcon>());
 			return false;
 		}
+		if (simple_desc->get_text().size() == 0 && simple_desc->get_icon() == enums::IconDef::Icon::NONE) {
+			continue;
+		}
 
 		simple_description.append(simple_desc);
 
 		for (int64_t j = 0; j < simple_desc->get_text().size(); j++) {
-			if (Object::cast_to<FormattedText>(simple_desc->get_text()[j])->get_command() == FormattedText::FORCE_END_OF_TEXT) {
+			Ref<FormattedText> command = simple_desc->get_text()[j];
+			if (command->get_command() == FormattedText::FORCE_END_OF_TEXT) {
 				set_simple_description(simple_description);
 				return true;
 			}
@@ -115,8 +119,8 @@ bool CardInstance::update_simple_description() {
 }
 
 bool CardInstance::description_requires_update() const {
-	for (int64_t i = 0; i < description.size(); i++) {
-		Ref<FormattedText> text = description[i];
+	for (int64_t i = 0; i < _description.size(); i++) {
+		Ref<FormattedText> text = _description[i];
 		if (text.is_null()) {
 			continue;
 		}
@@ -128,8 +132,11 @@ bool CardInstance::description_requires_update() const {
 		}
 	}
 
-	for (int64_t i = 0; i < simple_description.size(); i++) {
-		Ref<FormattedTextWithIcon> text_with_icon = simple_description[i];
+	for (int64_t i = 0; i < _simple_description.size(); i++) {
+		Ref<FormattedTextWithIcon> text_with_icon = _simple_description[i];
+		if (text_with_icon.is_null()) {
+			continue;
+		}
 		TypedArray<FormattedText> icon_text = text_with_icon->get_text();
 		for (int64_t j = 0; j < icon_text.size(); j++) {
 			Ref<FormattedText> text = icon_text[j];

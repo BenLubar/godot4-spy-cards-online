@@ -29,6 +29,8 @@
 #include "jigsaw_command_log.h"
 #include "jigsaw_command_format_text.h"
 #include "jigsaw_command_if.h"
+#include "jigsaw_command_set_variable.h"
+#include "jigsaw_command_lookup_definition_property.h"
 
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_card_grid.h"
@@ -67,6 +69,7 @@
 #include "jigsaw_parameter_choice.h"
 #include "jigsaw_parameter_character.h"
 #include "jigsaw_parameter_audience.h"
+#include "jigsaw_parameter_effect_instance_parameter.h"
 
 #include "card_filter.h"
 #include "card_filter_and.h"
@@ -135,8 +138,16 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawStackFrame);
 	GDREGISTER_CLASS(JigsawError);
 
-	// TODO
 	GDREGISTER_ABSTRACT_CLASS(JigsawProcedure);
+	GDREGISTER_CLASS(JigsawProcedureEffectCurve);
+	GDREGISTER_CLASS(JigsawProcedureEffectDescribe);
+	GDREGISTER_CLASS(JigsawProcedureEffectSimpleDescribe);
+	GDREGISTER_CLASS(JigsawProcedureEffectExtendedDescribe);
+	GDREGISTER_CLASS(JigsawProcedureModifierDescribe);
+	GDREGISTER_CLASS(JigsawProcedureModifierSimpleDescribe);
+	GDREGISTER_CLASS(JigsawProcedureModifierExtendedDescribe);
+	GDREGISTER_CLASS(JigsawProcedureStickerShouldShow);
+	GDREGISTER_CLASS(JigsawProcedureStatFormatCost);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
 	GDREGISTER_CLASS(JigsawFunction);
 
@@ -148,6 +159,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandLog);
 	GDREGISTER_CLASS(JigsawCommandFormatText);
 	GDREGISTER_CLASS(JigsawCommandIf);
+	GDREGISTER_CLASS(JigsawCommandSetVariable);
+	GDREGISTER_CLASS(JigsawCommandLookupDefinitionProperty);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
@@ -186,6 +199,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterChoice);
 	GDREGISTER_CLASS(JigsawParameterCharacter);
 	GDREGISTER_CLASS(JigsawParameterAudience);
+	GDREGISTER_CLASS(JigsawParameterEffectInstanceParameter);
 
 	GDREGISTER_ABSTRACT_CLASS(CardFilter);
 	GDREGISTER_CLASS(CardFilterAnd);
@@ -227,14 +241,16 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_ABSTRACT_CLASS(CardGridNative);
 }
 
+Vector<std::function<void()>> _free_lazy_globals;
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
-	CardGridNative::impl_script = Ref<GDScript>();
-	Base32::base32_crockford = Ref<Base32>();
-	Base32::base32_cid = Ref<Base32>();
+	for (int64_t i = 0; i < _free_lazy_globals.size(); i++) {
+		_free_lazy_globals[i]();
+	}
+	_free_lazy_globals.clear();
 }
 
 // Initialization

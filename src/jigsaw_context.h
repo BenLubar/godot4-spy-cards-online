@@ -9,6 +9,7 @@ class JigsawGlobal;
 #include "jigsaw_command_list.h"
 #include "jigsaw_error.h"
 #include "jigsaw_parameter.h"
+#include "jigsaw_procedure.h"
 #include "jigsaw_stack_frame.h"
 
 class JigsawContext : public RefCounted {
@@ -23,17 +24,28 @@ public:
 
 	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 	DECLARE_PROPERTY(Ref<JigsawContext>, parent);
-	DECLARE_PROPERTY_IS(bool, read_only, = false);
+	DECLARE_PROPERTY(Ref<JigsawProcedure>, procedure);
 	DECLARE_PROPERTY(TypedArray<JigsawStackFrame>, stack);
 	DECLARE_PROPERTY(TypedArray<JigsawCommandList>, command_stack);
-	DECLARE_PROPERTY(TypedArray<JigsawParameter>, environment);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, arguments);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, results);
 
-	TypedArray<JigsawError> validate(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, const String &debug_name, const PackedStringArray &arg_names, const PackedStringArray &result_names) const;
-	Ref<JigsawError> run(const Ref<JigsawCommandList> &commands, const TypedArray<JigsawParameter> &env, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results);
+private:
+	enum ExecutionState {
+		STATE_ERROR = 0,
+		STATE_DONE = 1,
+		STATE_CONTINUE = 2,
+		STATE_PAUSE = 3,
+	};
+	void cleanup();
+	void append_stack_frame(const Ref<JigsawCommandList> &commands);
+	ExecutionState evaluate_next(Ref<JigsawError> &err);
+
+public:
+	Ref<JigsawError> evaluate(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results);
+	Ref<JigsawError> run(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args);
 	Ref<JigsawError> continue_run();
-	bool in_progress() const;
+	bool is_in_progress() const;
 	Ref<JigsawError> create_error(const String &message, const TypedArray<JigsawParameter> &params = TypedArray<JigsawParameter>(), bool include_global_snapshot = false) const;
 
 	static Ref<JigsawContext> make(JigsawGlobal *global, const Ref<JigsawContext> &parent);

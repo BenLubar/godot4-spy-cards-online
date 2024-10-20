@@ -20,7 +20,7 @@ void Base32::_bind_methods() {
 }
 
 Base32::Base32() {
-	set_alphabet(alphabet);
+	set_alphabet(_alphabet);
 }
 Base32::Base32(const String &predefined_alphabet, const String &predefined_padding) {
 	set_alphabet(predefined_alphabet);
@@ -28,7 +28,7 @@ Base32::Base32(const String &predefined_alphabet, const String &predefined_paddi
 }
 
 String Base32::get_alphabet() const {
-	return alphabet;
+	return _alphabet;
 }
 void Base32::set_alphabet(String new_alphabet) {
 	ERR_FAIL_COND(new_alphabet.length() != 32);
@@ -43,33 +43,33 @@ void Base32::set_alphabet(String new_alphabet) {
 		new_lut[new_alphabet_chars[i]] = i;
 	}
 
-	alphabet = new_alphabet;
+	_alphabet = new_alphabet;
 	memcpy(lut, new_lut, sizeof(new_lut));
 }
 String Base32::get_padding() const {
-	return padding;
+	return _padding;
 }
 void Base32::set_padding(String new_padding) {
 	if (new_padding.is_empty()) {
-		padding = new_padding;
+		_padding = new_padding;
 		return;
 	}
 
 	ERR_FAIL_COND(new_padding.length() > 1);
 	ERR_FAIL_COND(new_padding[0] == '\n' || new_padding[0] == '\r');
 	ERR_FAIL_COND(new_padding[0] > 127);
-	padding = new_padding;
+	_padding = new_padding;
 }
 
 bool Base32::is_valid(const String &data) const {
 	String data_without_padding = data;
-	if (!padding.is_empty()) {
-		ERR_FAIL_COND_V(lut[padding[0]] != 255, false);
+	if (!_padding.is_empty()) {
+		ERR_FAIL_COND_V(lut[_padding[0]] != 255, false);
 		if (data.length() % 8 != 0) {
 			return false;
 		}
 
-		data_without_padding = data.rstrip(padding);
+		data_without_padding = data.rstrip(_padding);
 	}
 
 	if (encoded_len(decoded_len(data_without_padding.length())) != data_without_padding.length()) {
@@ -89,14 +89,14 @@ bool Base32::is_valid(const String &data) const {
 // Copyright 2011 The Go Authors. All rights reserved.
 String Base32::encode(const PackedByteArray &data) const {
 	// check padding validity early
-	ERR_FAIL_COND_V(!padding.is_empty() && lut[padding[0]] != 255, String());
+	ERR_FAIL_COND_V(!_padding.is_empty() && lut[_padding[0]] != 255, String());
 
-	CharString encode = alphabet.ascii();
+	CharString encode = _alphabet.ascii();
 
 	int64_t di = 0, si = 0;
 	int64_t n = (data.size() / 5) * 5;
 	PackedByteArray dst;
-	dst.resize(padding.is_empty() ? encoded_len(data.size()) : (data.size() + 4) / 5 * 8);
+	dst.resize(_padding.is_empty() ? encoded_len(data.size()) : (data.size() + 4) / 5 * 8);
 	while (si < n) {
 		uint32_t hi = (uint32_t(data[si + 0]) << 24) | (uint32_t(data[si + 1]) << 16) | (uint32_t(data[si+2]) << 8) | uint32_t(data[si + 3]);
 		uint32_t lo = (hi << 8) | uint32_t(data[si + 4]);
@@ -145,10 +145,10 @@ String Base32::encode(const PackedByteArray &data) const {
 	}
 
 	// Pad the final quantum
-	if (!padding.is_empty()) {
+	if (!_padding.is_empty()) {
 		int64_t n_pad = (remain * 8 / 5) + 1;
 		for (int64_t i = n_pad; i < 8; i++) {
-			dst[di + i] = padding.ascii()[0];
+			dst[di + i] = _padding.ascii()[0];
 		}
 	}
 
@@ -156,7 +156,7 @@ String Base32::encode(const PackedByteArray &data) const {
 }
 PackedByteArray Base32::decode(const String &data) const {
 	ERR_FAIL_COND_V(!is_valid(data), PackedByteArray());
-	CharString src = padding.is_empty() ? data.ascii() : data.rstrip(padding).ascii();
+	CharString src = _padding.is_empty() ? data.ascii() : data.rstrip(_padding).ascii();
 
 	int64_t srci = 0;
 	int64_t dsti = 0;
@@ -205,20 +205,8 @@ PackedByteArray Base32::decode(const String &data) const {
 	return dst;
 }
 
-Ref<Base32> Base32::base32_crockford;
-static Ref<Base32> Base32_crockford() {
-	if (Base32::base32_crockford.is_null()) {
-		Base32::base32_crockford = Ref<Base32>(memnew(Base32("0123456789ABCDEFGHJKMNPQRSTVWXYZ", "")));
-	}
-	return Base32::base32_crockford;
-}
-Ref<Base32> Base32::base32_cid;
-static Ref<Base32> Base32_cid() {
-	if (Base32::base32_cid.is_null()) {
-		Base32::base32_cid = Ref<Base32>(memnew(Base32("abcdefghijklmnopqrstuvwxyz234567", "")));
-	}
-	return Base32::base32_cid;
-}
+LazyGlobal<Base32> Base32::base32_crockford{[]() -> Ref<Base32> { return memnew(Base32("0123456789ABCDEFGHJKMNPQRSTVWXYZ", "")); }};
+LazyGlobal<Base32> Base32::base32_cid{[]() -> Ref<Base32> { return memnew(Base32("abcdefghijklmnopqrstuvwxyz234567", "")); }};
 
 String Base32::clean_crockford(const String &data) {
 	String s = data.to_upper();
@@ -236,26 +224,26 @@ bool Base32::is_valid_cid(const String &data) {
 		return false;
 	}
 
-	return Base32_cid()->is_valid(s.substr(1));
+	return base32_cid->is_valid(s.substr(1));
 }
 bool Base32::is_valid_crockford(const String &data) {
 	String s = clean_crockford(data);
-	return Base32_crockford()->is_valid(s);
+	return base32_crockford->is_valid(s);
 }
 PackedByteArray Base32::decode_cid(const String &data) {
 	String s = data.to_lower();
 	ERR_FAIL_COND_V(!s.begins_with("b"), PackedByteArray());
-	return Base32_cid()->decode(s.substr(1));
+	return base32_cid->decode(s.substr(1));
 }
 String Base32::encode_cid(const PackedByteArray &data) {
-	return "b" + Base32_cid()->encode(data);
+	return "b" + base32_cid->encode(data);
 }
 PackedByteArray Base32::decode_crockford(const String &data) {
 	String s = clean_crockford(data);
-	return Base32_crockford()->decode(s);
+	return base32_crockford->decode(s);
 }
 String Base32::encode_crockford(const PackedByteArray &data) {
-	return Base32_crockford()->encode(data);
+	return base32_crockford->encode(data);
 }
 int64_t Base32::encoded_len(int64_t n) {
 	return (n / 5) * 8 + (((n % 5) * 8) + 4) / 5;

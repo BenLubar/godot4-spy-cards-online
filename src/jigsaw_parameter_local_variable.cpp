@@ -3,7 +3,6 @@
 void JigsawParameterLocalVariable::_bind_methods() {
 	BIND_CONSTANT(FRAME_ARGUMENTS);
 	BIND_CONSTANT(FRAME_RESULTS);
-	BIND_CONSTANT(FRAME_ENVIRONMENT);
 
 	BIND_PROPERTY(Variant::INT, frame);
 	BIND_PROPERTY(Variant::INT, slot);

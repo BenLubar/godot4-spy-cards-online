@@ -15,22 +15,15 @@ void CardGridNative::_bind_methods() {
 	ClassDB::bind_static_method("CardGridNative", D_METHOD("make"), &CardGridNative::make);
 }
 
-Ref<GDScript> CardGridNative::impl_script;
+LazyGlobal<GDScript> CardGridNative::impl_script{[]() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://card/card_grid.gd", "GDScript"); }};
 
 void CardGridNative::set_impl_script(const Ref<GDScript> &script) {
-	if (unlikely(script.is_null())) {
-		WARN_PRINT("CardGridNative.set_impl_script: script is null");
-	}
+	ERR_FAIL_COND(script.is_null());
 
 	impl_script = script;
 }
 
 Ref<GDScript> CardGridNative::get_impl_script() {
-	if (impl_script.is_null()) {
-		impl_script = ResourceLoader::get_singleton()->load("res://card/card_grid.gd", "GDScript");
-		ERR_FAIL_COND_V(impl_script.is_null(), Ref<GDScript>());
-	}
-
 	return impl_script;
 }
 

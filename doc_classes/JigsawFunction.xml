@@ -11,6 +11,8 @@
 		</member>
 		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
 		</member>
+		<member name="editor_description" type="String" setter="set_editor_description" getter="get_editor_description" default="&quot;&quot;">
+		</member>
 		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>
 		<member name="result_names" type="PackedStringArray" setter="set_result_names" getter="get_result_names" default="PackedStringArray()">

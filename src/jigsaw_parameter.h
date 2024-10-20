@@ -43,6 +43,7 @@ public:
 		CHOICE = 20,
 		CHARACTER = 21,
 		AUDIENCE = 22,
+		EFFECT_INSTANCE_PARAMETER = 23,
 	};
 
 protected:
@@ -54,7 +55,7 @@ public:
 
 	virtual Type get_type() const = 0;
 
-	static bool is_concrete_type(Type type) { return type != NONE && type != VARIABLE && type != LOCAL_VARIABLE; }
+	static bool is_concrete_type(Type type) { return type != NONE && type != VARIABLE && type != LOCAL_VARIABLE && type != EFFECT_INSTANCE_PARAMETER; }
 	static bool is_saved_type(Type type) { return type > NONE; }
 };
 DECLARE_ENUM(JigsawParameter::Type);

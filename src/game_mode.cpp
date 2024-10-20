@@ -140,13 +140,9 @@ IMPLEMENT_PROPERTY(GameMode, TypedArray<JigsawFunction>, custom_functions);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<CardDef>, card_defs);
 
 Ref<CardDef> GameMode::get_card(enums::CardDef::Card id) const {
-	for (int64_t i = 0; i < card_defs.size(); i++) {
-		CardDef *card = Object::cast_to<CardDef>(card_defs[i]);
-		if (!card) {
-			continue;
-		}
-
-		if (card->get_id() == id) {
+	for (int64_t i = 0; i < _card_defs.size(); i++) {
+		Ref<CardDef> card = _card_defs[i];
+		if (card.is_valid() && card->get_id() == id) {
 			return card;
 		}
 	}
@@ -156,16 +152,14 @@ Ref<CardDef> GameMode::get_card(enums::CardDef::Card id) const {
 
 #define IMPLEMENT_TYPE_GETTER(Type, type) \
 	Ref<Type##Def> GameMode::get_##type(enums::Type##Def::Type id) const { \
-		ERR_FAIL_COND_V_MSG(!type##s.has(id), Ref<Type##Def>(), String("%s %d not part of this mode") % Array::make(String(#type), id)); \
+		ERR_FAIL_COND_V_MSG(!_##type##s.has(id), Ref<Type##Def>(), vformat("%s %d not part of this mode", #type, id)); \
 		if (id < enums::Type##Def::FIRST_CUSTOM) { \
 			return get_predefined<Type##Def>(id); \
 		} \
-		ERR_FAIL_INDEX_V_MSG(id - enums::Type##Def::FIRST_CUSTOM, custom_##type##s.size(), Ref<Type##Def>(), String("custom %s %d not defined") % Array::make(String(#type), id)); \
-		Type##Def *obj = Object::cast_to<Type##Def>(custom_##type##s[id - enums::Type##Def::FIRST_CUSTOM]); \
-		if (obj) { \
-			return obj; \
-		} \
-		return Ref<Type##Def>(); \
+		ERR_FAIL_INDEX_V_MSG(id - enums::Type##Def::FIRST_CUSTOM, _custom_##type##s.size(), Ref<Type##Def>(), vformat("custom %s %d not defined", #type, id)); \
+		Ref<Type##Def> obj = _custom_##type##s[id - enums::Type##Def::FIRST_CUSTOM]; \
+		ERR_FAIL_COND_V_MSG(obj.is_null(), Ref<Type##Def>(), vformat("custom %s %d is null", #type, id)); \
+		return obj; \
 	}
 
 IMPLEMENT_TYPE_GETTER(Rank, rank);

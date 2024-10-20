@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawParameterEffectInstanceParameter" inherits="JigsawParameter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterEffectInstanceParameter" />
+			<param index="0" name="inst" type="JigsawParameter" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="make_template" qualifiers="static">
+			<return type="JigsawParameterEffectInstanceParameter" />
+			<param index="0" name="effect" type="EffectDef" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="effect_instance" type="JigsawParameter" setter="set_effect_instance" getter="get_effect_instance">
+		</member>
+		<member name="index" type="int" setter="set_index" getter="get_index" default="-1">
+		</member>
+		<member name="template_effect" type="EffectDef" setter="set_template_effect" getter="get_template_effect">
+		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="23" />
+	</members>
+</class>

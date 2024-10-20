@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="format_quantity" type="JigsawProcedure" setter="set_format_quantity" getter="get_format_quantity">
+		<member name="format_cost" type="JigsawProcedureStatFormatCost" setter="set_format_cost" getter="get_format_cost">
 		</member>
 		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
 		</member>
