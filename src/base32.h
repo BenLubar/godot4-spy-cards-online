@@ -17,7 +17,6 @@ public:
 
 	Base32();
 	explicit Base32(const String &predefined_alphabet, const String &predefined_padding);
-	~Base32() = default;
 
 	DECLARE_PROPERTY(String, alphabet, = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567");
 	DECLARE_PROPERTY(String, padding, = "=");

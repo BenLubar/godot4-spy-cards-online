@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	ModifierInstance() = default;
-	~ModifierInstance() = default;
-
 	DECLARE_PROPERTY(enums::ModifierDef::Modifier, modifier, = enums::ModifierDef::Modifier::NONE);
 	DECLARE_PROPERTY(int64_t, amount, = 0);
 	DECLARE_PROPERTY(int64_t, amount_inf, = 0);

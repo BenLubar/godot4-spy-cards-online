@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	RecordingRound() = default;
-	~RecordingRound() = default;
-
 	DECLARE_PROPERTY(PackedByteArray, turn_seed);
 	DECLARE_PROPERTY(PackedByteArray, turn_seed2);
 	DECLARE_PROPERTY(TypedArray<PackedInt64Array>, ready);

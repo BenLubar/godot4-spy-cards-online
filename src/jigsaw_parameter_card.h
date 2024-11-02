@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCard() = default;
-	~JigsawParameterCard() = default;
-
 	DECLARE_PROPERTY(enums::CardDef::Card, card, = enums::CardDef::Card::NONE);
 
 	Type get_type() const override { return CARD; }

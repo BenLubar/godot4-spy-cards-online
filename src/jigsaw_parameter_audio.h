@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterAudio() = default;
-	~JigsawParameterAudio() = default;
-
 	DECLARE_PROPERTY(double, loop_start, = 0.0);
 	DECLARE_PROPERTY(double, loop_end, = 0.0);
 	DECLARE_PROPERTY(Ref<AudioStreamWAV>, audio);

@@ -6,6 +6,171 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="can_pause_execution" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="get_argument" qualifiers="const">
+			<return type="JigsawParameter" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_argument_name" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_argument_template" qualifiers="const">
+			<return type="JigsawParameter[]" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch" qualifiers="const">
+			<return type="JigsawCommandList" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_argument_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_argument_templates" qualifiers="const">
+			<return type="Array[]" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_name" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_result_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_result_templates" qualifiers="const">
+			<return type="Array[]" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
+			<description>
+			</description>
+		</method>
+		<method name="get_config_desc" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_config_name" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_config_options" qualifiers="const">
+			<return type="PackedStringArray" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_config_value" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_arguments" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_branches" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_configs" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_results" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_result" qualifiers="const">
+			<return type="JigsawParameterLocalVariable" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_result_name" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_result_template" qualifiers="const">
+			<return type="JigsawParameter[]" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
+			<description>
+			</description>
+		</method>
+		<method name="is_argument_unresolved" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="modifies_game_state" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="set_argument">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="arg" type="JigsawParameter" />
+			<description>
+			</description>
+		</method>
+		<method name="set_branch">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="commands" type="JigsawCommandList" />
+			<description>
+			</description>
+		</method>
+		<method name="set_config_value">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_result">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="result" type="JigsawParameterLocalVariable" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="type" type="int" setter="" getter="get_type" enum="JigsawCommand.Type" default="0">
 		</member>

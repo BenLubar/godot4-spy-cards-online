@@ -41,7 +41,7 @@
 		</method>
 		<method name="make_param" qualifiers="static">
 			<return type="CardFilter" />
-			<param index="0" name="param" type="JigsawParameter" />
+			<param index="0" name="param" type="JigsawParameterVariable" />
 			<description>
 			</description>
 		</method>
@@ -59,14 +59,14 @@
 		</method>
 		<method name="matches_def" qualifiers="const">
 			<return type="bool" />
-			<param index="0" name="ctx" type="JigsawContext" />
+			<param index="0" name="context" type="JigsawContext" />
 			<param index="1" name="card" type="int" enum="CardDef.Card" />
 			<description>
 			</description>
 		</method>
 		<method name="matches_instance" qualifiers="const">
 			<return type="bool" />
-			<param index="0" name="ctx" type="JigsawContext" />
+			<param index="0" name="context" type="JigsawContext" />
 			<param index="1" name="inst" type="CardInstance" />
 			<description>
 			</description>

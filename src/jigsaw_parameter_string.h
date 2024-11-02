@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterString() = default;
-	~JigsawParameterString() = default;
-
 	DECLARE_PROPERTY(String, string);
 
 	Type get_type() const override { return STRING; }

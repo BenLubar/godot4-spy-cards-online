@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterModifierInstance() = default;
-	~JigsawParameterModifierInstance() = default;
-
 	DECLARE_PROPERTY(Ref<ModifierInstance>, instance);
 
 	Type get_type() const override { return MODIFIER_INSTANCE; }

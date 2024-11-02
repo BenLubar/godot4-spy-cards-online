@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCardGrid() = default;
-	~JigsawParameterCardGrid() = default;
-
 	DECLARE_PROPERTY(int64_t, grid, = -1);
 
 	Type get_type() const override { return CARD_GRID; }

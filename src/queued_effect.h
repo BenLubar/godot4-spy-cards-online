@@ -15,9 +15,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	QueuedEffect() = default;
-	~QueuedEffect() = default;
-
 	DECLARE_PROPERTY(Ref<CardInstance>, card);
 	DECLARE_PROPERTY(Ref<EffectInstance>, effect);
 };

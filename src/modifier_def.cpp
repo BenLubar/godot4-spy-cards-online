@@ -15,10 +15,12 @@ void ModifierDef::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, editor_name);
 	BIND_PROPERTY_RESOURCE(JigsawProcedureModifierDescribe, describe);
 	BIND_PROPERTY_RESOURCE(JigsawProcedureModifierSimpleDescribe, simple_describe);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureModifierExtendedDescribe, extended_describe);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTriggerModifier, triggers);
 }
 
 IMPLEMENT_PROPERTY(ModifierDef, String, editor_name);
 IMPLEMENT_PROPERTY(ModifierDef, Ref<JigsawProcedureModifierDescribe>, describe);
 IMPLEMENT_PROPERTY(ModifierDef, Ref<JigsawProcedureModifierSimpleDescribe>, simple_describe);
+IMPLEMENT_PROPERTY(ModifierDef, Ref<JigsawProcedureModifierExtendedDescribe>, extended_describe);
 IMPLEMENT_PROPERTY(ModifierDef, TypedArray<JigsawTriggerModifier>, triggers);

@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterFileIDOpus() = default;
-	~JigsawParameterFileIDOpus() = default;
-
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 
 	Type get_type() const override { return FILE_ID_OPUS; }

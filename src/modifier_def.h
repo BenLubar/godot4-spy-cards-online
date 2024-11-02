@@ -20,12 +20,10 @@ protected:
 	static void _bind_methods();
 
 public:
-	ModifierDef() = default;
-	~ModifierDef() = default;
-
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(Ref<JigsawProcedureModifierDescribe>, describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureModifierSimpleDescribe>, simple_describe);
+	DECLARE_PROPERTY(Ref<JigsawProcedureModifierExtendedDescribe>, extended_describe);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerModifier>, triggers);
 };
 DECLARE_PREDEFINED_KEY(ModifierDef, MODIFIER);

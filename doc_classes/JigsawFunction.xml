@@ -11,6 +11,10 @@
 		</member>
 		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
 		</member>
+		<member name="cached_can_pause_execution" type="bool" setter="set_cached_can_pause_execution" getter="get_cached_can_pause_execution">
+		</member>
+		<member name="cached_modifies_game_state" type="bool" setter="set_cached_modifies_game_state" getter="get_cached_modifies_game_state">
+		</member>
 		<member name="editor_description" type="String" setter="set_editor_description" getter="get_editor_description" default="&quot;&quot;">
 		</member>
 		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">

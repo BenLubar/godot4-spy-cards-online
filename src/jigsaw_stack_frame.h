@@ -5,6 +5,7 @@
 
 class JigsawStackFrame;
 
+#include "jigsaw_command_list.h"
 #include "jigsaw_parameter.h"
 
 class JigsawStackFrame : public RefCounted {
@@ -14,9 +15,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawStackFrame() = default;
-	~JigsawStackFrame() = default;
-
+	DECLARE_PROPERTY(int64_t, branch, = 0);
+	DECLARE_PROPERTY(Ref<JigsawCommandList>, commands);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, local_variables);
 	DECLARE_PROPERTY(int64_t, instruction_pointer, = -1);
 };

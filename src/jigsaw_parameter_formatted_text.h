@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterFormattedText() = default;
-	~JigsawParameterFormattedText() = default;
-
 	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
 
 	Type get_type() const override { return FORMATTED_TEXT; }

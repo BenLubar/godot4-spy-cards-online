@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterUILabelInstance() = default;
-	~JigsawParameterUILabelInstance() = default;
-
 	DECLARE_PROPERTY(int64_t, label, = -1);
 
 	Type get_type() const override { return UI_LABEL_INSTANCE; }

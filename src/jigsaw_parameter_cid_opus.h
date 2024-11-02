@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCIDOpus() = default;
-	~JigsawParameterCIDOpus() = default;
-
 	DECLARE_PROPERTY(PackedByteArray, cid);
 
 	Type get_type() const override { return CID_OPUS; }

@@ -44,15 +44,13 @@ public:
 		CHARACTER = 21,
 		AUDIENCE = 22,
 		EFFECT_INSTANCE_PARAMETER = 23,
+		STAT_VALUE = 24,
 	};
 
 protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameter() = default;
-	~JigsawParameter() = default;
-
 	virtual Type get_type() const = 0;
 
 	static bool is_concrete_type(Type type) { return type != NONE && type != VARIABLE && type != LOCAL_VARIABLE && type != EFFECT_INSTANCE_PARAMETER; }

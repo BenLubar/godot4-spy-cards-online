@@ -15,9 +15,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	ChoicesDef() = default;
-	~ChoicesDef() = default;
-
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(PackedStringArray, editor_choice_names);
 };

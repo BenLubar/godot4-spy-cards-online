@@ -21,9 +21,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	TribeDef() = default;
-	~TribeDef() = default;
-
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(Color, color);
 	DECLARE_PROPERTY(DisplayMode, display, = DisplayMode::NORMAL);

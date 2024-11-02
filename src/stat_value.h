@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	StatValue() = default;
-	~StatValue() = default;
-
 	DECLARE_PROPERTY(enums::StatDef::Stat, stat, = enums::StatDef::Stat::NONE);
 };
 

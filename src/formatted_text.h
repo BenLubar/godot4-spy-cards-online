@@ -52,15 +52,12 @@ protected:
 	static void _bind_methods();
 
 public:
-	FormattedText() = default;
-	~FormattedText() = default;
-
 	DECLARE_PROPERTY(Command, command, = ADD_TEXT);
 	DECLARE_PROPERTY(String, text);
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<EffectInstance>, instance);
 	DECLARE_PROPERTY(Color, color);
-	DECLARE_PROPERTY(double, font_size, = 1.0f);
+	DECLARE_PROPERTY(double, font_size, = 1.0);
 	DECLARE_PROPERTY(int64_t, table_columns, = 0);
 
 	static TypedArray<FormattedText> make_plain(String string);
@@ -75,9 +72,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	FormattedTextWithIcon() = default;
-	~FormattedTextWithIcon() = default;
-
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
 };

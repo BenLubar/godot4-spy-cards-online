@@ -22,9 +22,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	CharacterDef() = default;
-	~CharacterDef() = default;
-
 	DECLARE_PROPERTY(String, id);
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(PackedStringArray, tags);

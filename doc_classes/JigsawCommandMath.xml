@@ -11,7 +11,7 @@
 		</member>
 		<member name="op" type="int" setter="set_op" getter="get_op" enum="JigsawCommandMath.Operation" default="0">
 		</member>
-		<member name="result" type="JigsawParameterLocalVariable" setter="set_result" getter="get_result">
+		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
 		</member>
 		<member name="rhs" type="JigsawParameter" setter="set_rhs" getter="get_rhs">
 		</member>

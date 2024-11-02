@@ -66,6 +66,7 @@ void EffectDef::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTriggerEffect, triggers);
 	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectDescribe, describe);
 	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectSimpleDescribe, simple_describe);
+	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectExtendedDescribe, extended_describe);
 	BIND_PROPERTY_RESOURCE(JigsawProcedureEffectCurve, curve);
 }
 
@@ -76,4 +77,5 @@ IMPLEMENT_PROPERTY(EffectDef, PackedStringArray, parameter_names);
 IMPLEMENT_PROPERTY(EffectDef, TypedArray<JigsawTriggerEffect>, triggers);
 IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectDescribe>, describe);
 IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectSimpleDescribe>, simple_describe);
+IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectExtendedDescribe>, extended_describe);
 IMPLEMENT_PROPERTY(EffectDef, Ref<JigsawProcedureEffectCurve>, curve);

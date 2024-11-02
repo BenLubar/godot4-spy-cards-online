@@ -29,12 +29,12 @@ Ref<CardFilter> CardFilter::make_or(const TypedArray<CardFilter> &list) {
 	return filter;
 }
 
-bool CardFilterOr::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
+bool CardFilterOr::_matches_def(const Ref<JigsawContext> &context, enums::CardDef::Card card) const {
 	for (int64_t i = 0; i < _list.size(); i++) {
 		Ref<CardFilter> sub_filter = _list[i];
 		ERR_CONTINUE(sub_filter.is_null());
 
-		if (sub_filter->matches_def(ctx, card)) {
+		if (sub_filter->matches_def(context, card)) {
 			return true;
 		}
 	}
@@ -42,12 +42,12 @@ bool CardFilterOr::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::C
 	return false;
 }
 
-bool CardFilterOr::_matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
+bool CardFilterOr::_matches_instance(const Ref<JigsawContext> &context, const Ref<CardInstance> &inst) const {
 	for (int64_t i = 0; i < _list.size(); i++) {
 		Ref<CardFilter> sub_filter = _list[i];
 		ERR_CONTINUE(sub_filter.is_null());
 
-		if (sub_filter->matches_instance(ctx, inst)) {
+		if (sub_filter->matches_instance(context, inst)) {
 			return true;
 		}
 	}

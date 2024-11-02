@@ -63,9 +63,9 @@ bool CardFilterCost::_matches_costs(const TypedArray<StatValue> &costs) const {
 	return false;
 }
 
-bool CardFilterCost::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
-	ERR_FAIL_COND_V(ctx.is_null(), false);
-	JigsawGlobal *global = ctx->get_global();
+bool CardFilterCost::_matches_def(const Ref<JigsawContext> &context, enums::CardDef::Card card) const {
+	ERR_FAIL_COND_V(context.is_null(), false);
+	JigsawGlobal *global = context->get_global();
 	ERR_FAIL_NULL_V(global, false);
 	Ref<GameMode> mode = global->get_mode();
 	ERR_FAIL_COND_V(mode.is_null(), false);
@@ -75,7 +75,7 @@ bool CardFilterCost::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef:
 	return _matches_costs(def->get_costs());
 }
 
-bool CardFilterCost::_matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
+bool CardFilterCost::_matches_instance(const Ref<JigsawContext> &context, const Ref<CardInstance> &inst) const {
 	ERR_FAIL_COND_V(inst.is_null(), false);
 
 	return _matches_costs(inst->get_costs());

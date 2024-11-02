@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterStat() = default;
-	~JigsawParameterStat() = default;
-
 	DECLARE_PROPERTY(enums::StatDef::Stat, stat, = enums::StatDef::Stat::NONE);
 
 	Type get_type() const override { return STAT; }

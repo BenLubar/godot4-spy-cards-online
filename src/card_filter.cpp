@@ -19,8 +19,8 @@ void CardFilter::_bind_methods() {
 
 	BIND_PROPERTY(Variant::BOOL, negate);
 
-	ClassDB::bind_method(D_METHOD("matches_def", "ctx", "card"), &CardFilter::matches_def);
-	ClassDB::bind_method(D_METHOD("matches_instance", "ctx", "inst"), &CardFilter::matches_instance);
+	ClassDB::bind_method(D_METHOD("matches_def", "context", "card"), &CardFilter::matches_def);
+	ClassDB::bind_method(D_METHOD("matches_instance", "context", "inst"), &CardFilter::matches_instance);
 
 	ClassDB::bind_static_method("CardFilter", D_METHOD("make_and", "list"), &CardFilter::make_and);
 	ClassDB::bind_static_method("CardFilter", D_METHOD("make_or", "list"), &CardFilter::make_or);
@@ -34,8 +34,8 @@ void CardFilter::_bind_methods() {
 
 IMPLEMENT_PROPERTY(CardFilter, bool, negate);
 
-bool CardFilter::matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
-	bool match = _matches_def(ctx, card);
+bool CardFilter::matches_def(const Ref<JigsawContext> &context, enums::CardDef::Card card) const {
+	bool match = _matches_def(context, card);
 	if (_negate) {
 		match = !match;
 	}
@@ -43,8 +43,8 @@ bool CardFilter::matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card
 	return match;
 }
 
-bool CardFilter::matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
-	bool match = _matches_instance(ctx, inst);
+bool CardFilter::matches_instance(const Ref<JigsawContext> &context, const Ref<CardInstance> &inst) const {
+	bool match = _matches_instance(context, inst);
 	if (_negate) {
 		match = !match;
 	}

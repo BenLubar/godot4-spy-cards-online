@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterAudienceInstance() = default;
-	~JigsawParameterAudienceInstance() = default;
-
 	DECLARE_PROPERTY(int64_t, group, = -1);
 	DECLARE_PROPERTY(int64_t, member, = -1);
 

@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterScene() = default;
-	~JigsawParameterScene() = default;
-
 	DECLARE_PROPERTY(Ref<GLTFState>, scene);
 	DECLARE_PROPERTY(Dictionary, json_data);
 };

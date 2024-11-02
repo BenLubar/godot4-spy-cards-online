@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterSpriteInstance() = default;
-	~JigsawParameterSpriteInstance() = default;
-
 	DECLARE_PROPERTY(int64_t, sprite, = -1);
 
 	Type get_type() const override { return SPRITE_INSTANCE; }

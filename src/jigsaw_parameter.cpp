@@ -36,6 +36,8 @@ void JigsawParameter::_bind_methods() {
 	BIND_ENUM_CONSTANT(CHOICE);
 	BIND_ENUM_CONSTANT(CHARACTER);
 	BIND_ENUM_CONSTANT(AUDIENCE);
+	BIND_ENUM_CONSTANT(EFFECT_INSTANCE_PARAMETER);
+	BIND_ENUM_CONSTANT(STAT_VALUE);
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawParameter::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");

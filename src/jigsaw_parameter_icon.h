@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterIcon() = default;
-	~JigsawParameterIcon() = default;
-
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 
 	Type get_type() const override { return ICON; }

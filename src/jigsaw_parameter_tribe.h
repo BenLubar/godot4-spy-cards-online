@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterTribe() = default;
-	~JigsawParameterTribe() = default;
-
 	DECLARE_PROPERTY(enums::TribeDef::Tribe, tribe, = enums::TribeDef::Tribe::NONE);
 
 	Type get_type() const override { return TRIBE; }

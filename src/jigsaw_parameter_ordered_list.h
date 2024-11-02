@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterOrderedList() = default;
-	~JigsawParameterOrderedList() = default;
-
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, list);
 	DECLARE_PROPERTY_IS(bool, template, = false);
 

@@ -16,9 +16,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	AudienceDef() = default;
-	~AudienceDef() = default;
-
 	DECLARE_PROPERTY(enums::IconDef::Icon, front, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, front_cheer, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);

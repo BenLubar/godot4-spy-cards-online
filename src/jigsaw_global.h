@@ -29,9 +29,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawGlobal() = default;
-	~JigsawGlobal() = default;
-
 	DECLARE_PROPERTY(Ref<GameMode>, mode);
 	DECLARE_PROPERTY(Ref<VariantDef>, selected_variant);
 	DECLARE_PROPERTY(Ref<CardInstance>, current_card_instance);

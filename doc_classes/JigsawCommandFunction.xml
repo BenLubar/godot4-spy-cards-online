@@ -9,6 +9,8 @@
 	<members>
 		<member name="args" type="JigsawParameter[]" setter="set_args" getter="get_args" default="[]">
 		</member>
+		<member name="editor_global" type="JigsawGlobal" setter="set_editor_global" getter="get_editor_global">
+		</member>
 		<member name="function_index" type="int" setter="set_function_index" getter="get_function_index" default="-1">
 		</member>
 		<member name="results" type="JigsawParameterLocalVariable[]" setter="set_results" getter="get_results" default="[]">

@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterLocation() = default;
-	~JigsawParameterLocation() = default;
-
 	DECLARE_PROPERTY(enums::LocationDef::Location, location, = enums::LocationDef::Location::NONE);
 
 	Type get_type() const override { return LOCATION; }

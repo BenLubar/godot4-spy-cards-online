@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterModifier() = default;
-	~JigsawParameterModifier() = default;
-
 	DECLARE_PROPERTY(enums::ModifierDef::Modifier, modifier, = enums::ModifierDef::Modifier::NONE);
 
 	Type get_type() const override { return MODIFIER; }

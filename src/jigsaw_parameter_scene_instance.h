@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterSceneInstance() = default;
-	~JigsawParameterSceneInstance() = default;
-
 	DECLARE_PROPERTY(int64_t, scene, = -1);
 
 	Type get_type() const override { return SCENE_INSTANCE; }

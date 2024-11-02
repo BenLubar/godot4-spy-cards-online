@@ -82,12 +82,10 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		Ref<JigsawParameterFormattedText> effect_description;
 		effect_description.instantiate();
 
-		Ref<JigsawContext> ctx = JigsawContext::make(card->get_global(), parent_context);
-		ctx->set_procedure(describe);
-
+		Ref<JigsawContext> context = JigsawContext::make(card->get_global(), parent_context);
 		TypedArray<JigsawParameter> results = Array::make(effect_description);
 
-		Ref<JigsawError> error = ctx->evaluate(describe->get_commands(), Array::make(
+		Ref<JigsawError> error = context->evaluate(describe, Array::make(
 			JigsawParameterCardInstance::make(card),
 			JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
 		), results);
@@ -118,7 +116,7 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 			after_text->set_command(FormattedText::POP);
 			description.append(after_text);
 		} else {
-			effect_description = ctx->get_results()[0];
+			effect_description = context->get_results()[0];
 			TypedArray<FormattedText> effect_description_text = effect_description->get_text();
 			if (effect_description_text.is_empty()) {
 				return TypedArray<FormattedText>();
@@ -162,12 +160,10 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 	Ref<JigsawParameterIcon> icon;
 	icon.instantiate();
 
-	Ref<JigsawContext> ctx = JigsawContext::make(card->get_global(), parent_context);
-	ctx->set_procedure(simple_describe);
-
+	Ref<JigsawContext> context = JigsawContext::make(card->get_global(), parent_context);
 	TypedArray<JigsawParameter> results = Array::make(effect_description, icon);
 
-	Ref<JigsawError> error = ctx->evaluate(simple_describe, Array::make(
+	Ref<JigsawError> error = context->evaluate(simple_describe, Array::make(
 		JigsawParameterCardInstance::make(card),
 		JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
 	), results);
@@ -177,8 +173,8 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 		return Ref<FormattedTextWithIcon>();
 	}
 
-	icon = ctx->get_results()[0];
-	effect_description = ctx->get_results()[1];
+	icon = context->get_results()[0];
+	effect_description = context->get_results()[1];
 
 	TypedArray<FormattedText> effect_description_text = effect_description->get_text();
 	description.append_array(effect_description_text);

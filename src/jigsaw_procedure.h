@@ -24,9 +24,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawProcedure() = default;
-	~JigsawProcedure() = default;
-
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, commands);
 	virtual String get_editor_name() const = 0;
 	virtual String get_editor_description() const = 0;
@@ -42,8 +39,6 @@ public:
 	protected: \
 		static void _bind_methods(); \
 	public: \
-		m_type() = default; \
-		~m_type() = default; \
 		String get_editor_name() const override; \
 		String get_editor_description() const override; \
 		TypedArray<JigsawParameter> get_arguments() const override; \

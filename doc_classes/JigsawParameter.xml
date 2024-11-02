@@ -81,5 +81,9 @@
 		</constant>
 		<constant name="AUDIENCE" value="22" enum="Type">
 		</constant>
+		<constant name="EFFECT_INSTANCE_PARAMETER" value="23" enum="Type">
+		</constant>
+		<constant name="STAT_VALUE" value="24" enum="Type">
+		</constant>
 	</constants>
 </class>

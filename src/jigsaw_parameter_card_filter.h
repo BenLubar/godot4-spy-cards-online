@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCardFilter() = default;
-	~JigsawParameterCardFilter() = default;
-
 	DECLARE_PROPERTY(Ref<CardFilter>, filter);
 
 	Type get_type() const override { return CARD_FILTER; }

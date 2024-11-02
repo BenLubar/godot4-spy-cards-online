@@ -17,11 +17,11 @@
 		</member>
 		<member name="font_size" type="JigsawParameter" setter="set_font_size" getter="get_font_size">
 		</member>
+		<member name="formatted_text" type="JigsawParameterLocalVariable" setter="set_formatted_text" getter="get_formatted_text">
+		</member>
 		<member name="icon" type="JigsawParameter" setter="set_icon" getter="get_icon">
 		</member>
-		<member name="result" type="JigsawParameterLocalVariable" setter="set_result" getter="get_result">
-		</member>
-		<member name="table_columns" type="int" setter="set_table_columns" getter="get_table_columns" default="1">
+		<member name="table_columns" type="JigsawParameter" setter="set_table_columns" getter="get_table_columns">
 		</member>
 		<member name="text" type="JigsawParameter" setter="set_text" getter="get_text">
 		</member>

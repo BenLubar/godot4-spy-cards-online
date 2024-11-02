@@ -21,9 +21,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	NPCDef() = default;
-	~NPCDef() = default;
-
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, build_deck);

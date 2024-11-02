@@ -15,9 +15,9 @@ Ref<CardFilter> CardFilter::make_rank(RankDef::Rank rank) {
 	return filter;
 }
 
-bool CardFilterRank::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef::Card card) const {
-	ERR_FAIL_COND_V(ctx.is_null(), false);
-	JigsawGlobal *global = ctx->get_global();
+bool CardFilterRank::_matches_def(const Ref<JigsawContext> &context, enums::CardDef::Card card) const {
+	ERR_FAIL_COND_V(context.is_null(), false);
+	JigsawGlobal *global = context->get_global();
 	ERR_FAIL_NULL_V(global, false);
 	Ref<GameMode> mode = global->get_mode();
 	ERR_FAIL_COND_V(mode.is_null(), false);
@@ -27,7 +27,7 @@ bool CardFilterRank::_matches_def(const Ref<JigsawContext> &ctx, enums::CardDef:
 	return get_rank() == def->get_rank();
 }
 
-bool CardFilterRank::_matches_instance(const Ref<JigsawContext> &ctx, const Ref<CardInstance> &inst) const {
+bool CardFilterRank::_matches_instance(const Ref<JigsawContext> &context, const Ref<CardInstance> &inst) const {
 	ERR_FAIL_COND_V(inst.is_null(), false);
 
 	return get_rank() == inst->get_rank();

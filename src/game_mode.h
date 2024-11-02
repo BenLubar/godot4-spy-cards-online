@@ -42,9 +42,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	GameMode() = default;
-	~GameMode() = default;
-
 	DECLARE_PROPERTY(float, visual_pixel_size, = 75.0f);
 	DECLARE_PROPERTY(Transform3D, visual_base_transform, = Transform3D(Basis(Vector3(2.32f, 0.0f, 0.0f), Vector3(0.0f, 3.16f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)), Vector3(0.0f, 0.0f, 0.0f)));
 	DECLARE_PROPERTY(Transform3D, visual_portrait_transform, = Transform3D(Basis(Vector3(1.28f, 0.0f, 0.0f), Vector3(0.0f, 1.28f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)), Vector3(0.0f, 0.45f, -0.05f)));

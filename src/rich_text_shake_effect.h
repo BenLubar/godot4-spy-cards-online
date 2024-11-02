@@ -18,7 +18,6 @@ private:
 
 public:
 	RichTextShakeEffect();
-	~RichTextShakeEffect() = default;
 
 	constexpr static double DEFAULT_RATE = 20.0;
 	constexpr static double DEFAULT_STRENGTH = 5.0;

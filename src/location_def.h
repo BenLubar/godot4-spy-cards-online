@@ -15,8 +15,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	LocationDef() = default;
-	~LocationDef() = default;
 };
 
 #endif // LOCATION_DEF_H

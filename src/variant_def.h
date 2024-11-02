@@ -16,9 +16,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	VariantDef() = default;
-	~VariantDef() = default;
-
 	DECLARE_PROPERTY(String, title);
 	DECLARE_PROPERTY(int64_t, player_count, = 2);
 	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, npcs);

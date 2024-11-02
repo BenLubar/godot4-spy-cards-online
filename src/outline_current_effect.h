@@ -13,9 +13,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	OutlineCurrentEffect() = default;
-	~OutlineCurrentEffect() = default;
-
 	bool _process_custom_fx(const Ref<CharFXTransform> &p_char_fx) const override;
 };
 

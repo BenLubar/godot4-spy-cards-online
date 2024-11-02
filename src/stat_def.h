@@ -20,9 +20,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	StatDef() = default;
-	~StatDef() = default;
-
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<JigsawProcedureStatFormatCost>, format_cost);

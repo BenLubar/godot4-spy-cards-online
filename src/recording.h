@@ -23,9 +23,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	Recording() = default;
-	~Recording() = default;
-
 	DECLARE_PROPERTY(FormatVersion, format_version, = FormatVersion::RECORDING_3);
 	DECLARE_PROPERTY(Vector3i, game_version);
 	DECLARE_PROPERTY(String, mode_name);

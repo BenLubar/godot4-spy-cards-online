@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterAudience() = default;
-	~JigsawParameterAudience() = default;
-
 	DECLARE_PROPERTY(enums::AudienceDef::Audience, audience, = enums::AudienceDef::Audience::NONE);
 
 	Type get_type() const override { return AUDIENCE; }

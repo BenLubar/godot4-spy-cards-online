@@ -27,9 +27,6 @@ private:
 	Vector<Vector<AudienceMember_t>> _members;
 
 public:
-	Audience() = default;
-	~Audience() = default;
-
 	DECLARE_PROPERTY(TypedArray<MultiMesh>, meshes);
 
 	void update(Vector2i dir);

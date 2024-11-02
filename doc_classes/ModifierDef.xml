@@ -11,6 +11,8 @@
 		</member>
 		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>
+		<member name="extended_describe" type="JigsawProcedureModifierExtendedDescribe" setter="set_extended_describe" getter="get_extended_describe">
+		</member>
 		<member name="simple_describe" type="JigsawProcedureModifierSimpleDescribe" setter="set_simple_describe" getter="get_simple_describe">
 		</member>
 		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">

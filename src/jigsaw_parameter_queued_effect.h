@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterQueuedEffect() = default;
-	~JigsawParameterQueuedEffect() = default;
-
 	DECLARE_PROPERTY(Ref<QueuedEffect>, effect);
 
 	Type get_type() const override { return QUEUED_EFFECT; }

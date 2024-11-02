@@ -13,9 +13,6 @@ private:
 	int64_t _reserve_write(int64_t length);
 
 public:
-	FormatHelper() = default;
-	~FormatHelper() = default;
-
 	static Ref<FormatHelper> read(String name, PackedByteArray buf);
 	static Ref<FormatHelper> write(String name);
 

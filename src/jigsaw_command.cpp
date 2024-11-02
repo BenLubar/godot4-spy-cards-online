@@ -13,4 +13,35 @@ void JigsawCommand::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawCommand::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");
+	ClassDB::bind_method(D_METHOD("modifies_game_state"), &JigsawCommand::modifies_game_state);
+	ClassDB::bind_method(D_METHOD("can_pause_execution"), &JigsawCommand::can_pause_execution);
+
+	ClassDB::bind_method(D_METHOD("get_num_configs"), &JigsawCommand::get_num_configs);
+	ClassDB::bind_method(D_METHOD("get_config_name", "i"), &JigsawCommand::get_config_name);
+	ClassDB::bind_method(D_METHOD("get_config_desc", "i"), &JigsawCommand::get_config_desc);
+	ClassDB::bind_method(D_METHOD("get_config_value", "i"), &JigsawCommand::get_config_value);
+	ClassDB::bind_method(D_METHOD("set_config_value", "i", "value"), &JigsawCommand::set_config_value);
+	ClassDB::bind_method(D_METHOD("get_config_options", "i"), &JigsawCommand::get_config_options);
+
+	ClassDB::bind_method(D_METHOD("get_num_arguments"), &JigsawCommand::get_num_arguments);
+	ClassDB::bind_method(D_METHOD("get_argument", "i"), &JigsawCommand::get_argument);
+	ClassDB::bind_method(D_METHOD("get_argument_template", "i"), &JigsawCommand::get_argument_template);
+	ClassDB::bind_method(D_METHOD("is_argument_unresolved", "i"), &JigsawCommand::is_argument_unresolved);
+	ClassDB::bind_method(D_METHOD("set_argument", "i", "arg"), &JigsawCommand::set_argument);
+	ClassDB::bind_method(D_METHOD("get_argument_name", "i"), &JigsawCommand::get_argument_name);
+
+	ClassDB::bind_method(D_METHOD("get_num_results"), &JigsawCommand::get_num_results);
+	ClassDB::bind_method(D_METHOD("get_result", "i"), &JigsawCommand::get_result);
+	ClassDB::bind_method(D_METHOD("get_result_template", "i"), &JigsawCommand::get_result_template);
+	ClassDB::bind_method(D_METHOD("set_result", "i", "result"), &JigsawCommand::set_result);
+	ClassDB::bind_method(D_METHOD("get_result_name", "i"), &JigsawCommand::get_result_name);
+
+	ClassDB::bind_method(D_METHOD("get_num_branches"), &JigsawCommand::get_num_branches);
+	ClassDB::bind_method(D_METHOD("get_branch", "i"), &JigsawCommand::get_branch);
+	ClassDB::bind_method(D_METHOD("set_branch", "i", "commands"), &JigsawCommand::set_branch);
+	ClassDB::bind_method(D_METHOD("get_branch_name", "i"), &JigsawCommand::get_branch_name);
+	ClassDB::bind_method(D_METHOD("get_branch_argument_templates", "i"), &JigsawCommand::get_branch_argument_templates);
+	ClassDB::bind_method(D_METHOD("get_branch_argument_names", "i"), &JigsawCommand::get_branch_argument_names);
+	ClassDB::bind_method(D_METHOD("get_branch_result_templates", "i"), &JigsawCommand::get_branch_result_templates);
+	ClassDB::bind_method(D_METHOD("get_branch_result_names", "i"), &JigsawCommand::get_branch_result_names);
 }

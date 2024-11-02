@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterRank() = default;
-	~JigsawParameterRank() = default;
-
 	DECLARE_PROPERTY(enums::RankDef::Rank, rank, = enums::RankDef::Rank::NONE);
 
 	Type get_type() const override { return RANK; }

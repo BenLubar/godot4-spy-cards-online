@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterAmount() = default;
-	~JigsawParameterAmount() = default;
-
 	DECLARE_PROPERTY(int64_t, amount, = 0);
 	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
 	DECLARE_PROPERTY_IS(bool, nan, = false);

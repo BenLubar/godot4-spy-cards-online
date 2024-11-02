@@ -26,9 +26,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawError() = default;
-	~JigsawError() = default;
-
 	DECLARE_PROPERTY(BitField<Flags1>, flags1, = MAGIC);
 	DECLARE_PROPERTY(String, message);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, params);

@@ -21,7 +21,6 @@ private:
 
 public:
 	IconDef();
-	~IconDef() = default;
 
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 	DECLARE_PROPERTY(Ref<Image>, image);

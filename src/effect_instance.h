@@ -19,9 +19,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	EffectInstance() = default;
-	~EffectInstance() = default;
-
 	DECLARE_PROPERTY(enums::EffectDef::Effect, effect, = enums::EffectDef::Effect::NONE);
 	DECLARE_PROPERTY(int64_t, priority, = 65);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, params);

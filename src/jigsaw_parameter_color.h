@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterColor() = default;
-	~JigsawParameterColor() = default;
-
 	DECLARE_PROPERTY(Color, color);
 
 	Type get_type() const override { return COLOR; }

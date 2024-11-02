@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterEffectInstance() = default;
-	~JigsawParameterEffectInstance() = default;
-
 	DECLARE_PROPERTY(Ref<EffectInstance>, instance);
 
 	Type get_type() const override { return EFFECT_INSTANCE; }

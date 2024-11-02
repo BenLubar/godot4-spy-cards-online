@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterEffectInstanceParameter() = default;
-	~JigsawParameterEffectInstanceParameter() = default;
-
 	DECLARE_PROPERTY(Ref<JigsawParameter>, effect_instance);
 	DECLARE_PROPERTY(Ref<EffectDef>, template_effect);
 	DECLARE_PROPERTY(int64_t, index, = -1);

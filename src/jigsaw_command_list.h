@@ -15,9 +15,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawCommandList() = default;
-	~JigsawCommandList() = default;
-
 	DECLARE_PROPERTY(PackedStringArray, local_variable_names);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, local_variables);
 	DECLARE_PROPERTY(TypedArray<JigsawCommand>, list);

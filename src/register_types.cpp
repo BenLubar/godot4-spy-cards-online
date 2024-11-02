@@ -70,6 +70,7 @@
 #include "jigsaw_parameter_character.h"
 #include "jigsaw_parameter_audience.h"
 #include "jigsaw_parameter_effect_instance_parameter.h"
+#include "jigsaw_parameter_stat_value.h"
 
 #include "card_filter.h"
 #include "card_filter_and.h"
@@ -200,6 +201,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterCharacter);
 	GDREGISTER_CLASS(JigsawParameterAudience);
 	GDREGISTER_CLASS(JigsawParameterEffectInstanceParameter);
+	GDREGISTER_CLASS(JigsawParameterStatValue);
 
 	GDREGISTER_ABSTRACT_CLASS(CardFilter);
 	GDREGISTER_CLASS(CardFilterAnd);

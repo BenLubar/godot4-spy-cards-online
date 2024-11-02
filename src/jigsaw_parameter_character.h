@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCharacter() = default;
-	~JigsawParameterCharacter() = default;
-
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
 
 	Type get_type() const override { return CHARACTER; }

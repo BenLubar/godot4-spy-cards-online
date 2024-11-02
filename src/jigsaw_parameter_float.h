@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterFloat() = default;
-	~JigsawParameterFloat() = default;
-
 	DECLARE_PROPERTY(double, value, = 0.0);
 
 	Type get_type() const override { return FLOAT; }

@@ -18,9 +18,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	GameModeSummary() = default;
-	~GameModeSummary() = default;
-
 	DECLARE_PROPERTY(String, title);
 	DECLARE_PROPERTY(String, author);
 	DECLARE_PROPERTY(enums::IconDef::Icon, mode_thumbnail, = enums::IconDef::Icon::NONE);

@@ -14,9 +14,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterCardInstance() = default;
-	~JigsawParameterCardInstance() = default;
-
 	DECLARE_PROPERTY(Ref<CardInstance>, instance);
 
 	Type get_type() const override { return CARD_INSTANCE; }

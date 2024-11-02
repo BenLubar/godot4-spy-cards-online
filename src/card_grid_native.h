@@ -25,9 +25,6 @@ private:
 	Vector<Node3D *> card_children;
 
 public:
-	CardGridNative() = default;
-	~CardGridNative() = default;
-
 	GDVIRTUAL2R(Node3D *, _insert_card, int64_t, const Ref<CardInstance> &);
 	GDVIRTUAL3(_update_card, int64_t, const Ref<CardInstance> &, Node3D *);
 	GDVIRTUAL4(_reorder_card, int64_t, int64_t, const Ref<CardInstance> &, Node3D *);

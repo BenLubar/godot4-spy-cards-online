@@ -21,9 +21,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	EffectDef() = default;
-	~EffectDef() = default;
-
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(int64_t, default_priority, = 65);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, default_parameters);
@@ -31,6 +28,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerEffect>, triggers);
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectDescribe>, describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectSimpleDescribe>, simple_describe);
+	DECLARE_PROPERTY(Ref<JigsawProcedureEffectExtendedDescribe>, extended_describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectCurve>, curve);
 };
 DECLARE_PREDEFINED_KEY(EffectDef, EFFECT);

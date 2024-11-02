@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterBoolean() = default;
-	~JigsawParameterBoolean() = default;
-
 	DECLARE_PROPERTY(bool, boolean, = false);
 
 	Type get_type() const override { return BOOLEAN; }

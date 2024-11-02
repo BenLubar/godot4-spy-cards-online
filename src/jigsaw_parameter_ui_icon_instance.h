@@ -10,9 +10,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterUIIconInstance() = default;
-	~JigsawParameterUIIconInstance() = default;
-
 	DECLARE_PROPERTY(int64_t, icon, = -1);
 
 	Type get_type() const override { return UI_ICON_INSTANCE; }

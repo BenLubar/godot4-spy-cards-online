@@ -23,9 +23,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	CardDef() = default;
-	~CardDef() = default;
-
 	DECLARE_PROPERTY(Card, id, = Card::NONE);
 	DECLARE_PROPERTY(enums::RankDef::Rank, rank, = enums::RankDef::Rank::NONE);
 	DECLARE_PROPERTY(TypedArray<StatValue>, costs);

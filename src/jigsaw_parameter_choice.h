@@ -12,9 +12,6 @@ protected:
 	static void _bind_methods();
 
 public:
-	JigsawParameterChoice() = default;
-	~JigsawParameterChoice() = default;
-
 	DECLARE_PROPERTY(enums::ChoicesDef::Choices, choices, = enums::ChoicesDef::Choices::NONE);
 	DECLARE_PROPERTY(int64_t, index, = -1);
 

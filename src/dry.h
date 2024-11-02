@@ -32,6 +32,11 @@ public: \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "get_" #m_name)
 
+#define BIND_PROPERTY_NOT_SAVED(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_" #m_name, "get_" #m_name)
+
 #define BIND_PROPERTY_ENUM(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
