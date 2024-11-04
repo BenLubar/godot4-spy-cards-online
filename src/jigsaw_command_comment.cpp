@@ -8,6 +8,10 @@ void JigsawCommandComment::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandComment, TypedArray<JigsawParameter>, params);
 IMPLEMENT_PROPERTY(JigsawCommandComment, Ref<JigsawCommandList>, command_list);
 
+JigsawExecutionState JigsawCommandComment::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	return JigsawExecutionState::CONTINUE;
+}
+
 int64_t JigsawCommandComment::get_num_arguments() const {
 	return _params.size() + 1;
 }

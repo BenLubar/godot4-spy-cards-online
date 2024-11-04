@@ -36,6 +36,12 @@ IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, lhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, rhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameterLocalVariable>, output);
 
+JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	err = context->create_error("internal error: TODO (math)");
+
+	return JigsawExecutionState::ERROR;
+}
+
 int64_t JigsawCommandMath::get_num_configs() const {
 	return 1;
 }

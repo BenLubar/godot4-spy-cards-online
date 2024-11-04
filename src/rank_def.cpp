@@ -1,5 +1,7 @@
 #include "rank_def.h"
 
+#include "player_preferences_helper.h"
+
 void RankDef::_bind_methods() {
 	using namespace enums::RankDef;
 
@@ -20,6 +22,8 @@ void RankDef::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, color_alt);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, front);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
+
+	ClassDB::bind_method(D_METHOD("get_color_by_preference"), &RankDef::get_color_by_preference);
 }
 
 IMPLEMENT_PROPERTY(RankDef, String, name);
@@ -27,3 +31,7 @@ IMPLEMENT_PROPERTY(RankDef, Color, color);
 IMPLEMENT_PROPERTY(RankDef, Color, color_alt);
 IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, front);
 IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, back);
+
+Color RankDef::get_color_by_preference() const {
+	return PlayerPreferences::alternate_colors() ? get_color_alt() : get_color();
+}

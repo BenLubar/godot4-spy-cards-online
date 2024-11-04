@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WhyIsntThisInGodot" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="find_builtin_enum_key_name" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="type" type="StringName" />
+			<param index="1" name="enum_name" type="StringName" />
+			<param index="2" name="enum_value" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

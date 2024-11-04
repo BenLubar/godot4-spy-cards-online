@@ -34,6 +34,11 @@ bool JigsawCommandFunction::can_pause_execution() const {
 
 	return func->get_cached_can_pause_execution();
 }
+JigsawExecutionState JigsawCommandFunction::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	err = context->create_error("internal error: TODO (function)");
+
+	return JigsawExecutionState::ERROR;
+}
 
 int64_t JigsawCommandFunction::get_num_configs() const {
 	ERR_FAIL_NULL_V(_editor_global, false);

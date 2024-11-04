@@ -1,6 +1,7 @@
 #include "format_helper.h"
 #include "rng.h"
 #include "base32.h"
+#include "why_isnt_this_in_godot.h"
 
 #include "formatted_text.h"
 #include "squish_label.h"
@@ -122,6 +123,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(FormatHelper);
 	GDREGISTER_CLASS(RNG);
 	GDREGISTER_CLASS(Base32);
+	GDREGISTER_ABSTRACT_CLASS(WhyIsntThisInGodot);
 
 	GDREGISTER_CLASS(FormattedText);
 	GDREGISTER_CLASS(FormattedTextWithIcon);

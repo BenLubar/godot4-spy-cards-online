@@ -13,6 +13,7 @@ void CardInstance::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, portrait);
+	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
 	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
@@ -32,6 +33,7 @@ IMPLEMENT_PROPERTY(CardInstance, enums::RankDef::Rank, rank);
 IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, back);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<StatValue>, costs);
 IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, portrait);
+IMPLEMENT_PROPERTY(CardInstance, TypedArray<EffectInstance>, effects);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
@@ -54,6 +56,7 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 	inst->set_back(rank.is_valid() ? rank->get_back() : IconDef::Icon::NONE);
 	inst->set_costs(Array(def->get_costs()));
 	inst->set_portrait(def->get_portrait());
+	inst->set_effects(Array(def->get_effects()));
 	inst->set_tribes(Array(def->get_tribes()));
 
 	if (!inst->update_simple_description()) {
@@ -64,13 +67,10 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 }
 
 void CardInstance::update_description() {
-	Ref<CardDef> card_def = get_def();
-	TypedArray<EffectInstance> effects = card_def->get_effects();
-
 	TypedArray<FormattedText> description;
 	bool first = true;
-	for (int64_t i = 0; i < effects.size(); i++) {
-		Ref<EffectInstance> e = effects[i];
+	for (int64_t i = 0; i < _effects.size(); i++) {
+		Ref<EffectInstance> e = _effects[i];
 		ERR_CONTINUE(e.is_null());
 
 		if (first) {
@@ -86,12 +86,9 @@ void CardInstance::update_description() {
 }
 
 bool CardInstance::update_simple_description() {
-	Ref<CardDef> card_def = get_def();
-	TypedArray<EffectInstance> effects = card_def->get_effects();
-
 	TypedArray<FormattedTextWithIcon> simple_description;
-	for (int64_t i = 0; i < effects.size(); i++) {
-		Ref<EffectInstance> e = effects[i];
+	for (int64_t i = 0; i < _effects.size(); i++) {
+		Ref<EffectInstance> e = _effects[i];
 		ERR_CONTINUE(e.is_null());
 
 		Ref<FormattedTextWithIcon> simple_desc = e->format_simple_description(this);

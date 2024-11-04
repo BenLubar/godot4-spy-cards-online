@@ -4,13 +4,22 @@
 #include "dry.h"
 
 class JigsawContext;
+enum class JigsawExecutionState;
 class JigsawGlobal;
 
 #include "jigsaw_command_list.h"
 #include "jigsaw_error.h"
 #include "jigsaw_parameter.h"
+#include "jigsaw_parameter_local_variable.h"
 #include "jigsaw_procedure.h"
 #include "jigsaw_stack_frame.h"
+
+enum class JigsawExecutionState {
+	ERROR = 0,
+	DONE = 1,
+	CONTINUE = 2,
+	PAUSE = 3,
+};
 
 class JigsawContext : public RefCounted {
 	GDCLASS(JigsawContext, RefCounted);
@@ -32,18 +41,14 @@ public:
 
 public:
 	// public to C++ code, private to GDScript
-	enum ExecutionState {
-		STATE_ERROR = 0,
-		STATE_DONE = 1,
-		STATE_CONTINUE = 2,
-		STATE_PAUSE = 3,
-	};
 	Ref<JigsawError> append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch);
-	Ref<JigsawError> resolve_or_copy_variable(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const;
+	Ref<JigsawError> pop_stack_frame();
+	Ref<JigsawError> resolve_variable(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const;
+	Ref<JigsawError> set_local_variable(const Ref<JigsawParameterLocalVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name);
 
 private:
 	void cleanup();
-	ExecutionState evaluate_next(Ref<JigsawError> &err);
+	JigsawExecutionState evaluate_next(Ref<JigsawError> &err, bool first);
 
 public:
 	Ref<JigsawError> evaluate(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, int64_t max_steps = DEFAULT_MAX_STEPS);

@@ -1,11 +1,13 @@
 #include "jigsaw_command_lookup_definition_property.h"
 
+#include "jigsaw_global.h"
 #include "jigsaw_parameter_amount.h"
 #include "jigsaw_parameter_boolean.h"
 #include "jigsaw_parameter_card.h"
 #include "jigsaw_parameter_card_instance.h"
 #include "jigsaw_parameter_color.h"
 #include "jigsaw_parameter_effect_instance.h"
+#include "jigsaw_parameter_formatted_text.h"
 #include "jigsaw_parameter_icon.h"
 #include "jigsaw_parameter_ordered_list.h"
 #include "jigsaw_parameter_rank.h"
@@ -13,6 +15,8 @@
 #include "jigsaw_parameter_stat_value.h"
 #include "jigsaw_parameter_string.h"
 #include "jigsaw_parameter_tribe.h"
+#include "player_preferences_helper.h"
+#include "why_isnt_this_in_godot.h"
 
 void JigsawCommandLookupDefinitionProperty::_bind_methods() {
 	BIND_ENUM_CONSTANT(CARD_DEF);
@@ -48,6 +52,805 @@ void JigsawCommandLookupDefinitionProperty::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, JigsawCommandLookupDefinitionProperty::Property, property);
 IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, Ref<JigsawParameter>, definition);
 IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, Ref<JigsawParameterLocalVariable>, value);
+
+JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	Ref<JigsawParameter> def;
+	err = context->resolve_variable(_definition, def, get_argument_name(0));
+	if (unlikely(err.is_valid())) {
+		return JigsawExecutionState::ERROR;
+	}
+
+	if (unlikely(def.is_null())) {
+		err = context->create_error("cannot read property of null definition");
+		return JigsawExecutionState::ERROR;
+	}
+
+	switch (_property) {
+	case CARD_DEF:
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card ID of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<CardDef> card_def = inst->get_def();
+			err = context->set_local_variable(_value, JigsawParameterCard::make(likely(card_def.is_valid()) ? card_def->get_id() : enums::CardDef::NONE), "def");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card ID of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_NAME:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card name of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterFormattedText::make(FormattedText::make_plain(card_def->get_name())), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card name of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterFormattedText::make(inst->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_RANK:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card rank of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterRank::make(card_def->get_rank()), "rank");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card rank of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterRank::make(inst->get_rank()), "rank");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card rank of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_COSTS:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card costs of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> costs = card_def->get_costs().map(callable_mp_static(&JigsawParameterStatValue::convert));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(costs), "costs");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card costs of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> costs = inst->get_costs().map(callable_mp_static(&JigsawParameterStatValue::convert));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(costs), "costs");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card costs of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_PORTRAIT:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card portrait of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(card_def->get_portrait()), "portrait");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card portrait of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(inst->get_portrait()), "portrait");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card portrait of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_TRIBES:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card tribes of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> tribes = card_def->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(tribes), "tribes");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card tribes of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> tribes = inst->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(tribes), "tribes");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card tribes of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case CARD_EFFECTS:
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read card effects of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> effects = card_def->get_effects().map(callable_mp_static(&JigsawParameterEffectInstance::make));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(effects), "effects");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read card effects of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			TypedArray<JigsawParameter> effects = inst->get_effects().map(callable_mp_static(&JigsawParameterEffectInstance::make));
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(effects), "effects");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read card effects of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_NAME:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank name of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank name of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank name of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank name of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank name of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_COLOR:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank color of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_COLOR_ALT:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank color of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_COLOR_BASED_ON_PREFERENCES:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank color of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank color of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_FRONT:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank front of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank front of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank front of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank front of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank front of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank front of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case RANK_BACK:
+		if (def->get_type() == JigsawParameter::RANK) {
+			Ref<JigsawParameterRank> rank_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(rank_param->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank back of missing rank %d", rank_param->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (def->get_type() == JigsawParameter::CARD) {
+			Ref<JigsawParameterCard> card_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<CardDef> card_def = likely(mode.is_valid()) ? mode->get_card(card_param->get_card()) : Ref<CardDef>();
+
+			if (unlikely(card_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank back of missing card %d", card_param->get_card()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			Ref<RankDef> rank_def = mode->get_rank(card_def->get_rank());
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank back of missing rank %d", card_def->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
+			Ref<JigsawParameterCardInstance> inst_param = def;
+			Ref<CardInstance> inst = inst_param->get_instance();
+
+			if (unlikely(inst.is_null())) {
+				err = context->create_error("cannot read rank back of null card instance");
+				return JigsawExecutionState::ERROR;
+			}
+
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<RankDef> rank_def = likely(mode.is_valid()) ? mode->get_rank(inst->get_rank()) : Ref<RankDef>();
+
+			if (unlikely(rank_def.is_null())) {
+				err = context->create_error(vformat("cannot read rank back of missing rank %d", inst->get_rank()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read rank back of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case TRIBE_NAME:
+		if (likely(def->get_type() == JigsawParameter::TRIBE)) {
+			Ref<JigsawParameterTribe> tribe_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<TribeDef> tribe_def = likely(mode.is_valid()) ? mode->get_tribe(tribe_param->get_tribe()) : Ref<TribeDef>();
+
+			if (unlikely(tribe_def.is_null())) {
+				err = context->create_error(vformat("cannot read tribe name of missing tribe %d", tribe_param->get_tribe()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(tribe_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read tribe name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case TRIBE_COLOR:
+		if (likely(def->get_type() == JigsawParameter::TRIBE)) {
+			Ref<JigsawParameterTribe> tribe_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<TribeDef> tribe_def = likely(mode.is_valid()) ? mode->get_tribe(tribe_param->get_tribe()) : Ref<TribeDef>();
+
+			if (unlikely(tribe_def.is_null())) {
+				err = context->create_error(vformat("cannot read tribe color of missing tribe %d", tribe_param->get_tribe()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterColor::make(tribe_def->get_color()), "color");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read tribe color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case TRIBE_IS_HIDDEN:
+		if (likely(def->get_type() == JigsawParameter::TRIBE)) {
+			Ref<JigsawParameterTribe> tribe_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<TribeDef> tribe_def = likely(mode.is_valid()) ? mode->get_tribe(tribe_param->get_tribe()) : Ref<TribeDef>();
+
+			if (unlikely(tribe_def.is_null())) {
+				err = context->create_error(vformat("cannot read tribe display type of missing tribe %d", tribe_param->get_tribe()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::HIDDEN), "hidden");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read tribe display type of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case TRIBE_IS_WIDE:
+		if (likely(def->get_type() == JigsawParameter::TRIBE)) {
+			Ref<JigsawParameterTribe> tribe_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<TribeDef> tribe_def = likely(mode.is_valid()) ? mode->get_tribe(tribe_param->get_tribe()) : Ref<TribeDef>();
+
+			if (unlikely(tribe_def.is_null())) {
+				err = context->create_error(vformat("cannot read tribe display type of missing tribe %d", tribe_param->get_tribe()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::WIDE), "hidden");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read tribe display type of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case STAT_DEF:
+		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
+			Ref<JigsawParameterStatValue> stat_param = def;
+
+			err = context->set_local_variable(_value, JigsawParameterStat::make(stat_param->get_stat()), "def");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read stat ID of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case STAT_NAME:
+		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
+			Ref<JigsawParameterStatValue> stat_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<StatDef> stat_def = likely(mode.is_valid()) ? mode->get_stat(stat_param->get_stat()) : Ref<StatDef>();
+
+			if (unlikely(stat_def.is_null())) {
+				err = context->create_error(vformat("cannot read stat name of missing stat %d", stat_param->get_stat()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(stat_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::STAT)) {
+			Ref<JigsawParameterStat> stat_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<StatDef> stat_def = likely(mode.is_valid()) ? mode->get_stat(stat_param->get_stat()) : Ref<StatDef>();
+
+			if (unlikely(stat_def.is_null())) {
+				err = context->create_error(vformat("cannot read stat name of missing stat %d", stat_param->get_stat()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterString::make(stat_def->get_name()), "name");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read stat name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case STAT_ICON:
+		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
+			Ref<JigsawParameterStatValue> stat_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<StatDef> stat_def = likely(mode.is_valid()) ? mode->get_stat(stat_param->get_stat()) : Ref<StatDef>();
+
+			if (unlikely(stat_def.is_null())) {
+				err = context->create_error(vformat("cannot read stat icon of missing stat %d", stat_param->get_stat()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(stat_def->get_icon()), "icon");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		if (likely(def->get_type() == JigsawParameter::STAT)) {
+			Ref<JigsawParameterStat> stat_param = def;
+			JigsawGlobal *global = context->get_global();
+			Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
+			Ref<StatDef> stat_def = likely(mode.is_valid()) ? mode->get_stat(stat_param->get_stat()) : Ref<StatDef>();
+
+			if (unlikely(stat_def.is_null())) {
+				err = context->create_error(vformat("cannot read stat icon of missing stat %d", stat_param->get_stat()));
+				return JigsawExecutionState::ERROR;
+			}
+
+			err = context->set_local_variable(_value, JigsawParameterIcon::make(stat_def->get_icon()), "icon");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read stat icon of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	case STAT_AMOUNT:
+		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
+			Ref<JigsawParameterStatValue> stat_param = def;
+
+			err = context->set_local_variable(_value, stat_param->is_nan() ? JigsawParameterAmount::make_nan() : JigsawParameterAmount::make(stat_param->get_amount(), stat_param->get_amount_inf()), "amount");
+
+			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error(vformat("cannot read stat amount of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
+		return JigsawExecutionState::ERROR;
+	}
+
+	err = context->create_error(vformat("internal error: missing handler for Lookup Definition Property %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandLookupDefinitionProperty", "Property", _property)));
+	return JigsawExecutionState::ERROR;
+}
 
 int64_t JigsawCommandLookupDefinitionProperty::get_num_configs() const {
 	return 1;
@@ -119,6 +922,7 @@ PackedStringArray JigsawCommandLookupDefinitionProperty::get_config_options(int6
 		"Stat: Definition",
 		"Stat: Name",
 		"Stat: Icon",
+		"Stat: Amount",
 	};
 }
 
@@ -221,7 +1025,7 @@ TypedArray<JigsawParameter> JigsawCommandLookupDefinitionProperty::get_result_te
 	case CARD_DEF:
 		return Array::make(JigsawParameterCard::make(enums::CardDef::NONE));
 	case CARD_NAME:
-		return Array::make(JigsawParameterString::make(""));
+		return Array::make(JigsawParameterFormattedText::make(TypedArray<FormattedText>()));
 	case CARD_RANK:
 		return Array::make(JigsawParameterRank::make(enums::RankDef::NONE));
 	case CARD_COSTS:
@@ -249,7 +1053,7 @@ TypedArray<JigsawParameter> JigsawCommandLookupDefinitionProperty::get_result_te
 	case TRIBE_IS_WIDE:
 		return Array::make(JigsawParameterBoolean::make(false));
 	case STAT_DEF:
-		return Array::make(JigsawParameterStatValue::make(enums::StatDef::NONE, 0));
+		return Array::make(JigsawParameterStat::make(enums::StatDef::NONE));
 	case STAT_NAME:
 		return Array::make(JigsawParameterString::make(""));
 	case STAT_ICON:

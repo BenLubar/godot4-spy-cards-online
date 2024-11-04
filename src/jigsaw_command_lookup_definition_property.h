@@ -9,7 +9,7 @@ class JigsawCommandLookupDefinitionProperty : public JigsawCommand {
 public:
 	enum Property {
 		CARD_DEF = 0, // card_instance -> card
-		CARD_NAME = 1, // card/card_instance -> string
+		CARD_NAME = 1, // card/card_instance -> formatted_text
 		CARD_RANK = 2, // card/card_instance -> rank
 		CARD_COSTS = 3, // card/card_instance -> ordered_list[stat_value]
 		CARD_PORTRAIT = 4, // card/card_instance -> icon
@@ -45,6 +45,7 @@ public:
 	Type get_type() const override { return LOOKUP_DEFINITION_PROPERTY; }
 	bool modifies_game_state() const override { return false; }
 	bool can_pause_execution() const override { return false; }
+	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;
 	String get_config_name(int64_t i) const override;

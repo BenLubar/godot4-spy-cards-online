@@ -6,6 +6,13 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="get_color_by_preference" qualifiers="const">
+			<return type="Color" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
 		</member>

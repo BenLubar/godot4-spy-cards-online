@@ -20,13 +20,14 @@ private:
 
 public:
 	DECLARE_PROPERTY(Operation, op, = Operation::EQUALS);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // amount or float
+	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // amount or float (operations on floats cannot return boolean)
 	DECLARE_PROPERTY(Ref<JigsawParameter>, rhs); // same type as lhs; for some operations, skipped
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output); // see Operation enum
 
 	Type get_type() const override { return MATH; }
 	bool modifies_game_state() const override { return false; }
 	bool can_pause_execution() const override { return false; }
+	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;
 	String get_config_name(int64_t i) const override;

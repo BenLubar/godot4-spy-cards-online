@@ -131,7 +131,7 @@
 			<description>
 			</description>
 		</method>
-		<method name="is_argument_unresolved" qualifiers="const">
+		<method name="is_argument_required" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="i" type="int" />
 			<description>

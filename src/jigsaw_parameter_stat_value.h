@@ -5,6 +5,10 @@
 
 #include "enums_stat_def.h"
 
+class JigsawParameterStatValue;
+
+#include "stat_value.h"
+
 class JigsawParameterStatValue : public JigsawParameter {
 	GDCLASS(JigsawParameterStatValue, JigsawParameter);
 
@@ -21,6 +25,7 @@ public:
 
 	static Ref<JigsawParameterStatValue> make(enums::StatDef::Stat stat, int64_t amount, int64_t amount_inf = 0);
 	static Ref<JigsawParameterStatValue> make_nan(enums::StatDef::Stat stat);
+	static Ref<JigsawParameterStatValue> convert(const Ref<StatValue> &stat_value);
 };
 
 #endif // JIGSAW_PARAMETER_STAT_VALUE_H

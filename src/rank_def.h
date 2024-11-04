@@ -21,6 +21,8 @@ public:
 	DECLARE_PROPERTY(Color, color_alt);
 	DECLARE_PROPERTY(enums::IconDef::Icon, front, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
+
+	Color get_color_by_preference() const;
 };
 DECLARE_PREDEFINED_KEY(RankDef, RANK);
 

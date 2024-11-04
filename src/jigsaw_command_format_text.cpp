@@ -35,6 +35,12 @@ IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameter>, font_size);
 
 IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameterLocalVariable>, formatted_text);
 
+JigsawExecutionState JigsawCommandFormatText::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	err = context->create_error("internal error: TODO (format text)");
+
+	return JigsawExecutionState::ERROR;
+}
+
 int64_t JigsawCommandFormatText::get_num_configs() const {
 	return 1;
 }

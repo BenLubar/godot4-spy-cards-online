@@ -26,7 +26,7 @@ void JigsawCommand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_num_arguments"), &JigsawCommand::get_num_arguments);
 	ClassDB::bind_method(D_METHOD("get_argument", "i"), &JigsawCommand::get_argument);
 	ClassDB::bind_method(D_METHOD("get_argument_template", "i"), &JigsawCommand::get_argument_template);
-	ClassDB::bind_method(D_METHOD("is_argument_unresolved", "i"), &JigsawCommand::is_argument_unresolved);
+	ClassDB::bind_method(D_METHOD("is_argument_required", "i"), &JigsawCommand::is_argument_required);
 	ClassDB::bind_method(D_METHOD("set_argument", "i", "arg"), &JigsawCommand::set_argument);
 	ClassDB::bind_method(D_METHOD("get_argument_name", "i"), &JigsawCommand::get_argument_name);
 

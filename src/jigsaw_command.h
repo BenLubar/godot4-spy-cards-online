@@ -7,6 +7,7 @@ class JigsawCommand;
 
 #include "jigsaw_command_list.h"
 #include "jigsaw_context.h"
+#include "jigsaw_error.h"
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_local_variable.h"
 #include "jigsaw_procedure.h"
@@ -34,6 +35,7 @@ public:
 	virtual Type get_type() const = 0;
 	virtual bool modifies_game_state() const = 0;
 	virtual bool can_pause_execution() const = 0;
+	virtual JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const = 0;
 
 	virtual int64_t get_num_configs() const { return 0; }
 	virtual String get_config_name(int64_t i) const { return ""; }
@@ -45,7 +47,6 @@ public:
 	virtual int64_t get_num_arguments() const = 0;
 	virtual Ref<JigsawParameter> get_argument(int64_t i) const = 0;
 	virtual TypedArray<JigsawParameter> get_argument_template(int64_t i, const Ref<JigsawContext> &context) const = 0;
-	virtual bool is_argument_unresolved(int64_t i) const { return false; }
 	virtual bool is_argument_required(int64_t i) const { return true; }
 	virtual void set_argument(int64_t i, const Ref<JigsawParameter> &arg) = 0;
 	virtual String get_argument_name(int64_t i) const = 0;

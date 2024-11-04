@@ -8,6 +8,11 @@ void JigsawCommandLog::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawCommandLog, Ref<JigsawParameter>, message);
 
+JigsawExecutionState JigsawCommandLog::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	err = context->create_error("internal error: TODO (log)");
+
+	return JigsawExecutionState::ERROR;
+}
 
 int64_t JigsawCommandLog::get_num_arguments() const {
 	return 1;

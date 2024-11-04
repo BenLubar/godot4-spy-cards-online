@@ -47,21 +47,24 @@ Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> 
 
 	for (int64_t i = 0; i < local_templates.size(); i++) {
 		Ref<JigsawParameter> local;
-		Ref<JigsawError> err = resolve_or_copy_variable(local_templates[i], local, local_names[i]);
+		Ref<JigsawError> err = resolve_variable(local_templates[i], local, local_names[i]);
 		if (err.is_valid()) {
 			return err;
 		}
-		locals[i] = local;
+		locals[i] = local->duplicate();
 	}
 
 	return Ref<JigsawError>();
 }
-Ref<JigsawError> JigsawContext::resolve_or_copy_variable(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const {
+Ref<JigsawError> JigsawContext::pop_stack_frame() {
+	return create_error("internal error: TODO (pop_stack_frame)");
+}
+Ref<JigsawError> JigsawContext::resolve_variable(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const {
 	ERR_FAIL_COND_V(tmpl.is_null(), create_error(vformat("missing variable value for '%s'", debug_name)));
 
 	JigsawParameter::Type type = tmpl->get_type();
 	if (JigsawParameter::is_concrete_type(type)) {
-		ret = tmpl->duplicate();
+		ret = tmpl;
 
 		return Ref<JigsawError>();
 	}
@@ -80,6 +83,9 @@ Ref<JigsawError> JigsawContext::resolve_or_copy_variable(const Ref<JigsawParamet
 
 	return create_error(vformat("internal error: unhandled variable type %d for variable '%s'", type, debug_name));
 }
+Ref<JigsawError> JigsawContext::set_local_variable(const Ref<JigsawParameterLocalVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name) {
+	return create_error("internal error: TODO (set local variable)");
+}
 
 void JigsawContext::cleanup() {
 	_procedure = Ref<JigsawProcedure>();
@@ -89,17 +95,71 @@ void JigsawContext::cleanup() {
 	_step_limit_remaining = 0;
 }
 
-JigsawContext::ExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err) {
+JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool first) {
 	if (_step_limit_remaining <= 0) {
 		err = create_error("Procedure step count safety limit exceeded - infinite loop? If you don't think this error should have happened, let Ben know what you were doing.");
 
-		return STATE_ERROR;
+		return JigsawExecutionState::ERROR;
 	}
 	_step_limit_remaining--;
 
-	err = create_error("internal error: TODO (evaluate_next)");
+	int64_t stack_depth = _stack.size() - 1;
+	if (unlikely(stack_depth < 0)) {
+		err = create_error("internal error: stack depth is negative. Let Ben know!");
 
-	return STATE_ERROR;
+		return JigsawExecutionState::ERROR;
+	}
+
+	Ref<JigsawStackFrame> frame = _stack[stack_depth];
+	if (unlikely(frame.is_null())) {
+		err = create_error("internal error: stack frame is null. Let Ben know!");
+
+		return JigsawExecutionState::ERROR;
+	}
+	Ref<JigsawCommandList> command_list = frame->get_commands();
+	if (unlikely(command_list.is_null())) {
+		err = create_error("internal error: stack frame command list is null. Let Ben know!");
+
+		return JigsawExecutionState::ERROR;
+	}
+	TypedArray<JigsawCommand> commands = command_list->get_list();
+
+	int64_t ip = frame->get_instruction_pointer();
+	if (unlikely((!first && ip < 0) || ip < -1)) {
+		err = create_error("internal error: instruction pointer is negative. Let Ben know!");
+
+		return JigsawExecutionState::ERROR;
+	}
+	if (first) {
+		ip++;
+		frame->set_instruction_pointer(ip);
+	}
+	if (unlikely(ip >= commands.size())) {
+		err = create_error("internal error: instruction pointer is past end of block. Let Ben know!");
+
+		return JigsawExecutionState::ERROR;
+	}
+
+	Ref<JigsawCommand> command = commands[ip];
+	if (unlikely(command.is_null())) {
+		err = create_error("internal error: command is null. Let Ben know!");
+
+		return JigsawExecutionState::ERROR;
+	}
+
+	JigsawExecutionState state = command->evaluate(this, err, first);
+	if (state == JigsawExecutionState::CONTINUE && ip == commands.size() - 1 && stack_depth == _stack.size() - 1) {
+		err = pop_stack_frame();
+		if (err.is_valid()) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (stack_depth == 0) {
+			return JigsawExecutionState::DONE;
+		}
+	}
+
+	return state;
 }
 
 Ref<JigsawError> JigsawContext::evaluate(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, int64_t max_steps) {
@@ -117,19 +177,19 @@ Ref<JigsawError> JigsawContext::evaluate(const Ref<JigsawProcedure> &procedure, 
 	}
 
 	for (;;) {
-		ExecutionState state = evaluate_next(err);
-		if (likely(state == STATE_CONTINUE)) {
+		JigsawExecutionState state = evaluate_next(err, true);
+		if (likely(state == JigsawExecutionState::CONTINUE)) {
 			continue;
 		}
 
-		if (unlikely(state == STATE_PAUSE)) {
+		if (unlikely(state == JigsawExecutionState::PAUSE)) {
 			err = create_error("internal error: cannot pause a procedure that returns a value");
 			cleanup();
 			return err;
 		}
 
 		cleanup();
-		ERR_FAIL_COND_V(state != STATE_DONE && state != STATE_ERROR, err); // redundant condition for error message
+		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
 		return err;
 	}
 }

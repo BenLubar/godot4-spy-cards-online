@@ -28,6 +28,7 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<StatValue>, costs);
 	DECLARE_PROPERTY(enums::IconDef::Icon, portrait, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(TypedArray<EffectInstance>, effects);
 	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, description);
 	DECLARE_PROPERTY(TypedArray<FormattedTextWithIcon>, simple_description);

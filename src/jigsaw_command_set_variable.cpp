@@ -12,6 +12,12 @@ IMPLEMENT_PROPERTY_IS(JigsawCommandSetVariable, bool, persistent);
 IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, value);
 IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, variable);
 
+JigsawExecutionState JigsawCommandSetVariable::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	err = context->create_error("internal error: TODO (set variable)");
+
+	return JigsawExecutionState::ERROR;
+}
+
 int64_t JigsawCommandSetVariable::get_num_configs() const {
 	return 1;
 }
@@ -66,11 +72,6 @@ TypedArray<JigsawParameter> JigsawCommandSetVariable::get_argument_template(int6
 	}
 
 	return TypedArray<JigsawParameter>();
-}
-bool JigsawCommandSetVariable::is_argument_unresolved(int64_t i) const {
-	ERR_FAIL_INDEX_V(i, 2, false);
-
-	return i == 0;
 }
 void JigsawCommandSetVariable::set_argument(int64_t i, const Ref<JigsawParameter> &arg) {
 	ERR_FAIL_INDEX(i, 2);

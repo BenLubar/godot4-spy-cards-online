@@ -17,6 +17,7 @@ public:
 	Type get_type() const override { return SET_VARIABLE; }
 	bool modifies_game_state() const override { return _persistent; }
 	bool can_pause_execution() const override { return false; }
+	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;
 	String get_config_name(int64_t i) const override;
@@ -28,7 +29,6 @@ public:
 	int64_t get_num_arguments() const override;
 	Ref<JigsawParameter> get_argument(int64_t i) const override;
 	TypedArray<JigsawParameter> get_argument_template(int64_t i, const Ref<JigsawContext> &context) const override;
-	bool is_argument_unresolved(int64_t i) const override;
 	void set_argument(int64_t i, const Ref<JigsawParameter> &arg) override;
 	String get_argument_name(int64_t i) const override;
 

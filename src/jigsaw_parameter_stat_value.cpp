@@ -31,3 +31,19 @@ Ref<JigsawParameterStatValue> JigsawParameterStatValue::make_nan(enums::StatDef:
 	param->set_nan(true);
 	return param;
 }
+
+Ref<JigsawParameterStatValue> JigsawParameterStatValue::convert(const Ref<StatValue> &stat_value) {
+	ERR_FAIL_COND_V(stat_value.is_null(), Ref<JigsawParameterStatValue>());
+
+	Ref<JigsawParameterStatValue> param;
+	param.instantiate();
+	param->set_stat(stat_value->get_stat());
+	if (stat_value->is_nan()) {
+		param->set_nan(true);
+	} else {
+		param->set_amount(stat_value->get_amount());
+		param->set_amount_inf(stat_value->get_amount_inf());
+	}
+
+	return param;
+}

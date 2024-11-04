@@ -1,6 +1,6 @@
 #include "jigsaw_command_crash.h"
 
-#include "jigsaw_parameter_formatted_text.h"
+#include "jigsaw_parameter_string.h"
 #include "jigsaw_parameter_ordered_list.h"
 
 void JigsawCommandCrash::_bind_methods() {
@@ -10,6 +10,38 @@ void JigsawCommandCrash::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, message);
 IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, params);
+
+JigsawExecutionState JigsawCommandCrash::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	Ref<JigsawParameter> message_param;
+	err = context->resolve_variable(_message, message_param, "message");
+	if (unlikely(err.is_valid())) {
+		return JigsawExecutionState::ERROR;
+	}
+
+	Ref<JigsawParameterString> message = message_param;
+	if (message.is_null()) {
+		err = context->create_error("error message must be string");
+		return JigsawExecutionState::ERROR;
+	}
+
+	TypedArray<JigsawParameter> params;
+	if (_params.is_valid()) {
+		Ref<JigsawParameter> params_param;
+		err = context->resolve_variable(_params, params_param, "params");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		Ref<JigsawParameterOrderedList> params_list = params_param;
+		if (likely(params_list.is_valid())) {
+			params = params_list->get_list();
+		}
+	}
+
+	// wrap custom error messages in quotes to tell them apart from internal errors
+	err = context->create_error("\"" + message->get_string() + "\"", params);
+	return JigsawExecutionState::ERROR;
+}
 
 int64_t JigsawCommandCrash::get_num_arguments() const {
 	return 2;
@@ -29,7 +61,7 @@ TypedArray<JigsawParameter> JigsawCommandCrash::get_argument_template(int64_t i,
 	ERR_FAIL_INDEX_V(i, 2, TypedArray<JigsawParameter>());
 
 	if (i == 0) {
-		return Array::make(JigsawParameterFormattedText::make(TypedArray<FormattedText>()));
+		return Array::make(JigsawParameterString::make(""));
 	} else if (i == 1) {
 		return Array::make(JigsawParameterOrderedList::make(TypedArray<JigsawParameter>()));
 	}

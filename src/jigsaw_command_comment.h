@@ -16,11 +16,11 @@ public:
 	Type get_type() const override { return COMMENT; }
 	bool modifies_game_state() const override { return false; }
 	bool can_pause_execution() const override { return false; }
+	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_arguments() const override;
 	Ref<JigsawParameter> get_argument(int64_t i) const override;
 	TypedArray<JigsawParameter> get_argument_template(int64_t i, const Ref<JigsawContext> &context) const override;
-	bool is_argument_unresolved(int64_t i) const override { return true; }
 	bool is_argument_required(int64_t i) const override { return false; }
 	void set_argument(int64_t i, const Ref<JigsawParameter> &arg) override;
 	String get_argument_name(int64_t i) const override;

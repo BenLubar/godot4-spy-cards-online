@@ -25,6 +25,7 @@ public:
 	Type get_type() const override { return FUNCTION; }
 	bool modifies_game_state() const override;
 	bool can_pause_execution() const override;
+	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;
 	String get_config_name(int64_t i) const override;
