@@ -1,5 +1,11 @@
 #include "jigsaw_context.h"
+
 #include "jigsaw_global.h"
+#include "jigsaw_parameter_effect_instance.h"
+#include "jigsaw_parameter_effect_instance_parameter.h"
+#include "jigsaw_parameter_local_variable.h"
+#include "jigsaw_parameter_variable.h"
+#include "why_isnt_this_in_godot.h"
 
 void JigsawContext::_bind_methods() {
 	BIND_CONSTANT(DEFAULT_MAX_STEPS);
@@ -57,9 +63,22 @@ Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> 
 	return Ref<JigsawError>();
 }
 Ref<JigsawError> JigsawContext::pop_stack_frame() {
-	return create_error("internal error: TODO (pop_stack_frame)");
+	// TODO: stack frames with return values
+	_stack.pop_back();
+
+	while (!_stack.is_empty()) {
+		Ref<JigsawStackFrame> frame = _stack.back();
+		if (frame->get_instruction_pointer() + 1 == frame->get_commands()->get_list().size()) {
+			_stack.pop_back();
+		} else {
+			break;
+		}
+	}
+
+	return Ref<JigsawError>();
 }
-Ref<JigsawError> JigsawContext::resolve_variable(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const {
+template<>
+Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const {
 	ERR_FAIL_COND_V(tmpl.is_null(), create_error(vformat("missing variable value for '%s'", debug_name)));
 
 	JigsawParameter::Type type = tmpl->get_type();
@@ -74,17 +93,108 @@ Ref<JigsawError> JigsawContext::resolve_variable(const Ref<JigsawParameter> &tmp
 	}
 
 	if (type == JigsawParameter::LOCAL_VARIABLE) {
-		return create_error("internal error: TODO (resolve local variable)");
+		Ref<JigsawParameterLocalVariable> variable_param = tmpl;
+		int64_t frame_number = variable_param->get_frame();
+		TypedArray<JigsawParameter> frame_variables;
+		if (frame_number == JigsawParameterLocalVariable::FRAME_ARGUMENTS) {
+			frame_variables = get_arguments();
+		} else if (frame_number == JigsawParameterLocalVariable::FRAME_RESULTS) {
+			frame_variables = get_results();
+		} else if (unlikely(frame_number < 0 || frame_number >= get_stack().size())) {
+			return create_error(vformat("cannot find stack frame number %d for '%s'", frame_number, debug_name));
+		} else {
+			Ref<JigsawStackFrame> frame = get_stack()[frame_number];
+			frame_variables = frame->get_local_variables();
+		}
+
+		int64_t slot = variable_param->get_slot();
+		if (unlikely(slot < 0 || slot >= frame_variables.size())) {
+			return create_error(vformat("no such slot %d in stack frame number %d for '%s'", slot, frame_number, debug_name));
+		}
+
+		ret = frame_variables[slot];
+		return Ref<JigsawError>();
 	}
 
 	if (type == JigsawParameter::EFFECT_INSTANCE_PARAMETER) {
-		return create_error("internal error: TODO (resolve effect instance parameter)");
+		Ref<JigsawParameterEffectInstanceParameter> effect_instance_param_param_param = tmpl;
+		int64_t index = effect_instance_param_param_param->get_index();
+		if (unlikely(index < 0)) {
+			return create_error(vformat("negative effect instance parameter index for '%s'", debug_name));
+		}
+
+		Ref<JigsawParameter> effect_instance_param_param;
+		Ref<JigsawError> err = resolve_variable(effect_instance_param_param_param->get_effect_instance(), effect_instance_param_param, vformat("%s (effect)", debug_name));
+		if (unlikely(err.is_valid())) {
+			return err;
+		}
+
+		Ref<JigsawParameterEffectInstance> effect_instance_param = effect_instance_param_param;
+		if (unlikely(effect_instance_param.is_null())) {
+			return create_error(vformat("effect instance for '%s' was of type %s", debug_name, WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", effect_instance_param_param->get_type())));
+		}
+
+		Ref<EffectInstance> effect_instance = effect_instance_param->get_instance();
+		if (unlikely(effect_instance.is_null())) {
+			return create_error(vformat("effect instance for '%s' was null", debug_name));
+		}
+
+		TypedArray<JigsawParameter> params = effect_instance->get_params();
+		if (index < params.size()) {
+			Ref<JigsawParameter> param = params[index];
+			if (likely(param.is_valid())) {
+				ret = param;
+				return Ref<JigsawError>();
+			}
+		}
+
+		JigsawGlobal *global = get_global();
+		ERR_FAIL_NULL_V(global, create_error("internal error: missing global in effect instance parameter resolve"));
+		Ref<GameMode> mode = global->get_mode();
+		ERR_FAIL_COND_V(mode.is_null(), create_error("internal error: missing game mode in effect instance parameter resolve"));
+		Ref<EffectDef> effect = mode->get_effect(effect_instance->get_effect());
+		ERR_FAIL_COND_V(effect.is_null(), create_error("internal error: missing effect in effect instance parameter resolve"));
+
+		params = effect->get_default_parameters();
+		if (index < params.size()) {
+			Ref<JigsawParameter> param = params[index];
+			if (likely(param.is_valid())) {
+				ret = param;
+				return Ref<JigsawError>();
+			}
+		}
+
+		return create_error(vformat("out of range effect instance parameter for '%s'", debug_name));
 	}
 
 	return create_error(vformat("internal error: unhandled variable type %d for variable '%s'", type, debug_name));
 }
 Ref<JigsawError> JigsawContext::set_local_variable(const Ref<JigsawParameterLocalVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name) {
-	return create_error("internal error: TODO (set local variable)");
+	ERR_FAIL_COND_V(var.is_null(), create_error(vformat("cannot set null local variable '%s'", debug_name)));
+	ERR_FAIL_COND_V(value.is_null(), create_error(vformat("cannot set local variable '%s' to null value", debug_name)));
+	ERR_FAIL_COND_V(!JigsawParameter::is_concrete_type(value->get_type()), create_error(vformat("cannot set local variable '%s' to non-concrete value type %s", debug_name, WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", value->get_type()))));
+
+	int64_t frame_number = var->get_frame();
+	TypedArray<JigsawParameter> frame_variables;
+	if (frame_number == JigsawParameterLocalVariable::FRAME_ARGUMENTS) {
+		frame_variables = get_arguments();
+	} else if (frame_number == JigsawParameterLocalVariable::FRAME_RESULTS) {
+		frame_variables = get_results();
+	} else if (unlikely(frame_number < 0 || frame_number >= get_stack().size())) {
+		return create_error(vformat("cannot find stack frame number %d for '%s'", frame_number, debug_name));
+	} else {
+		Ref<JigsawStackFrame> frame = get_stack()[frame_number];
+		frame_variables = frame->get_local_variables();
+	}
+
+	int64_t slot = var->get_slot();
+	if (unlikely(slot < 0 || slot >= frame_variables.size())) {
+		return create_error(vformat("no such slot %d in stack frame number %d for '%s'", slot, frame_number, debug_name));
+	}
+
+	frame_variables[slot] = value;
+
+	return Ref<JigsawError>();
 }
 
 void JigsawContext::cleanup() {
@@ -102,6 +212,10 @@ JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool fi
 		return JigsawExecutionState::ERROR;
 	}
 	_step_limit_remaining--;
+
+	if (_stack.is_empty()) {
+		return JigsawExecutionState::DONE;
+	}
 
 	int64_t stack_depth = _stack.size() - 1;
 	if (unlikely(stack_depth < 0)) {

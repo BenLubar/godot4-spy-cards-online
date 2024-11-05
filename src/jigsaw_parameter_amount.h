@@ -15,6 +15,7 @@ public:
 	DECLARE_PROPERTY_IS(bool, nan, = false);
 
 	Type get_type() const override { return AMOUNT; }
+	String _to_string() const;
 
 	static Ref<JigsawParameterAmount> make(int64_t amount, int64_t amount_inf = 0);
 	static Ref<JigsawParameterAmount> make_nan();

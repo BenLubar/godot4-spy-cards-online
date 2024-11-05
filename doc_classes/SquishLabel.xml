@@ -11,6 +11,8 @@
 			<return type="void" />
 			<param index="0" name="formatted_text" type="FormattedText[]" />
 			<param index="1" name="card" type="CardInstance" />
+			<param index="2" name="outline_effect_inactive_color" type="Color" />
+			<param index="3" name="outline_effect_highlight_width" type="int" />
 			<description>
 			</description>
 		</method>

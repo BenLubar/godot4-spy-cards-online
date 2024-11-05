@@ -10,12 +10,12 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(String, editor_name);
-	DECLARE_PROPERTY(String, editor_description);
-	DECLARE_PROPERTY(TypedArray<JigsawParameter>, arguments);
-	DECLARE_PROPERTY(PackedStringArray, argument_names);
-	DECLARE_PROPERTY(TypedArray<JigsawParameter>, results);
-	DECLARE_PROPERTY(PackedStringArray, result_names);
+	DECLARE_PROPERTY_IMPLGET(String, editor_name);
+	DECLARE_PROPERTY_IMPLGET(String, editor_description);
+	DECLARE_PROPERTY_IMPLGET(TypedArray<JigsawParameter>, arguments);
+	DECLARE_PROPERTY_IMPLGET(PackedStringArray, argument_names);
+	DECLARE_PROPERTY_IMPLGET(TypedArray<JigsawParameter>, results);
+	DECLARE_PROPERTY_IMPLGET(PackedStringArray, result_names);
 
 	DECLARE_PROPERTY(bool, cached_modifies_game_state, = false);
 	DECLARE_PROPERTY(bool, cached_can_pause_execution, = false);

@@ -13,6 +13,22 @@ IMPLEMENT_PROPERTY(JigsawParameterAmount, int64_t, amount);
 IMPLEMENT_PROPERTY(JigsawParameterAmount, int64_t, amount_inf);
 IMPLEMENT_PROPERTY_IS(JigsawParameterAmount, bool, nan);
 
+String JigsawParameterAmount::_to_string() const {
+	if (_nan) {
+		return "NaN";
+	}
+
+	if (_amount_inf > 0) {
+		return String::chr(0x221e);
+	}
+
+	if (_amount_inf < 0) {
+		return "-" + String::chr(0x221e);
+	}
+
+	return String::num_int64(_amount);
+}
+
 Ref<JigsawParameterAmount> JigsawParameterAmount::make(int64_t amount, int64_t amount_inf) {
 	Ref<JigsawParameterAmount> param;
 	param.instantiate();

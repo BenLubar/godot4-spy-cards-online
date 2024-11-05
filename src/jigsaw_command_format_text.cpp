@@ -6,6 +6,7 @@
 #include "jigsaw_parameter_formatted_text.h"
 #include "jigsaw_parameter_icon.h"
 #include "jigsaw_parameter_string.h"
+#include "why_isnt_this_in_godot.h"
 
 void JigsawCommandFormatText::_bind_methods() {
 	BIND_PROPERTY_ENUM(FormattedText::Command, command);
@@ -36,9 +37,132 @@ IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameter>, font_size);
 IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameterLocalVariable>, formatted_text);
 
 JigsawExecutionState JigsawCommandFormatText::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	err = context->create_error("internal error: TODO (format text)");
+	if (unlikely(_command == FormattedText::PUSH_EFFECT_INSTANCE || _command == FormattedText::POP)) {
+		err = context->create_error("invalid formatted text command");
+		return JigsawExecutionState::ERROR;
+	}
 
-	return JigsawExecutionState::ERROR;
+	TypedArray<FormattedText> ft;
+
+	if (_before.is_valid()) {
+		Ref<JigsawParameterFormattedText> before_param;
+		err = context->resolve_variable(_before, before_param, "before");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		ft.append_array(before_param->get_text());
+	}
+
+	if (_command == FormattedText::ADD_ICON) {
+		Ref<JigsawParameterIcon> icon_param;
+		err = context->resolve_variable(_icon, icon_param, "icon");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		Ref<FormattedText> icon;
+		icon.instantiate();
+		icon->set_command(FormattedText::ADD_ICON);
+		icon->set_icon(icon_param->get_icon());
+		ft.append(icon);
+	} else if (_command == FormattedText::FORCE_END_OF_TEXT) {
+		Ref<FormattedText> end;
+		end.instantiate();
+		end->set_command(FormattedText::FORCE_END_OF_TEXT);
+		ft.append(end);
+
+		err = context->set_local_variable(_formatted_text, JigsawParameterFormattedText::make(ft), "formatted_text");
+		return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+	} else {
+		Ref<JigsawParameter> text_param;
+		err = context->resolve_variable(_text, text_param, "text");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		Ref<JigsawParameterFormattedText> formatted_text_param = text_param;
+		if (formatted_text_param.is_null()) {
+			Ref<JigsawParameterString> plain_text_param = text_param;
+			if (likely(plain_text_param.is_valid())) {
+				formatted_text_param = JigsawParameterFormattedText::make(FormattedText::make_plain(plain_text_param->get_string()));
+			} else {
+				Ref<JigsawParameterAmount> amount_text_param = text_param;
+				if (likely(amount_text_param.is_valid())) {
+					formatted_text_param = JigsawParameterFormattedText::make(FormattedText::make_plain(amount_text_param->to_string()));
+				}
+			}
+		}
+		if (unlikely(formatted_text_param.is_null())) {
+			err = context->create_error(vformat("'text' is invalid parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", text_param->get_type())));
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (_command == FormattedText::ADD_TEXT) {
+			TypedArray<FormattedText> plain_text = formatted_text_param->get_text();
+			for (int64_t i = 0; i < plain_text.size(); i++) {
+				Ref<FormattedText> pt = plain_text[i];
+				if (likely(pt->get_command() == FormattedText::ADD_TEXT || pt->get_command() == FormattedText::FORCE_END_OF_TEXT)) {
+					ft.append(pt);
+				}
+			}
+		} else {
+			Ref<FormattedText> push;
+			push.instantiate();
+			push->set_command(_command);
+			if (_command == FormattedText::PUSH_FONT_SIZE) {
+				Ref<JigsawParameterFloat> font_size_param;
+				err = context->resolve_variable(_font_size, font_size_param, "font_size");
+				if (unlikely(err.is_valid())) {
+					return JigsawExecutionState::ERROR;
+				}
+
+				push->set_font_size(font_size_param->get_value());
+			}
+			if (_command == FormattedText::PUSH_TABLE) {
+				Ref<JigsawParameterAmount> table_columns_param;
+				err = context->resolve_variable(_table_columns, table_columns_param, "table_columns");
+				if (unlikely(err.is_valid())) {
+					return JigsawExecutionState::ERROR;
+				}
+
+				if (unlikely(table_columns_param->is_nan() || table_columns_param->get_amount_inf() != 0 || table_columns_param->get_amount() <= 0)) {
+					err = context->create_error("table columns must be a finite positive number");
+					return JigsawExecutionState::ERROR;
+				}
+
+				push->set_table_columns(table_columns_param->get_amount());
+			}
+			if (_command == FormattedText::PUSH_TEXT_COLOR || _command == FormattedText::PUSH_FG_COLOR || _command == FormattedText::PUSH_BG_COLOR) {
+				Ref<JigsawParameterColor> color_param;
+				err = context->resolve_variable(_color, color_param, "color");
+				if (unlikely(err.is_valid())) {
+					return JigsawExecutionState::ERROR;
+				}
+
+				push->set_color(color_param->get_color());
+			}
+			ft.append(push);
+
+			ft.append_array(formatted_text_param->get_text());
+
+			Ref<FormattedText> pop;
+			pop.instantiate();
+			pop->set_command(FormattedText::POP);
+			ft.append(pop);
+		}
+	}
+
+	if (_after.is_valid()) {
+		Ref<JigsawParameterFormattedText> after_param;
+		err = context->resolve_variable(_after, after_param, "after");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		ft.append_array(after_param->get_text());
+	}
+
+	err = context->set_local_variable(_formatted_text, JigsawParameterFormattedText::make(ft), "formatted_text");
+	return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
 }
 
 int64_t JigsawCommandFormatText::get_num_configs() const {
@@ -247,7 +371,7 @@ TypedArray<JigsawParameter> JigsawCommandFormatText::get_argument_template(int64
 
 	if (i == 1) {
 		if (_command == FormattedText::ADD_TEXT) {
-			return Array::make(JigsawParameterString::make(""));
+			return Array::make(JigsawParameterString::make(""), JigsawParameterAmount::make(0));
 		}
 		if (_command == FormattedText::ADD_ICON) {
 			return Array::make(JigsawParameterIcon::make(enums::IconDef::NONE));
@@ -258,7 +382,8 @@ TypedArray<JigsawParameter> JigsawCommandFormatText::get_argument_template(int64
 
 		return Array::make(
 			JigsawParameterFormattedText::make(TypedArray<FormattedText>()),
-			JigsawParameterString::make("")
+			JigsawParameterString::make(""),
+			JigsawParameterAmount::make(0)
 		);
 	}
 

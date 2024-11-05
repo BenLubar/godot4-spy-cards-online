@@ -173,8 +173,8 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 		return Ref<FormattedTextWithIcon>();
 	}
 
-	icon = context->get_results()[0];
-	effect_description = context->get_results()[1];
+	effect_description = context->get_results()[0];
+	icon = context->get_results()[1];
 
 	TypedArray<FormattedText> effect_description_text = effect_description->get_text();
 	description.append_array(effect_description_text);

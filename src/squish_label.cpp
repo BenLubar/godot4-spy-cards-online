@@ -7,7 +7,8 @@ void SquishLabel::_bind_methods() {
 	BIND_PROPERTY(Variant::VECTOR2, text_scale);
 	BIND_PROPERTY_IS(Variant::BOOL, centered);
 
-	ClassDB::bind_method(D_METHOD("set_formatted_text", "formatted_text", "card"), &SquishLabel::set_formatted_text);
+	ClassDB::bind_method(D_METHOD("_resize"), &SquishLabel::_resize);
+	ClassDB::bind_method(D_METHOD("set_formatted_text", "formatted_text", "card", "outline_effect_inactive_color", "outline_effect_highlight_width"), &SquishLabel::set_formatted_text);
 }
 SquishLabel::SquishLabel() {
 	set_use_bbcode(true);
@@ -65,7 +66,7 @@ void SquishLabel::_resize() {
 	}
 }
 
-void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_text, const Ref<CardInstance> &card) {
+void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_text, const Ref<CardInstance> &card, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width) {
 	clear();
 
 	Ref<GameMode> mode;
@@ -86,8 +87,8 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 		}
 
 		if (uses_outline_current) {
-			push_outline_color(mode->get_visual_description_background_color());
-			push_outline_size(mode->get_visual_effect_highlight_width());
+			push_outline_color(outline_effect_inactive_color);
+			push_outline_size(outline_effect_highlight_width);
 		}
 	}
 

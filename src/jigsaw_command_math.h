@@ -16,7 +16,7 @@ protected:
 	static void _bind_methods();
 
 private:
-	TypedArray<JigsawParameter> get_numeric_template(int64_t i, const Ref<JigsawContext> &context) const;
+	JigsawExecutionState set_boolean_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool b) const;
 
 public:
 	DECLARE_PROPERTY(Operation, op, = Operation::EQUALS);

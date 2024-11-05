@@ -12,30 +12,21 @@ IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, message);
 IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, params);
 
 JigsawExecutionState JigsawCommandCrash::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	Ref<JigsawParameter> message_param;
-	err = context->resolve_variable(_message, message_param, "message");
+	Ref<JigsawParameterString> message;
+	err = context->resolve_variable(_message, message, "message");
 	if (unlikely(err.is_valid())) {
-		return JigsawExecutionState::ERROR;
-	}
-
-	Ref<JigsawParameterString> message = message_param;
-	if (message.is_null()) {
-		err = context->create_error("error message must be string");
 		return JigsawExecutionState::ERROR;
 	}
 
 	TypedArray<JigsawParameter> params;
 	if (_params.is_valid()) {
-		Ref<JigsawParameter> params_param;
+		Ref<JigsawParameterOrderedList> params_param;
 		err = context->resolve_variable(_params, params_param, "params");
 		if (unlikely(err.is_valid())) {
 			return JigsawExecutionState::ERROR;
 		}
 
-		Ref<JigsawParameterOrderedList> params_list = params_param;
-		if (likely(params_list.is_valid())) {
-			params = params_list->get_list();
-		}
+		params = params_param->get_list();
 	}
 
 	// wrap custom error messages in quotes to tell them apart from internal errors

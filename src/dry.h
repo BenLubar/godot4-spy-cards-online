@@ -20,6 +20,13 @@ public: \
 	m_type get_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
 
+#define DECLARE_PROPERTY_IMPLGET(m_type, m_name, ...) \
+private: \
+	m_type _##m_name __VA_ARGS__; \
+public: \
+	m_type get_##m_name() const override; \
+	void set_##m_name(m_type new_##m_name)
+
 #define DECLARE_PROPERTY_IS(m_type, m_name, ...) \
 private: \
 	m_type _##m_name __VA_ARGS__; \

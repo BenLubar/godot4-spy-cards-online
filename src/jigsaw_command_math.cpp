@@ -14,21 +14,9 @@ void JigsawCommandMath::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameterLocalVariable, output);
 }
 
-TypedArray<JigsawParameter> JigsawCommandMath::get_numeric_template(int64_t i, const Ref<JigsawContext> &context) const {
-	if (i == -1) {
-		// TODO
-		return Array::make(
-			JigsawParameterAmount::make(0),
-			JigsawParameterFloat::make(0.0)
-		);
-	}
-
-	ERR_FAIL_INDEX_V(i, get_num_arguments(), TypedArray<JigsawParameter>());
-	// TODO
-	return Array::make(
-		JigsawParameterAmount::make(0),
-		JigsawParameterFloat::make(0.0)
-	);
+JigsawExecutionState JigsawCommandMath::set_boolean_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool b) const {
+	err = context->set_local_variable(_output, JigsawParameterBoolean::make(b), "output");
+	return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
 }
 
 IMPLEMENT_PROPERTY(JigsawCommandMath, JigsawCommandMath::Operation, op);
@@ -37,8 +25,58 @@ IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, rhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameterLocalVariable>, output);
 
 JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	err = context->create_error("internal error: TODO (math)");
+	switch (_op) {
+	case EQUALS:
+	{
+		Ref<JigsawParameterAmount> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
 
+		if (lhs->is_nan() || rhs->is_nan()) {
+			return set_boolean_result(context, err, false);
+		} else if (lhs->get_amount_inf() > 0) {
+			return set_boolean_result(context, err, rhs->get_amount_inf() > 0);
+		} else if (lhs->get_amount_inf() < 0) {
+			return set_boolean_result(context, err, rhs->get_amount_inf() < 0);
+		} else if (rhs->get_amount_inf() != 0) {
+			return set_boolean_result(context, err, false);
+		} else {
+			return set_boolean_result(context, err, lhs->get_amount() == rhs->get_amount());
+		}
+	}
+	case LESS_THAN:
+	{
+		Ref<JigsawParameterAmount> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (lhs->is_nan() || rhs->is_nan()) {
+			return set_boolean_result(context, err, false);
+		} else if (lhs->get_amount_inf() > 0) {
+			return set_boolean_result(context, err, false);
+		} else if (lhs->get_amount_inf() < 0) {
+			return set_boolean_result(context, err, rhs->get_amount_inf() >= 0);
+		} else if (rhs->get_amount_inf() != 0) {
+			return set_boolean_result(context, err, rhs->get_amount_inf() > 0);
+		} else {
+			return set_boolean_result(context, err, lhs->get_amount() < rhs->get_amount());
+		}
+	}
+	}
+
+	err = context->create_error(vformat("internal error: unhandled math operation %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandMath", "Operation", _op)));
 	return JigsawExecutionState::ERROR;
 }
 
@@ -100,7 +138,7 @@ Ref<JigsawParameter> JigsawCommandMath::get_argument(int64_t i) const {
 	return Ref<JigsawParameter>();
 }
 TypedArray<JigsawParameter> JigsawCommandMath::get_argument_template(int64_t i, const Ref<JigsawContext> &context) const {
-	return get_numeric_template(i, context);
+	return Array::make(JigsawParameterAmount::make(0));
 }
 void JigsawCommandMath::set_argument(int64_t i, const Ref<JigsawParameter> &arg) {
 	ERR_FAIL_INDEX(i, get_num_arguments());

@@ -38,11 +38,21 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY(Variant::FLOAT, visual_card_tribes_spacing);
 	BIND_PROPERTY(Variant::VECTOR2, visual_card_tribes_text_scale);
 
+	BIND_PROPERTY(Variant::RECT2, visual_simple_description_pos);
+	BIND_PROPERTY_ENUM(GrowMode, visual_simple_description_grow_mode);
+	BIND_PROPERTY(Variant::FLOAT, visual_simple_description_spacing);
+	BIND_PROPERTY(Variant::FLOAT, visual_simple_description_icon_align);
+	BIND_PROPERTY(Variant::FLOAT, visual_simple_description_text_align);
+	BIND_PROPERTY(Variant::RECT2, visual_simple_description_text_padding);
+	BIND_PROPERTY(Variant::VECTOR2, visual_simple_description_text_scale);
+
 	BIND_PROPERTY_RESOURCE_ARRAY(StickerDef, visual_card_stickers);
 
 	BIND_PROPERTY(Variant::INT, visual_effect_highlight_width);
 	BIND_PROPERTY(Variant::COLOR, visual_effect_highlight_color);
 	BIND_PROPERTY(Variant::COLOR, visual_description_background_color);
+	BIND_PROPERTY(Variant::INT, visual_simple_description_border_thickness);
+	BIND_PROPERTY(Variant::COLOR, visual_simple_description_border_color);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(AudienceDef, audience);
 	BIND_PROPERTY_RESOURCE_ARRAY(CharacterDef, characters);
@@ -106,11 +116,21 @@ IMPLEMENT_PROPERTY(GameMode, bool, visual_card_tribes_shrink_name);
 IMPLEMENT_PROPERTY(GameMode, float, visual_card_tribes_spacing);
 IMPLEMENT_PROPERTY(GameMode, Vector2, visual_card_tribes_text_scale);
 
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_simple_description_pos);
+IMPLEMENT_PROPERTY(GameMode, GameMode::GrowMode, visual_simple_description_grow_mode);
+IMPLEMENT_PROPERTY(GameMode, float, visual_simple_description_spacing);
+IMPLEMENT_PROPERTY(GameMode, float, visual_simple_description_icon_align);
+IMPLEMENT_PROPERTY(GameMode, float, visual_simple_description_text_align);
+IMPLEMENT_PROPERTY(GameMode, Rect2, visual_simple_description_text_padding);
+
 IMPLEMENT_PROPERTY(GameMode, TypedArray<StickerDef>, visual_card_stickers);
 
 IMPLEMENT_PROPERTY(GameMode, int64_t, visual_effect_highlight_width);
 IMPLEMENT_PROPERTY(GameMode, Color, visual_effect_highlight_color);
 IMPLEMENT_PROPERTY(GameMode, Color, visual_description_background_color);
+IMPLEMENT_PROPERTY(GameMode, int64_t, visual_simple_description_border_thickness);
+IMPLEMENT_PROPERTY(GameMode, Color, visual_simple_description_border_color);
+IMPLEMENT_PROPERTY(GameMode, Vector2, visual_simple_description_text_scale);
 
 IMPLEMENT_PROPERTY(GameMode, TypedArray<AudienceDef>, audience);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<CharacterDef>, characters);

@@ -70,11 +70,21 @@ public:
 	DECLARE_PROPERTY(float, visual_card_tribes_spacing, = 0.0f);
 	DECLARE_PROPERTY(Vector2, visual_card_tribes_text_scale, = Vector2(1.0f, 1.0f));
 
+	DECLARE_PROPERTY(Rect2, visual_simple_description_pos, = Rect2(18, 146, 136, 64));
+	DECLARE_PROPERTY(GrowMode, visual_simple_description_grow_mode, = GrowMode::SHRINK_HORIZONTAL);
+	DECLARE_PROPERTY(float, visual_simple_description_spacing, = 0.0f);
+	DECLARE_PROPERTY(float, visual_simple_description_icon_align, = -0.7f);
+	DECLARE_PROPERTY(float, visual_simple_description_text_align, = 1.0f);
+	DECLARE_PROPERTY(Rect2, visual_simple_description_text_padding, = Rect2(0, 0, 16, 0));
+	DECLARE_PROPERTY(Vector2, visual_simple_description_text_scale, = Vector2(1.0f, 1.2f));
+
 	DECLARE_PROPERTY(TypedArray<StickerDef>, visual_card_stickers);
 
 	DECLARE_PROPERTY(int64_t, visual_effect_highlight_width, = 5);
 	DECLARE_PROPERTY(Color, visual_effect_highlight_color, = Color("#44aaff"));
-	DECLARE_PROPERTY(Color, visual_description_background_color, = Color(1, 1, 1, 1));
+	DECLARE_PROPERTY(Color, visual_description_background_color, = Color("#efefef"));
+	DECLARE_PROPERTY(int64_t, visual_simple_description_border_thickness, = 10);
+	DECLARE_PROPERTY(Color, visual_simple_description_border_color, = Color("#000000"));
 
 	DECLARE_PROPERTY(TypedArray<AudienceDef>, audience);
 	DECLARE_PROPERTY(TypedArray<CharacterDef>, characters);

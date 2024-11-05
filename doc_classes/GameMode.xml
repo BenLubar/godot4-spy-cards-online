@@ -117,7 +117,7 @@
 		</member>
 		<member name="visual_card_tribes_text_scale" type="Vector2" setter="set_visual_card_tribes_text_scale" getter="get_visual_card_tribes_text_scale" default="Vector2(1, 1)">
 		</member>
-		<member name="visual_description_background_color" type="Color" setter="set_visual_description_background_color" getter="get_visual_description_background_color" default="Color(1, 1, 1, 1)">
+		<member name="visual_description_background_color" type="Color" setter="set_visual_description_background_color" getter="get_visual_description_background_color" default="Color(0.937255, 0.937255, 0.937255, 1)">
 		</member>
 		<member name="visual_effect_highlight_color" type="Color" setter="set_visual_effect_highlight_color" getter="get_visual_effect_highlight_color" default="Color(0.266667, 0.666667, 1, 1)">
 		</member>
@@ -128,6 +128,24 @@
 		<member name="visual_portrait_transform" type="Transform3D" setter="set_visual_portrait_transform" getter="get_visual_portrait_transform" default="Transform3D(1.28, 0, 0, 0, 1.28, 0, 0, 0, 1, 0, 0.45, -0.05)">
 		</member>
 		<member name="visual_rank_decoration_transform" type="Transform3D" setter="set_visual_rank_decoration_transform" getter="get_visual_rank_decoration_transform" default="Transform3D(0.533333, 0, 0, 0, 1.46667, 0, 0, 0, 1, 0.83, 0.44, 0)">
+		</member>
+		<member name="visual_simple_description_border_color" type="Color" setter="set_visual_simple_description_border_color" getter="get_visual_simple_description_border_color" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="visual_simple_description_border_thickness" type="int" setter="set_visual_simple_description_border_thickness" getter="get_visual_simple_description_border_thickness" default="10">
+		</member>
+		<member name="visual_simple_description_grow_mode" type="int" setter="set_visual_simple_description_grow_mode" getter="get_visual_simple_description_grow_mode" enum="GameMode.GrowMode" default="6">
+		</member>
+		<member name="visual_simple_description_icon_align" type="float" setter="set_visual_simple_description_icon_align" getter="get_visual_simple_description_icon_align" default="-0.7">
+		</member>
+		<member name="visual_simple_description_pos" type="Rect2" setter="set_visual_simple_description_pos" getter="get_visual_simple_description_pos" default="Rect2(18, 146, 136, 64)">
+		</member>
+		<member name="visual_simple_description_spacing" type="float" setter="set_visual_simple_description_spacing" getter="get_visual_simple_description_spacing" default="0.0">
+		</member>
+		<member name="visual_simple_description_text_align" type="float" setter="set_visual_simple_description_text_align" getter="get_visual_simple_description_text_align" default="1.0">
+		</member>
+		<member name="visual_simple_description_text_padding" type="Rect2" setter="set_visual_simple_description_text_padding" getter="get_visual_simple_description_text_padding" default="Rect2(0, 0, 16, 0)">
+		</member>
+		<member name="visual_simple_description_text_scale" type="Vector2" setter="set_visual_simple_description_text_scale" getter="get_visual_simple_description_text_scale" default="Vector2(1, 1.2)">
 		</member>
 		<member name="visual_smooth_corners" type="Vector3" setter="set_visual_smooth_corners" getter="get_visual_smooth_corners" default="Vector3(34.8, 47.4, 1)">
 		</member>
