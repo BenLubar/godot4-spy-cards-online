@@ -73,6 +73,6 @@ DECLARE_ENUM(JigsawCommand::Type);
 	Ref<JigsawParameterLocalVariable> get_result(int64_t i) const override { return Ref<JigsawParameterLocalVariable>(); } \
 	TypedArray<JigsawParameter> get_result_template(int64_t i, const Ref<JigsawContext> &context) const override { return TypedArray<JigsawParameter>(); } \
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override {} \
-	String get_result_name(int64_t i) const { return ""; }
+	String get_result_name(int64_t i) const override { return ""; }
 
 #endif // JIGSAW_COMMAND_H
