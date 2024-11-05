@@ -70,8 +70,13 @@ void CardInstance::update_description() {
 	TypedArray<FormattedText> description;
 	bool first = true;
 	for (int64_t i = 0; i < _effects.size(); i++) {
-		Ref<EffectInstance> e = _effects[i];
-		ERR_CONTINUE(e.is_null());
+		Ref<EffectInstance> effect = _effects[i];
+		ERR_CONTINUE(effect.is_null());
+
+		TypedArray<FormattedText> effect_description = effect->format_description(this);
+		if (effect_description.is_empty()) {
+			continue;
+		}
 
 		if (first) {
 			first = false;
@@ -79,7 +84,7 @@ void CardInstance::update_description() {
 			description.append_array(FormattedText::make_plain("\n"));
 		}
 
-		description.append_array(e->format_description(this));
+		description.append_array(effect_description);
 	}
 	
 	set_description(description);

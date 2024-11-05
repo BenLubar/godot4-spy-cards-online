@@ -22,5 +22,9 @@
 		</constant>
 		<constant name="LESS_THAN" value="1" enum="Operation">
 		</constant>
+		<constant name="ADD" value="2" enum="Operation">
+		</constant>
+		<constant name="SUBTRACT" value="3" enum="Operation">
+		</constant>
 	</constants>
 </class>

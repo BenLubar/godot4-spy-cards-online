@@ -7,6 +7,8 @@
 void JigsawCommandMath::_bind_methods() {
 	BIND_ENUM_CONSTANT(EQUALS);
 	BIND_ENUM_CONSTANT(LESS_THAN);
+	BIND_ENUM_CONSTANT(ADD);
+	BIND_ENUM_CONSTANT(SUBTRACT);
 
 	BIND_PROPERTY_ENUM(JigsawCommandMath::Operation, op);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, lhs);
@@ -14,8 +16,8 @@ void JigsawCommandMath::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameterLocalVariable, output);
 }
 
-JigsawExecutionState JigsawCommandMath::set_boolean_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool b) const {
-	err = context->set_local_variable(_output, JigsawParameterBoolean::make(b), "output");
+JigsawExecutionState JigsawCommandMath::set_math_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, const Ref<JigsawParameter> &param) const {
+	err = context->set_local_variable(_output, param, "result");
 	return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
 }
 
@@ -39,15 +41,15 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan()) {
-			return set_boolean_result(context, err, false);
+			return set_math_result(context, err, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() > 0) {
-			return set_boolean_result(context, err, rhs->get_amount_inf() > 0);
+			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
 		} else if (lhs->get_amount_inf() < 0) {
-			return set_boolean_result(context, err, rhs->get_amount_inf() < 0);
+			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() < 0));
 		} else if (rhs->get_amount_inf() != 0) {
-			return set_boolean_result(context, err, false);
+			return set_math_result(context, err, JigsawParameterBoolean::make(false));
 		} else {
-			return set_boolean_result(context, err, lhs->get_amount() == rhs->get_amount());
+			return set_math_result(context, err, JigsawParameterBoolean::make(lhs->get_amount() == rhs->get_amount()));
 		}
 	}
 	case LESS_THAN:
@@ -63,15 +65,81 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan()) {
-			return set_boolean_result(context, err, false);
+			return set_math_result(context, err, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() > 0) {
-			return set_boolean_result(context, err, false);
+			return set_math_result(context, err, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() < 0) {
-			return set_boolean_result(context, err, rhs->get_amount_inf() >= 0);
+			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() >= 0));
 		} else if (rhs->get_amount_inf() != 0) {
-			return set_boolean_result(context, err, rhs->get_amount_inf() > 0);
+			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
 		} else {
-			return set_boolean_result(context, err, lhs->get_amount() < rhs->get_amount());
+			return set_math_result(context, err, JigsawParameterBoolean::make(lhs->get_amount() < rhs->get_amount()));
+		}
+	}
+	case ADD:
+	{
+		Ref<JigsawParameterAmount> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (lhs->is_nan() || rhs->is_nan() || (lhs->get_amount_inf() < 0 && rhs->get_amount_inf() > 0) || (lhs->get_amount_inf() > 0 && rhs->get_amount_inf() < 0)) {
+			return set_math_result(context, err, JigsawParameterAmount::make_nan());
+		} else {
+			int64_t amount;
+			int64_t amount_inf;
+#ifdef __GNUC__
+			bool amount_overflow = __builtin_add_overflow(lhs->get_amount(), rhs->get_amount(), &amount);
+			bool amount_inf_overflow = __builtin_add_overflow(lhs->get_amount_inf(), rhs->get_amount_inf(), &amount_inf);
+#else
+			amount = lhs->get_amount() + rhs->get_amount();
+			amount_inf = lhs->get_amount_inf() + rhs->get_amount_inf();
+			// TODO
+			bool amount_overflow = false, amount_inf_overflow = false;
+#endif
+			if (unlikely(amount_overflow || amount_inf_overflow)) {
+				return set_math_result(context, err, JigsawParameterAmount::make_nan());
+			} else {
+				return set_math_result(context, err, JigsawParameterAmount::make(amount, amount_inf));
+			}
+		}
+	}
+	case SUBTRACT:
+	{
+		Ref<JigsawParameterAmount> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (lhs->is_nan() || rhs->is_nan() || (lhs->get_amount_inf() < 0 && rhs->get_amount_inf() < 0) || (lhs->get_amount_inf() > 0 && rhs->get_amount_inf() > 0)) {
+			return set_math_result(context, err, JigsawParameterAmount::make_nan());
+		} else {
+			int64_t amount;
+			int64_t amount_inf;
+#ifdef __GNUC__
+			bool amount_overflow = __builtin_sub_overflow(lhs->get_amount(), rhs->get_amount(), &amount);
+			bool amount_inf_overflow = __builtin_sub_overflow(lhs->get_amount_inf(), rhs->get_amount_inf(), &amount_inf);
+#else
+			amount = lhs->get_amount() - rhs->get_amount();
+			amount_inf = lhs->get_amount_inf() - rhs->get_amount_inf();
+			// TODO
+			bool amount_overflow = false, amount_inf_overflow = false;
+#endif
+			if (unlikely(amount_overflow || amount_inf_overflow)) {
+				return set_math_result(context, err, JigsawParameterAmount::make_nan());
+			} else {
+				return set_math_result(context, err, JigsawParameterAmount::make(amount, amount_inf));
+			}
 		}
 	}
 	}
@@ -110,10 +178,14 @@ PackedStringArray JigsawCommandMath::get_config_options(int64_t i) const {
 	// If these asserts fail, you have broken compatibility with existing game modes.
 	static_assert(EQUALS == 0);
 	static_assert(LESS_THAN == 1);
+	static_assert(ADD == 2);
+	static_assert(SUBTRACT == 3);
 
 	return PackedStringArray{
 		"Equals",
 		"Less than",
+		"Add",
+		"Subtract",
 	};
 }
 
@@ -121,6 +193,8 @@ int64_t JigsawCommandMath::get_num_arguments() const {
 	switch (_op) {
 	case EQUALS:
 	case LESS_THAN:
+	case ADD:
+	case SUBTRACT:
 		return 2;
 	}
 
@@ -178,6 +252,9 @@ TypedArray<JigsawParameter> JigsawCommandMath::get_result_template(int64_t i, co
 	case EQUALS:
 	case LESS_THAN:
 		return Array::make(JigsawParameterBoolean::make(false));
+	case ADD:
+	case SUBTRACT:
+		return Array::make(JigsawParameterAmount::make(0));
 	}
 
 	return TypedArray<JigsawParameter>();

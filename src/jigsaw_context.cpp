@@ -57,13 +57,13 @@ Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> 
 		if (err.is_valid()) {
 			return err;
 		}
-		locals[i] = local->duplicate();
+		locals[i] = local;
 	}
 
 	return Ref<JigsawError>();
 }
 Ref<JigsawError> JigsawContext::pop_stack_frame() {
-	// TODO: stack frames with return values
+	// TODO: blocks with return values
 	_stack.pop_back();
 
 	while (!_stack.is_empty()) {
@@ -244,6 +244,19 @@ JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool fi
 
 		return JigsawExecutionState::ERROR;
 	}
+
+	if (ip == -1 && commands.is_empty()) {
+		// special case: empty block
+
+		err = pop_stack_frame();
+
+		if (likely(err.is_null()) && _stack.is_empty()) {
+			return JigsawExecutionState::DONE;
+		}
+
+		return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+	}
+
 	if (first) {
 		ip++;
 		frame->set_instruction_pointer(ip);

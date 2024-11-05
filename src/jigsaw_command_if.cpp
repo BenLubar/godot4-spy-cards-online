@@ -14,23 +14,12 @@ IMPLEMENT_PROPERTY(JigsawCommandIf, Ref<JigsawCommandList>, if_true);
 IMPLEMENT_PROPERTY(JigsawCommandIf, Ref<JigsawCommandList>, if_false);
 
 JigsawExecutionState JigsawCommandIf::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	Ref<JigsawParameter> cond;
-	err = context->resolve_variable(_condition, cond, "condition");
+	Ref<JigsawParameterBoolean> cond_param;
+	err = context->resolve_variable(_condition, cond_param, "condition");
 	if (unlikely(err.is_valid())) {
 		return JigsawExecutionState::ERROR;
 	}
 
-	if (unlikely(cond.is_null())) {
-		err = context->create_error("condition is null (should be boolean)");
-		return JigsawExecutionState::ERROR;
-	}
-
-	if (unlikely(cond->get_type() != JigsawParameter::BOOLEAN)) {
-		err = context->create_error(vformat("condition is %s (should be boolean)", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", cond->get_type())));
-		return JigsawExecutionState::ERROR;
-	}
-
-	Ref<JigsawParameterBoolean> cond_param = cond;
 	if (cond_param->get_boolean()) {
 		if (_if_true.is_valid()) {
 			err = context->append_stack_frame(_if_true, 0);

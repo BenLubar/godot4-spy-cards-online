@@ -8,20 +8,22 @@ class JigsawCommandMath : public JigsawCommand {
 
 public:
 	enum Operation {
-		EQUALS = 0, // result is boolean
-		LESS_THAN = 1, // result is boolean
+		EQUALS = 0, // amount, amount -> boolean
+		LESS_THAN = 1, // amount, amount -> boolean
+		ADD = 2, // amount, amount -> amount
+		SUBTRACT = 3, // amount, amount -> amount
 	};
 
 protected:
 	static void _bind_methods();
 
 private:
-	JigsawExecutionState set_boolean_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool b) const;
+	JigsawExecutionState set_math_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, const Ref<JigsawParameter> &param) const;
 
 public:
 	DECLARE_PROPERTY(Operation, op, = Operation::EQUALS);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // amount or float (operations on floats cannot return boolean)
-	DECLARE_PROPERTY(Ref<JigsawParameter>, rhs); // same type as lhs; for some operations, skipped
+	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // see Operation enum
+	DECLARE_PROPERTY(Ref<JigsawParameter>, rhs); // see Operation enum; for some operations, skipped
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output); // see Operation enum
 
 	Type get_type() const override { return MATH; }

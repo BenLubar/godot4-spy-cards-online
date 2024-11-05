@@ -26,6 +26,7 @@ public:
 		IF = 6,
 		SET_VARIABLE = 7,
 		LOOKUP_DEFINITION_PROPERTY = 8,
+		IS_SAME = 9,
 	};
 
 protected:
