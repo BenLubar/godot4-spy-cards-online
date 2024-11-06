@@ -265,8 +265,13 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			TypedArray<JigsawParameter> effects = card_def->get_effects().map(callable_mp_static(&JigsawParameterEffectInstance::make));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(effects), "effects");
+			TypedArray<EffectInstance> effects = card_def->get_effects();
+			TypedArray<JigsawParameter> wrapped_effects;
+			wrapped_effects.resize(effects.size());
+			for (int64_t i = 0; i < effects.size(); i++) {
+				wrapped_effects[i] = JigsawParameterEffectInstance::make(effects[i]);
+			}
+			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(wrapped_effects), "effects");
 
 			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
 		}
