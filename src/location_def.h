@@ -15,6 +15,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	DEFAULT_TO_STRING();
 };
 
 #endif // LOCATION_DEF_H

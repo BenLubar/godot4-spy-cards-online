@@ -35,6 +35,8 @@ public:
 
 	void _resize();
 	void set_formatted_text(const TypedArray<FormattedText> &formatted_text, const Ref<CardInstance> &card, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // SQUISH_LABEL_H

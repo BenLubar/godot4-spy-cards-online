@@ -24,6 +24,8 @@ public:
 
 	DECLARE_PROPERTY(TypedArray<JigsawSideLocation>, locations);
 	DECLARE_PROPERTY(TypedArray<NumericValue>, stats);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // JIGSAW_SIDE_H

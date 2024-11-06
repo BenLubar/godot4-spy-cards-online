@@ -1,4 +1,5 @@
 #include "audience.h"
+#include "player_preferences_helper.h"
 
 void Audience::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(MultiMesh, meshes);
@@ -42,7 +43,9 @@ void Audience::update(Vector2i dir) {
 			float e2 = member.cheering ? 0.25f : 1.0f;
 			float arc = 1.0f - float(member.hop) / float(member.hop_time);
 			float dy = (member.excitement / e2 * 0.5f + ((1.0f - e2) * 0.4f)) * (1.0f - arc * arc);
-			// TODO: PlayerPreferences.prefers_reduced_motion -> dy = 0.0f;
+			if (PlayerPreferences::prefers_reduced_motion()) {
+				dy = 0.0f;
+			}
 
 			Vector3 pos = member.base_position;
 			pos.y += dy;

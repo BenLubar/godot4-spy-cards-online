@@ -27,10 +27,13 @@ public:
 		SET_VARIABLE = 7,
 		LOOKUP_DEFINITION_PROPERTY = 8,
 		IS_SAME = 9,
+		ORDERED_LIST = 10,
 	};
 
 protected:
 	static void _bind_methods();
+
+	JigsawExecutionState set_command_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, int64_t i, const Ref<JigsawParameter> &value) const;
 
 public:
 	virtual Type get_type() const = 0;
@@ -55,6 +58,7 @@ public:
 	virtual int64_t get_num_results() const = 0;
 	virtual Ref<JigsawParameterLocalVariable> get_result(int64_t i) const = 0;
 	virtual TypedArray<JigsawParameter> get_result_template(int64_t i, const Ref<JigsawContext> &context) const = 0;
+	virtual bool is_result_required(int64_t i) const { return true; }
 	virtual void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) = 0;
 	virtual String get_result_name(int64_t i) const = 0;
 
@@ -66,6 +70,8 @@ public:
 	virtual PackedStringArray get_branch_argument_names(int64_t i) const { return PackedStringArray(); }
 	virtual TypedArray<Array> get_branch_result_templates(int64_t i, const Ref<JigsawContext> &context) const { return TypedArray<Array>(); }
 	virtual PackedStringArray get_branch_result_names(int64_t i) const { return PackedStringArray(); }
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(JigsawCommand::Type);
 

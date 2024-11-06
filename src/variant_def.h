@@ -20,6 +20,8 @@ public:
 	DECLARE_PROPERTY(int64_t, player_count, = 2);
 	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, npcs);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerVariant>, triggers);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // VARIANT_DEF_H

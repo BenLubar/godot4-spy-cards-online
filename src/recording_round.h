@@ -13,6 +13,8 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, turn_seed);
 	DECLARE_PROPERTY(PackedByteArray, turn_seed2);
 	DECLARE_PROPERTY(TypedArray<PackedInt64Array>, ready);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // RECORDING_ROUND_H

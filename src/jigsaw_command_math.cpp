@@ -16,11 +16,6 @@ void JigsawCommandMath::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameterLocalVariable, output);
 }
 
-JigsawExecutionState JigsawCommandMath::set_math_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, const Ref<JigsawParameter> &param) const {
-	err = context->set_local_variable(_output, param, "result");
-	return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
-}
-
 IMPLEMENT_PROPERTY(JigsawCommandMath, JigsawCommandMath::Operation, op);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, lhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, rhs);
@@ -41,15 +36,15 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan()) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(false));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() > 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
 		} else if (lhs->get_amount_inf() < 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() < 0));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(rhs->get_amount_inf() < 0));
 		} else if (rhs->get_amount_inf() != 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(false));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(false));
 		} else {
-			return set_math_result(context, err, JigsawParameterBoolean::make(lhs->get_amount() == rhs->get_amount()));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(lhs->get_amount() == rhs->get_amount()));
 		}
 	}
 	case LESS_THAN:
@@ -65,15 +60,15 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan()) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(false));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() > 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(false));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(false));
 		} else if (lhs->get_amount_inf() < 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() >= 0));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(rhs->get_amount_inf() >= 0));
 		} else if (rhs->get_amount_inf() != 0) {
-			return set_math_result(context, err, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(rhs->get_amount_inf() > 0));
 		} else {
-			return set_math_result(context, err, JigsawParameterBoolean::make(lhs->get_amount() < rhs->get_amount()));
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(lhs->get_amount() < rhs->get_amount()));
 		}
 	}
 	case ADD:
@@ -89,7 +84,7 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan() || (lhs->get_amount_inf() < 0 && rhs->get_amount_inf() > 0) || (lhs->get_amount_inf() > 0 && rhs->get_amount_inf() < 0)) {
-			return set_math_result(context, err, JigsawParameterAmount::make_nan());
+			return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
 		} else {
 			int64_t amount;
 			int64_t amount_inf;
@@ -103,9 +98,9 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 			bool amount_overflow = false, amount_inf_overflow = false;
 #endif
 			if (unlikely(amount_overflow || amount_inf_overflow)) {
-				return set_math_result(context, err, JigsawParameterAmount::make_nan());
+				return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
 			} else {
-				return set_math_result(context, err, JigsawParameterAmount::make(amount, amount_inf));
+				return set_command_result(context, err, 0, JigsawParameterAmount::make(amount, amount_inf));
 			}
 		}
 	}
@@ -122,7 +117,7 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		}
 
 		if (lhs->is_nan() || rhs->is_nan() || (lhs->get_amount_inf() < 0 && rhs->get_amount_inf() < 0) || (lhs->get_amount_inf() > 0 && rhs->get_amount_inf() > 0)) {
-			return set_math_result(context, err, JigsawParameterAmount::make_nan());
+			return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
 		} else {
 			int64_t amount;
 			int64_t amount_inf;
@@ -136,9 +131,9 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 			bool amount_overflow = false, amount_inf_overflow = false;
 #endif
 			if (unlikely(amount_overflow || amount_inf_overflow)) {
-				return set_math_result(context, err, JigsawParameterAmount::make_nan());
+				return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
 			} else {
-				return set_math_result(context, err, JigsawParameterAmount::make(amount, amount_inf));
+				return set_command_result(context, err, 0, JigsawParameterAmount::make(amount, amount_inf));
 			}
 		}
 	}

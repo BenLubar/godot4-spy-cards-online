@@ -31,6 +31,8 @@ public:
 	virtual PackedStringArray get_argument_names() const = 0;
 	virtual TypedArray<JigsawParameter> get_results() const = 0;
 	virtual PackedStringArray get_result_names() const = 0;
+
+	DEFAULT_TO_STRING();
 };
 
 #define DECLARE_JIGSAW_PROCEDURE(m_type) \

@@ -77,9 +77,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			Ref<CardDef> card_def = inst->get_def();
-			err = context->set_local_variable(_value, JigsawParameterCard::make(likely(card_def.is_valid()) ? card_def->get_id() : enums::CardDef::NONE), "def");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterCard::make(likely(card_def.is_valid()) ? card_def->get_id() : enums::CardDef::NONE));
 		}
 
 		err = context->create_error(vformat("cannot read card ID of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -96,9 +95,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterFormattedText::make(FormattedText::make_plain(card_def->get_name())), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterFormattedText::make(FormattedText::make_plain(card_def->get_name())));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -110,9 +107,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterFormattedText::make(inst->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterFormattedText::make(inst->get_name()));
 		}
 
 		err = context->create_error(vformat("cannot read card name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -129,9 +124,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterRank::make(card_def->get_rank()), "rank");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterRank::make(card_def->get_rank()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -143,9 +136,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterRank::make(inst->get_rank()), "rank");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterRank::make(inst->get_rank()));
 		}
 
 		err = context->create_error(vformat("cannot read card rank of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -163,9 +154,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			TypedArray<JigsawParameter> costs = card_def->get_costs().map(callable_mp_static(&JigsawParameterStatValue::convert));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(costs), "costs");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(costs));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -178,9 +168,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			TypedArray<JigsawParameter> costs = inst->get_costs().map(callable_mp_static(&JigsawParameterStatValue::convert));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(costs), "costs");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(costs));
 		}
 
 		err = context->create_error(vformat("cannot read card costs of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -197,9 +186,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(card_def->get_portrait()), "portrait");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(card_def->get_portrait()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -211,9 +198,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(inst->get_portrait()), "portrait");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(inst->get_portrait()));
 		}
 
 		err = context->create_error(vformat("cannot read card portrait of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -231,9 +216,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			TypedArray<JigsawParameter> tribes = card_def->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(tribes), "tribes");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(tribes));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -246,9 +230,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			TypedArray<JigsawParameter> tribes = inst->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(tribes), "tribes");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(tribes));
 		}
 
 		err = context->create_error(vformat("cannot read card tribes of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -265,15 +248,16 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
+			// for some reason, if we do this the same way as CARD_INSTANCE, we encounter some kind of emscripten bug
+			// that makes JigsawParameterEffectInstance::make be both a void(i32, i32) and a void().
 			TypedArray<EffectInstance> effects = card_def->get_effects();
 			TypedArray<JigsawParameter> wrapped_effects;
 			wrapped_effects.resize(effects.size());
 			for (int64_t i = 0; i < effects.size(); i++) {
 				wrapped_effects[i] = JigsawParameterEffectInstance::make(effects[i]);
 			}
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(wrapped_effects), "effects");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(wrapped_effects));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -286,9 +270,8 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 			}
 
 			TypedArray<JigsawParameter> effects = inst->get_effects().map(callable_mp_static(&JigsawParameterEffectInstance::make));
-			err = context->set_local_variable(_value, JigsawParameterOrderedList::make(effects), "effects");
 
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(effects));
 		}
 
 		err = context->create_error(vformat("cannot read card effects of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -305,9 +288,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(rank_def->get_name()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -328,9 +309,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(rank_def->get_name()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -351,9 +330,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(rank_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(rank_def->get_name()));
 		}
 
 		err = context->create_error(vformat("cannot read rank name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -370,9 +347,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -393,9 +368,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -416,9 +389,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color()));
 		}
 
 		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -435,9 +406,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_alt()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -458,9 +427,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_alt()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -481,9 +448,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_alt()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_alt()));
 		}
 
 		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -500,9 +465,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_by_preference()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -523,9 +486,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_by_preference()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -546,9 +507,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(rank_def->get_color_by_preference()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(rank_def->get_color_by_preference()));
 		}
 
 		err = context->create_error(vformat("cannot read rank color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -565,9 +524,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_front()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -588,9 +545,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_front()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -611,9 +566,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_front()), "front");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_front()));
 		}
 
 		err = context->create_error(vformat("cannot read rank front of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -630,9 +583,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_back()));
 		}
 
 		if (def->get_type() == JigsawParameter::CARD) {
@@ -653,9 +604,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_back()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
@@ -676,9 +625,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(rank_def->get_back()), "back");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(rank_def->get_back()));
 		}
 
 		err = context->create_error(vformat("cannot read rank back of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -695,9 +642,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(tribe_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(tribe_def->get_name()));
 		}
 
 		err = context->create_error(vformat("cannot read tribe name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -714,9 +659,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterColor::make(tribe_def->get_color()), "color");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterColor::make(tribe_def->get_color()));
 		}
 
 		err = context->create_error(vformat("cannot read tribe color of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -733,9 +676,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::HIDDEN), "hidden");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::HIDDEN));
 		}
 
 		err = context->create_error(vformat("cannot read tribe display type of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -752,9 +693,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::WIDE), "hidden");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(tribe_def->get_display() == TribeDef::WIDE));
 		}
 
 		err = context->create_error(vformat("cannot read tribe display type of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -763,9 +702,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
 			Ref<JigsawParameterStatValue> stat_param = def;
 
-			err = context->set_local_variable(_value, JigsawParameterStat::make(stat_param->get_stat()), "def");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterStat::make(stat_param->get_stat()));
 		}
 
 		err = context->create_error(vformat("cannot read stat ID of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -782,9 +719,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(stat_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(stat_def->get_name()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::STAT)) {
@@ -798,9 +733,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterString::make(stat_def->get_name()), "name");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterString::make(stat_def->get_name()));
 		}
 
 		err = context->create_error(vformat("cannot read stat name of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -817,9 +750,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(stat_def->get_icon()), "icon");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(stat_def->get_icon()));
 		}
 
 		if (likely(def->get_type() == JigsawParameter::STAT)) {
@@ -833,9 +764,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			err = context->set_local_variable(_value, JigsawParameterIcon::make(stat_def->get_icon()), "icon");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, JigsawParameterIcon::make(stat_def->get_icon()));
 		}
 
 		err = context->create_error(vformat("cannot read stat icon of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));
@@ -844,9 +773,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 		if (likely(def->get_type() == JigsawParameter::STAT_VALUE)) {
 			Ref<JigsawParameterStatValue> stat_param = def;
 
-			err = context->set_local_variable(_value, stat_param->is_nan() ? JigsawParameterAmount::make_nan() : JigsawParameterAmount::make(stat_param->get_amount(), stat_param->get_amount_inf()), "amount");
-
-			return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+			return set_command_result(context, err, 0, stat_param->is_nan() ? JigsawParameterAmount::make_nan() : JigsawParameterAmount::make(stat_param->get_amount(), stat_param->get_amount_inf()));
 		}
 
 		err = context->create_error(vformat("cannot read stat amount of parameter type %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", def->get_type())));

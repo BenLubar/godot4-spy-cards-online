@@ -26,6 +26,8 @@ public:
 	DECLARE_PROPERTY(Ref<Image>, image);
 	Ref<ImageTexture> get_texture() const;
 
+	DEFAULT_TO_STRING();
+
 	static Ref<IconDef> convert_legacy_portrait(Icon portrait, PackedByteArray data);
 };
 DECLARE_PREDEFINED_KEY(Texture2D, ICON);

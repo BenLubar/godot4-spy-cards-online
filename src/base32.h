@@ -25,6 +25,8 @@ public:
 	String encode(const PackedByteArray &data) const;
 	PackedByteArray decode(const String &data) const;
 
+	DEFAULT_TO_STRING();
+
 	static String clean_crockford(const String &data);
 	static bool is_valid_cid(const String &data);
 	static bool is_valid_crockford(const String &data);

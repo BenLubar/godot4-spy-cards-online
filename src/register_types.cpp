@@ -33,6 +33,7 @@
 #include "jigsaw_command_set_variable.h"
 #include "jigsaw_command_lookup_definition_property.h"
 #include "jigsaw_command_is_same.h"
+#include "jigsaw_command_ordered_list.h"
 
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_card_grid.h"
@@ -166,6 +167,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandSetVariable);
 	GDREGISTER_CLASS(JigsawCommandLookupDefinitionProperty);
 	GDREGISTER_CLASS(JigsawCommandIsSame);
+	GDREGISTER_CLASS(JigsawCommandOrderedList);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs

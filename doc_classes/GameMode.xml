@@ -85,7 +85,7 @@
 		</member>
 		<member name="visual_card_costs_grow_mode" type="int" setter="set_visual_card_costs_grow_mode" getter="get_visual_card_costs_grow_mode" enum="GameMode.GrowMode" default="0">
 		</member>
-		<member name="visual_card_costs_pos" type="Rect2" setter="set_visual_card_costs_pos" getter="get_visual_card_costs_pos" default="Rect2(139, 4, 32, 32)">
+		<member name="visual_card_costs_pos" type="Rect2" setter="set_visual_card_costs_pos" getter="get_visual_card_costs_pos" default="Rect2(136, 4, 32, 32)">
 		</member>
 		<member name="visual_card_costs_shrink_name" type="bool" setter="set_visual_card_costs_shrink_name" getter="get_visual_card_costs_shrink_name" default="true">
 		</member>

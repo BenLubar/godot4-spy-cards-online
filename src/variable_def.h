@@ -27,6 +27,8 @@ public:
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(Uniqueness, uniqueness, = Uniqueness::CARD_EFFECT_INSTANCE);
 	DECLARE_PROPERTY(Ref<JigsawParameter>, default_value); // must be a non-variable type
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(VariableDef::Uniqueness);
 

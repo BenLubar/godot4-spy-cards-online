@@ -17,6 +17,8 @@ protected:
 public:
 	DECLARE_PROPERTY(Ref<CardInstance>, card);
 	DECLARE_PROPERTY(Ref<EffectInstance>, effect);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // QUEUED_EFFECT_H

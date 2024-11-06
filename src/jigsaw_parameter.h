@@ -52,6 +52,7 @@ protected:
 
 public:
 	virtual Type get_type() const = 0;
+	DEFAULT_TO_STRING();
 
 	static bool is_concrete_type(Type type) { return type != NONE && type != VARIABLE && type != LOCAL_VARIABLE && type != EFFECT_INSTANCE_PARAMETER; }
 	static bool is_saved_type(Type type) { return type > NONE; }

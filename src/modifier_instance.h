@@ -16,6 +16,8 @@ public:
 	DECLARE_PROPERTY(int64_t, amount, = 0);
 	DECLARE_PROPERTY(int64_t, amount_inf, = 0);
 	DECLARE_PROPERTY_IS(bool, nan, = false);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // MODIFIER_INSTANCE_H

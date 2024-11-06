@@ -19,6 +19,8 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, commands);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, local_variables);
 	DECLARE_PROPERTY(int64_t, instruction_pointer, = -1);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // JIGSAW_STACK_FRAME_H

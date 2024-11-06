@@ -7,3 +7,7 @@ static LazyGlobal<GDScript> player_preferences([]() -> Ref<GDScript> { return Re
 bool PlayerPreferences::alternate_colors() {
 	return player_preferences->get("alternate_colors");
 }
+
+bool PlayerPreferences::prefers_reduced_motion() {
+	return player_preferences->get("prefers_reduced_motion");
+}

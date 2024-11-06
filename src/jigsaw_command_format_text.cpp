@@ -71,8 +71,7 @@ JigsawExecutionState JigsawCommandFormatText::evaluate(const Ref<JigsawContext> 
 		end->set_command(FormattedText::FORCE_END_OF_TEXT);
 		ft.append(end);
 
-		err = context->set_local_variable(_formatted_text, JigsawParameterFormattedText::make(ft), "formatted_text");
-		return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+		return set_command_result(context, err, 0, JigsawParameterFormattedText::make(ft));
 	} else {
 		Ref<JigsawParameter> text_param;
 		err = context->resolve_variable(_text, text_param, "text");
@@ -161,8 +160,7 @@ JigsawExecutionState JigsawCommandFormatText::evaluate(const Ref<JigsawContext> 
 		ft.append_array(after_param->get_text());
 	}
 
-	err = context->set_local_variable(_formatted_text, JigsawParameterFormattedText::make(ft), "formatted_text");
-	return likely(err.is_null()) ? JigsawExecutionState::CONTINUE : JigsawExecutionState::ERROR;
+	return set_command_result(context, err, 0, JigsawParameterFormattedText::make(ft));
 }
 
 int64_t JigsawCommandFormatText::get_num_configs() const {

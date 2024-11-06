@@ -42,6 +42,8 @@ public:
 	double next_range_float(double min, double max);
 	int64_t fintn(double n);
 
+	DEFAULT_TO_STRING();
+
 	static Ref<RNG> with_seed(PackedByteArray seed);
 };
 

@@ -17,6 +17,8 @@ protected:
 public:
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(PackedStringArray, editor_choice_names);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // CHOICES_DEF_H

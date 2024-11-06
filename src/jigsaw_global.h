@@ -48,6 +48,8 @@ public:
 	DECLARE_PROPERTY(TypedArray<CardGridNative>, card_grids);
 
 	void init_sides();
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // JIGSAW_GLOBAL_H

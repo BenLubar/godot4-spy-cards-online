@@ -41,6 +41,8 @@ public:
 	virtual bool _matches_def(const Ref<JigsawContext> &context, enums::CardDef::Card card) const = 0;
 	virtual bool _matches_instance(const Ref<JigsawContext> &context, const Ref<CardInstance> &inst) const = 0;
 
+	DEFAULT_TO_STRING();
+
 	static Ref<CardFilter> make_and(const TypedArray<CardFilter> &list);
 	static Ref<CardFilter> make_or(const TypedArray<CardFilter> &list);
 	static Ref<CardFilter> make_card(enums::CardDef::Card card);

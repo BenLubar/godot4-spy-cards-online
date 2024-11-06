@@ -5,6 +5,7 @@
 
 namespace PlayerPreferences {
 	bool alternate_colors();
+	bool prefers_reduced_motion();
 }
 
 #endif // PLAYER_PREFERENCES_HELPER_H

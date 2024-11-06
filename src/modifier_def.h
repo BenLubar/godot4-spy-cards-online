@@ -25,6 +25,8 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawProcedureModifierSimpleDescribe>, simple_describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureModifierExtendedDescribe>, extended_describe);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerModifier>, triggers);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_PREDEFINED_KEY(ModifierDef, MODIFIER);
 

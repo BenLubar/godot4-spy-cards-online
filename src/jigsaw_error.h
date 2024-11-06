@@ -13,6 +13,9 @@ class JigsawError : public Resource {
 	friend class JigsawContext;
 
 public:
+	// only the current error format version can be read
+	static constexpr uint64_t ERROR_FORMAT_VERSION = 0;
+
 	enum Flags1 : uint32_t {
 		MAGIC = 0x80981566, // spells CRASH in Crockford base32
 		MAGIC_MASK = 0x80ffffff,
@@ -30,6 +33,11 @@ public:
 	DECLARE_PROPERTY(String, message);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, params);
 	DECLARE_PROPERTY(TypedArray<JigsawStackFrame>, stack);
+
+	String _to_string() const;
+	PackedByteArray marshal() const;
+
+	static Ref<JigsawError> unmarshal(const PackedByteArray &buf);
 };
 VARIANT_BITFIELD_CAST(JigsawError::Flags1);
 

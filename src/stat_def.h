@@ -23,6 +23,8 @@ public:
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<JigsawProcedureStatFormatCost>, format_cost);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_PREDEFINED_KEY(StatDef, STAT);
 

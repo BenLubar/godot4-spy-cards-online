@@ -13,6 +13,8 @@ protected:
 
 public:
 	DECLARE_PROPERTY(enums::StatDef::Stat, stat, = enums::StatDef::Stat::NONE);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // STAT_VALUE_H

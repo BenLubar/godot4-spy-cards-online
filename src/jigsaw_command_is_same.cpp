@@ -33,8 +33,7 @@ JigsawExecutionState JigsawCommandIsSame::evaluate(const Ref<JigsawContext> &con
 		if (object->get_type() == JigsawParameter::BOOLEAN) {
 			Ref<JigsawParameterBoolean> object_boolean = object;
 
-			err = context->set_local_variable(_is_same, JigsawParameterBoolean::make(compare_to_boolean->get_boolean() == object_boolean->get_boolean()), "is_same");
-			return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_boolean->get_boolean() == object_boolean->get_boolean()));
 		}
 	}
 
@@ -44,15 +43,13 @@ JigsawExecutionState JigsawCommandIsSame::evaluate(const Ref<JigsawContext> &con
 		if (object->get_type() == JigsawParameter::STAT) {
 			Ref<JigsawParameterStat> object_stat = object;
 
-			err = context->set_local_variable(_is_same, JigsawParameterBoolean::make(compare_to_stat->get_stat() == object_stat->get_stat()), "is_same");
-			return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_stat->get_stat() == object_stat->get_stat()));
 		}
 
 		if (object->get_type() == JigsawParameter::STAT_VALUE) {
 			Ref<JigsawParameterStatValue> object_stat_value = object;
 
-			err = context->set_local_variable(_is_same, JigsawParameterBoolean::make(compare_to_stat->get_stat() == object_stat_value->get_stat()), "is_same");
-			return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_stat->get_stat() == object_stat_value->get_stat()));
 		}
 	}
 
@@ -62,8 +59,7 @@ JigsawExecutionState JigsawCommandIsSame::evaluate(const Ref<JigsawContext> &con
 		if (object->get_type() == JigsawParameter::STAT_VALUE) {
 			Ref<JigsawParameterStatValue> object_stat_value = object;
 
-			err = context->set_local_variable(_is_same, JigsawParameterBoolean::make(compare_to_stat_value->get_stat() == object_stat_value->get_stat() && (compare_to_stat_value->is_nan() ? object_stat_value->is_nan() : (!object_stat_value->is_nan() && compare_to_stat_value->get_amount() == object_stat_value->get_amount() && compare_to_stat_value->get_amount_inf() == object_stat_value->get_amount_inf()))), "is_same");
-			return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_stat_value->get_stat() == object_stat_value->get_stat() && (compare_to_stat_value->is_nan() ? object_stat_value->is_nan() : (!object_stat_value->is_nan() && compare_to_stat_value->get_amount() == object_stat_value->get_amount() && compare_to_stat_value->get_amount_inf() == object_stat_value->get_amount_inf()))));
 		}
 	}
 

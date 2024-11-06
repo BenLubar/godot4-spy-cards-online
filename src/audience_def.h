@@ -23,6 +23,8 @@ public:
 	DECLARE_PROPERTY(double, weight, = 1.0);
 	DECLARE_PROPERTY(double, pixel_size, = 0.01);
 	DECLARE_PROPERTY(Dictionary, json_data);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // AUDIENCE_DEF_H

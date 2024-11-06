@@ -26,6 +26,8 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, build_deck);
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, play_cards);
 	DECLARE_PROPERTY(TypedArray<JigsawTrigger>, triggers);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_PREDEFINED_KEY(NPCDef, NPC);
 

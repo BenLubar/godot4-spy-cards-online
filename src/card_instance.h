@@ -38,6 +38,8 @@ public:
 	bool update_simple_description();
 	bool description_requires_update() const;
 
+	DEFAULT_TO_STRING();
+
 	static Ref<CardInstance> make(JigsawGlobal *global, const Ref<CardDef> &def);
 };
 

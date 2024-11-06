@@ -155,6 +155,9 @@ public: \
 	}; \
 	}
 
+#define DEFAULT_TO_STRING() \
+	String _to_string() const { return vformat("<%s#%d>", get_class(), get_instance_id()); }
+
 extern Vector<std::function<void()>> _free_lazy_globals;
 template<typename T>
 class LazyGlobal

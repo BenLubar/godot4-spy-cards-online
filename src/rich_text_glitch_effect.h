@@ -17,6 +17,8 @@ public:
 	DECLARE_PROPERTY(String, bbcode, = "sc_glitch");
 
 	bool _process_custom_fx(const Ref<CharFXTransform> &p_char_fx) const override;
+	DEFAULT_TO_STRING();
+
 	static bool _compare_glyph_widths(int32_t a, int32_t b, RID font, Ref<TextServer> text_server);
 };
 

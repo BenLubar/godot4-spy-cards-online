@@ -25,6 +25,8 @@ public:
 
 	TypedArray<FormattedText> format_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
 	Ref<FormattedTextWithIcon> format_simple_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // EFFECT_INSTANCE_H

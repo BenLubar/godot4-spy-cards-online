@@ -42,6 +42,7 @@ public:
 	DECLARE_PROPERTY(bool, portrait_crop_front, = false);
 
 	Ref<AtlasTexture> create_portrait(const Ref<GameMode> &mode) const;
+	DEFAULT_TO_STRING();
 };
 
 #endif // CHARACTER_DEF_H

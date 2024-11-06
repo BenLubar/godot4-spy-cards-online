@@ -26,6 +26,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<IconDef>, custom_icons);
 
 	Ref<Texture2D> get_icon_texture(IconDef::Icon icon) const;
+	DEFAULT_TO_STRING();
 };
 
 #endif // GAME_MODE_SUMMARY_H

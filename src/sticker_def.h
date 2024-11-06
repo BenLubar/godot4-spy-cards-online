@@ -19,6 +19,8 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Rect2, position, = Rect2(0, 0, 30, 10));
 	DECLARE_PROPERTY(Ref<JigsawProcedureStickerShouldShow>, should_show);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // STICKER_DEF_H

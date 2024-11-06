@@ -70,6 +70,8 @@ public:
 	void write_color_rgb888(Color c);
 	bool read_bool();
 	void write_bool(bool b);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // FORMAT_HELPER_H

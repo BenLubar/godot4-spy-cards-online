@@ -31,6 +31,8 @@ public:
 	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
 	DECLARE_PROPERTY(TypedArray<EffectInstance>, effects);
 	DECLARE_PROPERTY(double, curve_adjust, = 0.0);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // CARD_DEF_H

@@ -23,6 +23,8 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
 
 	Color get_color_by_preference() const;
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_PREDEFINED_KEY(RankDef, RANK);
 

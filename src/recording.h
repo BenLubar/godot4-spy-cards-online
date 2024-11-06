@@ -40,6 +40,8 @@ public:
 	DECLARE_PROPERTY(int64_t, variant, = -1);
 	DECLARE_PROPERTY(TypedArray<PackedInt64Array>, initial_decks);
 	DECLARE_PROPERTY(TypedArray<RecordingRound>, rounds);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(Recording::FormatVersion);
 

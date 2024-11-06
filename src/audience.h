@@ -34,6 +34,8 @@ public:
 	void cheer(uint8_t repeats);
 	void cheer_left(uint8_t repeats);
 	void cheer_right(uint8_t repeats);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // AUDIENCE_H

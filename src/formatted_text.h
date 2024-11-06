@@ -60,6 +60,8 @@ public:
 	DECLARE_PROPERTY(double, font_size, = 1.0);
 	DECLARE_PROPERTY(int64_t, table_columns, = 0);
 
+	DEFAULT_TO_STRING();
+
 	static TypedArray<FormattedText> make_plain(String string);
 	static bool requires_update(Command command);
 };
@@ -74,6 +76,8 @@ protected:
 public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // FORMATTED_TEXT_H

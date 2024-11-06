@@ -1,29 +1,24 @@
-#ifndef JIGSAW_COMMAND_MATH_H
-#define JIGSAW_COMMAND_MATH_H
+#ifndef JIGSAW_COMMAND_ORDERED_LIST_H
+#define JIGSAW_COMMAND_ORDERED_LIST_H
 
 #include "jigsaw_command.h"
 
-class JigsawCommandMath : public JigsawCommand {
-	GDCLASS(JigsawCommandMath, JigsawCommand);
-
-public:
-	enum Operation {
-		EQUALS = 0, // amount, amount -> boolean
-		LESS_THAN = 1, // amount, amount -> boolean
-		ADD = 2, // amount, amount -> amount
-		SUBTRACT = 3, // amount, amount -> amount
-	};
+class JigsawCommandOrderedList : public JigsawCommand {
+	GDCLASS(JigsawCommandOrderedList, JigsawCommand);
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Operation, op, = Operation::EQUALS);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // see Operation enum
-	DECLARE_PROPERTY(Ref<JigsawParameter>, rhs); // see Operation enum; for some operations, skipped
-	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output); // see Operation enum
+	enum Operation {
+		GET_NUM_ITEMS = 0,
+	};
 
-	Type get_type() const override { return MATH; }
+	DECLARE_PROPERTY(Operation, operation, = GET_NUM_ITEMS);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, list);
+	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
+
+	Type get_type() const override { return ORDERED_LIST; }
 	bool modifies_game_state() const override { return false; }
 	bool can_pause_execution() const override { return false; }
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
@@ -46,7 +41,17 @@ public:
 	TypedArray<JigsawParameter> get_result_template(int64_t i, const Ref<JigsawContext> &context) const override;
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override;
 	String get_result_name(int64_t i) const override;
-};
-DECLARE_ENUM(JigsawCommandMath::Operation);
 
-#endif // JIGSAW_COMMAND_MATH_H
+	int64_t get_num_branches() const override;
+	Ref<JigsawCommandList> get_branch(int64_t i) const override;
+	void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) override;
+	String get_branch_name(int64_t i) const override;
+	TypedArray<Array> get_branch_argument_templates(int64_t i) const override;
+	PackedStringArray get_branch_argument_names(int64_t i) const override;
+	TypedArray<Array> get_branch_result_templates(int64_t i, const Ref<JigsawContext> &context) const override;
+	PackedStringArray get_branch_result_names(int64_t i) const override;
+};
+
+DECLARE_ENUM(JigsawCommandOrderedList::Operation);
+
+#endif // JIGSAW_COMMAND_ORDERED_LIST_H

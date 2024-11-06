@@ -25,6 +25,7 @@ public:
 	DECLARE_PROPERTY(String, bbcode, = "sc_shake");
 
 	bool _process_custom_fx(const Ref<CharFXTransform> &p_char_fx) const override;
+	DEFAULT_TO_STRING();
 };
 
 #endif // RICH_TEXT_SHAKE_EFFECT_H

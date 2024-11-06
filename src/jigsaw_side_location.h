@@ -15,6 +15,8 @@ protected:
 
 public:
 	DECLARE_PROPERTY(TypedArray<CardInstance>, cards);
+
+	DEFAULT_TO_STRING();
 };
 
 #endif // JIGSAW_SIDE_LOCATION_H

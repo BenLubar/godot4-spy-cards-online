@@ -137,6 +137,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="is_result_required" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
 		<method name="modifies_game_state" qualifiers="const">
 			<return type="bool" />
 			<description>
@@ -193,6 +199,10 @@
 		<constant name="SET_VARIABLE" value="7" enum="Type">
 		</constant>
 		<constant name="LOOKUP_DEFINITION_PROPERTY" value="8" enum="Type">
+		</constant>
+		<constant name="IS_SAME" value="9" enum="Type">
+		</constant>
+		<constant name="ORDERED_LIST" value="10" enum="Type">
 		</constant>
 	</constants>
 </class>

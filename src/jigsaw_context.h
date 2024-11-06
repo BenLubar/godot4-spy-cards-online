@@ -59,6 +59,8 @@ public:
 	bool is_in_progress() const;
 	Ref<JigsawError> create_error(const String &message, const TypedArray<JigsawParameter> &params = TypedArray<JigsawParameter>(), bool include_global_snapshot = false) const;
 
+	DEFAULT_TO_STRING();
+
 	static Ref<JigsawContext> make(JigsawGlobal *global, const Ref<JigsawContext> &parent);
 };
 

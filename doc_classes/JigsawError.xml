@@ -6,6 +6,19 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="marshal" qualifiers="const">
+			<return type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="unmarshal" qualifiers="static">
+			<return type="JigsawError" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="flags1" type="int" setter="set_flags1" getter="get_flags1" enum="JigsawError.Flags1" is_bitfield="true" default="2157450598">
 		</member>

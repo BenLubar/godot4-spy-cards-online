@@ -13,9 +13,27 @@ IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, value);
 IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, variable);
 
 JigsawExecutionState JigsawCommandSetVariable::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	err = context->create_error("internal error: TODO (set variable)");
+	Ref<JigsawParameter> value;
+	err = context->resolve_variable(_value, value, "value");
+	if (unlikely(err.is_valid())) {
+		return JigsawExecutionState::ERROR;
+	}
 
-	return JigsawExecutionState::ERROR;
+	if (_persistent) {
+		Ref<JigsawParameterVariable> variable = _variable;
+		if (unlikely(variable.is_null())) {
+			err = context->create_error("missing variable in set variable command");
+			return JigsawExecutionState::ERROR;
+		}
+
+		err = context->create_error("internal error: TODO (set variable - persistent)");
+		return JigsawExecutionState::ERROR;
+	} else {
+		Ref<JigsawParameterLocalVariable> variable = _variable;
+
+		err = context->set_local_variable(variable, value, "variable");
+		return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
+	}
 }
 
 int64_t JigsawCommandSetVariable::get_num_configs() const {

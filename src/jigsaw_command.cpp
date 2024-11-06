@@ -10,6 +10,8 @@ void JigsawCommand::_bind_methods() {
 	BIND_ENUM_CONSTANT(IF);
 	BIND_ENUM_CONSTANT(SET_VARIABLE);
 	BIND_ENUM_CONSTANT(LOOKUP_DEFINITION_PROPERTY);
+	BIND_ENUM_CONSTANT(IS_SAME);
+	BIND_ENUM_CONSTANT(ORDERED_LIST);
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawCommand::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");
@@ -33,6 +35,7 @@ void JigsawCommand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_num_results"), &JigsawCommand::get_num_results);
 	ClassDB::bind_method(D_METHOD("get_result", "i"), &JigsawCommand::get_result);
 	ClassDB::bind_method(D_METHOD("get_result_template", "i"), &JigsawCommand::get_result_template);
+	ClassDB::bind_method(D_METHOD("is_result_required", "i"), &JigsawCommand::is_result_required);
 	ClassDB::bind_method(D_METHOD("set_result", "i", "result"), &JigsawCommand::set_result);
 	ClassDB::bind_method(D_METHOD("get_result_name", "i"), &JigsawCommand::get_result_name);
 
@@ -44,4 +47,21 @@ void JigsawCommand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_branch_argument_names", "i"), &JigsawCommand::get_branch_argument_names);
 	ClassDB::bind_method(D_METHOD("get_branch_result_templates", "i"), &JigsawCommand::get_branch_result_templates);
 	ClassDB::bind_method(D_METHOD("get_branch_result_names", "i"), &JigsawCommand::get_branch_result_names);
+}
+
+JigsawExecutionState JigsawCommand::set_command_result(const Ref<JigsawContext> &context, Ref<JigsawError> &err, int64_t i, const Ref<JigsawParameter> &value) const {
+	String result_name = get_result_name(i);
+
+	Ref<JigsawParameterLocalVariable> var = get_result(i);
+	if (var.is_null()) {
+		if (is_result_required(i)) {
+			err = context->create_error(vformat("missing required result variable %s", result_name));
+			return JigsawExecutionState::ERROR;
+		}
+
+		return JigsawExecutionState::CONTINUE;
+	}
+
+	err = context->set_local_variable(var, value, result_name);
+	return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
 }

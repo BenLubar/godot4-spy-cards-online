@@ -44,7 +44,9 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		before_text2->set_color(Color(1.0, 0.0, 0.0, 1.0));
 		description.append(before_text2);
 
-		description.append_array(FormattedText::make_plain(vformat("missing effect #%d", get_effect())));
+		String warning = vformat("missing effect #%d", get_effect());
+		description.append_array(FormattedText::make_plain(warning));
+		WARN_PRINT(warning);
 
 		Ref<FormattedText> after_text2;
 		after_text2.instantiate();
@@ -67,7 +69,9 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		before_text2->set_color(Color(1.0, 0.0, 0.0, 1.0));
 		description.append(before_text2);
 
-		description.append_array(FormattedText::make_plain(vformat("missing 'describe' procedure for effect #%d '%s'", get_effect(), def->get_editor_name())));
+		String warning = vformat("missing 'describe' procedure for effect #%d '%s'", get_effect(), def->get_editor_name());
+		description.append_array(FormattedText::make_plain(warning));
+		WARN_PRINT(warning);
 
 		Ref<FormattedText> after_text2;
 		after_text2.instantiate();
@@ -91,7 +95,7 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		), results);
 		if (error.is_valid()) {
 			// TODO: log error
-			WARN_PRINT(vformat("error in card '%s' effect '%s' describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error->get_message()));
+			WARN_PRINT(vformat("error in card '%s' effect '%s' describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error));
 
 			Ref<FormattedText> before_text;
 			before_text.instantiate();
@@ -169,7 +173,7 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 	), results);
 	if (error.is_valid()) {
 		// TODO: log error
-		WARN_PRINT(vformat("error in card '%s' effect '%s' simple describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error->get_message()));
+		WARN_PRINT(vformat("error in card '%s' effect '%s' simple describe procedure: %s", card->get_def()->get_name(), def->get_editor_name(), error));
 		return Ref<FormattedTextWithIcon>();
 	}
 

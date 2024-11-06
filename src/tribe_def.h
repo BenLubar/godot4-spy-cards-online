@@ -24,6 +24,8 @@ public:
 	DECLARE_PROPERTY(String, name);
 	DECLARE_PROPERTY(Color, color);
 	DECLARE_PROPERTY(DisplayMode, display, = DisplayMode::NORMAL);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(TribeDef::DisplayMode);
 DECLARE_PREDEFINED_KEY(TribeDef, TRIBE);

@@ -30,6 +30,8 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectSimpleDescribe>, simple_describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectExtendedDescribe>, extended_describe);
 	DECLARE_PROPERTY(Ref<JigsawProcedureEffectCurve>, curve);
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_PREDEFINED_KEY(EffectDef, EFFECT);
 

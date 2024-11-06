@@ -58,7 +58,7 @@ public:
 	DECLARE_PROPERTY(Rect2, visual_card_description_pos, = Rect2(18, 140, 136, 76));
 	DECLARE_PROPERTY(Vector2, visual_card_description_scale, = Vector2(1.0f, 1.25f));
 
-	DECLARE_PROPERTY(Rect2, visual_card_costs_pos, = Rect2(139, 4, 32, 32));
+	DECLARE_PROPERTY(Rect2, visual_card_costs_pos, = Rect2(136, 4, 32, 32));
 	DECLARE_PROPERTY(GrowMode, visual_card_costs_grow_mode, = GrowMode::GROW_LEFT);
 	DECLARE_PROPERTY(bool, visual_card_costs_shrink_name, = true);
 	DECLARE_PROPERTY(float, visual_card_costs_spacing, = 0.0f);
