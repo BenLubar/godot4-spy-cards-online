@@ -175,6 +175,8 @@ int64_t JigsawCommandOrderedList::get_num_branches() const {
 	case GET_NUM_ITEMS:
 		return 0;
 	}
+
+	return 0;
 }
 Ref<JigsawCommandList> JigsawCommandOrderedList::get_branch(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_branches(), Ref<JigsawCommandList>());
