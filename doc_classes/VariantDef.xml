@@ -13,7 +13,7 @@
 		</member>
 		<member name="title" type="String" setter="set_title" getter="get_title" default="&quot;&quot;">
 		</member>
-		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
+		<member name="triggers" type="JigsawTriggerVariant[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
 </class>

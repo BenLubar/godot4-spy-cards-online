@@ -15,7 +15,7 @@
 		</member>
 		<member name="simple_describe" type="JigsawProcedureModifierSimpleDescribe" setter="set_simple_describe" getter="get_simple_describe">
 		</member>
-		<member name="triggers" type="JigsawTrigger[]" setter="set_triggers" getter="get_triggers" default="[]">
+		<member name="triggers" type="JigsawTriggerModifier[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
 	<constants>
