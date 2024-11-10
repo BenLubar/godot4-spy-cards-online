@@ -5,14 +5,17 @@
 
 void JigsawCommandOrderedList::_bind_methods() {
 	BIND_ENUM_CONSTANT(GET_NUM_ITEMS);
+	BIND_ENUM_CONSTANT(GET_ITEM_AT_INDEX);
 
 	BIND_PROPERTY_ENUM(JigsawCommandOrderedList::Operation, operation);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, list);
+	BIND_PROPERTY_RESOURCE(JigsawParameter, index);
 	BIND_PROPERTY_RESOURCE(JigsawParameterLocalVariable, output);
 }
 
 IMPLEMENT_PROPERTY(JigsawCommandOrderedList, JigsawCommandOrderedList::Operation, operation);
 IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameter>, list);
+IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameter>, index);
 IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameterLocalVariable>, output);
 
 JigsawExecutionState JigsawCommandOrderedList::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
@@ -28,6 +31,39 @@ JigsawExecutionState JigsawCommandOrderedList::evaluate(const Ref<JigsawContext>
 		int64_t count = unlikely(list->is_template()) ? 0 : list->get_list().size();
 
 		return set_command_result(context, err, 0, JigsawParameterAmount::make(count));
+	}
+	case GET_ITEM_AT_INDEX:
+	{
+		Ref<JigsawParameterOrderedList> list;
+		err = context->resolve_variable(_list, list, "list");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		Ref<JigsawParameterAmount> index;
+		err = context->resolve_variable(_index, index, "index");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (unlikely(index->is_nan())) {
+			err = context->create_error("list index is not a number");
+			return JigsawExecutionState::ERROR;
+		}
+		if (unlikely(index->get_amount_inf() != 0)) {
+			err = context->create_error("list index is infinite");
+			return JigsawExecutionState::ERROR;
+		}
+		if (unlikely(index->get_amount() < 0)) {
+			err = context->create_error("list index is negative");
+			return JigsawExecutionState::ERROR;
+		}
+		if (unlikely(index->get_amount() >= list->get_list().size() || list->is_template())) {
+			err = context->create_error("list index is out of bounds");
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, list->get_list()[index->get_amount()]);
 	}
 	}
 
@@ -67,6 +103,7 @@ PackedStringArray JigsawCommandOrderedList::get_config_options(int64_t i) const 
 
 	return PackedStringArray{
 		"Get number of items",
+		"Get item at index",
 	};
 }
 
@@ -74,6 +111,8 @@ int64_t JigsawCommandOrderedList::get_num_arguments() const {
 	switch (_operation) {
 	case GET_NUM_ITEMS:
 		return 1;
+	case GET_ITEM_AT_INDEX:
+		return 2;
 	}
 
 	return 0;
@@ -84,6 +123,12 @@ Ref<JigsawParameter> JigsawCommandOrderedList::get_argument(int64_t i) const {
 	if (i == 0) {
 		return _list;
 	}
+	if (i == 1) {
+		switch (_operation) {
+		case GET_ITEM_AT_INDEX:
+			return _index;
+		}
+	}
 
 	return Ref<JigsawParameter>();
 }
@@ -92,6 +137,12 @@ TypedArray<JigsawParameter> JigsawCommandOrderedList::get_argument_template(int6
 
 	if (i == 0) {
 		return Array::make(JigsawParameterOrderedList::make(TypedArray<JigsawParameter>()));
+	}
+	if (i == 1) {
+		switch (_operation) {
+		case GET_ITEM_AT_INDEX:
+			return Array::make(JigsawParameterAmount::make(0));
+		}
 	}
 
 	return TypedArray<JigsawParameter>();
@@ -111,6 +162,12 @@ String JigsawCommandOrderedList::get_argument_name(int64_t i) const {
 	if (i == 0) {
 		return "list";
 	}
+	if (i == 1) {
+		switch (_operation) {
+		case GET_ITEM_AT_INDEX:
+			return "index";
+		}
+	}
 
 	return "";
 }
@@ -118,6 +175,7 @@ String JigsawCommandOrderedList::get_argument_name(int64_t i) const {
 int64_t JigsawCommandOrderedList::get_num_results() const {
 	switch (_operation) {
 	case GET_NUM_ITEMS:
+	case GET_ITEM_AT_INDEX:
 		return 1;
 	}
 
@@ -142,6 +200,8 @@ TypedArray<JigsawParameter> JigsawCommandOrderedList::get_result_template(int64_
 		}
 
 		return TypedArray<JigsawParameter>();
+	case GET_ITEM_AT_INDEX:
+		return TypedArray<JigsawParameter>(); // TODO: can we infer this?
 	}
 
 	return TypedArray<JigsawParameter>();
@@ -165,6 +225,12 @@ String JigsawCommandOrderedList::get_result_name(int64_t i) const {
 		}
 
 		return "";
+	case GET_ITEM_AT_INDEX:
+		if (i == 0) {
+			return "item";
+		}
+
+		return "";
 	}
 
 	return "";
@@ -173,6 +239,7 @@ String JigsawCommandOrderedList::get_result_name(int64_t i) const {
 int64_t JigsawCommandOrderedList::get_num_branches() const {
 	switch (_operation) {
 	case GET_NUM_ITEMS:
+	case GET_ITEM_AT_INDEX:
 		return 0;
 	}
 

@@ -15,6 +15,8 @@ protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(String, editor_name);
+
 	DEFAULT_TO_STRING();
 };
 

@@ -204,5 +204,9 @@
 		</constant>
 		<constant name="ORDERED_LIST" value="10" enum="Type">
 		</constant>
+		<constant name="RNG" value="11" enum="Type">
+		</constant>
+		<constant name="AUDIENCE" value="12" enum="Type">
+		</constant>
 	</constants>
 </class>

@@ -7,6 +7,8 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="index" type="JigsawParameter" setter="set_index" getter="get_index">
+		</member>
 		<member name="list" type="JigsawParameter" setter="set_list" getter="get_list">
 		</member>
 		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandOrderedList.Operation" default="0">
@@ -17,6 +19,8 @@
 	</members>
 	<constants>
 		<constant name="GET_NUM_ITEMS" value="0" enum="Operation">
+		</constant>
+		<constant name="GET_ITEM_AT_INDEX" value="1" enum="Operation">
 		</constant>
 	</constants>
 </class>

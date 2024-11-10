@@ -34,6 +34,8 @@
 #include "jigsaw_command_lookup_definition_property.h"
 #include "jigsaw_command_is_same.h"
 #include "jigsaw_command_ordered_list.h"
+#include "jigsaw_command_rng.h"
+#include "jigsaw_command_audience.h"
 
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_card_grid.h"
@@ -158,6 +160,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerModifier);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerNPC);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerVariant);
+	GDREGISTER_CLASS(JigsawTriggerVariantCosmeticInit);
+	GDREGISTER_CLASS(JigsawTriggerVariantCharacterInit);
+	GDREGISTER_CLASS(JigsawTriggerVariantDeckInit);
 	GDREGISTER_CLASS(JigsawFunction);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawCommand);
@@ -172,6 +177,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandLookupDefinitionProperty);
 	GDREGISTER_CLASS(JigsawCommandIsSame);
 	GDREGISTER_CLASS(JigsawCommandOrderedList);
+	GDREGISTER_CLASS(JigsawCommandRNG);
+	GDREGISTER_CLASS(JigsawCommandAudience);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
@@ -250,7 +257,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(ModifierInstance);
 	GDREGISTER_CLASS(QueuedEffect);
 	GDREGISTER_CLASS(Audience);
-	GDREGISTER_ABSTRACT_CLASS(CardGridNative);
+	GDREGISTER_ABSTRACT_CLASS(CardGridNative2D);
+	GDREGISTER_ABSTRACT_CLASS(CardGridNative3D);
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

@@ -62,6 +62,9 @@ class JigsawTriggerVariant : public JigsawTrigger {
 
 public:
 	enum Type {
+		COSMETIC_INIT = 0,
+		CHARACTER_INIT = 1,
+		DECK_INIT = 2,
 	};
 
 protected:
@@ -71,5 +74,25 @@ public:
 	virtual Type get_type() const = 0;
 };
 DECLARE_ENUM(JigsawTriggerVariant::Type);
+
+#define DECLARE_JIGSAW_TRIGGER(m_type, m_subtype, m_subtype_enum, ...) \
+	class JigsawTrigger##m_type##m_subtype : public JigsawTrigger##m_type { \
+		GDCLASS(JigsawTrigger##m_type##m_subtype, JigsawTrigger##m_type); \
+	protected: \
+		static void _bind_methods(); \
+	public: \
+		Type get_type() const override { return m_subtype_enum; } \
+		String get_editor_name() const override; \
+		String get_editor_description() const override; \
+		TypedArray<JigsawParameter> get_arguments() const override; \
+		PackedStringArray get_argument_names() const override; \
+		TypedArray<JigsawParameter> get_results() const override; \
+		PackedStringArray get_result_names() const override; \
+		__VA_ARGS__ \
+	}
+
+DECLARE_JIGSAW_TRIGGER(Variant, CosmeticInit, COSMETIC_INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, CharacterInit, CHARACTER_INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, DeckInit, DECK_INIT);
 
 #endif // JIGSAW_TRIGGER_H

@@ -28,6 +28,8 @@ public:
 		LOOKUP_DEFINITION_PROPERTY = 8,
 		IS_SAME = 9,
 		ORDERED_LIST = 10,
+		RNG = 11,
+		AUDIENCE = 12,
 	};
 
 protected:
@@ -40,6 +42,7 @@ public:
 	virtual bool modifies_game_state() const = 0;
 	virtual bool can_pause_execution() const = 0;
 	virtual JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const = 0;
+	virtual Ref<JigsawError> pop_stack_frame(const Ref<JigsawContext> &context, const Ref<JigsawStackFrame> &popped_frame) const { return Ref<JigsawError>(); }
 
 	virtual int64_t get_num_configs() const { return 0; }
 	virtual String get_config_name(int64_t i) const { return ""; }

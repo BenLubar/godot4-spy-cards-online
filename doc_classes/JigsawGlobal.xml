@@ -12,11 +12,22 @@
 			<description>
 			</description>
 		</method>
+		<method name="run_variant_triggers">
+			<return type="JigsawError" />
+			<param index="0" name="type" type="int" enum="JigsawTriggerVariant.Type" />
+			<param index="1" name="args" type="JigsawParameter[]" />
+			<param index="2" name="rng" type="RNG" />
+			<param index="3" name="copy_rng" type="bool" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
-		<member name="card_grids" type="CardGridNative[]" setter="set_card_grids" getter="get_card_grids" default="[]">
+		<member name="card_grids_2d" type="CardGridNative2D[]" setter="set_card_grids_2d" getter="get_card_grids_2d" default="[]">
+		</member>
+		<member name="card_grids_3d" type="CardGridNative3D[]" setter="set_card_grids_3d" getter="get_card_grids_3d" default="[]">
 		</member>
 		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
 		</member>
@@ -25,6 +36,8 @@
 		<member name="current_card_instance" type="CardInstance" setter="set_current_card_instance" getter="get_current_card_instance">
 		</member>
 		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
+		</member>
+		<member name="current_side" type="int" setter="set_current_side" getter="get_current_side" default="0">
 		</member>
 		<member name="icon_nodes" type="TextureRect[]" setter="set_icon_nodes" getter="get_icon_nodes" default="[]">
 		</member>

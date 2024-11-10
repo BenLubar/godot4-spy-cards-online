@@ -57,5 +57,7 @@
 		</constant>
 		<constant name="WIDE" value="2" enum="DisplayMode">
 		</constant>
+		<constant name="WIDER" value="3" enum="DisplayMode">
+		</constant>
 	</constants>
 </class>

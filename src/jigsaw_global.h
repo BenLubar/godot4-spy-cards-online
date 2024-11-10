@@ -33,6 +33,7 @@ public:
 	DECLARE_PROPERTY(Ref<VariantDef>, selected_variant);
 	DECLARE_PROPERTY(Ref<CardInstance>, current_card_instance);
 	DECLARE_PROPERTY(Ref<EffectInstance>, current_effect_instance);
+	DECLARE_PROPERTY(int32_t, current_side, = 0);
 	DECLARE_PROPERTY(TypedArray<JigsawSide>, sides);
 
 	DECLARE_PROPERTY(double, time_scale, = 1.0);
@@ -45,9 +46,11 @@ public:
 	DECLARE_PROPERTY(TypedArray<TextureRect>, icon_nodes);
 	DECLARE_PROPERTY(Ref<Audience>, audience);
 	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes);
-	DECLARE_PROPERTY(TypedArray<CardGridNative>, card_grids);
+	DECLARE_PROPERTY(TypedArray<CardGridNative2D>, card_grids_2d);
+	DECLARE_PROPERTY(TypedArray<CardGridNative3D>, card_grids_3d);
 
 	void init_sides();
+	Ref<JigsawError> run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng);
 
 	DEFAULT_TO_STRING();
 };

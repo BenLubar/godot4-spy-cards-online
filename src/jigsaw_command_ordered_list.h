@@ -12,10 +12,12 @@ protected:
 public:
 	enum Operation {
 		GET_NUM_ITEMS = 0,
+		GET_ITEM_AT_INDEX = 1,
 	};
 
 	DECLARE_PROPERTY(Operation, operation, = GET_NUM_ITEMS);
 	DECLARE_PROPERTY(Ref<JigsawParameter>, list);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, index);
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
 
 	Type get_type() const override { return ORDERED_LIST; }

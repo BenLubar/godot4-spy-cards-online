@@ -8,6 +8,7 @@ enum Variable {
 
 	TARGET_CARD = 0,
 	LIMIT_COUNT = 1,
+	REMATCHES = 2,
 
 	MAX_HP = 241,
 	HAND_MIN_SIZE = 242,

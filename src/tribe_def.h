@@ -15,6 +15,7 @@ public:
 		NORMAL = 0,
 		HIDDEN = 1,
 		WIDE = 2,
+		WIDER = 3,
 	};
 
 protected:

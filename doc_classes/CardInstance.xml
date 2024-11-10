@@ -41,6 +41,8 @@
 		</member>
 		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects" default="[]">
 		</member>
+		<member name="face_down_for_side" type="PackedInt32Array" setter="set_face_down_for_side" getter="get_face_down_for_side" default="PackedInt32Array()">
+		</member>
 		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
 		</member>
 		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers" default="[]">

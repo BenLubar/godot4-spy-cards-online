@@ -11,10 +11,11 @@ protected:
 
 public:
 	DECLARE_PROPERTY(int64_t, grid, = -1);
+	DECLARE_PROPERTY(bool, is_3d, = true);
 
 	Type get_type() const override { return CARD_GRID; }
 
-	static Ref<JigsawParameterCardGrid> make(int64_t grid);
+	static Ref<JigsawParameterCardGrid> make(int64_t grid, bool is_3d);
 };
 
 #endif // JIGSAW_PARAMETER_CARD_GRID_H

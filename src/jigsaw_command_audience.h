@@ -1,33 +1,17 @@
-#ifndef JIGSAW_COMMAND_MATH_H
-#define JIGSAW_COMMAND_MATH_H
+#ifndef JIGSAW_COMMAND_AUDIENCE_H
+#define JIGSAW_COMMAND_AUDIENCE_H
 
 #include "jigsaw_command.h"
 
-class JigsawCommandMath : public JigsawCommand {
-	GDCLASS(JigsawCommandMath, JigsawCommand);
-
-public:
-	enum Operation {
-		EQUALS = 0, // amount, amount -> boolean
-		LESS_THAN = 1, // amount, amount -> boolean
-		ADD = 2, // amount, amount -> amount
-		SUBTRACT = 3, // amount, amount -> amount
-		MULTIPLY = 4, // amount, amount -> amount
-		DIVIDE = 5, // amount, amount -> amount
-		REMAINDER = 6, // amount, amount -> amount
-	};
+class JigsawCommandAudience : public JigsawCommand {
+	GDCLASS(JigsawCommandAudience, JigsawCommand);
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Operation, op, = Operation::EQUALS);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, lhs); // see Operation enum
-	DECLARE_PROPERTY(Ref<JigsawParameter>, rhs); // see Operation enum; for some operations, skipped
-	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output); // see Operation enum
-
-	Type get_type() const override { return MATH; }
-	bool modifies_game_state() const override { return false; }
+	Type get_type() const override { return AUDIENCE; }
+	bool modifies_game_state() const override { return true; }
 	bool can_pause_execution() const override { return false; }
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
@@ -50,6 +34,5 @@ public:
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override;
 	String get_result_name(int64_t i) const override;
 };
-DECLARE_ENUM(JigsawCommandMath::Operation);
 
-#endif // JIGSAW_COMMAND_MATH_H
+#endif // JIGSAW_COMMAND_AUDIENCE_H

@@ -21,6 +21,8 @@
 		</constant>
 		<constant name="LIMIT_COUNT" value="1" enum="Variable">
 		</constant>
+		<constant name="REMATCHES" value="2" enum="Variable">
+		</constant>
 		<constant name="MAX_HP" value="241" enum="Variable">
 		</constant>
 		<constant name="HAND_MIN_SIZE" value="242" enum="Variable">
@@ -60,6 +62,8 @@
 		<constant name="EFFECT_QUEUE_TREE" value="1" enum="Uniqueness">
 		</constant>
 		<constant name="SIDE" value="2" enum="Uniqueness">
+		</constant>
+		<constant name="GLOBAL" value="3" enum="Uniqueness">
 		</constant>
 	</constants>
 </class>

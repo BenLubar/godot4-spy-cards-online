@@ -26,5 +26,11 @@
 		</constant>
 		<constant name="SUBTRACT" value="3" enum="Operation">
 		</constant>
+		<constant name="MULTIPLY" value="4" enum="Operation">
+		</constant>
+		<constant name="DIVIDE" value="5" enum="Operation">
+		</constant>
+		<constant name="REMAINDER" value="6" enum="Operation">
+		</constant>
 	</constants>
 </class>

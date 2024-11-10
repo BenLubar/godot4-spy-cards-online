@@ -18,6 +18,7 @@ public:
 		CARD_EFFECT_INSTANCE = 0,
 		EFFECT_QUEUE_TREE = 1,
 		SIDE = 2,
+		GLOBAL = 3,
 	};
 
 protected:
@@ -26,7 +27,7 @@ protected:
 public:
 	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(Uniqueness, uniqueness, = Uniqueness::CARD_EFFECT_INSTANCE);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, default_value); // must be a non-variable type
+	DECLARE_PROPERTY(Ref<JigsawParameter>, default_value); // must be a concrete type, but can be non-saved
 
 	DEFAULT_TO_STRING();
 };

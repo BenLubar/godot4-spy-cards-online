@@ -15,8 +15,6 @@
 		</member>
 		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon" default="-1">
 		</member>
-		<member name="json_data" type="Dictionary" setter="set_json_data" getter="get_json_data" default="{}">
-		</member>
 		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size" default="0.01">
 		</member>
 		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">

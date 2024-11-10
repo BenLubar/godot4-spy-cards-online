@@ -18,6 +18,7 @@ void CardInstance::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
 	BIND_PROPERTY_RESOURCE_ARRAY(ModifierInstance, modifiers);
+	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, face_down_for_side);
 
 	ClassDB::bind_method(D_METHOD("update_description"), &CardInstance::update_description);
 	ClassDB::bind_method(D_METHOD("update_simple_description"), &CardInstance::update_simple_description);
@@ -38,6 +39,7 @@ IMPLEMENT_PROPERTY(CardInstance, TypedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<ModifierInstance>, modifiers);
+IMPLEMENT_PROPERTY(CardInstance, PackedInt32Array, face_down_for_side);
 
 Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &def) {
 	ERR_FAIL_NULL_V(global, nullptr);

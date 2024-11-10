@@ -15,5 +15,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_directory_size" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="path" type="String" />
+			<description>
+			</description>
+		</method>
 	</methods>
 </class>

@@ -33,6 +33,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<FormattedText>, description);
 	DECLARE_PROPERTY(TypedArray<FormattedTextWithIcon>, simple_description);
 	DECLARE_PROPERTY(TypedArray<ModifierInstance>, modifiers);
+	DECLARE_PROPERTY(PackedInt32Array, face_down_for_side);
 
 	void update_description();
 	bool update_simple_description();

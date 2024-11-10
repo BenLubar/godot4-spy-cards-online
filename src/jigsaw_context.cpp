@@ -63,19 +63,18 @@ Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> 
 	return Ref<JigsawError>();
 }
 Ref<JigsawError> JigsawContext::pop_stack_frame() {
-	// TODO: blocks with return values
+	Ref<JigsawStackFrame> popped_frame = _stack.back();
 	_stack.pop_back();
 
-	while (!_stack.is_empty()) {
-		Ref<JigsawStackFrame> frame = _stack.back();
-		if (frame->get_instruction_pointer() + 1 == frame->get_commands()->get_list().size()) {
-			_stack.pop_back();
-		} else {
-			break;
-		}
+	if (_stack.is_empty()) {
+		return Ref<JigsawError>();
 	}
 
-	return Ref<JigsawError>();
+	Ref<JigsawStackFrame> current_frame = _stack.back();
+	TypedArray<JigsawCommand> current_frame_commands = current_frame->get_commands()->get_list();
+	Ref<JigsawCommand> branched_command = current_frame_commands[current_frame->get_instruction_pointer()];
+
+	return branched_command->pop_stack_frame(this, popped_frame);
 }
 template<>
 Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<JigsawParameter> &tmpl, Ref<JigsawParameter> &ret, const String &debug_name) const {
@@ -245,9 +244,7 @@ JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool fi
 		return JigsawExecutionState::ERROR;
 	}
 
-	if (ip == -1 && commands.is_empty()) {
-		// special case: empty block
-
+	if (ip == commands.size() - 1) {
 		err = pop_stack_frame();
 
 		if (likely(err.is_null()) && _stack.is_empty()) {
@@ -274,19 +271,7 @@ JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool fi
 		return JigsawExecutionState::ERROR;
 	}
 
-	JigsawExecutionState state = command->evaluate(this, err, first);
-	if (state == JigsawExecutionState::CONTINUE && ip == commands.size() - 1 && stack_depth == _stack.size() - 1) {
-		err = pop_stack_frame();
-		if (err.is_valid()) {
-			return JigsawExecutionState::ERROR;
-		}
-
-		if (stack_depth == 0) {
-			return JigsawExecutionState::DONE;
-		}
-	}
-
-	return state;
+	return command->evaluate(this, err, first);
 }
 
 Ref<JigsawError> JigsawContext::evaluate(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, int64_t max_steps) {

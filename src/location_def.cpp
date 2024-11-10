@@ -11,4 +11,8 @@ void LocationDef::_bind_methods() {
 	BIND_ENUM_CONSTANT(DISCARD);
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
+
+	BIND_PROPERTY(Variant::STRING, editor_name);
 }
+
+IMPLEMENT_PROPERTY(LocationDef, String, editor_name);

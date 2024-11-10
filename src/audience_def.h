@@ -22,7 +22,6 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, back_cheer, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(double, weight, = 1.0);
 	DECLARE_PROPERTY(double, pixel_size, = 0.01);
-	DECLARE_PROPERTY(Dictionary, json_data);
 
 	DEFAULT_TO_STRING();
 };

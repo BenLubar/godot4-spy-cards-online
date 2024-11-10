@@ -5,6 +5,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(VariantDef, selected_variant);
 	BIND_PROPERTY_RESOURCE(CardInstance, current_card_instance);
 	BIND_PROPERTY_RESOURCE(EffectInstance, current_effect_instance);
+	BIND_PROPERTY(Variant::INT, current_side);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSide, sides);
 
 	BIND_PROPERTY(Variant::FLOAT, time_scale);
@@ -17,17 +18,20 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(TextureRect, icon_nodes);
 	BIND_PROPERTY_RESOURCE(Audience, audience);
 	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
-	BIND_PROPERTY_RESOURCE_ARRAY(CardGrid, card_grids);
+	BIND_PROPERTY_RESOURCE_ARRAY(CardGridNative2D, card_grids_2d);
+	BIND_PROPERTY_RESOURCE_ARRAY(CardGridNative3D, card_grids_3d);
 
 	ADD_SIGNAL(MethodInfo("current_effect_changed"));
 
 	ClassDB::bind_method(D_METHOD("init_sides"), &JigsawGlobal::init_sides);
+	ClassDB::bind_method(D_METHOD("run_variant_triggers", "type", "args", "rng", "copy_rng"), &JigsawGlobal::run_variant_triggers);
 }
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<CardInstance>, current_card_instance, emit_signal("current_effect_changed"));
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<EffectInstance>, current_effect_instance, emit_signal("current_effect_changed"));
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSide>, sides);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);
@@ -40,7 +44,8 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<SquishLabel>, label_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<TextureRect>, icon_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<Audience>, audience);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative>, card_grids);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative2D>, card_grids_2d);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative3D>, card_grids_3d);
 
 void JigsawGlobal::init_sides() {
 	ERR_FAIL_COND(_mode.is_null());
@@ -75,4 +80,37 @@ void JigsawGlobal::init_sides() {
 
 		_sides[i] = side;
 	}
+}
+
+Ref<JigsawError> JigsawGlobal::run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng) {
+	ERR_FAIL_COND_V(_rng.is_valid(), Ref<JigsawError>());
+	ERR_FAIL_COND_V(!_context_stack.is_empty(), Ref<JigsawError>());
+
+	TypedArray<JigsawTriggerVariant> triggers;
+
+	if (likely(_mode.is_valid() && _mode->get_base_variant().is_valid())) {
+		triggers.append_array(_mode->get_base_variant()->get_triggers());
+	}
+
+	if (likely(_selected_variant.is_valid())) {
+		triggers.append_array(_selected_variant->get_triggers());
+	}
+
+	for (int64_t i = 0; i < triggers.size(); i++) {
+		Ref<JigsawTriggerVariant> trigger = triggers[i];
+		if (trigger->get_type() == type) {
+			set_rng(copy_rng ? rng->duplicate() : rng);
+
+			Ref<JigsawContext> context = JigsawContext::make(this, Ref<JigsawContext>());
+			_context_stack.push_back(context);
+			Ref<JigsawError> err = context->evaluate(trigger, args, TypedArray<JigsawParameter>());
+			_context_stack.pop_back();
+			set_rng(Ref<RNG>());
+			if (unlikely(err.is_valid())) {
+				return err;
+			}
+		}
+	}
+
+	return Ref<JigsawError>();
 }
