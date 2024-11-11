@@ -26,8 +26,8 @@ JigsawExecutionState JigsawCommandSetVariable::evaluate(const Ref<JigsawContext>
 			return JigsawExecutionState::ERROR;
 		}
 
-		err = context->create_error("internal error: TODO (set variable - persistent)");
-		return JigsawExecutionState::ERROR;
+		err = context->set_persistent_variable(variable, value, "variable");
+		return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
 	} else {
 		Ref<JigsawParameterLocalVariable> variable = _variable;
 

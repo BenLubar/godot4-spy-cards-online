@@ -11,6 +11,7 @@ class JigsawGlobal;
 #include "jigsaw_error.h"
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_local_variable.h"
+#include "jigsaw_parameter_variable.h"
 #include "jigsaw_procedure.h"
 #include "jigsaw_stack_frame.h"
 #include "why_isnt_this_in_godot.h"
@@ -47,6 +48,7 @@ public:
 	template<typename T>
 	_FORCE_INLINE_ Ref<JigsawError> resolve_variable(const Ref<JigsawParameter> &tmpl, Ref<T> &ret, const String &debug_name) const;
 	Ref<JigsawError> set_local_variable(const Ref<JigsawParameterLocalVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name);
+	Ref<JigsawError> set_persistent_variable(const Ref<JigsawParameterVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name);
 
 private:
 	void cleanup();

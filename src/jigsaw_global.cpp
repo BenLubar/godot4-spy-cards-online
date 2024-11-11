@@ -1,6 +1,9 @@
 #include "jigsaw_global.h"
 
+#include "jigsaw_visual.h"
+
 void JigsawGlobal::_bind_methods() {
+	BIND_PROPERTY_RESOURCE(JigsawVisual, visual);
 	BIND_PROPERTY_RESOURCE(GameMode, mode);
 	BIND_PROPERTY_RESOURCE(VariantDef, selected_variant);
 	BIND_PROPERTY_RESOURCE(CardInstance, current_card_instance);
@@ -27,6 +30,7 @@ void JigsawGlobal::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("run_variant_triggers", "type", "args", "rng", "copy_rng"), &JigsawGlobal::run_variant_triggers);
 }
 
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawVisual *, visual);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<CardInstance>, current_card_instance, emit_signal("current_effect_changed"));
@@ -46,6 +50,37 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<Audience>, audience);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative2D>, card_grids_2d);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative3D>, card_grids_3d);
+
+JigsawGlobal::~JigsawGlobal() {
+	for (int64_t i = 0; i < _scene_nodes.size(); i++) {
+		Node3D *node = Object::cast_to<Node3D>(_scene_nodes[i]);
+		node->queue_free();
+	}
+	for (int64_t i = 0; i < _sprite_nodes.size(); i++) {
+		Sprite3D *sprite = Object::cast_to<Sprite3D>(_sprite_nodes[i]);
+		sprite->queue_free();
+	}
+	for (int64_t i = 0; i < _label_nodes.size(); i++) {
+		SquishLabel *label = Object::cast_to<SquishLabel>(_label_nodes[i]);
+		label->queue_free();
+	}
+	for (int64_t i = 0; i < _icon_nodes.size(); i++) {
+		TextureRect *icon = Object::cast_to<TextureRect>(_icon_nodes[i]);
+		icon->queue_free();
+	}
+	for (int64_t i = 0; i < _character_nodes.size(); i++) {
+		MeshInstance3D *character = Object::cast_to<MeshInstance3D>(_character_nodes[i]);
+		character->queue_free();
+	}
+	for (int64_t i = 0; i < _card_grids_2d.size(); i++) {
+		CardGridNative2D *grid = Object::cast_to<CardGridNative2D>(_card_grids_2d[i]);
+		grid->queue_free();
+	}
+	for (int64_t i = 0; i < _card_grids_3d.size(); i++) {
+		CardGridNative3D *grid = Object::cast_to<CardGridNative3D>(_card_grids_3d[i]);
+		grid->queue_free();
+	}
+}
 
 void JigsawGlobal::init_sides() {
 	ERR_FAIL_COND(_mode.is_null());

@@ -13,6 +13,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_location" qualifiers="const">
+			<return type="LocationDef" />
+			<param index="0" name="id" type="int" enum="LocationDef.Location" />
+			<description>
+			</description>
+		</method>
 		<method name="get_modifier" qualifiers="const">
 			<return type="ModifierDef" />
 			<param index="0" name="id" type="int" enum="ModifierDef.Modifier" />
@@ -34,6 +40,12 @@
 		<method name="get_tribe" qualifiers="const">
 			<return type="TribeDef" />
 			<param index="0" name="id" type="int" enum="TribeDef.Tribe" />
+			<description>
+			</description>
+		</method>
+		<method name="get_variable" qualifiers="const">
+			<return type="VariableDef" />
+			<param index="0" name="id" type="int" enum="VariableDef.Variable" />
 			<description>
 			</description>
 		</method>

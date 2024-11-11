@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawVisual" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_picked_object" qualifiers="const">
+			<return type="Node3D" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="ambient_light_intensity" type="float" setter="set_ambient_light_intensity" getter="get_ambient_light_intensity" default="1.0">
+		</member>
+		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
+		</member>
+		<member name="music" type="JigsawParameterAudio" setter="set_music" getter="get_music">
+		</member>
+		<member name="scene_background_color" type="Color" setter="set_scene_background_color" getter="get_scene_background_color" default="Color(0.3, 0.3, 0.3, 1)">
+		</member>
+		<member name="simple_background" type="Texture2D" setter="set_simple_background" getter="get_simple_background">
+		</member>
+		<member name="simple_background_stretch" type="bool" setter="set_simple_background_stretch" getter="get_simple_background_stretch" default="true">
+		</member>
+	</members>
+</class>

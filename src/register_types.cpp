@@ -12,6 +12,7 @@
 
 #include "jigsaw_command_list.h"
 #include "jigsaw_global.h"
+#include "jigsaw_visual.h"
 #include "jigsaw_side.h"
 #include "jigsaw_side_location.h"
 #include "jigsaw_context.h"
@@ -36,6 +37,12 @@
 #include "jigsaw_command_ordered_list.h"
 #include "jigsaw_command_rng.h"
 #include "jigsaw_command_audience.h"
+#include "jigsaw_command_character.h"
+#include "jigsaw_command_audio.h"
+#include "jigsaw_command_scene.h"
+#include "jigsaw_command_sprite.h"
+#include "jigsaw_command_camera.h"
+#include "jigsaw_command_ui.h"
 
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_card_grid.h"
@@ -139,6 +146,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(JigsawCommandList);
 	GDREGISTER_CLASS(JigsawGlobal);
+	GDREGISTER_CLASS(JigsawVisual);
 	GDREGISTER_CLASS(JigsawSide);
 	GDREGISTER_CLASS(JigsawSideLocation);
 	GDREGISTER_CLASS(JigsawContext);
@@ -179,6 +187,12 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandOrderedList);
 	GDREGISTER_CLASS(JigsawCommandRNG);
 	GDREGISTER_CLASS(JigsawCommandAudience);
+	GDREGISTER_CLASS(JigsawCommandCharacter);
+	GDREGISTER_CLASS(JigsawCommandAudio);
+	GDREGISTER_CLASS(JigsawCommandScene);
+	GDREGISTER_CLASS(JigsawCommandSprite);
+	GDREGISTER_CLASS(JigsawCommandCamera);
+	GDREGISTER_CLASS(JigsawCommandUI);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs

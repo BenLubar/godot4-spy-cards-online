@@ -1,6 +1,7 @@
 #include "rich_text_glitch_effect.h"
 
 #include <godot_cpp/classes/text_server_manager.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 void RichTextGlitchEffect::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, bbcode);
@@ -23,7 +24,14 @@ bool RichTextGlitchEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 		sorted_glyphs[font] = PackedInt32Array(supported_glyphs);
 	}
 
-	// TODO
+	PackedInt32Array glyphs = sorted_glyphs[font];
+	uint32_t glyph = p_char_fx->get_glyph_index();
+	int64_t glyph_index = glyphs.find(glyph);
+	int64_t min_glyph = Math::max(int64_t(0), glyph_index - glyphs.size() / 10);
+	int64_t max_glyph = Math::max(glyph_index + glyphs.size() / 10, glyphs.size() - 1);
+	int64_t new_glyph_index = UtilityFunctions::randi_range(min_glyph, max_glyph);
+	p_char_fx->set_glyph_index(glyphs[new_glyph_index]);
+
 	return true;
 }
 

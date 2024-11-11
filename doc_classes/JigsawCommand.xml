@@ -208,5 +208,17 @@
 		</constant>
 		<constant name="AUDIENCE" value="12" enum="Type">
 		</constant>
+		<constant name="CHARACTER" value="13" enum="Type">
+		</constant>
+		<constant name="AUDIO" value="14" enum="Type">
+		</constant>
+		<constant name="SCENE" value="15" enum="Type">
+		</constant>
+		<constant name="SPRITE" value="16" enum="Type">
+		</constant>
+		<constant name="CAMERA" value="17" enum="Type">
+		</constant>
+		<constant name="UI" value="18" enum="Type">
+		</constant>
 	</constants>
 </class>

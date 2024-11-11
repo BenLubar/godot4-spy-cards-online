@@ -30,6 +30,12 @@ public:
 		ORDERED_LIST = 10,
 		RNG = 11,
 		AUDIENCE = 12,
+		CHARACTER = 13,
+		AUDIO = 14,
+		SCENE = 15,
+		SPRITE = 16,
+		CAMERA = 17,
+		UI = 18,
 	};
 
 protected:

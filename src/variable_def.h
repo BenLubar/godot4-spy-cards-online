@@ -32,5 +32,6 @@ public:
 	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(VariableDef::Uniqueness);
+DECLARE_PREDEFINED_KEY(VariableDef, VARIABLE);
 
 #endif // VARIABLE_DEF_H

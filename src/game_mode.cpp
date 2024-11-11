@@ -86,6 +86,8 @@ void GameMode::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_tribe", "id"), &GameMode::get_tribe);
 	ClassDB::bind_method(D_METHOD("get_stat", "id"), &GameMode::get_stat);
 	ClassDB::bind_method(D_METHOD("get_modifier", "id"), &GameMode::get_modifier);
+	ClassDB::bind_method(D_METHOD("get_variable", "id"), &GameMode::get_variable);
+	ClassDB::bind_method(D_METHOD("get_location", "id"), &GameMode::get_location);
 }
 
 IMPLEMENT_PROPERTY(GameMode, float, visual_pixel_size);
@@ -188,3 +190,17 @@ IMPLEMENT_TYPE_GETTER(Stat, stat);
 IMPLEMENT_TYPE_GETTER(Modifier, modifier);
 IMPLEMENT_TYPE_GETTER(Effect, effect);
 IMPLEMENT_TYPE_GETTER(NPC, npc);
+
+#define IMPLEMENT_TYPE_GETTER_NO_VALIDITY_CHECK(Type, type) \
+	Ref<Type##Def> GameMode::get_##type(enums::Type##Def::Type id) const { \
+		if (id < enums::Type##Def::FIRST_CUSTOM) { \
+			return get_predefined<Type##Def>(id); \
+		} \
+		ERR_FAIL_INDEX_V_MSG(id - enums::Type##Def::FIRST_CUSTOM, _custom_##type##s.size(), Ref<Type##Def>(), vformat("custom %s %d not defined", #type, id)); \
+		Ref<Type##Def> obj = _custom_##type##s[id - enums::Type##Def::FIRST_CUSTOM]; \
+		ERR_FAIL_COND_V_MSG(obj.is_null(), Ref<Type##Def>(), vformat("custom %s %d is null", #type, id)); \
+		return obj; \
+	}
+
+IMPLEMENT_TYPE_GETTER_NO_VALIDITY_CHECK(Variable, variable);
+IMPLEMENT_TYPE_GETTER_NO_VALIDITY_CHECK(Location, location);

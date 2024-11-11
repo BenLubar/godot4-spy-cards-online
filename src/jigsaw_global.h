@@ -8,8 +8,10 @@
 #include <godot_cpp/classes/sprite3d.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/templates/hash_map.hpp>
 
 class JigsawGlobal;
+class JigsawVisual;
 
 #include "audience.h"
 #include "card_grid_native.h"
@@ -29,6 +31,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(JigsawVisual *, visual, = nullptr);
 	DECLARE_PROPERTY(Ref<GameMode>, mode);
 	DECLARE_PROPERTY(Ref<VariantDef>, selected_variant);
 	DECLARE_PROPERTY(Ref<CardInstance>, current_card_instance);
@@ -48,6 +51,10 @@ public:
 	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes);
 	DECLARE_PROPERTY(TypedArray<CardGridNative2D>, card_grids_2d);
 	DECLARE_PROPERTY(TypedArray<CardGridNative3D>, card_grids_3d);
+
+	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
+
+	~JigsawGlobal();
 
 	void init_sides();
 	Ref<JigsawError> run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng);

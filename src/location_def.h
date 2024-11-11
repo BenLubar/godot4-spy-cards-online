@@ -19,5 +19,6 @@ public:
 
 	DEFAULT_TO_STRING();
 };
+DECLARE_PREDEFINED_KEY(LocationDef, LOCATION);
 
 #endif // LOCATION_DEF_H

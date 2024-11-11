@@ -88,7 +88,32 @@ Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<Jigs
 	}
 
 	if (type == JigsawParameter::VARIABLE) {
-		return create_error("internal error: TODO (resolve persistent variable)");
+		Ref<JigsawParameterVariable> variable_param = tmpl;
+		JigsawGlobal *global = get_global();
+		ERR_FAIL_NULL_V(global, create_error("internal error: missing global in persistent variable resolve"));
+		Ref<GameMode> mode = global->get_mode();
+		ERR_FAIL_COND_V(mode.is_null(), create_error("internal error: missing game mode in persistent variable resolve"));
+
+		Ref<VariableDef> variable = mode->get_variable(variable_param->get_variable());
+		ERR_FAIL_COND_V(variable.is_null(), create_error(vformat("no variable with id %d", variable_param->get_variable())));
+
+		switch (variable->get_uniqueness()) {
+		case VariableDef::CARD_EFFECT_INSTANCE:
+			return create_error("internal error: TODO (get card effect instance variable)"); // TODO
+		case VariableDef::EFFECT_QUEUE_TREE:
+			return create_error("internal error: TODO (get effect queue tree variable)"); // TODO
+		case VariableDef::SIDE:
+			return create_error("internal error: TODO (get side variable)"); // TODO
+		case VariableDef::GLOBAL:
+			if (global->_variables.has(variable_param->get_variable())) {
+				ret = global->_variables[variable_param->get_variable()];
+				return Ref<JigsawError>();
+			}
+			break;
+		}
+
+		ret = variable->get_default_value();
+		return Ref<JigsawError>();
 	}
 
 	if (type == JigsawParameter::LOCAL_VARIABLE) {
@@ -192,6 +217,33 @@ Ref<JigsawError> JigsawContext::set_local_variable(const Ref<JigsawParameterLoca
 	}
 
 	frame_variables[slot] = value;
+
+	return Ref<JigsawError>();
+}
+Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParameterVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name) {
+	ERR_FAIL_COND_V(var.is_null(), create_error(vformat("cannot set null persistent variable '%s'", debug_name)));
+	ERR_FAIL_COND_V(value.is_null(), create_error(vformat("cannot set persistent variable '%s' to null value", debug_name)));
+	ERR_FAIL_COND_V(!JigsawParameter::is_concrete_type(value->get_type()), create_error(vformat("cannot set persistent variable '%s' to non-concrete value type %s", debug_name, WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", value->get_type()))));
+
+	JigsawGlobal *global = get_global();
+	ERR_FAIL_NULL_V(global, create_error("internal error: missing global in set persistent variable"));
+	Ref<GameMode> mode = global->get_mode();
+	ERR_FAIL_COND_V(mode.is_null(), create_error("internal error: missing game mode in set persistent variable"));
+
+	Ref<VariableDef> variable = mode->get_variable(var->get_variable());
+	ERR_FAIL_COND_V(variable.is_null(), create_error(vformat("no variable with id %d", var->get_variable())));
+
+	switch (variable->get_uniqueness()) {
+	case VariableDef::CARD_EFFECT_INSTANCE:
+		return create_error("internal error: TODO (set card effect instance variable)"); // TODO
+	case VariableDef::EFFECT_QUEUE_TREE:
+		return create_error("internal error: TODO (set effect queue tree variable)"); // TODO
+	case VariableDef::SIDE:
+		return create_error("internal error: TODO (set side variable)"); // TODO
+	case VariableDef::GLOBAL:
+		global->_variables[var->get_variable()] = value;
+		break;
+	}
 
 	return Ref<JigsawError>();
 }

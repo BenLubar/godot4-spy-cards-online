@@ -57,6 +57,8 @@
 		</member>
 		<member name="time_scale" type="float" setter="set_time_scale" getter="get_time_scale" default="1.0">
 		</member>
+		<member name="visual" type="JigsawVisual" setter="set_visual" getter="get_visual">
+		</member>
 	</members>
 	<signals>
 		<signal name="current_effect_changed">
