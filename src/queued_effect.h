@@ -8,6 +8,8 @@ class QueuedEffect;
 #include "card_instance.h"
 #include "effect_instance.h"
 
+#include <godot_cpp/templates/hash_map.hpp>
+
 class QueuedEffect : public RefCounted {
 	GDCLASS(QueuedEffect, RefCounted);
 
@@ -17,6 +19,8 @@ protected:
 public:
 	DECLARE_PROPERTY(Ref<CardInstance>, card);
 	DECLARE_PROPERTY(Ref<EffectInstance>, effect);
+
+	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
 
 	DEFAULT_TO_STRING();
 };

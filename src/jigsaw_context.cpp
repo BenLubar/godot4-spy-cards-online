@@ -101,7 +101,11 @@ Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<Jigs
 		case VariableDef::CARD_EFFECT_INSTANCE:
 			return create_error("internal error: TODO (get card effect instance variable)"); // TODO
 		case VariableDef::EFFECT_QUEUE_TREE:
-			return create_error("internal error: TODO (get effect queue tree variable)"); // TODO
+			if (global->_queued_effect_variables.has(variable_param->get_variable())) {
+				ret = global->_queued_effect_variables[variable_param->get_variable()];
+				return Ref<JigsawError>();
+			}
+			break;
 		case VariableDef::SIDE:
 			return create_error("internal error: TODO (get side variable)"); // TODO
 		case VariableDef::GLOBAL:
@@ -237,7 +241,8 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 	case VariableDef::CARD_EFFECT_INSTANCE:
 		return create_error("internal error: TODO (set card effect instance variable)"); // TODO
 	case VariableDef::EFFECT_QUEUE_TREE:
-		return create_error("internal error: TODO (set effect queue tree variable)"); // TODO
+		global->_queued_effect_variables[var->get_variable()] = value;
+		break;
 	case VariableDef::SIDE:
 		return create_error("internal error: TODO (set side variable)"); // TODO
 	case VariableDef::GLOBAL:

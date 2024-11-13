@@ -121,7 +121,7 @@
 #include "modifier_instance.h"
 #include "queued_effect.h"
 #include "audience.h"
-#include "card_grid_native.h"
+#include "card_grid.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -271,8 +271,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(ModifierInstance);
 	GDREGISTER_CLASS(QueuedEffect);
 	GDREGISTER_CLASS(Audience);
-	GDREGISTER_ABSTRACT_CLASS(CardGridNative2D);
-	GDREGISTER_ABSTRACT_CLASS(CardGridNative3D);
+	GDREGISTER_CLASS(CardGrid2D);
+	GDREGISTER_CLASS(CardGrid3D);
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

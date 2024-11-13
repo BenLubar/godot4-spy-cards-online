@@ -14,7 +14,7 @@ class JigsawGlobal;
 class JigsawVisual;
 
 #include "audience.h"
-#include "card_grid_native.h"
+#include "card_grid.h"
 #include "card_instance.h"
 #include "effect_instance.h"
 #include "game_mode.h"
@@ -49,10 +49,11 @@ public:
 	DECLARE_PROPERTY(TypedArray<TextureRect>, icon_nodes);
 	DECLARE_PROPERTY(Ref<Audience>, audience);
 	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes);
-	DECLARE_PROPERTY(TypedArray<CardGridNative2D>, card_grids_2d);
-	DECLARE_PROPERTY(TypedArray<CardGridNative3D>, card_grids_3d);
+	DECLARE_PROPERTY(TypedArray<CardGrid2D>, card_grids_2d);
+	DECLARE_PROPERTY(TypedArray<CardGrid3D>, card_grids_3d);
 
 	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
+	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _queued_effect_variables;
 
 	~JigsawGlobal();
 

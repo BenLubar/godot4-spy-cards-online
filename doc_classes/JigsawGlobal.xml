@@ -25,9 +25,9 @@
 	<members>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
-		<member name="card_grids_2d" type="CardGridNative2D[]" setter="set_card_grids_2d" getter="get_card_grids_2d" default="[]">
+		<member name="card_grids_2d" type="CardGrid2D[]" setter="set_card_grids_2d" getter="get_card_grids_2d" default="[]">
 		</member>
-		<member name="card_grids_3d" type="CardGridNative3D[]" setter="set_card_grids_3d" getter="get_card_grids_3d" default="[]">
+		<member name="card_grids_3d" type="CardGrid3D[]" setter="set_card_grids_3d" getter="get_card_grids_3d" default="[]">
 		</member>
 		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
 		</member>

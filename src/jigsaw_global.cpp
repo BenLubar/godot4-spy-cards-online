@@ -21,8 +21,8 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(TextureRect, icon_nodes);
 	BIND_PROPERTY_RESOURCE(Audience, audience);
 	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
-	BIND_PROPERTY_RESOURCE_ARRAY(CardGridNative2D, card_grids_2d);
-	BIND_PROPERTY_RESOURCE_ARRAY(CardGridNative3D, card_grids_3d);
+	BIND_PROPERTY_RESOURCE_ARRAY(CardGrid2D, card_grids_2d);
+	BIND_PROPERTY_RESOURCE_ARRAY(CardGrid3D, card_grids_3d);
 
 	ADD_SIGNAL(MethodInfo("current_effect_changed"));
 
@@ -48,8 +48,8 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<SquishLabel>, label_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<TextureRect>, icon_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<Audience>, audience);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative2D>, card_grids_2d);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGridNative3D>, card_grids_3d);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGrid2D>, card_grids_2d);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<CardGrid3D>, card_grids_3d);
 
 JigsawGlobal::~JigsawGlobal() {
 	for (int64_t i = 0; i < _scene_nodes.size(); i++) {
@@ -73,11 +73,11 @@ JigsawGlobal::~JigsawGlobal() {
 		character->queue_free();
 	}
 	for (int64_t i = 0; i < _card_grids_2d.size(); i++) {
-		CardGridNative2D *grid = Object::cast_to<CardGridNative2D>(_card_grids_2d[i]);
+		CardGrid2D *grid = Object::cast_to<CardGrid2D>(_card_grids_2d[i]);
 		grid->queue_free();
 	}
 	for (int64_t i = 0; i < _card_grids_3d.size(); i++) {
-		CardGridNative3D *grid = Object::cast_to<CardGridNative3D>(_card_grids_3d[i]);
+		CardGrid3D *grid = Object::cast_to<CardGrid3D>(_card_grids_3d[i]);
 		grid->queue_free();
 	}
 }
