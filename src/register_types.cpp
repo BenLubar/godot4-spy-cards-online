@@ -2,6 +2,7 @@
 #include "rng.h"
 #include "base32.h"
 #include "why_isnt_this_in_godot.h"
+#include "single_use_audio_stream_player.h"
 
 #include "formatted_text.h"
 #include "squish_label.h"
@@ -135,6 +136,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(RNG);
 	GDREGISTER_CLASS(Base32);
 	GDREGISTER_ABSTRACT_CLASS(WhyIsntThisInGodot);
+	GDREGISTER_CLASS(SingleUseAudioStreamPlayer);
+	GDREGISTER_CLASS(SingleUseAudioStreamPlayer2D);
+	GDREGISTER_CLASS(SingleUseAudioStreamPlayer3D);
 
 	GDREGISTER_CLASS(FormattedText);
 	GDREGISTER_CLASS(FormattedTextWithIcon);
