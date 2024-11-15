@@ -364,6 +364,8 @@ String JigsawCommandAudience::get_argument_name(int64_t i) const {
 	case GET_TOTAL_WEIGHT:
 		break;
 	}
+
+	return "";
 }
 
 int64_t JigsawCommandAudience::get_num_results() const {

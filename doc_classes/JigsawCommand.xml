@@ -44,7 +44,7 @@
 			</description>
 		</method>
 		<method name="get_branch_argument_templates" qualifiers="const">
-			<return type="Array[]" />
+			<return type="JigsawParameter[]" />
 			<param index="0" name="i" type="int" />
 			<description>
 			</description>

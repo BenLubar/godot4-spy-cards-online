@@ -258,10 +258,10 @@ String JigsawCommandOrderedList::get_branch_name(int64_t i) const {
 
 	return "";
 }
-TypedArray<Array> JigsawCommandOrderedList::get_branch_argument_templates(int64_t i) const {
-	ERR_FAIL_INDEX_V(i, get_num_branches(), TypedArray<Array>());
+TypedArray<JigsawParameter> JigsawCommandOrderedList::get_branch_argument_templates(int64_t i) const {
+	ERR_FAIL_INDEX_V(i, get_num_branches(), TypedArray<JigsawParameter>());
 
-	return TypedArray<Array>();
+	return TypedArray<JigsawParameter>();
 }
 PackedStringArray JigsawCommandOrderedList::get_branch_argument_names(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_branches(), PackedStringArray());

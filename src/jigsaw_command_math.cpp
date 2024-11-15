@@ -587,6 +587,8 @@ TypedArray<JigsawParameter> JigsawCommandMath::get_argument_template(int64_t i, 
 	case ATAN2:
 		return Array::make(JigsawParameterFloat::make(0.0));
 	}
+
+	return TypedArray<JigsawParameter>();
 }
 void JigsawCommandMath::set_argument(int64_t i, const Ref<JigsawParameter> &arg) {
 	ERR_FAIL_INDEX(i, get_num_arguments());

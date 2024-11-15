@@ -48,7 +48,7 @@ public:
 	Ref<JigsawCommandList> get_branch(int64_t i) const override;
 	void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) override;
 	String get_branch_name(int64_t i) const override;
-	TypedArray<Array> get_branch_argument_templates(int64_t i) const override;
+	TypedArray<JigsawParameter> get_branch_argument_templates(int64_t i) const override;
 	PackedStringArray get_branch_argument_names(int64_t i) const override;
 	TypedArray<Array> get_branch_result_templates(int64_t i, const Ref<JigsawContext> &context) const override;
 	PackedStringArray get_branch_result_names(int64_t i) const override;
