@@ -7,3 +7,11 @@ void JigsawParameterAudienceInstance::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterAudienceInstance, int64_t, group);
 IMPLEMENT_PROPERTY(JigsawParameterAudienceInstance, int64_t, member);
+
+Ref<JigsawParameterAudienceInstance> JigsawParameterAudienceInstance::make(int64_t group, int64_t member) {
+	Ref<JigsawParameterAudienceInstance> param;
+	param.instantiate();
+	param->set_group(group);
+	param->set_member(member);
+	return param;
+}

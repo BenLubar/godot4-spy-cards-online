@@ -19,4 +19,12 @@
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="11" />
 	</members>
+	<constants>
+		<constant name="FLOAT" value="0" enum="Operation">
+		</constant>
+		<constant name="AMOUNT" value="1" enum="Operation">
+		</constant>
+		<constant name="SCOPE" value="2" enum="Operation">
+		</constant>
+	</constants>
 </class>

@@ -5,6 +5,10 @@
 #include "jigsaw_parameter_float.h"
 
 void JigsawCommandRNG::_bind_methods() {
+	BIND_ENUM_CONSTANT(FLOAT);
+	BIND_ENUM_CONSTANT(AMOUNT);
+	BIND_ENUM_CONSTANT(SCOPE);
+
 	BIND_PROPERTY_ENUM(JigsawCommandRNG::Operation, operation);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, min);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, max);

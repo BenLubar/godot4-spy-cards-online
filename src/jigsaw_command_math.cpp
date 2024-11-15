@@ -12,6 +12,21 @@ void JigsawCommandMath::_bind_methods() {
 	BIND_ENUM_CONSTANT(MULTIPLY);
 	BIND_ENUM_CONSTANT(DIVIDE);
 	BIND_ENUM_CONSTANT(REMAINDER);
+	BIND_ENUM_CONSTANT(AMOUNT_TO_FLOAT);
+	BIND_ENUM_CONSTANT(FLOOR);
+	BIND_ENUM_CONSTANT(CEIL);
+	BIND_ENUM_CONSTANT(FLOAT_LESS_THAN);
+	BIND_ENUM_CONSTANT(FLOAT_ADD);
+	BIND_ENUM_CONSTANT(FLOAT_SUBTRACT);
+	BIND_ENUM_CONSTANT(FLOAT_MULTIPLY);
+	BIND_ENUM_CONSTANT(FLOAT_DIVIDE);
+	BIND_ENUM_CONSTANT(FLOAT_REMAINDER);
+	BIND_ENUM_CONSTANT(POW);
+	BIND_ENUM_CONSTANT(SIN);
+	BIND_ENUM_CONSTANT(COS);
+	BIND_ENUM_CONSTANT(TAN);
+	BIND_ENUM_CONSTANT(ATAN);
+	BIND_ENUM_CONSTANT(ATAN2);
 
 	BIND_PROPERTY_ENUM(JigsawCommandMath::Operation, op);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, lhs);
@@ -218,6 +233,206 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 			return set_command_result(context, err, 0, JigsawParameterAmount::make(lhs->get_amount() % rhs->get_amount()));
 		}
 	}
+	case AMOUNT_TO_FLOAT:
+	{
+		Ref<JigsawParameterAmount> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (value->is_nan()) {
+			return set_command_result(context, err, 0, JigsawParameterFloat::make(NAN));
+		} else if (value->get_amount_inf() != 0) {
+			return set_command_result(context, err, 0, JigsawParameterFloat::make(value->get_amount_inf() * INFINITY));
+		} else {
+			return set_command_result(context, err, 0, JigsawParameterFloat::make(value->get_amount()));
+		}
+	}
+	case FLOOR:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (Math::is_nan(value->get_value())) {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
+		} else if (Math::is_inf(value->get_value())) {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make(0, Math::sign(value->get_value())));
+		} else {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make(static_cast<int64_t>(Math::floor(value->get_value()))));
+		}
+	}
+	case CEIL:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (Math::is_nan(value->get_value())) {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make_nan());
+		} else if (Math::is_inf(value->get_value())) {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make(0, Math::sign(value->get_value())));
+		} else {
+			return set_command_result(context, err, 0, JigsawParameterAmount::make(static_cast<int64_t>(Math::ceil(value->get_value()))));
+		}
+	}
+	case FLOAT_LESS_THAN:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterBoolean::make(lhs->get_value() < rhs->get_value()));
+	}
+	case FLOAT_ADD:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(lhs->get_value() + rhs->get_value()));
+	}
+	case FLOAT_SUBTRACT:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(lhs->get_value() - rhs->get_value()));
+	}
+	case FLOAT_MULTIPLY:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(lhs->get_value() * rhs->get_value()));
+	}
+	case FLOAT_DIVIDE:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(lhs->get_value() / rhs->get_value()));
+	}
+	case FLOAT_REMAINDER:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::fposmod(lhs->get_value(), rhs->get_value())));
+	}
+	case POW:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::pow(lhs->get_value(), rhs->get_value())));
+	}
+	case SIN:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::sin(value->get_value())));
+	}
+	case COS:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::cos(value->get_value())));
+	}
+	case TAN:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::tan(value->get_value())));
+	}
+	case ATAN:
+	{
+		Ref<JigsawParameterFloat> value;
+		err = context->resolve_variable(_lhs, value, "value");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::atan(value->get_value())));
+	}
+	case ATAN2:
+	{
+		Ref<JigsawParameterFloat> lhs, rhs;
+		err = context->resolve_variable(_lhs, lhs, "lhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+		err = context->resolve_variable(_rhs, rhs, "rhs");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterFloat::make(Math::atan2(lhs->get_value(), rhs->get_value())));
+	}
 	}
 
 	err = context->create_error(vformat("internal error: unhandled math operation %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandMath", "Operation", _op)));
@@ -256,15 +471,48 @@ PackedStringArray JigsawCommandMath::get_config_options(int64_t i) const {
 	static_assert(LESS_THAN == 1);
 	static_assert(ADD == 2);
 	static_assert(SUBTRACT == 3);
+	static_assert(MULTIPLY == 4);
+	static_assert(DIVIDE == 5);
+	static_assert(REMAINDER == 6);
+	static_assert(AMOUNT_TO_FLOAT == 7);
+	static_assert(FLOOR == 8);
+	static_assert(CEIL == 9);
+	static_assert(FLOAT_LESS_THAN == 10);
+	static_assert(FLOAT_ADD == 11);
+	static_assert(FLOAT_SUBTRACT == 12);
+	static_assert(FLOAT_MULTIPLY == 13);
+	static_assert(FLOAT_DIVIDE == 14);
+	static_assert(FLOAT_REMAINDER == 15);
+	static_assert(POW == 16);
+	static_assert(SIN == 17);
+	static_assert(COS == 18);
+	static_assert(TAN == 19);
+	static_assert(ATAN == 20);
+	static_assert(ATAN2 == 21);
 
 	return PackedStringArray{
-		"Equals",
-		"Less than",
-		"Add",
-		"Subtract",
-		"Multiply",
-		"Divide",
-		"Remainder",
+		"Equals (amount)",
+		"Less than (amount)",
+		"Add (amount)",
+		"Subtract (amount)",
+		"Multiply (amount)",
+		"Divide (amount)",
+		"Remainder (amount)",
+		"Amount to float",
+		"Round down to amount",
+		"Round up to amount",
+		"Less than (float)",
+		"Add (float)",
+		"Subtract (float)",
+		"Multiply (float)",
+		"Divide (float)",
+		"Remainder (float)",
+		"Exponent (float)",
+		"Sine (float)",
+		"Cosine (float)",
+		"Tangent (float)",
+		"Arctangent (float)",
+		"Arctangent (y, x) (float)",
 	};
 }
 
@@ -277,6 +525,25 @@ int64_t JigsawCommandMath::get_num_arguments() const {
 	case MULTIPLY:
 	case DIVIDE:
 	case REMAINDER:
+		return 2;
+	case AMOUNT_TO_FLOAT:
+	case FLOOR:
+	case CEIL:
+		return 1;
+	case FLOAT_LESS_THAN:
+	case FLOAT_ADD:
+	case FLOAT_SUBTRACT:
+	case FLOAT_MULTIPLY:
+	case FLOAT_DIVIDE:
+	case FLOAT_REMAINDER:
+	case POW:
+		return 2;
+	case SIN:
+	case COS:
+	case TAN:
+	case ATAN:
+		return 1;
+	case ATAN2:
 		return 2;
 	}
 
@@ -294,7 +561,32 @@ Ref<JigsawParameter> JigsawCommandMath::get_argument(int64_t i) const {
 	return Ref<JigsawParameter>();
 }
 TypedArray<JigsawParameter> JigsawCommandMath::get_argument_template(int64_t i, const Ref<JigsawContext> &context) const {
-	return Array::make(JigsawParameterAmount::make(0));
+	switch (_op) {
+	case EQUALS:
+	case LESS_THAN:
+	case ADD:
+	case SUBTRACT:
+	case MULTIPLY:
+	case DIVIDE:
+	case REMAINDER:
+	case AMOUNT_TO_FLOAT:
+		return Array::make(JigsawParameterAmount::make(0));
+	case FLOOR:
+	case CEIL:
+	case FLOAT_LESS_THAN:
+	case FLOAT_ADD:
+	case FLOAT_SUBTRACT:
+	case FLOAT_MULTIPLY:
+	case FLOAT_DIVIDE:
+	case FLOAT_REMAINDER:
+	case POW:
+	case SIN:
+	case COS:
+	case TAN:
+	case ATAN:
+	case ATAN2:
+		return Array::make(JigsawParameterFloat::make(0.0));
+	}
 }
 void JigsawCommandMath::set_argument(int64_t i, const Ref<JigsawParameter> &arg) {
 	ERR_FAIL_INDEX(i, get_num_arguments());
@@ -340,6 +632,25 @@ TypedArray<JigsawParameter> JigsawCommandMath::get_result_template(int64_t i, co
 	case DIVIDE:
 	case REMAINDER:
 		return Array::make(JigsawParameterAmount::make(0));
+	case AMOUNT_TO_FLOAT:
+		return Array::make(JigsawParameterFloat::make(0.0));
+	case FLOOR:
+	case CEIL:
+		return Array::make(JigsawParameterAmount::make(0));
+	case FLOAT_LESS_THAN:
+		return Array::make(JigsawParameterBoolean::make(false));
+	case FLOAT_ADD:
+	case FLOAT_SUBTRACT:
+	case FLOAT_MULTIPLY:
+	case FLOAT_DIVIDE:
+	case FLOAT_REMAINDER:
+	case POW:
+	case SIN:
+	case COS:
+	case TAN:
+	case ATAN:
+	case ATAN2:
+		return Array::make(JigsawParameterFloat::make(0.0));
 	}
 
 	return TypedArray<JigsawParameter>();

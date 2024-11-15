@@ -6,10 +6,30 @@
 class JigsawCommandAudience : public JigsawCommand {
 	GDCLASS(JigsawCommandAudience, JigsawCommand);
 
+public:
+	enum Operation {
+		CREATE = 0,
+		GET_BY_WEIGHT = 1,
+		GET_TOTAL_WEIGHT = 2,
+	};
+
 protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(Operation, operation, = CREATE);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, member);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, x);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, y);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, z);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, back);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, flip);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, left);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, color);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, excitement);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, weight);
+	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
+
 	Type get_type() const override { return AUDIENCE; }
 	bool modifies_game_state() const override { return true; }
 	bool can_pause_execution() const override { return false; }
@@ -31,8 +51,10 @@ public:
 	int64_t get_num_results() const override;
 	Ref<JigsawParameterLocalVariable> get_result(int64_t i) const override;
 	TypedArray<JigsawParameter> get_result_template(int64_t i, const Ref<JigsawContext> &context) const override;
+	bool is_result_required(int64_t i) const override;
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override;
 	String get_result_name(int64_t i) const override;
 };
+DECLARE_ENUM(JigsawCommandAudience::Operation);
 
 #endif // JIGSAW_COMMAND_AUDIENCE_H

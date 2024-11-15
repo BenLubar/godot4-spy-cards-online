@@ -6,15 +6,16 @@
 #include <godot_cpp/classes/multi_mesh.hpp>
 
 struct AudienceMember_t {
-	Vector3 base_position;
-	Color color;
-	float excitement;
-	uint8_t want_cheer;
-	uint8_t cheering;
-	uint8_t hop_time;
-	uint8_t hop;
-	bool left;
-	bool flip;
+	Vector3 base_position{};
+	Color color{};
+	float excitement{};
+	uint8_t want_cheer{};
+	uint8_t cheering{};
+	uint8_t hop_time{};
+	uint8_t hop{};
+	bool left{};
+	bool flip{};
+	bool deleted{};
 };
 
 class Audience : public RefCounted {
@@ -25,6 +26,8 @@ protected:
 
 private:
 	Vector<Vector<AudienceMember_t>> _members;
+	uint8_t _hop_offset = 0;
+	friend class JigsawCommandAudience;
 
 public:
 	DECLARE_PROPERTY(TypedArray<MultiMesh>, meshes);

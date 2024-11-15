@@ -17,10 +17,19 @@ void Audience::update(Vector2i dir) {
 	for (int64_t i = 0; i < _members.size(); i++) {
 		Ref<MultiMesh> mesh = _meshes[i];
 		ERR_CONTINUE(mesh.is_null());
-		ERR_CONTINUE(mesh->get_instance_count() != _members[i].size());
 
+		int64_t mesh_instances = next_power_of_2(_members[i].size());
+		if (unlikely(mesh->get_instance_count() != next_power_of_2(_members[i].size()))) {
+			mesh->set_instance_count(mesh_instances);
+		}
+
+		int64_t k = 0;
 		for (int64_t j = 0; j < _members[i].size(); j++) {
 			AudienceMember_t &member = _members.write[i].write[j];
+			if (member.deleted) {
+				continue;
+			}
+
 			int8_t d = member.left ? dir.x : dir.y;
 			if (d == 1 && member.hop < member.hop_time) {
 				member.hop += 3;
@@ -50,9 +59,13 @@ void Audience::update(Vector2i dir) {
 			Vector3 pos = member.base_position;
 			pos.y += dy;
 
-			mesh->set_instance_transform(j, Transform3D(Basis(), pos));
-			mesh->set_instance_custom_data(j, Color(member.cheering ? 1.0f : 0.0f, member.flip ? 1.0f : 0.0f, 0.0f, 0.0f));
+			mesh->set_instance_transform(k, Transform3D(Basis(), pos));
+			mesh->set_instance_color(k, member.color);
+			mesh->set_instance_custom_data(k, Color(member.cheering ? 1.0f : 0.0f, member.flip ? 1.0f : 0.0f, 0.0f, 0.0f));
+			k++;
 		}
+
+		mesh->set_visible_instance_count(k);
 	}
 }
 

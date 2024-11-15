@@ -36,6 +36,7 @@ public:
 		SPRITE = 16,
 		CAMERA = 17,
 		UI = 18,
+		LOOP = 19,
 	};
 
 protected:
@@ -75,7 +76,7 @@ public:
 	virtual Ref<JigsawCommandList> get_branch(int64_t i) const { return Ref<JigsawCommandList>(); }
 	virtual void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) {}
 	virtual String get_branch_name(int64_t i) const { return ""; }
-	virtual TypedArray<Array> get_branch_argument_templates(int64_t i) const { return TypedArray<Array>(); }
+	virtual TypedArray<JigsawParameter> get_branch_argument_templates(int64_t i) const { return TypedArray<JigsawParameter>(); }
 	virtual PackedStringArray get_branch_argument_names(int64_t i) const { return PackedStringArray(); }
 	virtual TypedArray<Array> get_branch_result_templates(int64_t i, const Ref<JigsawContext> &context) const { return TypedArray<Array>(); }
 	virtual PackedStringArray get_branch_result_names(int64_t i) const { return PackedStringArray(); }

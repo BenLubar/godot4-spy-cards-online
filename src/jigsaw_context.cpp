@@ -35,7 +35,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, arguments)
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, results);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, int64_t, step_limit_remaining);
 
-Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch) {
+Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch, const TypedArray<JigsawParameter> &args) {
 	ERR_FAIL_COND_V(commands.is_null(), create_error("null command list"));
 
 	Ref<JigsawStackFrame> frame;
@@ -53,7 +53,7 @@ Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> 
 
 	for (int64_t i = 0; i < local_templates.size(); i++) {
 		Ref<JigsawParameter> local;
-		Ref<JigsawError> err = resolve_variable(local_templates[i], local, local_names[i]);
+		Ref<JigsawError> err = resolve_variable(i < args.size() ? args[i] : local_templates[i], local, local_names[i]);
 		if (err.is_valid()) {
 			return err;
 		}

@@ -15,6 +15,21 @@ public:
 		MULTIPLY = 4, // amount, amount -> amount
 		DIVIDE = 5, // amount, amount -> amount
 		REMAINDER = 6, // amount, amount -> amount
+		AMOUNT_TO_FLOAT = 7, // amount -> float
+		FLOOR = 8, // float -> amount
+		CEIL = 9, // float -> amount
+		FLOAT_LESS_THAN = 10, // float, float -> boolean
+		FLOAT_ADD = 11, // float, float -> float
+		FLOAT_SUBTRACT = 12, // float, float -> float
+		FLOAT_MULTIPLY = 13, // float, float -> float
+		FLOAT_DIVIDE = 14, // float, float -> float
+		FLOAT_REMAINDER = 15, // float, float -> float
+		POW = 16, // float, float -> float
+		SIN = 17, // float -> float
+		COS = 18, // float -> float
+		TAN = 19, // float -> float
+		ATAN = 20, // float -> float
+		ATAN2 = 21, // float, float -> float
 	};
 
 protected:

@@ -6,10 +6,22 @@
 class JigsawCommandScene : public JigsawCommand {
 	GDCLASS(JigsawCommandScene, JigsawCommand);
 
+public:
+	enum Operation {
+		GET_PROPERTY_STRING = 0,
+		GET_PROPERTY_FLOAT = 1,
+	};
+
 protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(Operation, operation, = GET_PROPERTY_STRING);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, scene);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, property_name);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, default_value);
+	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
+
 	Type get_type() const override { return SCENE; }
 	bool modifies_game_state() const override { return true; }
 	bool can_pause_execution() const override { return false; }
@@ -34,5 +46,6 @@ public:
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override;
 	String get_result_name(int64_t i) const override;
 };
+DECLARE_ENUM(JigsawCommandScene::Operation);
 
 #endif // JIGSAW_COMMAND_SCENE_H

@@ -43,7 +43,7 @@ public:
 
 public:
 	// public to C++ code, private to GDScript
-	Ref<JigsawError> append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch);
+	Ref<JigsawError> append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch, const TypedArray<JigsawParameter> &args = TypedArray<JigsawParameter>());
 	Ref<JigsawError> pop_stack_frame();
 	template<typename T>
 	_FORCE_INLINE_ Ref<JigsawError> resolve_variable(const Ref<JigsawParameter> &tmpl, Ref<T> &ret, const String &debug_name) const;

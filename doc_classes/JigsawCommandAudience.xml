@@ -7,6 +7,38 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="back" type="JigsawParameter" setter="set_back" getter="get_back">
+		</member>
+		<member name="color" type="JigsawParameter" setter="set_color" getter="get_color">
+		</member>
+		<member name="excitement" type="JigsawParameter" setter="set_excitement" getter="get_excitement">
+		</member>
+		<member name="flip" type="JigsawParameter" setter="set_flip" getter="get_flip">
+		</member>
+		<member name="left" type="JigsawParameter" setter="set_left" getter="get_left">
+		</member>
+		<member name="member" type="JigsawParameter" setter="set_member" getter="get_member">
+		</member>
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandAudience.Operation" default="0">
+		</member>
+		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
+		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="12" />
+		<member name="weight" type="JigsawParameter" setter="set_weight" getter="get_weight">
+		</member>
+		<member name="x" type="JigsawParameter" setter="set_x" getter="get_x">
+		</member>
+		<member name="y" type="JigsawParameter" setter="set_y" getter="get_y">
+		</member>
+		<member name="z" type="JigsawParameter" setter="set_z" getter="get_z">
+		</member>
 	</members>
+	<constants>
+		<constant name="CREATE" value="0" enum="Operation">
+		</constant>
+		<constant name="GET_BY_WEIGHT" value="1" enum="Operation">
+		</constant>
+		<constant name="GET_TOTAL_WEIGHT" value="2" enum="Operation">
+		</constant>
+	</constants>
 </class>

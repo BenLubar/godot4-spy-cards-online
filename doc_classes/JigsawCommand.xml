@@ -220,5 +220,7 @@
 		</constant>
 		<constant name="UI" value="18" enum="Type">
 		</constant>
+		<constant name="LOOP" value="19" enum="Type">
+		</constant>
 	</constants>
 </class>
