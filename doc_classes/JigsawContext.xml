@@ -50,6 +50,22 @@
 			<description>
 			</description>
 		</method>
+		<method name="set_local_variable">
+			<return type="JigsawError" />
+			<param index="0" name="variable" type="JigsawParameterLocalVariable" />
+			<param index="1" name="value" type="JigsawParameter" />
+			<param index="2" name="debug_name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="set_persistent_variable">
+			<return type="JigsawError" />
+			<param index="0" name="variable" type="JigsawParameterVariable" />
+			<param index="1" name="value" type="JigsawParameter" />
+			<param index="2" name="debug_name" type="String" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">

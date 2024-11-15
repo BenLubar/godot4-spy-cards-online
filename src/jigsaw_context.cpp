@@ -18,6 +18,8 @@ void JigsawContext::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, results);
 	BIND_PROPERTY(Variant::INT, step_limit_remaining);
 
+	ClassDB::bind_method(D_METHOD("set_local_variable", "variable", "value", "debug_name"), &JigsawContext::set_local_variable);
+	ClassDB::bind_method(D_METHOD("set_persistent_variable", "variable", "value", "debug_name"), &JigsawContext::set_persistent_variable);
 	ClassDB::bind_method(D_METHOD("evaluate", "procedure", "args", "results", "max_steps"), &JigsawContext::evaluate, DEFVAL(DEFAULT_MAX_STEPS));
 	ClassDB::bind_method(D_METHOD("run", "procedure", "args", "max_steps"), &JigsawContext::run, DEFVAL(DEFAULT_MAX_STEPS));
 	ClassDB::bind_method(D_METHOD("continue_run", "max_steps"), &JigsawContext::continue_run, DEFVAL(DEFAULT_MAX_STEPS));
