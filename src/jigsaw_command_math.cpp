@@ -40,6 +40,17 @@ IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, rhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameterLocalVariable>, output);
 
 JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	if (false) {
+		Ref<JigsawParameter> lhs, rhs;
+		context->resolve_variable(_lhs, lhs, "lhs");
+		if (_rhs.is_valid()) {
+			context->resolve_variable(_rhs, rhs, "rhs");
+			WARN_PRINT(vformat("%s %s %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandMath", "Operation", _op), lhs, rhs));
+		} else {
+			WARN_PRINT(vformat("%s %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandMath", "Operation", _op), lhs));
+		}
+	}
+
 	switch (_op) {
 	case EQUALS:
 	{
@@ -172,7 +183,7 @@ JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &conte
 		} else {
 			int64_t amount;
 #ifdef __GNUC__
-			bool amount_overflow = __builtin_sub_overflow(lhs->get_amount(), rhs->get_amount(), &amount);
+			bool amount_overflow = __builtin_mul_overflow(lhs->get_amount(), rhs->get_amount(), &amount);
 #else
 			amount = lhs->get_amount() * rhs->get_amount();
 			// TODO

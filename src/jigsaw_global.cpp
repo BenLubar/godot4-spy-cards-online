@@ -8,6 +8,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(VariantDef, selected_variant);
 	BIND_PROPERTY_RESOURCE(CardInstance, current_card_instance);
 	BIND_PROPERTY_RESOURCE(EffectInstance, current_effect_instance);
+	BIND_PROPERTY_RESOURCE(QueuedEffect, current_queued_effect);
 	BIND_PROPERTY(Variant::INT, current_side);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSide, sides);
 
@@ -35,6 +36,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<CardInstance>, current_card_instance, emit_signal("current_effect_changed"));
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<EffectInstance>, current_effect_instance, emit_signal("current_effect_changed"));
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<QueuedEffect>, current_queued_effect);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSide>, sides);
 

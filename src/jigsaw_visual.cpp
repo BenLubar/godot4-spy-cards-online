@@ -80,7 +80,6 @@ JigsawVisual::JigsawVisual() {
 	_stage_viewport->set_world_3d(_stage_world_3d);
 	_stage_viewport->set_disable_3d(PlayerPreferences::disable_3d());
 	_stage_viewport_container->add_child(_stage_viewport);
-	_stage_viewport_container->set_texture(_stage_viewport->get_texture());
 
 	_stage_camera_target = memnew(Node3D);
 	_stage_camera_target->set_name("CameraTarget");
@@ -151,6 +150,8 @@ JigsawVisual::JigsawVisual() {
 void JigsawVisual::_ready() {
 	AudioServer *audio_server = AudioServer::get_singleton();
 	_fft = audio_server->get_bus_effect_instance(audio_server->get_bus_index(MUSIC_BUS), 0);
+
+	_stage_viewport_container->set_texture(_stage_viewport->get_texture());
 
 	_process(0.0); // force camera update
 }
@@ -250,6 +251,10 @@ Node3D *JigsawVisual::get_picked_object() const {
 	}
 
 	return Object::cast_to<Node3D>(collider);
+}
+
+SubViewport *JigsawVisual::get_stage_viewport() const {
+	return _stage_viewport;
 }
 
 Ref<JigsawParameterAudio> JigsawVisual::get_music() const {

@@ -10,11 +10,14 @@
 		<method name="make" qualifiers="static">
 			<return type="JigsawParameterVariable" />
 			<param index="0" name="variable" type="int" enum="VariableDef.Variable" />
+			<param index="1" name="specifier" type="JigsawParameter" default="null" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
+		<member name="specifier" type="JigsawParameter" setter="set_specifier" getter="get_specifier">
+		</member>
 		<member name="variable" type="int" setter="set_variable" getter="get_variable" enum="VariableDef.Variable" default="-1">
 		</member>
 	</members>

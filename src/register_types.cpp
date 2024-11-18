@@ -45,6 +45,7 @@
 #include "jigsaw_command_camera.h"
 #include "jigsaw_command_ui.h"
 #include "jigsaw_command_loop.h"
+#include "jigsaw_command_color.h"
 
 #include "jigsaw_parameter.h"
 #include "jigsaw_parameter_card_grid.h"
@@ -199,6 +200,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandCamera);
 	GDREGISTER_CLASS(JigsawCommandUI);
 	GDREGISTER_CLASS(JigsawCommandLoop);
+	GDREGISTER_CLASS(JigsawCommandColor);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs

@@ -222,5 +222,7 @@
 		</constant>
 		<constant name="LOOP" value="19" enum="Type">
 		</constant>
+		<constant name="COLOR" value="20" enum="Type">
+		</constant>
 	</constants>
 </class>

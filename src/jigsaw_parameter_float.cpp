@@ -8,6 +8,10 @@ void JigsawParameterFloat::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterFloat, double, value);
 
+String JigsawParameterFloat::_to_string() const {
+	return String::num(_value);
+}
+
 Ref<JigsawParameterFloat> JigsawParameterFloat::make(double value) {
 	Ref<JigsawParameterFloat> param;
 	param.instantiate();

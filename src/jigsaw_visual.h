@@ -82,6 +82,7 @@ public:
 	void _init_audience();
 
 	Node3D *get_picked_object() const;
+	SubViewport *get_stage_viewport() const;
 
 	Ref<Texture2D> get_simple_background() const;
 	void set_simple_background(const Ref<Texture2D> &texture);

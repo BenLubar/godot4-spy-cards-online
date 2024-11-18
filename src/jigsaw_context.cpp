@@ -1,10 +1,14 @@
 #include "jigsaw_context.h"
 
 #include "jigsaw_global.h"
+#include "jigsaw_parameter_amount.h"
 #include "jigsaw_parameter_effect_instance.h"
 #include "jigsaw_parameter_effect_instance_parameter.h"
 #include "jigsaw_parameter_local_variable.h"
+#include "jigsaw_parameter_queued_effect.h"
 #include "jigsaw_parameter_variable.h"
+#include "jigsaw_side.h"
+#include "queued_effect.h"
 #include "why_isnt_this_in_godot.h"
 
 void JigsawContext::_bind_methods() {
@@ -101,21 +105,44 @@ Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<Jigs
 
 		switch (variable->get_uniqueness()) {
 		case VariableDef::CARD_EFFECT_INSTANCE:
+		{
 			return create_error("internal error: TODO (get card effect instance variable)"); // TODO
+		}
 		case VariableDef::EFFECT_QUEUE_TREE:
-			if (global->_queued_effect_variables.has(variable_param->get_variable())) {
-				ret = global->_queued_effect_variables[variable_param->get_variable()];
+		{
+			Ref<JigsawParameterQueuedEffect> queue_specifier = variable_param->get_specifier();
+			Ref<QueuedEffect> queued_effect = queue_specifier.is_valid() ? queue_specifier->get_effect() : global->get_current_queued_effect();
+			if (queued_effect.is_valid() && queued_effect->_variables.has(variable_param->get_variable())) {
+				ret = queued_effect->_variables[variable_param->get_variable()];
 				return Ref<JigsawError>();
 			}
 			break;
+		}
 		case VariableDef::SIDE:
-			return create_error("internal error: TODO (get side variable)"); // TODO
+		{
+			TypedArray<JigsawSide> sides = global->get_sides();
+
+			Ref<JigsawParameterAmount> side_specifier = variable_param->get_specifier();
+			if (side_specifier.is_valid() && unlikely(side_specifier->is_nan() || side_specifier->get_amount_inf() != 0 || side_specifier->get_amount() < 0 || side_specifier->get_amount() >= sides.size())) {
+				return create_error(vformat("invalid side number %s", side_specifier));
+			}
+
+			int32_t side_number = side_specifier.is_valid() ? side_specifier->get_amount() : global->get_current_side();
+			Ref<JigsawSide> side = sides[side_number];
+			if (side->_variables.has(variable_param->get_variable())) {
+				ret = side->_variables[variable_param->get_variable()];
+				return Ref<JigsawError>();
+			}
+			break;
+		}
 		case VariableDef::GLOBAL:
+		{
 			if (global->_variables.has(variable_param->get_variable())) {
 				ret = global->_variables[variable_param->get_variable()];
 				return Ref<JigsawError>();
 			}
 			break;
+		}
 		}
 
 		ret = variable->get_default_value();
@@ -241,15 +268,32 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 
 	switch (variable->get_uniqueness()) {
 	case VariableDef::CARD_EFFECT_INSTANCE:
+	{
 		return create_error("internal error: TODO (set card effect instance variable)"); // TODO
+	}
 	case VariableDef::EFFECT_QUEUE_TREE:
-		global->_queued_effect_variables[var->get_variable()] = value;
-		break;
+	{
+		return create_error("internal error: TODO (set queued effect variable)"); // TODO
+	}
 	case VariableDef::SIDE:
-		return create_error("internal error: TODO (set side variable)"); // TODO
+	{
+		TypedArray<JigsawSide> sides = global->get_sides();
+
+		Ref<JigsawParameterAmount> side_specifier = var->get_specifier();
+		if (side_specifier.is_valid() && unlikely(side_specifier->is_nan() || side_specifier->get_amount_inf() != 0 || side_specifier->get_amount() < 0 || side_specifier->get_amount() >= sides.size())) {
+			return create_error(vformat("invalid side number %s", side_specifier));
+		}
+
+		int32_t side_number = side_specifier.is_valid() ? side_specifier->get_amount() : global->get_current_side();
+		Ref<JigsawSide> side = sides[side_number];
+		side->_variables[var->get_variable()] = value;
+		break;
+	}
 	case VariableDef::GLOBAL:
+	{
 		global->_variables[var->get_variable()] = value;
 		break;
+	}
 	}
 
 	return Ref<JigsawError>();
@@ -388,6 +432,9 @@ Ref<JigsawError> JigsawContext::create_error(const String &message, const TypedA
 
 	error->set_message(message);
 	error->set_params(params.duplicate(true));
+
+	// TODO: temp
+	error->set_stack(get_stack().duplicate(true));
 
 	if (include_global_snapshot) {
 		// TODO: store global snapshot

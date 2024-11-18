@@ -11,6 +11,8 @@ class JigsawSide;
 #include "jigsaw_side_location.h"
 #include "numeric_value.h"
 
+#include <godot_cpp/templates/hash_map.hpp>
+
 class JigsawSide : public RefCounted {
 	GDCLASS(JigsawSide, RefCounted);
 
@@ -24,6 +26,8 @@ public:
 
 	DECLARE_PROPERTY(TypedArray<JigsawSideLocation>, locations);
 	DECLARE_PROPERTY(TypedArray<NumericValue>, stats);
+
+	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
 
 	DEFAULT_TO_STRING();
 };

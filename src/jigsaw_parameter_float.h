@@ -13,6 +13,7 @@ public:
 	DECLARE_PROPERTY(double, value, = 0.0);
 
 	Type get_type() const override { return FLOAT; }
+	String _to_string() const;
 
 	static Ref<JigsawParameterFloat> make(double value);
 };

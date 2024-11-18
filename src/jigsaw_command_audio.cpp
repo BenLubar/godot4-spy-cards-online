@@ -65,6 +65,9 @@ void JigsawCommandAudio::set_config_value(int64_t i, int64_t value) {
 PackedStringArray JigsawCommandAudio::get_config_options(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, 1, PackedStringArray());
 
+	// If these asserts fail, you have broken compatibility with existing game modes.
+	static_assert(SET_MUSIC == 0);
+
 	return PackedStringArray{
 		"Set music",
 	};

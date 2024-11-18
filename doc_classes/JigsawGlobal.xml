@@ -37,6 +37,8 @@
 		</member>
 		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
 		</member>
+		<member name="current_queued_effect" type="QueuedEffect" setter="set_current_queued_effect" getter="get_current_queued_effect">
+		</member>
 		<member name="current_side" type="int" setter="set_current_side" getter="get_current_side" default="0">
 		</member>
 		<member name="icon_nodes" type="TextureRect[]" setter="set_icon_nodes" getter="get_icon_nodes" default="[]">

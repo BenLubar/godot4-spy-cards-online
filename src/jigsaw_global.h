@@ -20,6 +20,7 @@ class JigsawVisual;
 #include "game_mode.h"
 #include "jigsaw_context.h"
 #include "jigsaw_side.h"
+#include "queued_effect.h"
 #include "rng.h"
 #include "squish_label.h"
 #include "variant_def.h"
@@ -36,6 +37,7 @@ public:
 	DECLARE_PROPERTY(Ref<VariantDef>, selected_variant);
 	DECLARE_PROPERTY(Ref<CardInstance>, current_card_instance);
 	DECLARE_PROPERTY(Ref<EffectInstance>, current_effect_instance);
+	DECLARE_PROPERTY(Ref<QueuedEffect>, current_queued_effect);
 	DECLARE_PROPERTY(int32_t, current_side, = 0);
 	DECLARE_PROPERTY(TypedArray<JigsawSide>, sides);
 
@@ -53,7 +55,6 @@ public:
 	DECLARE_PROPERTY(TypedArray<CardGrid3D>, card_grids_3d);
 
 	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
-	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _queued_effect_variables;
 
 	~JigsawGlobal();
 

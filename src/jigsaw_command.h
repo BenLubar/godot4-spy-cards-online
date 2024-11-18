@@ -37,6 +37,7 @@ public:
 		CAMERA = 17,
 		UI = 18,
 		LOOP = 19,
+		COLOR = 20,
 	};
 
 protected:

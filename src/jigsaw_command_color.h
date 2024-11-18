@@ -1,31 +1,30 @@
-#ifndef JIGSAW_COMMAND_CHARACTER_H
-#define JIGSAW_COMMAND_CHARACTER_H
+#ifndef JIGSAW_COMMAND_COLOR_H
+#define JIGSAW_COMMAND_COLOR_H
 
 #include "jigsaw_command.h"
 
-class JigsawCommandCharacter : public JigsawCommand {
-	GDCLASS(JigsawCommandCharacter, JigsawCommand);
+class JigsawCommandColor : public JigsawCommand {
+	GDCLASS(JigsawCommandColor, JigsawCommand);
 
 public:
 	enum Operation {
-		CREATE,
+		CREATE_FLOAT = 0,
+		CREATE_AMOUNT = 1,
 	};
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Operation, operation, = CREATE);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, def);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, x);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, y);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, z);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, flip);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, player_number);
+	DECLARE_PROPERTY(Operation, operation, = CREATE_FLOAT);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, red);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, green);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, blue);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, alpha);
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
 
-	Type get_type() const override { return CHARACTER; }
-	bool modifies_game_state() const override { return true; }
+	Type get_type() const override { return COLOR; }
+	bool modifies_game_state() const override { return false; }
 	bool can_pause_execution() const override { return false; }
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
@@ -48,7 +47,6 @@ public:
 	void set_result(int64_t i, const Ref<JigsawParameterLocalVariable> &result) override;
 	String get_result_name(int64_t i) const override;
 };
+DECLARE_ENUM(JigsawCommandColor::Operation);
 
-DECLARE_ENUM(JigsawCommandCharacter::Operation);
-
-#endif // JIGSAW_COMMAND_CHARACTER_H
+#endif // JIGSAW_COMMAND_COLOR_H

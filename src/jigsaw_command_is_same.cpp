@@ -1,5 +1,7 @@
 #include "jigsaw_command_is_same.h"
 
+#include "jigsaw_parameter_audience.h"
+#include "jigsaw_parameter_audience_instance.h"
 #include "jigsaw_parameter_boolean.h"
 #include "jigsaw_parameter_stat.h"
 #include "jigsaw_parameter_stat_value.h"
@@ -63,7 +65,27 @@ JigsawExecutionState JigsawCommandIsSame::evaluate(const Ref<JigsawContext> &con
 		}
 	}
 
-	err = context->create_error(vformat("cannot check if %s is the same as %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", compare_to->get_type()), WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", object->get_type())));
+	if (compare_to->get_type() == JigsawParameter::AUDIENCE) {
+		Ref<JigsawParameterAudience> compare_to_audience = compare_to;
+
+		if (object->get_type() == JigsawParameter::AUDIENCE) {
+			Ref<JigsawParameterAudience> object_audience = object;
+
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_audience->get_audience() == object_audience->get_audience()));
+		}
+
+		if (object->get_type() == JigsawParameter::AUDIENCE_INSTANCE) {
+			Ref<JigsawParameterAudienceInstance> object_audience_instance = object;
+
+			if (object_audience_instance->get_group() == -1) {
+				return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_audience->get_audience() == enums::AudienceDef::NONE));
+			}
+
+			return set_command_result(context, err, 0, JigsawParameterBoolean::make(compare_to_audience->get_audience() == object_audience_instance->get_group() / 2));
+		}
+	}
+
+	err = context->create_error(vformat("cannot check if %s is the same as %s (let Ben know if you need this fixed)", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", compare_to->get_type()), WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", object->get_type())));
 	return JigsawExecutionState::ERROR;
 }
 
