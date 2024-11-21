@@ -25,7 +25,6 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawParameter>, max);
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, scope);
-	mutable Ref<::RNG> _rng_saved;
 
 	Type get_type() const override { return RNG; }
 	bool modifies_game_state() const override { return true; }

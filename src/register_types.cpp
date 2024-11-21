@@ -171,12 +171,17 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawProcedureStatFormatCost);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerEffect);
+	GDREGISTER_CLASS(JigsawTriggerEffectCustom);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerModifier);
+	GDREGISTER_CLASS(JigsawTriggerModifierCustom);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerNPC);
+	GDREGISTER_CLASS(JigsawTriggerNPCCustom);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerVariant);
+	GDREGISTER_CLASS(JigsawTriggerVariantCustom);
 	GDREGISTER_CLASS(JigsawTriggerVariantCosmeticInit);
 	GDREGISTER_CLASS(JigsawTriggerVariantCharacterInit);
 	GDREGISTER_CLASS(JigsawTriggerVariantDeckInit);
+	GDREGISTER_CLASS(JigsawTriggerVariantMatchStart);
 	GDREGISTER_CLASS(JigsawFunction);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawCommand);

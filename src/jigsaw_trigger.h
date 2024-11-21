@@ -17,6 +17,7 @@ class JigsawTriggerEffect : public JigsawTrigger {
 
 public:
 	enum Type {
+		CUSTOM = 0,
 	};
 
 protected:
@@ -32,6 +33,7 @@ class JigsawTriggerModifier : public JigsawTrigger {
 
 public:
 	enum Type {
+		CUSTOM = 0,
 	};
 
 protected:
@@ -47,6 +49,7 @@ class JigsawTriggerNPC : public JigsawTrigger {
 
 public:
 	enum Type {
+		CUSTOM = 0,
 	};
 
 protected:
@@ -62,9 +65,11 @@ class JigsawTriggerVariant : public JigsawTrigger {
 
 public:
 	enum Type {
-		COSMETIC_INIT = 0,
-		CHARACTER_INIT = 1,
-		DECK_INIT = 2,
+		CUSTOM = 0,
+		COSMETIC_INIT = 1,
+		CHARACTER_INIT = 2,
+		DECK_INIT = 3,
+		MATCH_START = 4,
 	};
 
 protected:
@@ -91,8 +96,16 @@ DECLARE_ENUM(JigsawTriggerVariant::Type);
 		__VA_ARGS__ \
 	}
 
+DECLARE_JIGSAW_TRIGGER(Effect, Custom, CUSTOM);
+
+DECLARE_JIGSAW_TRIGGER(Modifier, Custom, CUSTOM);
+
+DECLARE_JIGSAW_TRIGGER(NPC, Custom, CUSTOM);
+
+DECLARE_JIGSAW_TRIGGER(Variant, Custom, CUSTOM);
 DECLARE_JIGSAW_TRIGGER(Variant, CosmeticInit, COSMETIC_INIT);
 DECLARE_JIGSAW_TRIGGER(Variant, CharacterInit, CHARACTER_INIT);
 DECLARE_JIGSAW_TRIGGER(Variant, DeckInit, DECK_INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, MatchStart, MATCH_START);
 
 #endif // JIGSAW_TRIGGER_H

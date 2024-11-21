@@ -7,6 +7,6 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawTriggerVariant" enum="JigsawTriggerVariant.Type" default="1" />
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawTriggerVariant" enum="JigsawTriggerVariant.Type" default="2" />
 	</members>
 </class>

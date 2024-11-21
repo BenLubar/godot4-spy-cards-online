@@ -17,6 +17,7 @@ void JigsawContext::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
 	BIND_PROPERTY_RESOURCE(JigsawContext, parent);
 	BIND_PROPERTY_RESOURCE(JigsawProcedure, procedure);
+	BIND_PROPERTY_RESOURCE(RNG, rng);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawStackFrame, stack);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, arguments);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, results);
@@ -36,6 +37,7 @@ void JigsawContext::_bind_methods() {
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, JigsawGlobal *, global);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Ref<JigsawContext>, parent);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Ref<JigsawProcedure>, procedure);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Ref<RNG>, rng);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawStackFrame>, stack);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, arguments);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, results);
@@ -301,6 +303,7 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 
 void JigsawContext::cleanup() {
 	_procedure = Ref<JigsawProcedure>();
+	_rng = Ref<RNG>();
 	_stack.clear();
 	_arguments = TypedArray<JigsawParameter>();
 	// _results is not cleared
@@ -412,12 +415,56 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 	ERR_FAIL_COND_V(is_in_progress(), create_error("internal error: a procedure was already running in this context"));
 	ERR_FAIL_COND_V(procedure.is_null(), create_error("internal error: null procedure"));
 
-	return create_error("internal error: TODO (run)"); // TODO
+	get_global()->set_pause_time(0.0);
+
+	set_procedure(procedure);
+	set_arguments(args);
+	set_results(TypedArray<JigsawParameter>());
+	set_step_limit_remaining(max_steps);
+
+	Ref<JigsawError> err = append_stack_frame(procedure->get_commands(), -1);
+	if (err.is_valid()) {
+		return err;
+	}
+
+	for (;;) {
+		JigsawExecutionState state = evaluate_next(err, true);
+		if (likely(state == JigsawExecutionState::CONTINUE)) {
+			continue;
+		}
+
+		if (unlikely(state == JigsawExecutionState::PAUSE)) {
+			return Ref<JigsawError>();
+		}
+
+		cleanup();
+		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
+		return err;
+	}
 }
 Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
 	ERR_FAIL_COND_V(!is_in_progress(), create_error("internal error: no procedure was running in this context"));
 
-	return create_error("internal error: TODO (continue_run)"); // TODO
+	get_global()->set_pause_time(0.0);
+
+	Ref<JigsawError> err;
+	bool new_command = false;
+
+	for (;;) {
+		JigsawExecutionState state = evaluate_next(err, new_command);
+		new_command = true;
+		if (likely(state == JigsawExecutionState::CONTINUE)) {
+			continue;
+		}
+
+		if (unlikely(state == JigsawExecutionState::PAUSE)) {
+			return Ref<JigsawError>();
+		}
+
+		cleanup();
+		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
+		return err;
+	}
 }
 bool JigsawContext::is_in_progress() const {
 	return !_stack.is_empty();
@@ -434,7 +481,7 @@ Ref<JigsawError> JigsawContext::create_error(const String &message, const TypedA
 	error->set_params(params.duplicate(true));
 
 	// TODO: temp
-	error->set_stack(get_stack().duplicate(true));
+	error->set_stack(get_stack());
 
 	if (include_global_snapshot) {
 		// TODO: store global snapshot

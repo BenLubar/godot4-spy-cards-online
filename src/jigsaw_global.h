@@ -42,8 +42,8 @@ public:
 	DECLARE_PROPERTY(TypedArray<JigsawSide>, sides);
 
 	DECLARE_PROPERTY(double, time_scale, = 1.0);
+	DECLARE_PROPERTY(double, pause_time, = 0.0);
 	DECLARE_PROPERTY(TypedArray<JigsawContext>, context_stack);
-	DECLARE_PROPERTY(Ref<RNG>, rng);
 
 	DECLARE_PROPERTY(TypedArray<Node3D>, scene_nodes);
 	DECLARE_PROPERTY(TypedArray<Sprite3D>, sprite_nodes);

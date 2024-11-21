@@ -11,11 +11,15 @@
 		</member>
 	</members>
 	<constants>
-		<constant name="COSMETIC_INIT" value="0" enum="Type">
+		<constant name="CUSTOM" value="0" enum="Type">
 		</constant>
-		<constant name="CHARACTER_INIT" value="1" enum="Type">
+		<constant name="COSMETIC_INIT" value="1" enum="Type">
 		</constant>
-		<constant name="DECK_INIT" value="2" enum="Type">
+		<constant name="CHARACTER_INIT" value="2" enum="Type">
+		</constant>
+		<constant name="DECK_INIT" value="3" enum="Type">
+		</constant>
+		<constant name="MATCH_START" value="4" enum="Type">
 		</constant>
 	</constants>
 </class>

@@ -14,6 +14,7 @@ class JigsawGlobal;
 #include "jigsaw_parameter_variable.h"
 #include "jigsaw_procedure.h"
 #include "jigsaw_stack_frame.h"
+#include "rng.h"
 #include "why_isnt_this_in_godot.h"
 
 enum class JigsawExecutionState {
@@ -36,6 +37,7 @@ public:
 	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 	DECLARE_PROPERTY(Ref<JigsawContext>, parent);
 	DECLARE_PROPERTY(Ref<JigsawProcedure>, procedure);
+	DECLARE_PROPERTY(Ref<RNG>, rng);
 	DECLARE_PROPERTY(TypedArray<JigsawStackFrame>, stack);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, arguments);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, results);

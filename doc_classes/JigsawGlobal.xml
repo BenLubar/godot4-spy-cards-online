@@ -47,7 +47,7 @@
 		</member>
 		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
 		</member>
-		<member name="rng" type="RNG" setter="set_rng" getter="get_rng">
+		<member name="pause_time" type="float" setter="set_pause_time" getter="get_pause_time" default="0.0">
 		</member>
 		<member name="scene_nodes" type="Node3D[]" setter="set_scene_nodes" getter="get_scene_nodes" default="[]">
 		</member>

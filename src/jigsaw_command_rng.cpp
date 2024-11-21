@@ -1,6 +1,5 @@
 #include "jigsaw_command_rng.h"
 
-#include "jigsaw_global.h"
 #include "jigsaw_parameter_amount.h"
 #include "jigsaw_parameter_float.h"
 
@@ -23,7 +22,7 @@ IMPLEMENT_PROPERTY(JigsawCommandRNG, Ref<JigsawParameterLocalVariable>, output);
 IMPLEMENT_PROPERTY(JigsawCommandRNG, Ref<JigsawCommandList>, scope);
 
 JigsawExecutionState JigsawCommandRNG::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	Ref<::RNG> rng = context->get_global()->get_rng();
+	Ref<::RNG> rng = context->get_rng();
 	if (rng.is_null()) {
 		err = context->create_error("RNG is not available in this context");
 		return JigsawExecutionState::ERROR;
@@ -108,19 +107,11 @@ JigsawExecutionState JigsawCommandRNG::evaluate(const Ref<JigsawContext> &contex
 	}
 	case SCOPE:
 	{
-		if (unlikely(_rng_saved.is_valid())) {
-			err = context->create_error("cannot create RNG scope recursively with the same command instance");
-			return JigsawExecutionState::ERROR;
-		}
-
-		_rng_saved = rng;
-		context->get_global()->set_rng(rng->duplicate());
-
 		err = context->append_stack_frame(_scope, 0);
-
-		if (unlikely(err.is_valid())) {
-			context->get_global()->set_rng(rng);
-			_rng_saved = Ref<::RNG>();
+		if (likely(err.is_null())) {
+			Ref<JigsawStackFrame> new_frame = context->get_stack().back();
+			new_frame->set_meta("saved_rng", rng);
+			context->set_rng(rng->duplicate());
 		}
 
 		return unlikely(err.is_valid()) ? JigsawExecutionState::ERROR : JigsawExecutionState::CONTINUE;
@@ -131,10 +122,10 @@ JigsawExecutionState JigsawCommandRNG::evaluate(const Ref<JigsawContext> &contex
 	return JigsawExecutionState::ERROR;
 }
 Ref<JigsawError> JigsawCommandRNG::pop_stack_frame(const Ref<JigsawContext> &context, const Ref<JigsawStackFrame> &popped_frame) const {
-	ERR_FAIL_COND_V(_rng_saved.is_null(), context->create_error("internal error: saved RNG is missing"));
+	Ref<::RNG> saved_rng = popped_frame->get_meta("saved_rng");
+	ERR_FAIL_COND_V(saved_rng.is_null(), context->create_error("internal error: saved RNG is missing"));
 
-	context->get_global()->set_rng(_rng_saved);
-	_rng_saved = Ref<::RNG>();
+	context->set_rng(saved_rng);
 
 	return Ref<JigsawError>();
 }

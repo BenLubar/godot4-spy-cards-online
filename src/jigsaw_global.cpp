@@ -13,8 +13,8 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSide, sides);
 
 	BIND_PROPERTY(Variant::FLOAT, time_scale);
+	BIND_PROPERTY(Variant::FLOAT, pause_time);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawContext, context_stack);
-	BIND_PROPERTY_RESOURCE(RNG, rng);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(Node3D, scene_nodes);
 	BIND_PROPERTY_RESOURCE_ARRAY(Sprite3D, sprite_nodes);
@@ -41,8 +41,8 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSide>, sides);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, pause_time);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawContext>, context_stack);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<RNG>, rng);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<Node3D>, scene_nodes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<Sprite3D>, sprite_nodes);
@@ -120,7 +120,6 @@ void JigsawGlobal::init_sides() {
 }
 
 Ref<JigsawError> JigsawGlobal::run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng) {
-	ERR_FAIL_COND_V(_rng.is_valid(), Ref<JigsawError>());
 	ERR_FAIL_COND_V(!_context_stack.is_empty(), Ref<JigsawError>());
 
 	TypedArray<JigsawTriggerVariant> triggers;
@@ -136,13 +135,11 @@ Ref<JigsawError> JigsawGlobal::run_variant_triggers(JigsawTriggerVariant::Type t
 	for (int64_t i = 0; i < triggers.size(); i++) {
 		Ref<JigsawTriggerVariant> trigger = triggers[i];
 		if (trigger->get_type() == type) {
-			set_rng(copy_rng ? rng->duplicate() : rng);
-
 			Ref<JigsawContext> context = JigsawContext::make(this, Ref<JigsawContext>());
+			context->set_rng(copy_rng ? rng->duplicate() : rng);
 			_context_stack.push_back(context);
 			Ref<JigsawError> err = context->evaluate(trigger, args, TypedArray<JigsawParameter>());
 			_context_stack.pop_back();
-			set_rng(Ref<RNG>());
 			if (unlikely(err.is_valid())) {
 				return err;
 			}
