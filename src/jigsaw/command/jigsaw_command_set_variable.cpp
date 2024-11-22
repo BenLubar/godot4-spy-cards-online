@@ -1,6 +1,6 @@
 #include "jigsaw_command_set_variable.h"
 
-#include "jigsaw_parameter_variable.h"
+#include "jigsaw/parameter/jigsaw_parameter_variable.h"
 
 void JigsawCommandSetVariable::_bind_methods() {
 	BIND_PROPERTY_IS(Variant::BOOL, persistent);

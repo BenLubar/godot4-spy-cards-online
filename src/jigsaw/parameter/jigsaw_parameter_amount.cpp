@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
 
 void JigsawParameterAmount::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, amount);

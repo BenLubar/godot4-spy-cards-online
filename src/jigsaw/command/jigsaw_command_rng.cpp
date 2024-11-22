@@ -1,7 +1,7 @@
 #include "jigsaw_command_rng.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
 
 void JigsawCommandRNG::_bind_methods() {
 	BIND_ENUM_CONSTANT(FLOAT);

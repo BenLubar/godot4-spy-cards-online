@@ -19,7 +19,7 @@ public:
 	DECLARE_PROPERTY(String, debug_name, = "unnamed buffer");
 	DECLARE_PROPERTY(PackedByteArray, buffer);
 	DECLARE_PROPERTY(int64_t, offset, = 0);
-	DECLARE_PROPERTY(bool, valid, = true);
+	DECLARE_PROPERTY_IS(bool, valid, = true);
 
 	uint8_t peek_byte(int64_t offset) const;
 	int64_t remaining_len() const;

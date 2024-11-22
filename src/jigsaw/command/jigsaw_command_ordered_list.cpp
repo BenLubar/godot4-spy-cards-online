@@ -1,7 +1,7 @@
 #include "jigsaw_command_ordered_list.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_ordered_list.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
 
 void JigsawCommandOrderedList::_bind_methods() {
 	BIND_ENUM_CONSTANT(GET_NUM_ITEMS);

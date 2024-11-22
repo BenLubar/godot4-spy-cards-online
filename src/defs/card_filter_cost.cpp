@@ -1,6 +1,6 @@
-#include "card_filter_cost.h"
+#include "defs/card_filter_cost.h"
 
-#include "jigsaw_global.h"
+#include "jigsaw/jigsaw_global.h"
 
 void CardFilterCost::_bind_methods() {
 	BIND_PROPERTY_ENUM(StatDef::Stat, stat);

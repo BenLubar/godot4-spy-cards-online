@@ -1,10 +1,10 @@
 #include "jigsaw_trigger.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_card.h"
-#include "jigsaw_parameter_character.h"
-#include "jigsaw_parameter_ordered_list.h"
-#include "jigsaw_parameter_string.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_card.h"
+#include "jigsaw/parameter/jigsaw_parameter_character.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
 
 void JigsawTrigger::_bind_methods() {
 }

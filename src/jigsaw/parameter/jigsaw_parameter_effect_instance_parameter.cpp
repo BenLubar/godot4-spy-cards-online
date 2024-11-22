@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_effect_instance_parameter.h"
+#include "jigsaw/parameter/jigsaw_parameter_effect_instance_parameter.h"
 
 void JigsawParameterEffectInstanceParameter::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, effect_instance);

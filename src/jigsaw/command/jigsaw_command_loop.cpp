@@ -1,6 +1,6 @@
 #include "jigsaw_command_loop.h"
 
-#include "jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
 
 void JigsawCommandLoop::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, count);

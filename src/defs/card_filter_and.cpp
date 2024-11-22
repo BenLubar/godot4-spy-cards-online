@@ -1,4 +1,4 @@
-#include "card_filter_and.h"
+#include "defs/card_filter_and.h"
 
 void CardFilterAnd::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(CardFilter, list);

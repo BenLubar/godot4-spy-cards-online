@@ -1,15 +1,15 @@
-#include "jigsaw_context.h"
+#include "jigsaw/jigsaw_context.h"
 
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_effect_instance.h"
-#include "jigsaw_parameter_effect_instance_parameter.h"
-#include "jigsaw_parameter_local_variable.h"
-#include "jigsaw_parameter_queued_effect.h"
-#include "jigsaw_parameter_variable.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_effect_instance_parameter.h"
+#include "jigsaw/parameter/jigsaw_parameter_local_variable.h"
+#include "jigsaw/parameter/jigsaw_parameter_queued_effect.h"
+#include "jigsaw/parameter/jigsaw_parameter_variable.h"
 #include "jigsaw_side.h"
-#include "queued_effect.h"
-#include "why_isnt_this_in_godot.h"
+#include "active/queued_effect.h"
+#include "util/why_isnt_this_in_godot.h"
 
 void JigsawContext::_bind_methods() {
 	BIND_CONSTANT(DEFAULT_MAX_STEPS);

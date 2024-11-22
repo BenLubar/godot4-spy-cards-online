@@ -1,4 +1,4 @@
-#include "queued_effect.h"
+#include "active/queued_effect.h"
 
 void QueuedEffect::_bind_methods() {
 	BIND_PROPERTY(Variant::OBJECT, card);

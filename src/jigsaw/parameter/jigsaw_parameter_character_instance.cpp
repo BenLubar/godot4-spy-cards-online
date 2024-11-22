@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_character_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_character_instance.h"
 
 void JigsawParameterCharacterInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, character);

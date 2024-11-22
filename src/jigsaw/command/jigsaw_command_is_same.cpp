@@ -1,10 +1,10 @@
 #include "jigsaw_command_is_same.h"
 
-#include "jigsaw_parameter_audience.h"
-#include "jigsaw_parameter_audience_instance.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_stat.h"
-#include "jigsaw_parameter_stat_value.h"
+#include "jigsaw/parameter/jigsaw_parameter_audience.h"
+#include "jigsaw/parameter/jigsaw_parameter_audience_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_stat.h"
+#include "jigsaw/parameter/jigsaw_parameter_stat_value.h"
 
 void JigsawCommandIsSame::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, compare_to);

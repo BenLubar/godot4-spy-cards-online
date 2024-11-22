@@ -1,4 +1,4 @@
-#include "base32.h"
+#include "util/base32.h"
 
 void Base32::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, alphabet);

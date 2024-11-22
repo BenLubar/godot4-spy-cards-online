@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_card.h"
+#include "jigsaw/parameter/jigsaw_parameter_card.h"
 
 void JigsawParameterCard::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::CardDef::Card, card);

@@ -1,9 +1,9 @@
 #include "jigsaw_command_scene.h"
 
-#include "jigsaw_parameter_file_id_gltf.h"
-#include "jigsaw_parameter_float.h"
-#include "jigsaw_parameter_scene_instance.h"
-#include "jigsaw_parameter_string.h"
+#include "jigsaw/parameter/jigsaw_parameter_file_id_gltf.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_scene_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
 
 void JigsawCommandScene::_bind_methods() {
 	BIND_ENUM_CONSTANT(GET_PROPERTY_STRING);

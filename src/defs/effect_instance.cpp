@@ -1,11 +1,11 @@
-#include "effect_instance.h"
+#include "defs/effect_instance.h"
 
-#include "card_instance.h"
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_card_instance.h"
-#include "jigsaw_parameter_effect_instance.h"
-#include "jigsaw_parameter_formatted_text.h"
-#include "jigsaw_parameter_icon.h"
+#include "active/card_instance.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_card_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
+#include "jigsaw/parameter/jigsaw_parameter_icon.h"
 
 void EffectInstance::_bind_methods() {
 	BIND_PROPERTY_ENUM(EffectDef::Effect, effect);

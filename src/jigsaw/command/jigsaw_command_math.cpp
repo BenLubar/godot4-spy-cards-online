@@ -1,8 +1,8 @@
 #include "jigsaw_command_math.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
 
 void JigsawCommandMath::_bind_methods() {
 	BIND_ENUM_CONSTANT(EQUALS);

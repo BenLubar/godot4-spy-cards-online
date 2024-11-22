@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_queued_effect.h"
+#include "jigsaw/parameter/jigsaw_parameter_queued_effect.h"
 
 void JigsawParameterQueuedEffect::_bind_methods() {
 	BIND_PROPERTY(Variant::OBJECT, effect);

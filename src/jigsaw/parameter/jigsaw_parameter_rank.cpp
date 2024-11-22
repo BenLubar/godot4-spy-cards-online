@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_rank.h"
+#include "jigsaw/parameter/jigsaw_parameter_rank.h"
 
 void JigsawParameterRank::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::RankDef::Rank, rank);

@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_card_grid.h"
+#include "jigsaw/parameter/jigsaw_parameter_card_grid.h"
 
 void JigsawParameterCardGrid::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, grid);

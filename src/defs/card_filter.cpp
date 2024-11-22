@@ -1,7 +1,7 @@
 #include "card_filter.h"
 
-#include "card_instance.h"
-#include "jigsaw_context.h"
+#include "active/card_instance.h"
+#include "jigsaw/jigsaw_context.h"
 #include "jigsaw/parameter/jigsaw_parameter.h"
 
 void CardFilter::_bind_methods() {

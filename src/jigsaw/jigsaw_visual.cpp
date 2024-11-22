@@ -1,4 +1,4 @@
-#include "jigsaw_visual.h"
+#include "jigsaw/jigsaw_visual.h"
 
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
@@ -13,9 +13,9 @@
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/classes/world_environment.hpp>
 
-#include "jigsaw_parameter_cid_opus.h"
-#include "jigsaw_parameter_file_id_opus.h"
-#include "player_preferences_helper.h"
+#include "jigsaw/parameter/jigsaw_parameter_cid_opus.h"
+#include "jigsaw/parameter/jigsaw_parameter_file_id_opus.h"
+#include "util/player_preferences_helper.h"
 
 #define MUSIC_BUS "Music"
 

@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_audio.h"
+#include "jigsaw/parameter/jigsaw_parameter_audio.h"
 
 void JigsawParameterAudio::_bind_methods() {
 	BIND_PROPERTY(Variant::FLOAT, loop_start);

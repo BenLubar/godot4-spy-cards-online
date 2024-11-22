@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_color.h"
+#include "jigsaw/parameter/jigsaw_parameter_color.h"
 
 void JigsawParameterColor::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, color);

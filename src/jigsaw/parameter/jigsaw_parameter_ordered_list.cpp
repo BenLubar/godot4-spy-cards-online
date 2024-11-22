@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_ordered_list.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
 
 void JigsawParameterOrderedList::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, list);

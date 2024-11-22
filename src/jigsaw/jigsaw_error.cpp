@@ -1,7 +1,7 @@
 #include "jigsaw_error.h"
 
-#include "base32.h"
-#include "format_helper.h"
+#include "util/base32.h"
+#include "util/format_helper.h"
 
 void JigsawError::_bind_methods() {
 	BIND_BITFIELD_FLAG(MAGIC);

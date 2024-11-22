@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_formatted_text.h"
+#include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
 
 void JigsawParameterFormattedText::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, text);

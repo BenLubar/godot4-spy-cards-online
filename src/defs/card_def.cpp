@@ -1,6 +1,6 @@
 #include "card_def.h"
 
-#include "effect_instance.h"
+#include "defs/effect_instance.h"
 #include "stat_value.h"
 
 void CardDef::_bind_methods() {

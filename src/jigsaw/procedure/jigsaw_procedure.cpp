@@ -1,13 +1,13 @@
 #include "jigsaw_procedure.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_card_instance.h"
-#include "jigsaw_parameter_effect_instance.h"
-#include "jigsaw_parameter_float.h"
-#include "jigsaw_parameter_formatted_text.h"
-#include "jigsaw_parameter_icon.h"
-#include "jigsaw_parameter_ordered_list.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_card_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
+#include "jigsaw/parameter/jigsaw_parameter_icon.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
 
 void JigsawProcedure::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawCommandList, commands);

@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_scene.h"
+#include "jigsaw/parameter/jigsaw_parameter_scene.h"
 
 void JigsawParameterScene::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_NOT_SAVED(GLTFState, scene);

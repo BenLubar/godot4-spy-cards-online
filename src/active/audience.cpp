@@ -1,5 +1,5 @@
 #include "audience.h"
-#include "player_preferences_helper.h"
+#include "util/player_preferences_helper.h"
 
 void Audience::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(MultiMesh, meshes);

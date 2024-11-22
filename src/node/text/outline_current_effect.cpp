@@ -1,8 +1,8 @@
 #include "node/text/outline_current_effect.h"
 
-#include "card_instance.h"
-#include "effect_instance.h"
-#include "jigsaw_global.h"
+#include "active/card_instance.h"
+#include "defs/effect_instance.h"
+#include "jigsaw/jigsaw_global.h"
 
 void OutlineCurrentEffect::_bind_methods() {
 }

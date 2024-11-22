@@ -1,4 +1,4 @@
-#include "format_helper.h"
+#include "util/format_helper.h"
 
 void FormatHelper::_bind_methods() {
 	ClassDB::bind_static_method("FormatHelper", D_METHOD("read", "name", "buf"), &FormatHelper::read);
@@ -7,7 +7,7 @@ void FormatHelper::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, debug_name);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, buffer);
 	BIND_PROPERTY(Variant::INT, offset);
-	BIND_PROPERTY(Variant::BOOL, valid);
+	BIND_PROPERTY_IS(Variant::BOOL, valid);
 
 	ClassDB::bind_method(D_METHOD("peek_byte", "offset"), &FormatHelper::peek_byte);
 	ClassDB::bind_method(D_METHOD("remaining_len"), &FormatHelper::remaining_len);
@@ -83,7 +83,7 @@ Ref<FormatHelper> FormatHelper::write(String name) {
 IMPLEMENT_PROPERTY_SIMPLE(FormatHelper, String, debug_name);
 IMPLEMENT_PROPERTY_SIMPLE(FormatHelper, PackedByteArray, buffer);
 IMPLEMENT_PROPERTY_SIMPLE(FormatHelper, int64_t, offset);
-IMPLEMENT_PROPERTY_SIMPLE(FormatHelper, bool, valid);
+IMPLEMENT_PROPERTY_SIMPLE_IS(FormatHelper, bool, valid);
 
 uint8_t FormatHelper::peek_byte(int64_t offset2) const {
 	ERR_FAIL_INDEX_V_MSG(_offset + offset2, _buffer.size(), 0, vformat("%s: cannot peek outside of buffer", _debug_name));

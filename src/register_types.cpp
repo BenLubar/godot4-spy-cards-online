@@ -115,16 +115,17 @@
 #include "defs/variable_def.h"
 #include "defs/variant_def.h"
 
-#include "defs/game_mode_summary.h"
-#include "defs/game_mode.h"
-#include "protocol/recording.h"
-#include "protocol/recording_round.h"
-
 #include "active/card_instance.h"
 #include "active/modifier_instance.h"
 #include "active/queued_effect.h"
 #include "active/audience.h"
 #include "node/card_grid.h"
+
+#include "protocol/data_container.h"
+#include "defs/game_mode_summary.h"
+#include "defs/game_mode.h"
+#include "protocol/recording.h"
+#include "protocol/recording_round.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -275,17 +276,18 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(VariableDef);
 	GDREGISTER_CLASS(VariantDef);
 
-	GDREGISTER_CLASS(GameModeSummary);
-	GDREGISTER_CLASS(GameMode);
-	GDREGISTER_CLASS(Recording);
-	GDREGISTER_CLASS(RecordingRound);
-
 	GDREGISTER_CLASS(CardInstance);
 	GDREGISTER_CLASS(ModifierInstance);
 	GDREGISTER_CLASS(QueuedEffect);
 	GDREGISTER_CLASS(Audience);
 	GDREGISTER_CLASS(CardGrid2D);
 	GDREGISTER_CLASS(CardGrid3D);
+
+	GDREGISTER_CLASS(DataContainer);
+	GDREGISTER_CLASS(GameModeSummary);
+	GDREGISTER_CLASS(GameMode);
+	GDREGISTER_CLASS(Recording);
+	GDREGISTER_CLASS(RecordingRound);
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

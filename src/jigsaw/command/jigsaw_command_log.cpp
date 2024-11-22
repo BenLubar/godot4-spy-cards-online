@@ -1,6 +1,6 @@
 #include "jigsaw_command_log.h"
 
-#include "jigsaw_parameter_formatted_text.h"
+#include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
 
 void JigsawCommandLog::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, message);

@@ -1,6 +1,6 @@
-#include "jigsaw_global.h"
+#include "jigsaw/jigsaw_global.h"
 
-#include "jigsaw_visual.h"
+#include "jigsaw/jigsaw_visual.h"
 
 void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawVisual, visual);

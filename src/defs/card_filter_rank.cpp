@@ -1,6 +1,6 @@
-#include "card_filter_rank.h"
+#include "defs/card_filter_rank.h"
 
-#include "jigsaw_global.h"
+#include "jigsaw/jigsaw_global.h"
 
 void CardFilterRank::_bind_methods() {
 	BIND_PROPERTY_ENUM(RankDef::Rank, rank);

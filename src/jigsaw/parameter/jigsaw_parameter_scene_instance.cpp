@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_scene_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_scene_instance.h"
 
 void JigsawParameterSceneInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, scene);

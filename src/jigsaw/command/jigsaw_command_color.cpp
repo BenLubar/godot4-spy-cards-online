@@ -1,8 +1,8 @@
 #include "jigsaw_command_color.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_color.h"
-#include "jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_color.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
 
 void JigsawCommandColor::_bind_methods() {
 	BIND_ENUM_CONSTANT(CREATE_FLOAT);

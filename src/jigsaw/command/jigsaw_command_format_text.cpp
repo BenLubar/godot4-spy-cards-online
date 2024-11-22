@@ -1,12 +1,12 @@
 #include "jigsaw_command_format_text.h"
 
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_color.h"
-#include "jigsaw_parameter_float.h"
-#include "jigsaw_parameter_formatted_text.h"
-#include "jigsaw_parameter_icon.h"
-#include "jigsaw_parameter_string.h"
-#include "why_isnt_this_in_godot.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_color.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
+#include "jigsaw/parameter/jigsaw_parameter_icon.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
+#include "util/why_isnt_this_in_godot.h"
 
 void JigsawCommandFormatText::_bind_methods() {
 	BIND_PROPERTY_ENUM(FormattedText::Command, command);

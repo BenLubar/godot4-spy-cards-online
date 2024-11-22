@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_audience.h"
+#include "jigsaw/parameter/jigsaw_parameter_audience.h"
 
 void JigsawParameterAudience::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::AudienceDef::Audience, audience);

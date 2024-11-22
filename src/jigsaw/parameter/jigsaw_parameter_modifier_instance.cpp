@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_modifier_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_modifier_instance.h"
 
 void JigsawParameterModifierInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::OBJECT, instance);

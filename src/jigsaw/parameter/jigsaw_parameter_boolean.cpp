@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
 
 void JigsawParameterBoolean::_bind_methods() {
 	BIND_PROPERTY(Variant::BOOL, boolean);

@@ -1,11 +1,11 @@
 #include "jigsaw_command_audience.h"
 
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_audience.h"
-#include "jigsaw_parameter_audience_instance.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_color.h"
-#include "jigsaw_parameter_float.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_audience.h"
+#include "jigsaw/parameter/jigsaw_parameter_audience_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_color.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
 
 void JigsawCommandAudience::_bind_methods() {
 	BIND_ENUM_CONSTANT(CREATE);

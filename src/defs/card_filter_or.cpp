@@ -1,4 +1,4 @@
-#include "card_filter_or.h"
+#include "defs/card_filter_or.h"
 
 void CardFilterOr::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(CardFilter, list);

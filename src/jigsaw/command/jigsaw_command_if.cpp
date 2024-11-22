@@ -1,7 +1,7 @@
 #include "jigsaw_command_if.h"
 
-#include "jigsaw_parameter_boolean.h"
-#include "why_isnt_this_in_godot.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "util/why_isnt_this_in_godot.h"
 
 void JigsawCommandIf::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameter, condition);

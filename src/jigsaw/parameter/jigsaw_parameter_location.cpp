@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_location.h"
+#include "jigsaw/parameter/jigsaw_parameter_location.h"
 
 void JigsawParameterLocation::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::LocationDef::Location, location);

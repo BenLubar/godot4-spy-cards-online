@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_ui_icon_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_ui_icon_instance.h"
 
 void JigsawParameterUIIconInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, icon);

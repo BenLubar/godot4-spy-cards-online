@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_choice.h"
+#include "jigsaw/parameter/jigsaw_parameter_choice.h"
 
 void JigsawParameterChoice::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::ChoicesDef::Choices, choices);

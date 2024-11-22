@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_modifier.h"
+#include "jigsaw/parameter/jigsaw_parameter_modifier.h"
 
 void JigsawParameterModifier::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::ModifierDef::Modifier, modifier);

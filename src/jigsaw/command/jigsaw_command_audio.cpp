@@ -1,9 +1,9 @@
 #include "jigsaw_command_audio.h"
 
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_cid_opus.h"
-#include "jigsaw_parameter_file_id_opus.h"
-#include "jigsaw_visual.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_cid_opus.h"
+#include "jigsaw/parameter/jigsaw_parameter_file_id_opus.h"
+#include "jigsaw/jigsaw_visual.h"
 
 void JigsawCommandAudio::_bind_methods() {
 	BIND_ENUM_CONSTANT(SET_MUSIC);

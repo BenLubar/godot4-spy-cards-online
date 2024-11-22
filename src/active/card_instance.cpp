@@ -1,9 +1,9 @@
-#include "card_instance.h"
+#include "active/card_instance.h"
 
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_color.h"
-#include "jigsaw_parameter_string.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_color.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
 
 void CardInstance::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);

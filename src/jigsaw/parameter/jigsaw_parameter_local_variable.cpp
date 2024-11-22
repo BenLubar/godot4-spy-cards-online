@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_local_variable.h"
+#include "jigsaw/parameter/jigsaw_parameter_local_variable.h"
 
 void JigsawParameterLocalVariable::_bind_methods() {
 	BIND_CONSTANT(FRAME_ARGUMENTS);

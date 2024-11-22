@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="DataContainer" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="from_byte_array" qualifiers="static">
+			<return type="DataContainer" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<param index="1" name="debug_name" type="String" default="&quot;data container&quot;" />
+			<description>
+			</description>
+		</method>
+		<method name="to_byte_array" qualifiers="const">
+			<return type="PackedByteArray" />
+			<param index="0" name="debug_name" type="String" default="&quot;data container&quot;" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="container_type" type="int" setter="set_container_type" getter="get_container_type" enum="DataContainer.ContainerType" default="0">
+		</member>
+		<member name="format_revision" type="int" setter="set_format_revision" getter="get_format_revision" enum="DataContainer.FormatRevision" default="0">
+		</member>
+		<member name="game_version" type="Vector3i" setter="set_game_version" getter="get_game_version" default="Vector3i(0, 0, 0)">
+		</member>
+		<member name="timestamp" type="int" setter="set_timestamp" getter="get_timestamp" default="0">
+		</member>
+	</members>
+	<constants>
+		<constant name="MAGIC" value="3462844490205406305">
+		</constant>
+		<constant name="FORMAT_0" value="0" enum="FormatRevision">
+		</constant>
+		<constant name="GAME_MODE" value="0" enum="ContainerType">
+		</constant>
+		<constant name="GAME_MODE_SUMMARY" value="1" enum="ContainerType">
+		</constant>
+		<constant name="RECORDING" value="2" enum="ContainerType">
+		</constant>
+		<constant name="ERROR_REPORT" value="3" enum="ContainerType">
+		</constant>
+	</constants>
+</class>

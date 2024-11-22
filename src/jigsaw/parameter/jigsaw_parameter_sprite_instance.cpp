@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_sprite_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_sprite_instance.h"
 
 void JigsawParameterSpriteInstance::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, sprite);

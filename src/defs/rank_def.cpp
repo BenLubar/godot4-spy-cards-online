@@ -1,6 +1,6 @@
 #include "rank_def.h"
 
-#include "player_preferences_helper.h"
+#include "util/player_preferences_helper.h"
 
 void RankDef::_bind_methods() {
 	using namespace enums::RankDef;

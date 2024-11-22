@@ -1,4 +1,4 @@
-#include "jigsaw_parameter_icon.h"
+#include "jigsaw/parameter/jigsaw_parameter_icon.h"
 
 void JigsawParameterIcon::_bind_methods() {
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, icon);

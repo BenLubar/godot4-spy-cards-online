@@ -1,12 +1,12 @@
 #include "jigsaw_command_character.h"
 
-#include "jigsaw_global.h"
-#include "jigsaw_parameter_amount.h"
-#include "jigsaw_parameter_boolean.h"
-#include "jigsaw_parameter_character.h"
-#include "jigsaw_parameter_character_instance.h"
-#include "jigsaw_parameter_float.h"
-#include "jigsaw_visual.h"
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_character.h"
+#include "jigsaw/parameter/jigsaw_parameter_character_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_float.h"
+#include "jigsaw/jigsaw_visual.h"
 
 #include <godot_cpp/classes/sub_viewport.hpp>
 

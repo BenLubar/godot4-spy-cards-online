@@ -1,7 +1,7 @@
 #ifndef JIGSAW_PARAMETER_FILE_ID_GLTF_H
 #define JIGSAW_PARAMETER_FILE_ID_GLTF_H
 
-#include "jigsaw_parameter_scene.h"
+#include "jigsaw/parameter/jigsaw_parameter_scene.h"
 
 class JigsawParameterFileIDGLTF : public JigsawParameterScene {
 	GDCLASS(JigsawParameterFileIDGLTF, JigsawParameterScene);

@@ -248,7 +248,7 @@
 		</member>
 		<member name="offset" type="int" setter="set_offset" getter="get_offset" default="0">
 		</member>
-		<member name="valid" type="bool" setter="set_valid" getter="get_valid" default="true">
+		<member name="valid" type="bool" setter="set_valid" getter="is_valid" default="true">
 		</member>
 	</members>
 </class>
