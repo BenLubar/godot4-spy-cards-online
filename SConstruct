@@ -6,7 +6,7 @@ libname = "spycardsonlinenative"
 env = SConscript("godot-cpp/SConstruct")
 
 env.Append(CPPPATH=["src/"])
-sources = Glob("src/*.cpp")
+sources = Glob("src/**.cpp")
 
 if env["target"] in ["editor", "template_debug"]:
     try:

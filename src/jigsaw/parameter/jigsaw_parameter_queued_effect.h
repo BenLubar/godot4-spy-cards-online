@@ -1,0 +1,24 @@
+#ifndef JIGSAW_PARAMETER_QUEUED_EFFECT_H
+#define JIGSAW_PARAMETER_QUEUED_EFFECT_H
+
+#include "jigsaw/parameter/jigsaw_parameter.h"
+
+class JigsawParameterQueuedEffect;
+
+#include "active/queued_effect.h"
+
+class JigsawParameterQueuedEffect : public JigsawParameter {
+	GDCLASS(JigsawParameterQueuedEffect, JigsawParameter);
+
+protected:
+	static void _bind_methods();
+
+public:
+	DECLARE_PROPERTY(Ref<QueuedEffect>, effect);
+
+	Type get_type() const override { return QUEUED_EFFECT; }
+
+	static Ref<JigsawParameterQueuedEffect> make(const Ref<QueuedEffect> &effect);
+};
+
+#endif // JIGSAW_PARAMETER_QUEUED_EFFECT_H

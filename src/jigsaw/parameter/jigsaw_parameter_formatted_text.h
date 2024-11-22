@@ -1,0 +1,24 @@
+#ifndef JIGSAW_PARAMETER_FORMATTED_TEXT_H
+#define JIGSAW_PARAMETER_FORMATTED_TEXT_H
+
+#include "jigsaw/parameter/jigsaw_parameter.h"
+
+class JigsawParameterFormattedText;
+
+#include "defs/formatted_text.h"
+
+class JigsawParameterFormattedText : public JigsawParameter {
+	GDCLASS(JigsawParameterFormattedText, JigsawParameter);
+
+protected:
+	static void _bind_methods();
+
+public:
+	DECLARE_PROPERTY(TypedArray<FormattedText>, text);
+
+	Type get_type() const override { return FORMATTED_TEXT; }
+
+	static Ref<JigsawParameterFormattedText> make(const TypedArray<FormattedText> &text);
+};
+
+#endif // JIGSAW_PARAMETER_FORMATTED_TEXT_H
