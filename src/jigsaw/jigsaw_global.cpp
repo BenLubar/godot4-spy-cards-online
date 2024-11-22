@@ -86,7 +86,6 @@ JigsawGlobal::~JigsawGlobal() {
 
 void JigsawGlobal::init_sides() {
 	ERR_FAIL_COND(_mode.is_null());
-	ERR_FAIL_COND(_mode->get_base_variant().is_null());
 	ERR_FAIL_COND(_mode->get_variants().is_empty());
 	ERR_FAIL_COND(_selected_variant.is_null());
 
@@ -124,8 +123,8 @@ Ref<JigsawError> JigsawGlobal::run_variant_triggers(JigsawTriggerVariant::Type t
 
 	TypedArray<JigsawTriggerVariant> triggers;
 
-	if (likely(_mode.is_valid() && _mode->get_base_variant().is_valid())) {
-		triggers.append_array(_mode->get_base_variant()->get_triggers());
+	if (likely(_mode.is_valid())) {
+		triggers.append_array(_mode->get_base_triggers());
 	}
 
 	if (likely(_selected_variant.is_valid())) {

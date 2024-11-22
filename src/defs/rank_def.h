@@ -3,8 +3,12 @@
 
 #include "dry.h"
 
+class RankDef;
+
 #include "enums/enums_icon_def.h"
 #include "enums/enums_rank_def.h"
+
+#include "defs/card_design.h"
 
 class RankDef : public Resource {
 	GDCLASS(RankDef, Resource);
@@ -21,6 +25,7 @@ public:
 	DECLARE_PROPERTY(Color, color_alt);
 	DECLARE_PROPERTY(enums::IconDef::Icon, front, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
+	DECLARE_PROPERTY(Ref<CardDesign>, custom_design);
 
 	Color get_color_by_preference() const;
 

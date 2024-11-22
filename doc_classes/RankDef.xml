@@ -20,6 +20,8 @@
 		</member>
 		<member name="color_alt" type="Color" setter="set_color_alt" getter="get_color_alt" default="Color(0, 0, 0, 1)">
 		</member>
+		<member name="custom_design" type="CardDesign" setter="set_custom_design" getter="get_custom_design">
+		</member>
 		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon" default="-1">
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">

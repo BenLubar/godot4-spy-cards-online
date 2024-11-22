@@ -10,6 +10,7 @@ class CardInstance;
 class JigsawGlobal;
 
 #include "defs/card_def.h"
+#include "defs/card_design.h"
 #include "defs/formatted_text.h"
 #include "active/modifier_instance.h"
 #include "defs/stat_value.h"
@@ -38,6 +39,7 @@ public:
 	void update_description();
 	bool update_simple_description();
 	bool description_requires_update() const;
+	Ref<CardDesign> get_design() const;
 
 	DEFAULT_TO_STRING();
 

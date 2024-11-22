@@ -12,6 +12,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_design" qualifiers="const">
+			<return type="CardDesign" />
+			<description>
+			</description>
+		</method>
 		<method name="make" qualifiers="static">
 			<return type="CardInstance" />
 			<param index="0" name="global" type="JigsawGlobal" />

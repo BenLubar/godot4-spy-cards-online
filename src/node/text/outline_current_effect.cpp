@@ -21,8 +21,6 @@ bool OutlineCurrentEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 
 	JigsawGlobal *global = card->get_global();
 	ERR_FAIL_NULL_V(global, false);
-	Ref<GameMode> mode = global->get_mode();
-	ERR_FAIL_COND_V(mode.is_null(), false);
 
 	if (global->get_current_card_instance() != card) {
 		return true;
@@ -32,8 +30,11 @@ bool OutlineCurrentEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 		return true;
 	}
 
+	Ref<CardDesign> design = card->get_design();
+	ERR_FAIL_COND_V(design.is_null(), false);
+
 	// TODO: waiting for https://github.com/godotengine/godot/pull/97300
-	p_char_fx->set_color(mode->get_visual_effect_highlight_color());
+	p_char_fx->set_color(design->get_effect_highlight_color());
 
 	return true;
 }

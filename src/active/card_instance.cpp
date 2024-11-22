@@ -23,6 +23,7 @@ void CardInstance::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("update_description"), &CardInstance::update_description);
 	ClassDB::bind_method(D_METHOD("update_simple_description"), &CardInstance::update_simple_description);
 	ClassDB::bind_method(D_METHOD("description_requires_update"), &CardInstance::description_requires_update);
+	ClassDB::bind_method(D_METHOD("get_design"), &CardInstance::get_design);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
@@ -157,4 +158,19 @@ bool CardInstance::description_requires_update() const {
 	}
 
 	return false;
+}
+
+Ref<CardDesign> CardInstance::get_design() const {
+	JigsawGlobal *global = get_global();
+	ERR_FAIL_NULL_V(global, Ref<CardDesign>());
+	Ref<GameMode> mode = global->get_mode();
+	ERR_FAIL_COND_V(mode.is_null(), Ref<CardDesign>());
+	Ref<RankDef> rank = mode->get_rank(get_rank());
+	ERR_FAIL_COND_V(rank.is_null(), Ref<CardDesign>());
+
+	if (rank->get_custom_design().is_valid()) {
+		return rank->get_custom_design();
+	}
+
+	return mode->get_default_card_design();
 }

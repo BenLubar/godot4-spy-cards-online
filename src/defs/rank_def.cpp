@@ -22,6 +22,7 @@ void RankDef::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, color_alt);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, front);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
+	BIND_PROPERTY_RESOURCE(CardDesign, custom_design);
 
 	ClassDB::bind_method(D_METHOD("get_color_by_preference"), &RankDef::get_color_by_preference);
 }
@@ -31,6 +32,7 @@ IMPLEMENT_PROPERTY(RankDef, Color, color);
 IMPLEMENT_PROPERTY(RankDef, Color, color_alt);
 IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, front);
 IMPLEMENT_PROPERTY(RankDef, enums::IconDef::Icon, back);
+IMPLEMENT_PROPERTY(RankDef, Ref<CardDesign>, custom_design);
 
 Color RankDef::get_color_by_preference() const {
 	return PlayerPreferences::alternate_colors() ? get_color_alt() : get_color();

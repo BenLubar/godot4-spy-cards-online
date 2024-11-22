@@ -98,6 +98,7 @@
 
 #include "defs/audience_def.h"
 #include "defs/card_def.h"
+#include "defs/card_design.h"
 #include "defs/character_def.h"
 #include "defs/choices_def.h"
 #include "defs/effect_def.h"
@@ -259,6 +260,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(AudienceDef);
 	GDREGISTER_CLASS(CardDef);
+	GDREGISTER_CLASS(CardDesign);
 	GDREGISTER_CLASS(CharacterDef);
 	GDREGISTER_CLASS(ChoicesDef);
 	GDREGISTER_CLASS(EffectDef);
