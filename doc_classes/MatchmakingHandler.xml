@@ -149,7 +149,7 @@
 		</member>
 		<member name="peer" type="WebRTCMultiplayerPeer" setter="set_peer" getter="get_peer">
 		</member>
-		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
+		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
 		</member>
 		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
 		</member>

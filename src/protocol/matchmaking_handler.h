@@ -50,7 +50,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<MatchmakingConnection>, connections);
 	DECLARE_PROPERTY(Ref<DataContainer>, recording);
 
-	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
+	DECLARE_PROPERTY(PackedByteArray, realtime_inputs);
 
 private:
 	// authority only
@@ -85,7 +85,7 @@ public:
 	void request_repick();
 	void acknowledge_repick();
 	void reject_repick();
-	void realtime_update(int64_t acknowedge_frame, int64_t starting_frame, const PackedByteArray &packed_inputs);
+	void realtime_update(int64_t acknowledge_frame, int64_t starting_frame, const PackedByteArray &packed_inputs);
 
 	void _on_lobby_created(const String &lobby_id, const String &verification_code);
 	void _on_player_id(int32_t player_id, const String &verification_code);

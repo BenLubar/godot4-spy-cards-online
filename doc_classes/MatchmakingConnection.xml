@@ -25,8 +25,6 @@
 		</member>
 		<member name="frame_ack" type="int" setter="set_frame_ack" getter="get_frame_ack" default="0">
 		</member>
-		<member name="frame_recv" type="int" setter="set_frame_recv" getter="get_frame_recv" default="0">
-		</member>
 		<member name="handler" type="MatchmakingHandler" setter="set_handler" getter="get_handler">
 		</member>
 		<member name="highest_remote_ping_id" type="int" setter="set_highest_remote_ping_id" getter="get_highest_remote_ping_id" default="0">
@@ -47,7 +45,7 @@
 		</member>
 		<member name="prev_remote_frame_advantage" type="int" setter="set_prev_remote_frame_advantage" getter="get_prev_remote_frame_advantage" default="0">
 		</member>
-		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
+		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
 		</member>
 		<member name="recv_commands" type="int" setter="set_recv_commands" getter="get_recv_commands" default="0">
 		</member>

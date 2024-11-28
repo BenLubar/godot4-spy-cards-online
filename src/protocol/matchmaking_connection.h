@@ -41,14 +41,13 @@ public:
 	DECLARE_PROPERTY(bool, was_fully_connected, = false);
 	DECLARE_PROPERTY(bool, loaded_mode, = false);
 
-	DECLARE_PROPERTY(int64_t, frame_recv, = 0);
 	DECLARE_PROPERTY(int64_t, frame_ack, = 0);
 	DECLARE_PROPERTY(int32_t, local_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, prev_local_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, remote_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, prev_remote_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, suggested_drop_inputs, = 0);
-	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
+	DECLARE_PROPERTY(PackedByteArray, realtime_inputs);
 
 	MatchmakingConnection() = default; // trivial constructor for documentation generator
 	MatchmakingConnection(MatchmakingHandler *handler, int32_t remote_id);

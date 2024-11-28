@@ -38,14 +38,13 @@ void MatchmakingConnection::_bind_methods() {
 	BIND_PROPERTY(Variant::BOOL, was_fully_connected);
 	BIND_PROPERTY(Variant::BOOL, loaded_mode);
 
-	BIND_PROPERTY(Variant::INT, frame_recv);
 	BIND_PROPERTY(Variant::INT, frame_ack);
 	BIND_PROPERTY(Variant::INT, local_frame_advantage);
 	BIND_PROPERTY(Variant::INT, prev_local_frame_advantage);
 	BIND_PROPERTY(Variant::INT, remote_frame_advantage);
 	BIND_PROPERTY(Variant::INT, prev_remote_frame_advantage);
 	BIND_PROPERTY(Variant::INT, suggested_drop_inputs);
-	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
+	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, realtime_inputs);
 
 	ClassDB::add_signal("MatchmakingConnection", MethodInfo("encountered_fatal_error", PropertyInfo(Variant::STRING, "message")));
 	ClassDB::add_signal("MatchmakingConnection", MethodInfo("fully_connected"));
@@ -73,14 +72,13 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, String, fatal_error);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, bool, was_fully_connected);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, bool, loaded_mode);
 
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int64_t, frame_recv);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int64_t, frame_ack);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, local_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, prev_local_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, remote_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, prev_remote_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, suggested_drop_inputs);
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, PackedInt32Array, realtime_inputs);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, PackedByteArray, realtime_inputs);
 
 MatchmakingConnection::MatchmakingConnection(MatchmakingHandler *handler, int32_t remote_id) {
 	_handler = handler;
@@ -182,7 +180,7 @@ void MatchmakingConnection::_start_ping() {
 		// estimate how many frames the other side of the connection will have seen before this message gets there
 		int64_t add_frames = Math::fast_ftoi(get_average_ping() * (60.0 / 1000.0));
 
-		int64_t remote_frame = _frame_recv + add_frames;
+		int64_t remote_frame = _realtime_inputs.size() + add_frames;
 		int64_t local_frame = _handler->get_realtime_inputs().size();
 
 		behind = remote_frame - local_frame;

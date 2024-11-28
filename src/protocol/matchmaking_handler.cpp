@@ -2,6 +2,7 @@
 
 #include "util/base32.h"
 #include "util/why_isnt_this_in_godot.h"
+#include "protocol/button_input_history.h"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/multiplayer_api.hpp>
@@ -40,7 +41,7 @@ void MatchmakingHandler::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(MatchmakingConnection, connections);
 	BIND_PROPERTY_RESOURCE(DataContainer, recording);
 
-	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
+	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, realtime_inputs);
 
 	ClassDB::bind_method(D_METHOD("clear"), &MatchmakingHandler::clear);
 	ClassDB::bind_method(D_METHOD("create_lobby", "game_mode_container", "selected_variant", "mode_public_name", "mode_public_revision"), &MatchmakingHandler::create_lobby, DEFVAL(""), DEFVAL(0));
@@ -125,7 +126,7 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<WebRTCMultiplayerPeer>, peer);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, TypedArray<MatchmakingConnection>, connections);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<DataContainer>, recording);
 
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, PackedInt32Array, realtime_inputs);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, PackedByteArray, realtime_inputs);
 
 void MatchmakingHandler::clear() {
 	_state = INIT_WAIT;
@@ -435,25 +436,62 @@ void MatchmakingHandler::set_local_player_initial_deck(const TypedArray<enums::C
 }
 
 void MatchmakingHandler::state_advance(const PackedByteArray &state_checksum, const PackedByteArray &next_random_seed) {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
 void MatchmakingHandler::choices_preview(const PackedInt64Array &picked_cards) {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
 void MatchmakingHandler::choices_confirmed(const PackedInt64Array &picked_cards) {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
 void MatchmakingHandler::request_repick() {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
 void MatchmakingHandler::acknowledge_repick() {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
 void MatchmakingHandler::reject_repick() {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
 	// TODO
 }
-void MatchmakingHandler::realtime_update(int64_t acknowedge_frame, int64_t starting_frame, const PackedByteArray &packed_inputs) {
-	// TODO
+void MatchmakingHandler::realtime_update(int64_t acknowledge_frame, int64_t starting_frame, const PackedByteArray &packed_inputs) {
+	MatchmakingConnection *conn = find_remote_connection();
+	ERR_FAIL_NULL(conn);
+
+	ERR_FAIL_INDEX(acknowledge_frame, _realtime_inputs.size() + 1);
+
+	PackedByteArray unpacked_inputs = ButtonInputHistory::unpack_inputs(packed_inputs);
+	ERR_FAIL_COND(unpacked_inputs.is_empty() && !packed_inputs.is_empty());
+
+	PackedByteArray rti = conn->get_realtime_inputs();
+	ERR_FAIL_INDEX(starting_frame, rti.size() + 1);
+
+	for (int64_t i = starting_frame, j = 0; i < rti.size() && j < unpacked_inputs.size(); i++, j++) {
+		ERR_FAIL_COND(rti[i] != unpacked_inputs[j]);
+	}
+
+	rti.append_array(unpacked_inputs.slice(rti.size() - starting_frame));
+	conn->set_realtime_inputs(rti);
+	conn->set_frame_ack(acknowledge_frame);
+
+	// TODO: check for rollback
 }
 
 void MatchmakingHandler::_on_lobby_created(const String &lobby_id, const String &verification_code) {
