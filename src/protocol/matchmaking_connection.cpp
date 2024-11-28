@@ -154,6 +154,10 @@ void MatchmakingConnection::_physics_process(double delta) {
 			}
 		}
 		break;
+	case WebRTCPeerConnection::STATE_NEW:
+	case WebRTCPeerConnection::STATE_CONNECTING:
+	case WebRTCPeerConnection::STATE_DISCONNECTED:
+		break;
 	}
 }
 void MatchmakingConnection::restart() {

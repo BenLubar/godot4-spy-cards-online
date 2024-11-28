@@ -125,6 +125,8 @@ Ref<JigsawParameter> JigsawCommandOrderedList::get_argument(int64_t i) const {
 	}
 	if (i == 1) {
 		switch (_operation) {
+		case GET_NUM_ITEMS:
+			break;
 		case GET_ITEM_AT_INDEX:
 			return _index;
 		}
@@ -140,6 +142,8 @@ TypedArray<JigsawParameter> JigsawCommandOrderedList::get_argument_template(int6
 	}
 	if (i == 1) {
 		switch (_operation) {
+		case GET_NUM_ITEMS:
+			break;
 		case GET_ITEM_AT_INDEX:
 			return Array::make(JigsawParameterAmount::make(0));
 		}
@@ -164,6 +168,8 @@ String JigsawCommandOrderedList::get_argument_name(int64_t i) const {
 	}
 	if (i == 1) {
 		switch (_operation) {
+		case GET_NUM_ITEMS:
+			break;
 		case GET_ITEM_AT_INDEX:
 			return "index";
 		}

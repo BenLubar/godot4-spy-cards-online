@@ -203,6 +203,8 @@ TypedArray<JigsawParameter> JigsawCommandRNG::get_argument_template(int64_t i, c
 		return Array::make(JigsawParameterFloat::make(0.0));
 	case AMOUNT:
 		return Array::make(JigsawParameterAmount::make(0));
+	case SCOPE:
+		break;
 	}
 
 	return TypedArray<JigsawParameter>();
@@ -254,6 +256,8 @@ TypedArray<JigsawParameter> JigsawCommandRNG::get_result_template(int64_t i, con
 		return Array::make(JigsawParameterFloat::make(0.0));
 	case AMOUNT:
 		return Array::make(JigsawParameterAmount::make(0));
+	case SCOPE:
+		break;
 	}
 
 	return TypedArray<JigsawParameter>();
