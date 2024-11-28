@@ -8,6 +8,13 @@ env = SConscript("godot-cpp/SConstruct")
 env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp") + Glob("src/*/*.cpp") + Glob("src/*/*/*.cpp")
 
+if env["target"] == "template_debug" and env["platform"] == "web":
+    env.Append(CCFLAGS=["-gdwarf-4", "-g3"])
+    env.Append(LINKFLAGS=["-gdwarf-4", "-g3"])
+
+    project_path = Dir("..").abspath
+    env.Append(CCFLAGS=[f"-ffile-prefix-map={project_path}=."])
+
 if env["target"] in ["editor", "template_debug"]:
     try:
         doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
