@@ -104,22 +104,21 @@ MatchmakingConnection::MatchmakingConnection(MatchmakingHandler *handler, int32_
 }
 
 void MatchmakingConnection::_ready() {
+	ERR_FAIL_NULL(_handler);
+
 	Ref<OfflineMultiplayerPeer> offline = get_multiplayer()->get_multiplayer_peer();
-	if (offline.is_valid()) {
-		if (_remote_id == 1) {
-			_sender->request(
-				MATCHMAKING_JOIN,
-				Array::make("Content-Type: application/x-www-form-urlencoded"),
-				HTTPClient::METHOD_POST,
-				vformat("code=%s", _handler->get_lobby_id().uri_encode())
-			);
-			_sender_active = true;
-		}
+	if (offline.is_valid() && _remote_id == 1) {
+		_sender->request(
+			MATCHMAKING_JOIN,
+			Array::make("Content-Type: application/x-www-form-urlencoded"),
+			HTTPClient::METHOD_POST,
+			vformat("code=%s", _handler->get_lobby_id().uri_encode())
+		);
+		_sender_active = true;
 		return;
 	}
 
-	Ref<WebRTCMultiplayerPeer> peer = get_multiplayer()->get_multiplayer_peer();
-	peer->add_peer(_conn, _remote_id);
+	_handler->get_peer()->add_peer(_conn, _remote_id);
 
 	if (get_multiplayer()->get_unique_id() < _remote_id) {
 		_conn->create_offer();
@@ -132,6 +131,11 @@ void MatchmakingConnection::_ready() {
 void MatchmakingConnection::_physics_process(double delta) {
 	if (!_fatal_error.is_empty()) {
 		return;
+	}
+
+	Ref<OfflineMultiplayerPeer> offline = get_multiplayer()->get_multiplayer_peer();
+	if (offline.is_valid()) {
+		_conn->poll();
 	}
 
 	switch (_conn->get_connection_state()) {

@@ -188,7 +188,7 @@ class LazyGlobalNode
 		if (_node.is_null()) {
 			T *node = _init();
 			_node = node ? node->get_instance_id() : ObjectID();
-			_free_lazy_globals.append([this]() -> void { if (_node.is_valid()) this->queue_free(); });
+			_free_lazy_globals.append([this]() -> void { if (_node.is_valid()) (*this)->queue_free(); });
 		}
 	}
 public:
