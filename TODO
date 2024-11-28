@@ -1,0 +1,148 @@
+GAME LOOP
+
+two networking modes
+- lockstep mode for normal card gameplay
+    - game mode designates zero or one card grid per player
+    - players can select zero or more cards within their grid (with locally-applied constraints)
+    - since each player can have different views of each grid, this is evaluated from the perspective of each player separately
+    - players send a reliable ordered list of card indices that they selected, and once all players have submitted their response to all other players, the game progresses until the next input prompt
+    - players send unreliable state notifications to all other players while selecting inputs
+    - players can revoke their submitted inputs
+        - only if the other players are not "ready" yet and must wait for all other players to reliably acknowledge the revocation before it becomes real
+        - if the player reaches a state where it appears that all other players are ready during this process, they reliably send the same input that they originally revoked
+        - this can also be done if the player cancels their revocation. the only valid input during a revocation state that has not been fully confirmed is the input being revoked, which cancels the revocation
+        - if a player receives a revocation request after they believe everyone to be ready, they send a reliable non-acknowledgement packet
+- rollback mode for realtime gameplay
+    - rollback packets received during lockstep mode are ignored, so pseudo packet loss is expected at the start of a rollback segment
+    - players keep a log of inputs (ABXY, d-pad, select, start) per frame
+    - inputs are run-length encoded and sent to all other players
+    - the history is repeatedly unreliably sent to all other players, along with a counter for the other player's last received input
+    - the game can pause and wait for players to catch up if the last received input counter for a player is too far behind the current player's (adjusted by ping)
+    - two states are kept; the latest known frame that all players agree on and the current frame for the current player
+    - when an input in the past is received, the early state is either updated (if all players have submitted that frame's input) or copied to the current state and updated back to the current player's current frame
+    - if a player's input is unknown, it is assumed to be the same as their previous input, with the first input on the frame when rollback begins being "all buttons released"
+    - differences between the previous and next "current" state must be accounted for. animations update to the point where they would be had the input been known all along. sounds can be cancelled or started already partially through their runtime if needed.
+
+network state transitions
+- initial setup happens using reliable packets
+- lockstep mode can start rollback mode at any time
+- rollback mode can end itself only when all players have confirmed the frame where rollback ends
+- when rollback mode ends, it rolls back to the frame where it would have ended in perfect networking conditions
+- at any time, a player can crash, desync, or quit, resulting in the match ending with a partial recording and an error report
+
+DATA FORMAT
+
+container
+- magic: starts with the bytes 61 a4 1c 87 b7 7e 0e 30 (first 8 bytes of sha256("Spy Cards Online"))
+- all fields are uvarints unless otherwise specified
+- field: format revision (currently always 0; for future expansion)
+- field: container type (enum)
+    - GAME_MODE_SUMMARY = 0
+    - GAME_MODE = 1
+    - RECORDING = 2
+    - ERROR_REPORT = 3
+- field: game version (3 uvarints; for the first version of godot spy cards online this will be 0, 4, 0)
+- field: timestamp (unix timestamp in milliseconds; upload or modification time for game mode + summary, match start time for recording + error report)
+- field: number of embedded files
+- repeated (count = number of embedded files):
+    - field (bytesvar): file id
+    - field (bytesvar): content
+    - file id must be unique in this list
+    - file id must be one of the local types (local PNG, local OPUS, local GLTF)
+    - when a mode is uploaded, these are converted to uploaded types and replaced within the mode
+    - cannot upload recordings with any embedded files (but they can be saved locally)
+- remaining fields are specific to container type
+
+game mode summary
+- TODO
+
+game mode
+- initial fields are the same as game mode summary
+- TODO
+
+recording
+- initial fields are the same as game mode
+- field: game mode variant index
+- repeated (count = number of bug players in the variant):
+    - field (stringvar): display name
+    - field: character id
+    - field: deck size
+    - repeated (count = deck size):
+        - field: card id
+- field (bytesvar): shared seed
+- field: number of rounds
+- repeated (count = number of rounds):
+    - field: enum value representing round type:
+        - CHOICE = 0
+        - REALTIME = 1
+    - field (bytesvar): state checksum
+    - repeated (count = number of bug players in the variant):
+        - field (bytesvar): personal seed
+        - if round type is CHOICE:
+            - field: number of cards chosen
+            - repeated (count = number of cards chosen):
+                - field: card index
+        - if round type is REALTIME:
+            - field: number of input changes in recording
+            - repeated (count = number of input changes):
+                - field: bitfield of input state
+                - field: number of frames this state lasts for, minus one
+            - field (bytesvar): personal seed after
+    - if round type is REALTIME:
+        - field (bytesvar): state checksum after realtime ends
+- field (bytesvar): state checksum at end of match
+
+error report
+- TODO
+
+network protocol (overview)
+- matchmaking server server-side parts already implemented (see server/signaling-server-2.go in the parent repo)
+- connection handshake is godot's webrtc implementation (not specified here)
+- game uses reliable and ordered unreliable RPC messages for communication
+- players are connected in a mesh configuration (every player is talking directly to every other player, so for a match with n players, there are (n)(n-1)/2 total connections, (n-1) per player)
+- technically allows up to 255 bug players (as opposed to bot), but good luck getting that many
+- all information is known to all computers to simplify implementation and calculations
+- initial random seed is generated on player 1's computer
+- random seed for each round is generated by concatenating random bytes from each player
+- only inputs, randomness, and checksums are sent; all other data and computations are done locally for each player
+
+network protocol (init)
+- RELIABLE PEER: all players send service worker cache hash upon connect and compare to their own; if mismatch, the match is aborted and players are told to refresh
+- RELIABLE PEER: p1 sends initial random seed, match init timestamp, game mode data, and any embedded files to all other players upon connect
+- RELIABLE BROADCAST: each player broadcasts their display name and chosen character once they have selected
+- RELIABLE BROADCAST: each player broadcasts their initial deck once they have selected
+- Note: if a player connects after a broadcast has occurred, that information is sent to them upon connect.
+- Once a player has sent both broadcasts and received both broadcasts from every other player, the match begins, initially looping in lockstep mode.
+
+network protocol (lockstep):
+- The match is simulated until a CHOICE command is reached.
+- The state of the match is saved and every operation until the CHOICE command resolves is reverted and re-applied every time any input data changes.
+- RELIABLE BROADCAST: when the CHOICE command is reached, each player generates 4 random bytes and computes a checksum of the match state. This data is sent to all other players. If the checksum differs, the match is aborted. The random seed that will be used after the CHOICE command is resolved is the initial random seed concatenated with the random bytes from each player, in player number order.
+- Note: CHOICE commands select zero or one card grid for each player; each player then selects zero or more cards in order. The game mode is able to specify a function that computes whether a given choice is valid and update the UI locally. Unlike previous versions of Spy Cards Online, the choices are ordered.
+- UNRELIABLE BROADCAST: whenever the player's choice is changed, they send their current list of selections to all other players. this is ignored if the player has confirmed their choices reliably. the game mode can use this information to adjust the UI to indicate which choices the opposing players are in the process of making.
+- RELIABLE BROADCAST: when the player's choices are confirmed, the list of selections is sent to all other players.
+- RELIABLE BROADCAST: if a player wants to go back to choosing after they have confirmed, they can request that other players un-confirm their choices.
+- RELIABLE PEER: when a revert request is received, as long as the CHOICE command has not resolved yet, send back a message indicating acknowledgement of the request. if the CHOICE command has resolved already, send back a message indicating refusal of the message.
+- RELIABLE BROADCAST: if refusal is received or all other players have confirmed their choices before all the acknowledgements have been received, the player sends the same choices that they initially tried to revert. otherwise, if the revert succeeds, the player goes back to choosing normally.
+
+network protocol (rollback):
+- RELIABLE BROADCAST: When a REALTIME command is reached, players synchronize random bytes and checksums the same way as in lockstep mode
+- Once all players have synchronized random bytes and checksums, rollback mode begins.
+- Inputs (up, down, left, right, a, b, x, y, select, start) are recorded at 60Hz.
+- Two copies of the game state are kept: the "ground truth" state, which is simulated up until the inputs that have been received for all players, and the "future" state, which is simulated as if all players had kept holding the buttons they are currently holding until the time of the local player's latest input.
+- REALTIME mode can only end in the "groud truth" state; the "future" state pauses if it reaches the end of REALTIME mode.
+- UNRELIABLE PEER: Players send to each peer: their current starting frame number, the last frame number they have received from the peer, a run length encoded list of inputs since their starting frame, and the last two checksums of the ground truth state, computed at an interval of two times the maximum frame count difference.
+- A player's starting frame number for a given peer is the last acknowledged frame number they have received from that peer.
+- If the maximum frame count difference is reached, the game pauses and tries to wait for clocks to sync back up [TODO: check how GGPO does this].
+- RELIABLE BROADCAST: When the REALTIME command terminates, players synchronize again and the match logic continues in lockstep mode.
+
+network protocol (abort):
+- TODO
+
+network protocol (finalize):
+- TODO
+- RELIABLE BROADCAST: if a player wants a rematch, they send a packet requesting a rematch
+    - if a player sends the packet and receives it from all other players, player 1 chooses a new shared seed and then the match restarts from the deck picking phase (characters and display names stay the same; rematches variable incremented by 1)
+    - if an abort is received from any player, the rematch button is disabled
+
+EDITOR

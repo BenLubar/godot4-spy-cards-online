@@ -20,10 +20,12 @@ protected:
 	static void _bind_methods();
 
 public:
+	// immutable state
 	DECLARE_PROPERTY(String, player_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
 	DECLARE_PROPERTY(TypedArray<enums::CardDef::Card>, initial_deck);
 
+	// mutable state
 	DECLARE_PROPERTY(TypedArray<JigsawSideLocation>, locations);
 	DECLARE_PROPERTY(TypedArray<NumericValue>, stats);
 

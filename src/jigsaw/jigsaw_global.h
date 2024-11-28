@@ -42,7 +42,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<JigsawSide>, sides);
 
 	DECLARE_PROPERTY(double, time_scale, = 1.0);
-	DECLARE_PROPERTY(double, pause_time, = 0.0);
+	DECLARE_PROPERTY(uint32_t, pause_frames, = 0);
 	DECLARE_PROPERTY(TypedArray<JigsawContext>, context_stack);
 
 	DECLARE_PROPERTY(TypedArray<Node3D>, scene_nodes);

@@ -22,11 +22,33 @@
 		</method>
 	</methods>
 	<members>
-		<member name="container_type" type="int" setter="set_container_type" getter="get_container_type" enum="DataContainer.ContainerType" default="0">
+		<member name="container_type" type="int" setter="set_container_type" getter="get_container_type" enum="DataContainer.ContainerType" default="1">
+		</member>
+		<member name="data_files" type="EmbeddedDataFile[]" setter="set_data_files" getter="get_data_files" default="[]">
+		</member>
+		<member name="final_checksum" type="PackedByteArray" setter="set_final_checksum" getter="get_final_checksum" default="PackedByteArray()">
 		</member>
 		<member name="format_revision" type="int" setter="set_format_revision" getter="get_format_revision" enum="DataContainer.FormatRevision" default="0">
 		</member>
 		<member name="game_version" type="Vector3i" setter="set_game_version" getter="get_game_version" default="Vector3i(0, 0, 0)">
+		</member>
+		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
+		</member>
+		<member name="mode_public_name" type="String" setter="set_mode_public_name" getter="get_mode_public_name" default="&quot;&quot;">
+		</member>
+		<member name="mode_public_revision" type="int" setter="set_mode_public_revision" getter="get_mode_public_revision" default="0">
+		</member>
+		<member name="mode_summary" type="GameModeSummary" setter="set_mode_summary" getter="get_mode_summary">
+		</member>
+		<member name="player_data" type="RecordingPlayerData[]" setter="set_player_data" getter="get_player_data" default="[]">
+		</member>
+		<member name="rematches" type="int" setter="set_rematches" getter="get_rematches" default="0">
+		</member>
+		<member name="rounds" type="RecordingRoundData[]" setter="set_rounds" getter="get_rounds" default="[]">
+		</member>
+		<member name="selected_variant" type="int" setter="set_selected_variant" getter="get_selected_variant" default="0">
+		</member>
+		<member name="shared_seed" type="PackedByteArray" setter="set_shared_seed" getter="get_shared_seed" default="PackedByteArray()">
 		</member>
 		<member name="timestamp" type="int" setter="set_timestamp" getter="get_timestamp" default="0">
 		</member>
@@ -36,9 +58,9 @@
 		</constant>
 		<constant name="FORMAT_0" value="0" enum="FormatRevision">
 		</constant>
-		<constant name="GAME_MODE" value="0" enum="ContainerType">
+		<constant name="GAME_MODE_SUMMARY" value="0" enum="ContainerType">
 		</constant>
-		<constant name="GAME_MODE_SUMMARY" value="1" enum="ContainerType">
+		<constant name="GAME_MODE" value="1" enum="ContainerType">
 		</constant>
 		<constant name="RECORDING" value="2" enum="ContainerType">
 		</constant>

@@ -96,6 +96,18 @@ IMPLEMENT_TYPE_GETTER(Modifier, modifier);
 IMPLEMENT_TYPE_GETTER(Effect, effect);
 IMPLEMENT_TYPE_GETTER(NPC, npc);
 
+Ref<CharacterDef> GameMode::get_character(enums::CharacterDef::Character id) const {
+	static_assert(enums::CharacterDef::FIRST_CUSTOM == 0);
+
+	if (id == enums::CharacterDef::NONE) {
+		return Ref<CharacterDef>();
+	}
+
+	ERR_FAIL_INDEX_V(id, _characters.size(), Ref<CharacterDef>());
+
+	return _characters[id];
+}
+
 #define IMPLEMENT_TYPE_GETTER_NO_VALIDITY_CHECK(Type, type) \
 	Ref<Type##Def> GameMode::get_##type(enums::Type##Def::Type id) const { \
 		if (id < enums::Type##Def::FIRST_CUSTOM) { \

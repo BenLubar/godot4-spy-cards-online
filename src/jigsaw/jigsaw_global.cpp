@@ -13,7 +13,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSide, sides);
 
 	BIND_PROPERTY(Variant::FLOAT, time_scale);
-	BIND_PROPERTY(Variant::FLOAT, pause_time);
+	BIND_PROPERTY(Variant::INT, pause_frames);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawContext, context_stack);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(Node3D, scene_nodes);
@@ -41,7 +41,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSide>, sides);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, pause_time);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, uint32_t, pause_frames);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawContext>, context_stack);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<Node3D>, scene_nodes);

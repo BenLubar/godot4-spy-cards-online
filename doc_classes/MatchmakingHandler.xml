@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="MatchmakingHandler" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="acknowledge_repick">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="choices_confirmed">
+			<return type="void" />
+			<param index="0" name="picked_cards" type="PackedInt64Array" />
+			<description>
+			</description>
+		</method>
+		<method name="choices_preview">
+			<return type="void" />
+			<param index="0" name="picked_cards" type="PackedInt64Array" />
+			<description>
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="create_lobby">
+			<return type="void" />
+			<param index="0" name="game_mode_container" type="DataContainer" />
+			<param index="1" name="selected_variant" type="int" />
+			<param index="2" name="mode_public_name" type="String" default="&quot;&quot;" />
+			<param index="3" name="mode_public_revision" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="fatal_error_encountered">
+			<return type="void" />
+			<param index="0" name="message" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="find_remote_connection" qualifiers="const">
+			<return type="MatchmakingConnection" />
+			<description>
+			</description>
+		</method>
+		<method name="init_game_data">
+			<return type="void" />
+			<param index="0" name="game_mode_container_bytes" type="PackedByteArray" />
+			<param index="1" name="selected_variant" type="int" />
+			<param index="2" name="mode_public_name" type="String" />
+			<param index="3" name="mode_public_revision" type="int" />
+			<param index="4" name="match_start_timestamp" type="int" />
+			<param index="5" name="shared_seed" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="join_lobby">
+			<return type="void" />
+			<param index="0" name="lobby_id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="notify_loaded_mode">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="ping">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="frames_behind" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="pong">
+			<return type="void" />
+			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="realtime_update">
+			<return type="void" />
+			<param index="0" name="acknowledge_frame" type="int" />
+			<param index="1" name="starting_frame" type="int" />
+			<param index="2" name="packed_inputs" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="reject_repick">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="request_repick">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_local_player_cosmetic_data">
+			<return type="void" />
+			<param index="0" name="display_name" type="String" />
+			<param index="1" name="character" type="int" enum="CharacterDef.Character" />
+			<description>
+			</description>
+		</method>
+		<method name="set_local_player_initial_deck">
+			<return type="void" />
+			<param index="0" name="deck" type="int[]" />
+			<description>
+			</description>
+		</method>
+		<method name="set_player_cosmetic_data">
+			<return type="void" />
+			<param index="0" name="display_name" type="String" />
+			<param index="1" name="character" type="int" enum="CharacterDef.Character" />
+			<description>
+			</description>
+		</method>
+		<method name="set_player_initial_deck">
+			<return type="void" />
+			<param index="0" name="packed_deck" type="PackedInt64Array" />
+			<description>
+			</description>
+		</method>
+		<method name="state_advance">
+			<return type="void" />
+			<param index="0" name="state_checksum" type="PackedByteArray" />
+			<param index="1" name="next_random_seed" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections" default="[]">
+		</member>
+		<member name="crypto" type="Crypto" setter="set_crypto" getter="get_crypto">
+		</member>
+		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config" default="{ &quot;iceServers&quot;: [{ &quot;urls&quot;: [&quot;stun:stun.cloudflare.com:3478&quot;] }] }">
+		</member>
+		<member name="lobby_id" type="String" setter="set_lobby_id" getter="get_lobby_id" default="&quot;&quot;">
+		</member>
+		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players" default="0">
+		</member>
+		<member name="peer" type="WebRTCMultiplayerPeer" setter="set_peer" getter="get_peer">
+		</member>
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
+		</member>
+		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
+		</member>
+		<member name="state" type="int" setter="set_state" getter="get_state" enum="MatchmakingHandler.MatchState" default="0">
+		</member>
+		<member name="verification_code" type="String" setter="set_verification_code" getter="get_verification_code" default="&quot;&quot;">
+		</member>
+	</members>
+	<signals>
+		<signal name="lobby_created">
+			<param index="0" name="lobby_id" type="String" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="SHARED_SEED_LENGTH" value="32">
+		</constant>
+		<constant name="INIT_WAIT" value="0" enum="MatchState">
+			Waiting for Authority (player 1) to send game static data and initial random seed.
+		</constant>
+		<constant name="ABORTED" value="1" enum="MatchState">
+			One or more players encountered a fatal error.
+		</constant>
+		<constant name="COSMETIC" value="2" enum="MatchState">
+			Selecting player character and display name.
+		</constant>
+		<constant name="DECK" value="3" enum="MatchState">
+			Selecting cards for deck.
+		</constant>
+		<constant name="START_WAIT" value="4" enum="MatchState">
+			Player character, display name, and deck selected. Waiting for other players to begin.
+		</constant>
+		<constant name="RESOLVE" value="5" enum="MatchState">
+			Match is processing Jigsaw commands autonomously - waiting for the game mode to request user input.
+		</constant>
+		<constant name="CHOICE" value="6" enum="MatchState">
+			Players are being prompted to select cards - waiting for all players to confirm their choices.
+		</constant>
+		<constant name="REALTIME" value="7" enum="MatchState">
+			Game mode is running using rollback netcode and live inputs.
+		</constant>
+		<constant name="REALTIME_WAIT" value="8" enum="MatchState">
+			Consensus state has reached the end of the REALTIME command - waiting for all players to synchronize.
+		</constant>
+		<constant name="FINALIZE" value="9" enum="MatchState">
+			Match is over - waiting for final confirmation.
+		</constant>
+		<constant name="COMPLETED" value="10" enum="MatchState">
+			Match is over and confirmed - player being prompted to request a rematch.
+		</constant>
+		<constant name="REMATCH_WAIT" value="11" enum="MatchState">
+			Match is over and confirmed - player is requesting a rematch.
+		</constant>
+		<constant name="REMATCH_ABORTED" value="12" enum="MatchState">
+			Match is over and confirmed - one or more players has left.
+		</constant>
+	</constants>
+</class>

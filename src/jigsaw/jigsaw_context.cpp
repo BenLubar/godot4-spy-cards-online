@@ -415,7 +415,7 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 	ERR_FAIL_COND_V(is_in_progress(), create_error("internal error: a procedure was already running in this context"));
 	ERR_FAIL_COND_V(procedure.is_null(), create_error("internal error: null procedure"));
 
-	get_global()->set_pause_time(0.0);
+	get_global()->set_pause_frames(0);
 
 	set_procedure(procedure);
 	set_arguments(args);
@@ -445,7 +445,7 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
 	ERR_FAIL_COND_V(!is_in_progress(), create_error("internal error: no procedure was running in this context"));
 
-	get_global()->set_pause_time(0.0);
+	get_global()->set_pause_frames(0);
 
 	Ref<JigsawError> err;
 	bool new_command = false;

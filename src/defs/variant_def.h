@@ -18,6 +18,7 @@ protected:
 public:
 	DECLARE_PROPERTY(String, title);
 	DECLARE_PROPERTY(int64_t, player_count, = 2);
+	DECLARE_PROPERTY_IS(bool, arcade_names, = false);
 	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, npcs);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerVariant>, triggers);
 

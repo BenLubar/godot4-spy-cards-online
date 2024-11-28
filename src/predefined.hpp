@@ -1,3 +1,4 @@
+#include <godot_cpp/classes/gd_script.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 template<typename T>
@@ -12,6 +13,12 @@ struct PredefinedScriptKey
 		static constexpr char name[] = #m_name; \
 	}
 
+inline Ref<GDScript> get_predefined_defs() {
+	static LazyGlobal<GDScript> defs{ []() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://predefined/predefined.gd", "GDScript"); } };
+
+	return defs;
+}
+
 template<typename T, typename E>
 Ref<T> get_predefined(E index)
 {
@@ -19,8 +26,7 @@ Ref<T> get_predefined(E index)
 		return Ref<T>();
 	}
 
-	// TODO: more efficient way of doing this than calling load every time
-	Ref<Resource> predefined_defs = ResourceLoader::get_singleton()->load("res://predefined/predefined.gd", "GDScript");
+	Ref<GDScript> predefined_defs = get_predefined_defs();
 	ERR_FAIL_COND_V_MSG(predefined_defs.is_null(), Ref<T>(), "failed to load predefined defs script");
 
 	Array predefined = predefined_defs->get(PredefinedScriptKey<T>::name);

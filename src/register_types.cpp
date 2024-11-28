@@ -123,10 +123,17 @@
 #include "node/card_grid.h"
 
 #include "protocol/data_container.h"
+#include "protocol/embedded_data_file.h"
+#include "protocol/recording_player_data.h"
+#include "protocol/recording_round_data.h"
+#include "protocol/recording_round_player_data.h"
+#include "protocol/matchmaking_handler.h"
+#include "protocol/matchmaking_connection.h"
 #include "defs/game_mode_summary.h"
 #include "defs/game_mode.h"
 #include "protocol/recording.h"
 #include "protocol/recording_round.h"
+#include "protocol/button_input_history.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -286,10 +293,17 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CardGrid3D);
 
 	GDREGISTER_CLASS(DataContainer);
+	GDREGISTER_CLASS(EmbeddedDataFile);
+	GDREGISTER_CLASS(RecordingPlayerData);
+	GDREGISTER_CLASS(RecordingRoundData);
+	GDREGISTER_CLASS(RecordingRoundPlayerData);
+	GDREGISTER_CLASS(MatchmakingHandler);
+	GDREGISTER_CLASS(MatchmakingConnection);
 	GDREGISTER_CLASS(GameModeSummary);
 	GDREGISTER_CLASS(GameMode);
 	GDREGISTER_CLASS(Recording);
 	GDREGISTER_CLASS(RecordingRound);
+	GDREGISTER_ABSTRACT_CLASS(ButtonInputHistory);
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

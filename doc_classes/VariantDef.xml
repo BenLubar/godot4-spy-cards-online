@@ -7,6 +7,8 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="arcade_names" type="bool" setter="set_arcade_names" getter="is_arcade_names" default="false">
+		</member>
 		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs" default="[]">
 		</member>
 		<member name="player_count" type="int" setter="set_player_count" getter="get_player_count" default="2">

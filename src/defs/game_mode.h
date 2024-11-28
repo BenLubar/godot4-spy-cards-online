@@ -66,6 +66,7 @@ public:
 	Ref<ModifierDef> get_modifier(enums::ModifierDef::Modifier id) const;
 	Ref<EffectDef> get_effect(enums::EffectDef::Effect id) const;
 	Ref<NPCDef> get_npc(enums::NPCDef::NPC id) const;
+	Ref<CharacterDef> get_character(enums::CharacterDef::Character id) const;
 	Ref<VariableDef> get_variable(enums::VariableDef::Variable id) const;
 	Ref<LocationDef> get_location(enums::LocationDef::Location id) const;
 };

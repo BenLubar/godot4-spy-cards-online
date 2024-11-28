@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ButtonInputHistory" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_current_inputs" qualifiers="static">
+			<return type="int" enum="ButtonInputHistory.InputButton" is_bitfield="true" />
+			<description>
+			</description>
+		</method>
+		<method name="pack_inputs" qualifiers="static">
+			<return type="PackedByteArray" />
+			<param index="0" name="unpacked_inputs" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="unpack_inputs" qualifiers="static">
+			<return type="PackedByteArray" />
+			<param index="0" name="packed_inputs" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="UP" value="1" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="DOWN" value="2" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="LEFT" value="4" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="RIGHT" value="8" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="CONFIRM" value="16" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="CANCEL" value="32" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="SWITCH" value="64" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="TOGGLE" value="128" enum="InputButton" is_bitfield="true">
+		</constant>
+	</constants>
+</class>

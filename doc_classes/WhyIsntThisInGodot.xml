@@ -21,5 +21,10 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_project_version_vector" qualifiers="static">
+			<return type="Vector3i" />
+			<description>
+			</description>
+		</method>
 	</methods>
 </class>

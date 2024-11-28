@@ -11,8 +11,6 @@
 
 using namespace godot;
 
-#include "predefined.hpp"
-
 #define DECLARE_PROPERTY(m_type, m_name, ...) \
 private: \
 	m_type _##m_name __VA_ARGS__; \
@@ -165,7 +163,12 @@ class LazyGlobal
 	Ref<T> (*_init)();
 	mutable Ref<T> _ref;
 
-	void _maybe_init() const { if (_ref.is_null()) { _ref = _init(); _free_lazy_globals.append([this]() -> void { _ref = Ref<T>(); }); } }
+	void _maybe_init() const {
+		if (_ref.is_null()) {
+			_ref = _init();
+			_free_lazy_globals.append([this]() -> void { _ref = Ref<T>(); });
+		}
+	}
 public:
 	LazyGlobal(Ref<T> (*init)()) : _init(init) {}
 
@@ -174,5 +177,29 @@ public:
 	T *operator->() const { _maybe_init(); return _ref.ptr(); }
 	void operator=(const Ref<T> &ref) { _ref = ref; }
 };
+
+template<typename T>
+class LazyGlobalNode
+{
+	T *(*_init)();
+	mutable ObjectID _node;
+
+	void _maybe_init() const {
+		if (_node.is_null()) {
+			T *node = _init();
+			_node = node ? node->get_instance_id() : ObjectID();
+			_free_lazy_globals.append([this]() -> void { if (_node.is_valid()) this->queue_free(); });
+		}
+	}
+public:
+	LazyGlobalNode(T *(*init)()) : _init(init) {}
+
+	operator T *() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
+	T *operator*() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
+	T *operator->() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
+	void operator=(T *node) { _node = node ? node->get_instance_id() : ObjectID(); }
+};
+
+#include "predefined.hpp"
 
 #endif // DRY_H
