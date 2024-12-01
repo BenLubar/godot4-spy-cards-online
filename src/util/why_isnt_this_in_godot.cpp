@@ -12,9 +12,9 @@ void WhyIsntThisInGodot::_bind_methods() {
 
 String WhyIsntThisInGodot::find_builtin_enum_key_name(const StringName &type, const StringName &enum_name, int64_t enum_value) {
 	PackedStringArray names = ClassDB::class_get_enum_constants(type, enum_name);
-	for (const String name : names) {
-		if (ClassDB::class_get_integer_constant(type, name) == enum_value) {
-			return name;
+	for (int64_t i = 0; i < names.size(); i++) {
+		if (ClassDB::class_get_integer_constant(type, names[i]) == enum_value) {
+			return names[i];
 		}
 	}
 
