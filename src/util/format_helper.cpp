@@ -66,14 +66,14 @@ int64_t FormatHelper::_reserve_write(int64_t length) {
 	return off;
 }
 
-Ref<FormatHelper> FormatHelper::read(String name, PackedByteArray buf) {
+Ref<FormatHelper> FormatHelper::read(const String &name, const PackedByteArray &buf) {
 	Ref<FormatHelper> fh;
 	fh.instantiate();
 	fh->set_debug_name(name);
 	fh->set_buffer(buf);
 	return fh;
 }
-Ref<FormatHelper> FormatHelper::write(String name) {
+Ref<FormatHelper> FormatHelper::write(const String &name) {
 	Ref<FormatHelper> fh;
 	fh.instantiate();
 	fh->set_debug_name(name);

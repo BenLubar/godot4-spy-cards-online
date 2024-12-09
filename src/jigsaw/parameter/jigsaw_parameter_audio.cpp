@@ -6,6 +6,6 @@ void JigsawParameterAudio::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_NOT_SAVED(AudioStreamWAV, audio);
 }
 
-IMPLEMENT_PROPERTY(JigsawParameterAudio, double, loop_start);
-IMPLEMENT_PROPERTY(JigsawParameterAudio, double, loop_end);
+IMPLEMENT_PROPERTY(JigsawParameterAudio, float, loop_start);
+IMPLEMENT_PROPERTY(JigsawParameterAudio, float, loop_end);
 IMPLEMENT_PROPERTY(JigsawParameterAudio, Ref<AudioStreamWAV>, audio);

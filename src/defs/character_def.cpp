@@ -38,13 +38,13 @@ IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, idle0);
 IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, idle1);
 IMPLEMENT_PROPERTY(CharacterDef, enums::IconDef::Icon, angry);
 
-IMPLEMENT_PROPERTY(CharacterDef, double, idle0_center_px);
-IMPLEMENT_PROPERTY(CharacterDef, double, idle1_center_px);
-IMPLEMENT_PROPERTY(CharacterDef, double, angry_center_px);
+IMPLEMENT_PROPERTY(CharacterDef, float, idle0_center_px);
+IMPLEMENT_PROPERTY(CharacterDef, float, idle1_center_px);
+IMPLEMENT_PROPERTY(CharacterDef, float, angry_center_px);
 
-IMPLEMENT_PROPERTY(CharacterDef, double, pixel_size);
+IMPLEMENT_PROPERTY(CharacterDef, float, pixel_size);
 IMPLEMENT_PROPERTY(CharacterDef, Vector2, portrait_offset);
-IMPLEMENT_PROPERTY(CharacterDef, double, portrait_scale);
+IMPLEMENT_PROPERTY(CharacterDef, float, portrait_scale);
 IMPLEMENT_PROPERTY(CharacterDef, bool, portrait_crop_top);
 IMPLEMENT_PROPERTY(CharacterDef, bool, portrait_crop_front);
 

@@ -30,7 +30,7 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, portrait, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
 	DECLARE_PROPERTY(TypedArray<EffectInstance>, effects);
-	DECLARE_PROPERTY(double, curve_adjust, = 0.0);
+	DECLARE_PROPERTY(float, curve_adjust, = 0.0f);
 
 	DEFAULT_TO_STRING();
 };

@@ -11,6 +11,8 @@
 		</member>
 		<member name="back_cheer" type="int" setter="set_back_cheer" getter="get_back_cheer" enum="IconDef.Icon" default="-1">
 		</member>
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		</member>
 		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon" default="-1">
 		</member>
 		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon" default="-1">

@@ -2,6 +2,7 @@
 
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"
 #include "jigsaw/parameter/jigsaw_parameter_boolean.h"
+#include "jigsaw/parameter/jigsaw_parameter_card.h"
 #include "jigsaw/parameter/jigsaw_parameter_card_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"
@@ -202,6 +203,87 @@ TypedArray<JigsawParameter> JigsawProcedureModifierExtendedDescribe::get_results
 }
 PackedStringArray JigsawProcedureModifierExtendedDescribe::get_result_names() const {
 	return PackedStringArray{"tooltips"};
+}
+
+void JigsawProcedureNPCBuildDeck::_bind_methods() {}
+String JigsawProcedureNPCBuildDeck::get_editor_name() const {
+	return "TODO"; // TODO
+}
+String JigsawProcedureNPCBuildDeck::get_editor_description() const {
+	return "TODO"; // TODO
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCBuildDeck::get_arguments() const {
+	return TypedArray<JigsawParameter>();
+}
+PackedStringArray JigsawProcedureNPCBuildDeck::get_argument_names() const {
+	return PackedStringArray{};
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCBuildDeck::get_results() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		))
+	);
+}
+PackedStringArray JigsawProcedureNPCBuildDeck::get_result_names() const {
+	return PackedStringArray{"cards"};
+}
+
+void JigsawProcedureNPCDecideChoice::_bind_methods() {}
+String JigsawProcedureNPCDecideChoice::get_editor_name() const {
+	return "TODO"; // TODO
+}
+String JigsawProcedureNPCDecideChoice::get_editor_description() const {
+	return "TODO"; // TODO
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCDecideChoice::get_arguments() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCardInstance::make(Ref<CardInstance>())
+		))
+	);
+}
+PackedStringArray JigsawProcedureNPCDecideChoice::get_argument_names() const {
+	return PackedStringArray{"options"};
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCDecideChoice::get_results() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCardInstance::make(Ref<CardInstance>())
+		))
+	);
+}
+PackedStringArray JigsawProcedureNPCDecideChoice::get_result_names() const {
+	return PackedStringArray{"choices"};
+}
+
+void JigsawProcedureNPCDecideRealtime::_bind_methods() {}
+String JigsawProcedureNPCDecideRealtime::get_editor_name() const {
+	return "TODO"; // TODO
+}
+String JigsawProcedureNPCDecideRealtime::get_editor_description() const {
+	return "TODO"; // TODO
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCDecideRealtime::get_arguments() const {
+	return TypedArray<JigsawParameter>();
+}
+PackedStringArray JigsawProcedureNPCDecideRealtime::get_argument_names() const {
+	return PackedStringArray{};
+}
+TypedArray<JigsawParameter> JigsawProcedureNPCDecideRealtime::get_results() const {
+	return Array::make(
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false),
+		JigsawParameterBoolean::make(false)
+	);
+}
+PackedStringArray JigsawProcedureNPCDecideRealtime::get_result_names() const {
+	return PackedStringArray{"up", "down", "left", "right", "confirm", "cancel", "switch", "toggle"};
 }
 
 void JigsawProcedureStickerShouldShow::_bind_methods() {}

@@ -8,7 +8,7 @@ void JigsawParameterFileIDOpus::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterFileIDOpus, PackedByteArray, file_id);
 
-Ref<JigsawParameterFileIDOpus> JigsawParameterFileIDOpus::make(PackedByteArray file_id, double loop_start, double loop_end) {
+Ref<JigsawParameterFileIDOpus> JigsawParameterFileIDOpus::make(PackedByteArray file_id, float loop_start, float loop_end) {
 	Ref<JigsawParameterFileIDOpus> param;
 	param.instantiate();
 	param->set_file_id(file_id);

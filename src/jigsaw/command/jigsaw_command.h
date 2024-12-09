@@ -17,6 +17,7 @@ class JigsawCommand : public Resource {
 
 public:
 	enum Type {
+		NONE = -1,
 		CRASH = 0,
 		COMMENT = 1,
 		FUNCTION = 2,

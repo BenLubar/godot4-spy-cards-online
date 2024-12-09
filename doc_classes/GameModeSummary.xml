@@ -23,7 +23,11 @@
 		</member>
 		<member name="latest_changes" type="String" setter="set_latest_changes" getter="get_latest_changes" default="&quot;&quot;">
 		</member>
+		<member name="mode_list_card_design" type="CardDesign" setter="set_mode_list_card_design" getter="get_mode_list_card_design">
+		</member>
 		<member name="mode_thumbnail" type="int" setter="set_mode_thumbnail" getter="get_mode_thumbnail" enum="IconDef.Icon" default="-1">
+		</member>
+		<member name="title" type="String" setter="set_title" getter="get_title" default="&quot;&quot;">
 		</member>
 	</members>
 </class>

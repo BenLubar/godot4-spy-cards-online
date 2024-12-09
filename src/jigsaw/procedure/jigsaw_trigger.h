@@ -1,7 +1,8 @@
 #ifndef JIGSAW_TRIGGER_H
 #define JIGSAW_TRIGGER_H
 
-#include "jigsaw_procedure.h"
+#include "jigsaw/procedure/jigsaw_procedure.h"
+#include "jigsaw/parameter/jigsaw_parameter_choice.h"
 
 class JigsawTrigger : public JigsawProcedure {
 	GDCLASS(JigsawTrigger, JigsawProcedure);
@@ -96,13 +97,13 @@ DECLARE_ENUM(JigsawTriggerVariant::Type);
 		__VA_ARGS__ \
 	}
 
-DECLARE_JIGSAW_TRIGGER(Effect, Custom, CUSTOM);
+DECLARE_JIGSAW_TRIGGER(Effect, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(Modifier, Custom, CUSTOM);
+DECLARE_JIGSAW_TRIGGER(Modifier, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(NPC, Custom, CUSTOM);
+DECLARE_JIGSAW_TRIGGER(NPC, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(Variant, Custom, CUSTOM);
+DECLARE_JIGSAW_TRIGGER(Variant, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 DECLARE_JIGSAW_TRIGGER(Variant, CosmeticInit, COSMETIC_INIT);
 DECLARE_JIGSAW_TRIGGER(Variant, CharacterInit, CHARACTER_INIT);
 DECLARE_JIGSAW_TRIGGER(Variant, DeckInit, DECK_INIT);

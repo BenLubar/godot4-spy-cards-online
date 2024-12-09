@@ -120,4 +120,4 @@ IMPLEMENT_PROPERTY(CardDef, String, name);
 IMPLEMENT_PROPERTY(CardDef, enums::IconDef::Icon, portrait);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<EffectInstance>, effects);
-IMPLEMENT_PROPERTY(CardDef, double, curve_adjust);
+IMPLEMENT_PROPERTY(CardDef, float, curve_adjust);

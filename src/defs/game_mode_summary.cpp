@@ -1,20 +1,24 @@
 #include "game_mode_summary.h"
 
 void GameModeSummary::_bind_methods() {
+	BIND_PROPERTY(Variant::STRING, title);
 	BIND_PROPERTY(Variant::STRING, author);
-	BIND_PROPERTY_ENUM(IconDef::Icon, mode_thumbnail);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, mode_thumbnail);
 	BIND_PROPERTY_MULTILINE_TEXT(description);
 	BIND_PROPERTY_MULTILINE_TEXT(latest_changes);
 	BIND_PROPERTY_RESOURCE_ARRAY(IconDef, custom_icons);
+	BIND_PROPERTY_RESOURCE(CardDesign, mode_list_card_design);
 
 	ClassDB::bind_method(D_METHOD("get_icon_texture", "icon"), &GameModeSummary::get_icon_texture);
 }
 
+IMPLEMENT_PROPERTY(GameModeSummary, String, title);
 IMPLEMENT_PROPERTY(GameModeSummary, String, author);
-IMPLEMENT_PROPERTY(GameModeSummary, IconDef::Icon, mode_thumbnail);
+IMPLEMENT_PROPERTY(GameModeSummary, enums::IconDef::Icon, mode_thumbnail);
 IMPLEMENT_PROPERTY(GameModeSummary, String, description);
 IMPLEMENT_PROPERTY(GameModeSummary, String, latest_changes);
 IMPLEMENT_PROPERTY(GameModeSummary, TypedArray<IconDef>, custom_icons);
+IMPLEMENT_PROPERTY(GameModeSummary, Ref<CardDesign>, mode_list_card_design);
 
 Ref<Texture2D> GameModeSummary::get_icon_texture(IconDef::Icon icon) const {
 	if (icon == IconDef::Icon::NONE) {

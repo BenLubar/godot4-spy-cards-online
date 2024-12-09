@@ -13,8 +13,8 @@ private:
 	int64_t _reserve_write(int64_t length);
 
 public:
-	static Ref<FormatHelper> read(String name, PackedByteArray buf);
-	static Ref<FormatHelper> write(String name);
+	static Ref<FormatHelper> read(const String &name, const PackedByteArray &buf);
+	static Ref<FormatHelper> write(const String &name);
 
 	DECLARE_PROPERTY(String, debug_name, = "unnamed buffer");
 	DECLARE_PROPERTY(PackedByteArray, buffer);
@@ -40,6 +40,11 @@ public:
 	void write_uvarint(uint64_t x);
 	int64_t read_svarint();
 	void write_svarint(int64_t x);
+
+	template<typename E, typename = std::enable_if_t<std::is_enum_v<E> && E::NONE == -1>>
+	E read_id();
+	template<typename E, typename = std::enable_if_t<std::is_enum_v<E> && E::NONE == -1>>
+	void write_id(E id);
 
 	uint8_t read_uint8();
 	void write_uint8(uint8_t x);
@@ -73,5 +78,20 @@ public:
 
 	DEFAULT_TO_STRING();
 };
+
+template<typename E, typename>
+E FormatHelper::read_id() {
+	static_assert(std::is_enum_v<E>);
+	static_assert(E::NONE == -1);
+
+	return static_cast<E>(int64_t(read_uvarint()) - 1);
+}
+template<typename E, typename>
+void FormatHelper::write_id(E id) {
+	static_assert(std::is_enum_v<E>);
+	static_assert(E::NONE == -1);
+
+	write_uvarint(uint64_t(int64_t(id) + 1));
+}
 
 #endif // FORMAT_HELPER_H

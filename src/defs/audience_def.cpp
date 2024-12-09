@@ -7,6 +7,7 @@ void AudienceDef::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(FIRST_CUSTOM);
 
+	BIND_PROPERTY(Variant::STRING, editor_name);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, front);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, front_cheer);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, back);
@@ -15,9 +16,10 @@ void AudienceDef::_bind_methods() {
 	BIND_PROPERTY(Variant::FLOAT, pixel_size);
 }
 
+IMPLEMENT_PROPERTY(AudienceDef, String, editor_name);
 IMPLEMENT_PROPERTY(AudienceDef, enums::IconDef::Icon, front);
 IMPLEMENT_PROPERTY(AudienceDef, enums::IconDef::Icon, front_cheer);
 IMPLEMENT_PROPERTY(AudienceDef, enums::IconDef::Icon, back);
 IMPLEMENT_PROPERTY(AudienceDef, enums::IconDef::Icon, back_cheer);
-IMPLEMENT_PROPERTY(AudienceDef, double, weight);
-IMPLEMENT_PROPERTY(AudienceDef, double, pixel_size);
+IMPLEMENT_PROPERTY(AudienceDef, float, weight);
+IMPLEMENT_PROPERTY(AudienceDef, float, pixel_size);

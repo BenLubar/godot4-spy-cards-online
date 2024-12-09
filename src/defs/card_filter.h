@@ -19,6 +19,8 @@ class CardFilter : public Resource {
 
 public:
 	enum Type {
+		NONE = -1,
+
 		AND = 0,
 		OR = 1,
 

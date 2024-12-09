@@ -50,8 +50,8 @@ IMPLEMENT_PROPERTY(FormattedText, String, text);
 IMPLEMENT_PROPERTY(FormattedText, enums::IconDef::Icon, icon);
 IMPLEMENT_PROPERTY(FormattedText, Ref<EffectInstance>, instance);
 IMPLEMENT_PROPERTY(FormattedText, Color, color);
-IMPLEMENT_PROPERTY(FormattedText, double, font_size);
-IMPLEMENT_PROPERTY(FormattedText, int64_t, table_columns);
+IMPLEMENT_PROPERTY(FormattedText, float, font_size);
+IMPLEMENT_PROPERTY(FormattedText, int32_t, table_columns);
 
 TypedArray<FormattedText> FormattedText::make_plain(String string) {
 	Ref<FormattedText> ft;

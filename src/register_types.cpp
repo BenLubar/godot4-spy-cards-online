@@ -176,6 +176,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawProcedureModifierDescribe);
 	GDREGISTER_CLASS(JigsawProcedureModifierSimpleDescribe);
 	GDREGISTER_CLASS(JigsawProcedureModifierExtendedDescribe);
+	GDREGISTER_CLASS(JigsawProcedureNPCBuildDeck);
+	GDREGISTER_CLASS(JigsawProcedureNPCDecideChoice);
+	GDREGISTER_CLASS(JigsawProcedureNPCDecideRealtime);
 	GDREGISTER_CLASS(JigsawProcedureStickerShouldShow);
 	GDREGISTER_CLASS(JigsawProcedureStatFormatCost);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);

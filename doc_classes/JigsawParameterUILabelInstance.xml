@@ -6,6 +6,14 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="make" qualifiers="static">
+			<return type="JigsawParameterUILabelInstance" />
+			<param index="0" name="label" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="label" type="int" setter="set_label" getter="get_label" default="-1">
 		</member>

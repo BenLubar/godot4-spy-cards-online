@@ -10,6 +10,7 @@
 class GameModeSummary;
 
 #include "defs/icon_def.h"
+#include "defs/card_design.h"
 
 class GameModeSummary : public Resource {
 	GDCLASS(GameModeSummary, Resource);
@@ -24,6 +25,7 @@ public:
 	DECLARE_PROPERTY(String, description);
 	DECLARE_PROPERTY(String, latest_changes);
 	DECLARE_PROPERTY(TypedArray<IconDef>, custom_icons);
+	DECLARE_PROPERTY(Ref<CardDesign>, mode_list_card_design);
 
 	Ref<Texture2D> get_icon_texture(IconDef::Icon icon) const;
 	DEFAULT_TO_STRING();

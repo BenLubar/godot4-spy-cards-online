@@ -12,8 +12,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(double, loop_start, = 0.0);
-	DECLARE_PROPERTY(double, loop_end, = 0.0);
+	DECLARE_PROPERTY(float, loop_start, = 0.0f);
+	DECLARE_PROPERTY(float, loop_end, = 0.0f);
 	DECLARE_PROPERTY(Ref<AudioStreamWAV>, audio);
 };
 

@@ -53,10 +53,17 @@ DECLARE_JIGSAW_PROCEDURE(JigsawProcedureEffectCurve);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureEffectDescribe);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureEffectSimpleDescribe);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureEffectExtendedDescribe);
+
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureModifierDescribe);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureModifierSimpleDescribe);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureModifierExtendedDescribe);
+
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureNPCBuildDeck);
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureNPCDecideChoice);
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureNPCDecideRealtime);
+
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureStickerShouldShow);
+
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureStatFormatCost);
 
 #endif // JIGSAW_PROCEDURE_H

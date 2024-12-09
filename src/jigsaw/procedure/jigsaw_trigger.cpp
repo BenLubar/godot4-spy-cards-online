@@ -10,7 +10,10 @@ void JigsawTrigger::_bind_methods() {
 }
 
 #define IMPLEMENT_CUSTOM_TRIGGER(m_type) \
-	void JigsawTrigger##m_type##Custom::_bind_methods() {} \
+	void JigsawTrigger##m_type##Custom::_bind_methods() { \
+		BIND_PROPERTY_RESOURCE(JigsawParameterChoice, custom_tag); \
+	} \
+	IMPLEMENT_PROPERTY(JigsawTrigger##m_type##Custom, Ref<JigsawParameterChoice>, custom_tag); \
 	String JigsawTrigger##m_type##Custom::get_editor_name() const { \
 		return "TODO"; \
 	} \

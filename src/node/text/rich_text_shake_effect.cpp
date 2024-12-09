@@ -21,9 +21,9 @@ static uint64_t rotate_i64(uint64_t i, int64_t rotate) {
 
 bool RichTextShakeEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char_fx) const {
 	Dictionary env = p_char_fx->get_environment();
-	double rate = env.get("rate", DEFAULT_RATE);
-	double strength = env.get("strength", DEFAULT_STRENGTH);
-	strength /= 10.0;
+	float rate = env.get("rate", DEFAULT_RATE);
+	float strength = env.get("strength", DEFAULT_STRENGTH);
+	strength /= 10.0f;
 
 	uint64_t prev_rand = env.get("_prev_rand", 0);
 	uint64_t cur_rand = env.get("_cur_rand", 0);

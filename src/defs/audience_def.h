@@ -16,12 +16,13 @@ protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(String, editor_name);
 	DECLARE_PROPERTY(enums::IconDef::Icon, front, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, front_cheer, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, back, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, back_cheer, = enums::IconDef::Icon::NONE);
-	DECLARE_PROPERTY(double, weight, = 1.0);
-	DECLARE_PROPERTY(double, pixel_size, = 0.01);
+	DECLARE_PROPERTY(float, weight, = 1.0f);
+	DECLARE_PROPERTY(float, pixel_size, = 0.01f);
 
 	DEFAULT_TO_STRING();
 };

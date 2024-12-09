@@ -8,7 +8,7 @@ void JigsawParameterCIDOpus::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawParameterCIDOpus, PackedByteArray, cid);
 
-Ref<JigsawParameterCIDOpus> JigsawParameterCIDOpus::make(PackedByteArray cid, double loop_start, double loop_end) {
+Ref<JigsawParameterCIDOpus> JigsawParameterCIDOpus::make(PackedByteArray cid, float loop_start, float loop_end) {
 	Ref<JigsawParameterCIDOpus> param;
 	param.instantiate();
 	param->set_cid(cid);

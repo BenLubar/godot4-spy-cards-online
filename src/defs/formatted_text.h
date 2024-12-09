@@ -57,8 +57,8 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, icon, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(Ref<EffectInstance>, instance);
 	DECLARE_PROPERTY(Color, color);
-	DECLARE_PROPERTY(double, font_size, = 1.0);
-	DECLARE_PROPERTY(int64_t, table_columns, = 0);
+	DECLARE_PROPERTY(float, font_size, = 1.0f);
+	DECLARE_PROPERTY(int32_t, table_columns, = 0);
 
 	DEFAULT_TO_STRING();
 

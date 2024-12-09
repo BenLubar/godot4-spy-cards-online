@@ -31,13 +31,13 @@ public:
 	DECLARE_PROPERTY(enums::IconDef::Icon, idle1, = enums::IconDef::Icon::NONE);
 	DECLARE_PROPERTY(enums::IconDef::Icon, angry, = enums::IconDef::Icon::NONE);
 
-	DECLARE_PROPERTY(double, idle0_center_px, = 0.0);
-	DECLARE_PROPERTY(double, idle1_center_px, = 0.0);
-	DECLARE_PROPERTY(double, angry_center_px, = 0.0);
+	DECLARE_PROPERTY(float, idle0_center_px, = 0.0f);
+	DECLARE_PROPERTY(float, idle1_center_px, = 0.0f);
+	DECLARE_PROPERTY(float, angry_center_px, = 0.0f);
 
-	DECLARE_PROPERTY(double, pixel_size, = 0.01);
+	DECLARE_PROPERTY(float, pixel_size, = 0.01f);
 	DECLARE_PROPERTY(Vector2, portrait_offset);
-	DECLARE_PROPERTY(double, portrait_scale, = 1.0);
+	DECLARE_PROPERTY(float, portrait_scale, = 1.0f);
 	DECLARE_PROPERTY(bool, portrait_crop_top, = false);
 	DECLARE_PROPERTY(bool, portrait_crop_front, = false);
 

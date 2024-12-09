@@ -19,8 +19,8 @@ private:
 public:
 	RichTextShakeEffect();
 
-	constexpr static double DEFAULT_RATE = 20.0;
-	constexpr static double DEFAULT_STRENGTH = 5.0;
+	constexpr static float DEFAULT_RATE = 20.0f;
+	constexpr static float DEFAULT_STRENGTH = 5.0f;
 
 	DECLARE_PROPERTY(String, bbcode, = "sc_shake");
 

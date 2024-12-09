@@ -7,7 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="arcade_names" type="bool" setter="set_arcade_names" getter="is_arcade_names" default="false">
+		<member name="content_warning" type="String" setter="set_content_warning" getter="get_content_warning" default="&quot;&quot;">
+		</member>
+		<member name="flags" type="int" setter="set_flags" getter="get_flags" enum="VariantDef.VariantFlags" is_bitfield="true" default="0">
 		</member>
 		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs" default="[]">
 		</member>
@@ -18,4 +20,8 @@
 		<member name="triggers" type="JigsawTriggerVariant[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
+	<constants>
+		<constant name="ARCADE_NAMES" value="1" enum="VariantFlags" is_bitfield="true">
+		</constant>
+	</constants>
 </class>

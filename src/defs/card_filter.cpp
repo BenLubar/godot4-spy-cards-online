@@ -5,6 +5,8 @@
 #include "jigsaw/parameter/jigsaw_parameter.h"
 
 void CardFilter::_bind_methods() {
+	BIND_ENUM_CONSTANT(NONE);
+
 	BIND_ENUM_CONSTANT(AND);
 	BIND_ENUM_CONSTANT(OR);
 

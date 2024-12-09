@@ -79,6 +79,8 @@
 		</member>
 	</members>
 	<constants>
+		<constant name="NONE" value="-1" enum="Type">
+		</constant>
 		<constant name="AND" value="0" enum="Type">
 		</constant>
 		<constant name="OR" value="1" enum="Type">

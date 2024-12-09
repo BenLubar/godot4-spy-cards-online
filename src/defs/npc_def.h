@@ -8,7 +8,7 @@
 
 class NPCDef;
 
-#include "jigsaw/procedure/jigsaw_command_list.h"
+#include "jigsaw/procedure/jigsaw_procedure.h"
 #include "jigsaw/procedure/jigsaw_trigger.h"
 
 class NPCDef : public Resource {
@@ -23,9 +23,10 @@ protected:
 public:
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
-	DECLARE_PROPERTY(Ref<JigsawCommandList>, build_deck);
-	DECLARE_PROPERTY(Ref<JigsawCommandList>, play_cards);
-	DECLARE_PROPERTY(TypedArray<JigsawTrigger>, triggers);
+	DECLARE_PROPERTY(TypedArray<JigsawTriggerNPC>, triggers);
+	DECLARE_PROPERTY(Ref<JigsawProcedureNPCBuildDeck>, build_deck);
+	DECLARE_PROPERTY(Ref<JigsawProcedureNPCDecideChoice>, decide_choice);
+	DECLARE_PROPERTY(Ref<JigsawProcedureNPCDecideRealtime>, decide_realtime);
 
 	DEFAULT_TO_STRING();
 };

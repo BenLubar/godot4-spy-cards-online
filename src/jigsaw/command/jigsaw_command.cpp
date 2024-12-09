@@ -1,6 +1,7 @@
 #include "jigsaw/command/jigsaw_command.h"
 
 void JigsawCommand::_bind_methods() {
+	BIND_ENUM_CONSTANT(NONE);
 	BIND_ENUM_CONSTANT(CRASH);
 	BIND_ENUM_CONSTANT(COMMENT);
 	BIND_ENUM_CONSTANT(FUNCTION);
