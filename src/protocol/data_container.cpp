@@ -31,6 +31,8 @@ void DataContainer::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, mode_public_revision);
 	BIND_PROPERTY(Variant::INT, selected_variant);
 	BIND_PROPERTY(Variant::INT, rematches);
+	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, resumed_from_recording);
+	BIND_PROPERTY(Variant::INT, resumed_from_round);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingPlayerData, player_data);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, shared_seed);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingRoundData, rounds);
@@ -54,6 +56,8 @@ IMPLEMENT_PROPERTY(DataContainer, String, mode_public_name);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, mode_public_revision);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, selected_variant);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, rematches);
+IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, resumed_from_recording);
+IMPLEMENT_PROPERTY(DataContainer, int64_t, resumed_from_round);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingPlayerData>, player_data);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, shared_seed);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingRoundData>, rounds);
@@ -449,6 +453,8 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 	_selected_variant = fh->read_uvarint();
 	ERR_FAIL_INDEX_V(_selected_variant, _mode->get_variants().size(), false);
 	_rematches = fh->read_uvarint();
+	_resumed_from_recording = fh->read_bytesvar();
+	_resumed_from_round = int64_t(fh->read_uvarint()) - 1;
 
 	Ref<VariantDef> selected_variant = _mode->get_variants()[_selected_variant];
 	_player_data.resize(selected_variant->get_player_count());
@@ -502,7 +508,7 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 			case RecordingRoundData::REALTIME:
 			{
 				PackedByteArray packed_inputs = fh->read_bytesvar();
-				PackedByteArray unpacked_inputs = ButtonInputHistory::unpack_inputs(packed_inputs);
+				PackedInt32Array unpacked_inputs = ButtonInputHistory::unpack_inputs(packed_inputs);
 				ERR_FAIL_COND_V(unpacked_inputs.is_empty() && !packed_inputs.is_empty(), false);
 				player->set_realtime_inputs(unpacked_inputs);
 				player->set_personal_seed_after(fh->read_bytesvar());
@@ -537,6 +543,8 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 	ERR_FAIL_INDEX_V(_selected_variant, _mode->get_variants().size(), false);
 	fh->write_uvarint(_selected_variant);
 	fh->write_uvarint(_rematches);
+	fh->write_bytesvar(_resumed_from_recording);
+	fh->write_uvarint(_resumed_from_round + 1);
 
 	Ref<VariantDef> selected_variant = _mode->get_variants()[_selected_variant];
 	ERR_FAIL_COND_V(selected_variant->get_player_count() != _player_data.size(), false);
@@ -574,7 +582,7 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 			}
 			case RecordingRoundData::REALTIME:
 			{
-				PackedByteArray unpacked_inputs = player->get_realtime_inputs();
+				PackedInt32Array unpacked_inputs = player->get_realtime_inputs();
 				PackedByteArray packed_inputs = ButtonInputHistory::pack_inputs(unpacked_inputs);
 				ERR_FAIL_COND_V(packed_inputs.is_empty() && !unpacked_inputs.is_empty(), false);
 				fh->write_bytesvar(packed_inputs);

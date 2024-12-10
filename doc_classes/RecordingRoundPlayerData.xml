@@ -13,7 +13,7 @@
 		</member>
 		<member name="personal_seed_after" type="PackedByteArray" setter="set_personal_seed_after" getter="get_personal_seed_after" default="PackedByteArray()">
 		</member>
-		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
 		</member>
 	</members>
 </class>

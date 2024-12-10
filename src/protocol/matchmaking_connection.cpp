@@ -44,7 +44,7 @@ void MatchmakingConnection::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, remote_frame_advantage);
 	BIND_PROPERTY(Variant::INT, prev_remote_frame_advantage);
 	BIND_PROPERTY(Variant::INT, suggested_drop_inputs);
-	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, realtime_inputs);
+	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
 
 	ClassDB::add_signal("MatchmakingConnection", MethodInfo("encountered_fatal_error", PropertyInfo(Variant::STRING, "message")));
 	ClassDB::add_signal("MatchmakingConnection", MethodInfo("fully_connected"));
@@ -78,7 +78,7 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, prev_local_frame_advan
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, remote_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, prev_remote_frame_advantage);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, suggested_drop_inputs);
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, PackedByteArray, realtime_inputs);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, PackedInt32Array, realtime_inputs);
 
 MatchmakingConnection::MatchmakingConnection(MatchmakingHandler *handler, int32_t remote_id) {
 	_handler = handler;

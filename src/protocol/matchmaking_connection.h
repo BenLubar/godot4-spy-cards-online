@@ -47,7 +47,7 @@ public:
 	DECLARE_PROPERTY(int32_t, remote_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, prev_remote_frame_advantage, = 0);
 	DECLARE_PROPERTY(int32_t, suggested_drop_inputs, = 0);
-	DECLARE_PROPERTY(PackedByteArray, realtime_inputs);
+	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
 
 	MatchmakingConnection() = default; // trivial constructor for documentation generator
 	MatchmakingConnection(MatchmakingHandler *handler, int32_t remote_id);

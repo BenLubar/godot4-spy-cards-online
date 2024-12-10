@@ -45,7 +45,7 @@
 		</member>
 		<member name="prev_remote_frame_advantage" type="int" setter="set_prev_remote_frame_advantage" getter="get_prev_remote_frame_advantage" default="0">
 		</member>
-		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
 		</member>
 		<member name="recv_commands" type="int" setter="set_recv_commands" getter="get_recv_commands" default="0">
 		</member>

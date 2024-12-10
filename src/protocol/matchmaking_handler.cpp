@@ -477,10 +477,10 @@ void MatchmakingHandler::realtime_update(int64_t acknowledge_frame, int64_t star
 
 	ERR_FAIL_INDEX(acknowledge_frame, _realtime_inputs.size() + 1);
 
-	PackedByteArray unpacked_inputs = ButtonInputHistory::unpack_inputs(packed_inputs);
+	PackedInt32Array unpacked_inputs = ButtonInputHistory::unpack_inputs(packed_inputs);
 	ERR_FAIL_COND(unpacked_inputs.is_empty() && !packed_inputs.is_empty());
 
-	PackedByteArray rti = conn->get_realtime_inputs();
+	PackedInt32Array rti = conn->get_realtime_inputs();
 	ERR_FAIL_INDEX(starting_frame, rti.size() + 1);
 
 	for (int64_t i = starting_frame, j = 0; i < rti.size() && j < unpacked_inputs.size(); i++, j++) {

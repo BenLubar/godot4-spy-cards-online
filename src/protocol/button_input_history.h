@@ -19,11 +19,13 @@ public:
 		CANCEL  = 0x20,
 		SWITCH  = 0x40,
 		TOGGLE  = 0x80,
+		PAUSE   = 0x100,
+		HELP    = 0x200,
 	};
 
 	static BitField<InputButton> get_current_inputs();
-	static PackedByteArray pack_inputs(const PackedByteArray &unpacked_inputs);
-	static PackedByteArray unpack_inputs(const PackedByteArray &packed_inputs);
+	static PackedByteArray pack_inputs(const PackedInt32Array &unpacked_inputs);
+	static PackedInt32Array unpack_inputs(const PackedByteArray &packed_inputs);
 };
 VARIANT_BITFIELD_CAST(ButtonInputHistory::InputButton);
 

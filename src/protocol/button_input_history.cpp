@@ -1,5 +1,7 @@
 #include "protocol/button_input_history.h"
 
+#include "util/format_helper.h"
+
 #include <godot_cpp/classes/input.hpp>
 
 void ButtonInputHistory::_bind_methods() {
@@ -11,6 +13,8 @@ void ButtonInputHistory::_bind_methods() {
 	BIND_BITFIELD_FLAG(CANCEL);
 	BIND_BITFIELD_FLAG(SWITCH);
 	BIND_BITFIELD_FLAG(TOGGLE);
+	BIND_BITFIELD_FLAG(PAUSE);
+	BIND_BITFIELD_FLAG(HELP);
 
 	ClassDB::bind_static_method("ButtonInputHistory", D_METHOD("get_current_inputs"), &ButtonInputHistory::get_current_inputs);
 	ClassDB::bind_static_method("ButtonInputHistory", D_METHOD("pack_inputs", "unpacked_inputs"), &ButtonInputHistory::pack_inputs);
@@ -45,41 +49,46 @@ BitField<ButtonInputHistory::InputButton> ButtonInputHistory::get_current_inputs
 	if (input->is_action_pressed("button_toggle")) {
 		buttons.set_flag(TOGGLE);
 	}
+	if (input->is_action_pressed("button_pause")) {
+		buttons.set_flag(PAUSE);
+	}
+	if (input->is_action_pressed("button_help")) {
+		buttons.set_flag(HELP);
+	}
 
 	return buttons;
 }
 
-// packed inputs are run-length encoded with the following 2 byte pattern:
-// - 8 bits: buttons currently being held
-// - 8 bits: 1 less than the number of frames this input is held for
-// this means that every 2 bytes can encode between 1 and 256 frames of input.
+// packed inputs are run-length encoded with the following pattern:
+// - uvarint: bitfield of input buttons being held
+// - uvarint: one fewer than the number of frames this input is held for
 //
-// unpacked inputs are simply the 8 bit bitfield
+// unpacked inputs are simply the 10 bit bitfield (bits 11-31 reserved, zero)
 
-PackedByteArray ButtonInputHistory::pack_inputs(const PackedByteArray &unpacked_inputs) {
-	PackedByteArray packed_inputs;
+PackedByteArray ButtonInputHistory::pack_inputs(const PackedInt32Array &unpacked_inputs) {
+	Ref<FormatHelper> packed_inputs = FormatHelper::write("inputs");
 
 	for (int64_t i = 0; i < unpacked_inputs.size(); ) {
-		uint32_t current_run = 1;
-		for (int64_t j = i + 1; j < unpacked_inputs.size() && unpacked_inputs[i] == unpacked_inputs[j] && current_run < 256; j++);
+		int64_t current_run = 1;
+		for (int64_t j = i + 1; j < unpacked_inputs.size() && unpacked_inputs[i] == unpacked_inputs[j]; j++);
 
-		packed_inputs.append(unpacked_inputs[i] & 0xff);
-		packed_inputs.append(current_run - 1);
+		packed_inputs->write_uvarint(unpacked_inputs[i]);
+		packed_inputs->write_uvarint(current_run - 1);
 
 		i += current_run;
 	}
 
-	return packed_inputs;
+	return packed_inputs->get_buffer();
 }
-PackedByteArray ButtonInputHistory::unpack_inputs(const PackedByteArray &packed_inputs) {
-	ERR_FAIL_COND_V(packed_inputs.size() % 2 != 0, PackedByteArray());
+PackedInt32Array ButtonInputHistory::unpack_inputs(const PackedByteArray &packed_inputs) {
+	Ref<FormatHelper> fh = FormatHelper::read("inputs", packed_inputs);
 
-	PackedByteArray unpacked_inputs;
-	for (int64_t i = 0; i < packed_inputs.size(); i += 2) {
-		uint8_t input = packed_inputs[i];
+	PackedInt32Array unpacked_inputs;
+	while (!fh->is_eof()) {
+		int32_t input = fh->read_uvarint();
+		int64_t count = fh->read_uvarint() + 1;
 
-		int count = (packed_inputs[i + 1] + 1);
-		for (int j = 0; j < count; j++) {
+		for (int64_t i = 0; i < count; i++) {
 			unpacked_inputs.append(input);
 		}
 	}

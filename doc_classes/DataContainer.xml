@@ -44,6 +44,10 @@
 		</member>
 		<member name="rematches" type="int" setter="set_rematches" getter="get_rematches" default="0">
 		</member>
+		<member name="resumed_from_recording" type="PackedByteArray" setter="set_resumed_from_recording" getter="get_resumed_from_recording" default="PackedByteArray()">
+		</member>
+		<member name="resumed_from_round" type="int" setter="set_resumed_from_round" getter="get_resumed_from_round" default="-1">
+		</member>
 		<member name="rounds" type="RecordingRoundData[]" setter="set_rounds" getter="get_rounds" default="[]">
 		</member>
 		<member name="selected_variant" type="int" setter="set_selected_variant" getter="get_selected_variant" default="0">

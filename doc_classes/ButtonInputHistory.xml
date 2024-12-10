@@ -14,12 +14,12 @@
 		</method>
 		<method name="pack_inputs" qualifiers="static">
 			<return type="PackedByteArray" />
-			<param index="0" name="unpacked_inputs" type="PackedByteArray" />
+			<param index="0" name="unpacked_inputs" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>
 		<method name="unpack_inputs" qualifiers="static">
-			<return type="PackedByteArray" />
+			<return type="PackedInt32Array" />
 			<param index="0" name="packed_inputs" type="PackedByteArray" />
 			<description>
 			</description>
@@ -41,6 +41,10 @@
 		<constant name="SWITCH" value="64" enum="InputButton" is_bitfield="true">
 		</constant>
 		<constant name="TOGGLE" value="128" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="PAUSE" value="256" enum="InputButton" is_bitfield="true">
+		</constant>
+		<constant name="HELP" value="512" enum="InputButton" is_bitfield="true">
 		</constant>
 	</constants>
 </class>

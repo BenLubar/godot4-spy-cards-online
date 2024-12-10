@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LegacyParse" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="arcade_recording" qualifiers="static">
+			<return type="DataContainer" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="card_recording" qualifiers="static">
+			<return type="DataContainer" />
+			<param index="0" name="buf" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="game_mode" qualifiers="static">
+			<return type="DataContainer" />
+			<param index="0" name="buf" type="PackedStringArray" />
+			<param index="1" name="name" type="String" default="&quot;custom&quot;" />
+			<param index="2" name="revision" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

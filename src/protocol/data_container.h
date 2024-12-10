@@ -52,6 +52,8 @@ public:
 	DECLARE_PROPERTY(int64_t, mode_public_revision, = 0);
 	DECLARE_PROPERTY(int64_t, selected_variant, = 0);
 	DECLARE_PROPERTY(int64_t, rematches, = 0);
+	DECLARE_PROPERTY(PackedByteArray, resumed_from_recording);
+	DECLARE_PROPERTY(int64_t, resumed_from_round, = -1);
 	DECLARE_PROPERTY(TypedArray<RecordingPlayerData>, player_data);
 	DECLARE_PROPERTY(PackedByteArray, shared_seed);
 	DECLARE_PROPERTY(TypedArray<RecordingRoundData>, rounds);
@@ -165,6 +167,8 @@ private:
 public:
 	static Ref<DataContainer> from_byte_array(const PackedByteArray &buf, const String &debug_name = "data container");
 	PackedByteArray to_byte_array(const String &debug_name = "data container") const;
+
+	DEFAULT_TO_STRING();
 };
 DECLARE_ENUM(DataContainer::FormatRevision);
 DECLARE_ENUM(DataContainer::ContainerType);
