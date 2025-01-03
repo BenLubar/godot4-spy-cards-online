@@ -52,6 +52,7 @@ public:
 	DECLARE_PROPERTY(int64_t, mode_public_revision, = 0);
 	DECLARE_PROPERTY(int64_t, selected_variant, = 0);
 	DECLARE_PROPERTY(int64_t, rematches, = 0);
+	DECLARE_PROPERTY(PackedInt64Array, previous_wins);
 	DECLARE_PROPERTY(PackedByteArray, resumed_from_recording);
 	DECLARE_PROPERTY(int64_t, resumed_from_round, = -1);
 	DECLARE_PROPERTY(TypedArray<RecordingPlayerData>, player_data);
@@ -167,6 +168,7 @@ private:
 public:
 	static Ref<DataContainer> from_byte_array(const PackedByteArray &buf, const String &debug_name = "data container");
 	PackedByteArray to_byte_array(const String &debug_name = "data container") const;
+	TypedArray<JigsawError> validate() const;
 
 	DEFAULT_TO_STRING();
 };

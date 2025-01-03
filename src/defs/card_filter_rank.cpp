@@ -3,12 +3,18 @@
 #include "jigsaw/jigsaw_global.h"
 
 void CardFilterRank::_bind_methods() {
-	BIND_PROPERTY_ENUM(RankDef::Rank, rank);
+	BIND_PROPERTY_ENUM(enums::RankDef::Rank, rank);
 }
 
-IMPLEMENT_PROPERTY(CardFilterRank, RankDef::Rank, rank);
+IMPLEMENT_PROPERTY(CardFilterRank, enums::RankDef::Rank, rank);
 
-Ref<CardFilter> CardFilter::make_rank(RankDef::Rank rank) {
+Ref<CardFilter> CardFilter::make_rank(enums::RankDef::Rank rank) {
+	ERR_FAIL_COND_V_MSG(rank == enums::RankDef::LEGACY_NONE, Ref<CardFilter>(), "calling code needs to be updated to handle RankDef::LEGACY_NONE");
+
+	if (rank == enums::RankDef::LEGACY_ENEMY) {
+		return make_or(Array::make(make_rank(enums::RankDef::ATTACKER), make_rank(enums::RankDef::EFFECT)));
+	}
+
 	Ref<CardFilterRank> filter;
 	filter.instantiate();
 	filter->set_rank(rank);

@@ -15,6 +15,9 @@ public:
 	DECLARE_PROPERTY(enums::StatDef::Stat, stat, = enums::StatDef::Stat::NONE);
 
 	DEFAULT_TO_STRING();
+
+	static Ref<StatValue> make(enums::StatDef::Stat stat, int64_t amount, int64_t amount_inf = 0);
+	static Ref<StatValue> make_nan(enums::StatDef::Stat stat);
 };
 
 #endif // STAT_VALUE_H

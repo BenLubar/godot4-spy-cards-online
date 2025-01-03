@@ -527,8 +527,6 @@ void IconDef::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_NOT_SAVED(Image, image);
 	ClassDB::bind_method(D_METHOD("get_texture"), &IconDef::get_texture);
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture", PROPERTY_USAGE_NONE), "", "get_texture");
-
-	ClassDB::bind_static_method("IconDef", D_METHOD("convert_legacy_portrait", "portrait", "data"), &IconDef::convert_legacy_portrait);
 }
 
 IconDef::IconDef() {
@@ -539,31 +537,4 @@ IMPLEMENT_PROPERTY(IconDef, PackedByteArray, file_id);
 IMPLEMENT_PROPERTY(IconDef, Ref<Image>, image);
 Ref<ImageTexture> IconDef::get_texture() const {
 	return texture;
-}
-
-Ref<IconDef> IconDef::convert_legacy_portrait(Icon portrait, PackedByteArray data) {
-	using namespace enums::IconDef;
-
-	ERR_FAIL_COND_V_MSG(portrait != LEGACY_PORTRAIT_EMBEDDED && portrait != LEGACY_PORTRAIT_EXTERNAL, nullptr, "invalid portrait ID for legacy");
-
-	if (portrait == LEGACY_PORTRAIT_EMBEDDED) {
-		Ref<Image> image;
-		image.instantiate();
-
-		Error err = image->load_png_from_buffer(data);
-		ERR_FAIL_COND_V_MSG(err != OK, Ref<IconDef>(), "failed to decode PNG");
-
-		image->generate_mipmaps();
-
-		Ref<IconDef> def;
-		def.instantiate();
-		def->set_image(image);
-		def->get_texture()->set_image(image);
-		return def;
-	}
-
-	Ref<IconDef> def;
-	def.instantiate();
-	def->set_file_id(data);
-	return def;
 }

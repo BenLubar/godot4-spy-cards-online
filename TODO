@@ -1,3 +1,19 @@
+TASKS
+
+- [ ] design "cosmetic value" system for jigsaw parameters that cannot be used in decisions that affect game state
+- [ ] rollback-able audio
+- [ ] rollback-able sprites/models
+- [ ] base editor UI
+- [ ] implement card game loop in jigsaw
+- [ ] implement every built-in effectdef (describe) in jigsaw
+- [ ] implement every built-in effectdef (logic) in jigsaw
+- [ ] port mite knight to jigsaw
+- [ ] port flower journey to jigsaw
+- [ ] port aphid festival to jigsaw
+- [ ] port worm fishing to jigsaw
+- [ ] port whack-a-worm to jigsaw
+- [ ] factorio style loud test suite
+
 GAME LOOP
 
 two networking modes
@@ -54,11 +70,11 @@ container
 - remaining fields are specific to container type
 
 game mode summary
-- TODO
+- implemented; TODO: document
 
 game mode
 - initial fields are the same as game mode summary
-- TODO
+- implemented; TODO: document
 
 recording
 - initial fields are the same as game mode

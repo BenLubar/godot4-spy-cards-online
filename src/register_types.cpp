@@ -135,6 +135,7 @@
 #include "protocol/recording_round.h"
 #include "protocol/button_input_history.h"
 #include "legacy/legacy_parse.h"
+#include "protocol/deck.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -309,6 +310,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(RecordingRound);
 	GDREGISTER_ABSTRACT_CLASS(ButtonInputHistory);
 	GDREGISTER_ABSTRACT_CLASS(LegacyParse);
+	GDREGISTER_ABSTRACT_CLASS(Deck);
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

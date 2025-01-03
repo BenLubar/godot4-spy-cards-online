@@ -3,12 +3,14 @@
 #include "jigsaw/jigsaw_global.h"
 
 void CardFilterTribe::_bind_methods() {
-	BIND_PROPERTY_ENUM(TribeDef::Tribe, tribe);
+	BIND_PROPERTY_ENUM(enums::TribeDef::Tribe, tribe);
 }
 
-IMPLEMENT_PROPERTY(CardFilterTribe, TribeDef::Tribe, tribe);
+IMPLEMENT_PROPERTY(CardFilterTribe, enums::TribeDef::Tribe, tribe);
 
-Ref<CardFilter> CardFilter::make_tribe(TribeDef::Tribe tribe) {
+Ref<CardFilter> CardFilter::make_tribe(enums::TribeDef::Tribe tribe) {
+	ERR_FAIL_COND_V_MSG(tribe == enums::TribeDef::LEGACY_NONE, Ref<CardFilter>(), "calling code needs to be updated to handle TribeDef::LEGACY_NONE");
+
 	Ref<CardFilterTribe> filter;
 	filter.instantiate();
 	filter->set_tribe(tribe);

@@ -2,6 +2,7 @@
 
 #include "util/why_isnt_this_in_godot.h"
 #include "protocol/button_input_history.h"
+#include "protocol/deck.h"
 
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/hashing_context.hpp>
@@ -31,6 +32,7 @@ void DataContainer::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, mode_public_revision);
 	BIND_PROPERTY(Variant::INT, selected_variant);
 	BIND_PROPERTY(Variant::INT, rematches);
+	BIND_PROPERTY(Variant::PACKED_INT64_ARRAY, previous_wins);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, resumed_from_recording);
 	BIND_PROPERTY(Variant::INT, resumed_from_round);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingPlayerData, player_data);
@@ -40,6 +42,7 @@ void DataContainer::_bind_methods() {
 
 	ClassDB::bind_static_method("DataContainer", D_METHOD("from_byte_array", "buf", "debug_name"), &DataContainer::from_byte_array, DEFVAL("data container"));
 	ClassDB::bind_method(D_METHOD("to_byte_array", "debug_name"), &DataContainer::to_byte_array, DEFVAL("data container"));
+	ClassDB::bind_method(D_METHOD("validate"), &DataContainer::validate);
 }
 
 IMPLEMENT_PROPERTY(DataContainer, DataContainer::FormatRevision, format_revision);
@@ -56,6 +59,7 @@ IMPLEMENT_PROPERTY(DataContainer, String, mode_public_name);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, mode_public_revision);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, selected_variant);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, rematches);
+IMPLEMENT_PROPERTY(DataContainer, PackedInt64Array, previous_wins);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, resumed_from_recording);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, resumed_from_round);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingPlayerData>, player_data);
@@ -446,32 +450,31 @@ bool DataContainer::_encode_game_mode(const Ref<FormatHelper> &fh) const {
 	return fh->is_valid();
 }
 bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
-	ERR_FAIL_COND_V(!_decode_game_mode(fh), false);
-
 	_mode_public_name = fh->read_stringvar();
 	_mode_public_revision = fh->read_uvarint();
+
+	if (_mode_public_name.is_empty() || _mode_public_revision <= 0) {
+		ERR_FAIL_COND_V(!_decode_game_mode(fh), false);
+	}
+
 	_selected_variant = fh->read_uvarint();
-	ERR_FAIL_INDEX_V(_selected_variant, _mode->get_variants().size(), false);
 	_rematches = fh->read_uvarint();
+	_previous_wins.resize(fh->read_uvarint());
+	for (int64_t i = 0; i < _previous_wins.size(); i++) {
+		_previous_wins[i] = fh->read_uvarint();
+	}
 	_resumed_from_recording = fh->read_bytesvar();
 	_resumed_from_round = int64_t(fh->read_uvarint()) - 1;
 
-	Ref<VariantDef> selected_variant = _mode->get_variants()[_selected_variant];
-	_player_data.resize(selected_variant->get_player_count());
-	for (int64_t i = 0; i < selected_variant->get_player_count(); i++) {
+	_player_data.resize(fh->read_uvarint());
+	for (int64_t i = 0; i < _player_data.size(); i++) {
 		Ref<RecordingPlayerData> player;
 		player.instantiate();
 		player->set_display_name(fh->read_stringvar());
 		player->set_character(fh->read_id<enums::CharacterDef::Character>());
-		ERR_FAIL_INDEX_V(player->get_character(), _mode->get_characters().size(), false);
 
-		TypedArray<enums::CardDef::Card> initial_deck;
-		initial_deck.resize(fh->read_uvarint());
-		for (int64_t j = 0; j < initial_deck.size(); j++) {
-			enums::CardDef::Card card = fh->read_id<enums::CardDef::Card>();
-			ERR_FAIL_COND_V(_mode->get_card(card).is_null(), false);
-			initial_deck[j] = card;
-		}
+		PackedByteArray packed_deck = fh->read_bytesvar();
+		TypedArray<enums::CardDef::Card> initial_deck = Deck::decode(packed_deck);
 		player->set_initial_deck(initial_deck);
 		_player_data[i] = player;
 	}
@@ -483,12 +486,12 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 		Ref<RecordingRoundData> round;
 		round.instantiate();
 		round->set_type(static_cast<RecordingRoundData::RoundType>(fh->read_uvarint()));
-		ERR_FAIL_COND_V(round->get_type() != RecordingRoundData::CHOICE && round->get_type() != RecordingRoundData::REALTIME, false);
+		ERR_FAIL_COND_V(round->get_type() != RecordingRoundData::CHOICE && round->get_type() != RecordingRoundData::ACTION && round->get_type() != RecordingRoundData::REALTIME, false);
 
 		round->set_initial_checksum(fh->read_bytesvar());
 
 		TypedArray<RecordingRoundPlayerData> player_data;
-		player_data.resize(selected_variant->get_player_count());
+		player_data.resize(_player_data.size());
 		for (int64_t j = 0; j < round->get_player_data().size(); j++) {
 			Ref<RecordingRoundPlayerData> player;
 			player.instantiate();
@@ -496,6 +499,7 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 			player->set_personal_seed(fh->read_bytesvar());
 			switch (round->get_type()) {
 			case RecordingRoundData::CHOICE:
+			case RecordingRoundData::ACTION:
 			{
 				PackedInt64Array chosen_cards;
 				chosen_cards.resize(fh->read_uvarint());
@@ -522,6 +526,7 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 
 		switch (round->get_type()) {
 		case RecordingRoundData::CHOICE:
+		case RecordingRoundData::ACTION:
 			break;
 		case RecordingRoundData::REALTIME:
 			round->set_final_checksum(fh->read_bytesvar());
@@ -536,27 +541,28 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 	return true;
 }
 bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
-	ERR_FAIL_COND_V(!_encode_game_mode(fh), false);
-
 	fh->write_stringvar(_mode_public_name);
 	fh->write_uvarint(_mode_public_revision);
-	ERR_FAIL_INDEX_V(_selected_variant, _mode->get_variants().size(), false);
+
+	if (_mode_public_name.is_empty() || _mode_public_revision <= 0) {
+		ERR_FAIL_COND_V(!_encode_game_mode(fh), false);
+	}
+
 	fh->write_uvarint(_selected_variant);
 	fh->write_uvarint(_rematches);
+	fh->write_uvarint(_previous_wins.size());
+	for (int64_t i = 0; i < _previous_wins.size(); i++) {
+		fh->write_uvarint(_previous_wins[i]);
+	}
 	fh->write_bytesvar(_resumed_from_recording);
 	fh->write_uvarint(_resumed_from_round + 1);
 
-	Ref<VariantDef> selected_variant = _mode->get_variants()[_selected_variant];
-	ERR_FAIL_COND_V(selected_variant->get_player_count() != _player_data.size(), false);
+	fh->write_uvarint(_player_data.size());
 	for (int64_t i = 0; i < _player_data.size(); i++) {
 		Ref<RecordingPlayerData> player = _player_data[i];
 		fh->write_stringvar(player->get_display_name());
 		fh->write_id(player->get_character());
-		fh->write_uvarint(player->get_initial_deck().size());
-		for (int64_t j = 0; j < player->get_initial_deck().size(); j++) {
-			int64_t card_id = player->get_initial_deck()[j];
-			fh->write_id(static_cast<enums::CardDef::Card>(card_id));
-		}
+		fh->write_bytesvar(Deck::encode(player->get_initial_deck()));
 	}
 
 	fh->write_bytesvar(_shared_seed);
@@ -567,12 +573,13 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 		fh->write_uvarint(round->get_type());
 		fh->write_bytesvar(round->get_initial_checksum());
 
-		ERR_FAIL_COND_V(selected_variant->get_player_count() != round->get_player_data().size(), false);
+		ERR_FAIL_COND_V(_player_data.size() != round->get_player_data().size(), false);
 		for (int64_t j = 0; j < round->get_player_data().size(); j++) {
 			Ref<RecordingRoundPlayerData> player = round->get_player_data()[j];
 			fh->write_bytesvar(player->get_personal_seed());
 			switch (round->get_type()) {
 			case RecordingRoundData::CHOICE:
+			case RecordingRoundData::ACTION:
 			{
 				fh->write_uvarint(player->get_chosen_cards().size());
 				for (int64_t k = 0; k < player->get_chosen_cards().size(); k++) {
@@ -594,6 +601,7 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 
 		switch (round->get_type()) {
 		case RecordingRoundData::CHOICE:
+		case RecordingRoundData::ACTION:
 			break;
 		case RecordingRoundData::REALTIME:
 			fh->write_bytesvar(round->get_final_checksum());
@@ -625,7 +633,11 @@ Ref<DataContainer> DataContainer::from_byte_array(const PackedByteArray &buf, co
 	ERR_FAIL_COND_V(data->get_format_revision() > FORMAT_0, Ref<DataContainer>());
 
 	data->set_container_type(static_cast<DataContainer::ContainerType>(fh->read_uvarint()));
-	data->set_game_version(Vector3i(fh->read_uvarint(), fh->read_uvarint(), fh->read_uvarint()));
+	Vector3i game_version;
+	game_version.x = fh->read_uvarint();
+	game_version.y = fh->read_uvarint();
+	game_version.z = fh->read_uvarint();
+	data->set_game_version(game_version);
 
 	data->set_timestamp(fh->read_uvarint());
 
@@ -734,4 +746,9 @@ PackedByteArray DataContainer::to_byte_array(const String &debug_name) const {
 
 	ERR_FAIL_COND_V(!fh->is_valid(), PackedByteArray());
 	return fh->get_buffer();
+}
+
+TypedArray<JigsawError> DataContainer::validate() const {
+	WARN_PRINT_ONCE("TODO: DataContainer::validate"); // TODO: DataContainer::validate
+	return TypedArray<JigsawError>();
 }
