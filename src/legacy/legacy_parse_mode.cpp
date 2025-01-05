@@ -257,6 +257,7 @@ bool LegacyParse::field_vanilla_version(const Ref<DataContainer> &container, con
 }
 bool LegacyParse::field_card_group(const Ref<DataContainer> &container, const Ref<FormatHelper> &fh, const Ref<VariantDef> &variant) {
 	(void)fh->read_uvarint(); // unused flags field
+
 	String title = fh->read_stringvar();
 
 	TypedArray<enums::CardDef::Card> cards;
@@ -270,7 +271,7 @@ bool LegacyParse::field_card_group(const Ref<DataContainer> &container, const Re
 	return true;
 }
 bool LegacyParse::field_special_flags(const Ref<DataContainer> &container, const Ref<FormatHelper> &fh, const Ref<VariantDef> &variant) {
-	(void)fh->read_uvarint(); // unused flags field
+	(void)fh->read_uvarint(); // unused flags flags field
 
 	int64_t count = fh->read_uvarint();
 	for (int64_t i = 0; i < count; i++) {

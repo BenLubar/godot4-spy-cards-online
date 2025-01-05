@@ -6,15 +6,6 @@
 	</description>
 	<tutorials>
 	</tutorials>
-	<methods>
-		<method name="convert_legacy_portrait" qualifiers="static">
-			<return type="IconDef" />
-			<param index="0" name="portrait" type="int" enum="IconDef.Icon" />
-			<param index="1" name="data" type="PackedByteArray" />
-			<description>
-			</description>
-		</method>
-	</methods>
 	<members>
 		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
 		</member>

@@ -38,3 +38,15 @@ Ref<T> get_predefined(E index)
 
 	return def;
 }
+
+template<typename T>
+class LazyPredefined : public LazyGlobal<T> {
+public:
+	LazyPredefined(const char *name) : LazyGlobal<T>([name]() -> Ref<T> {
+		Ref<T> value = get_predefined_defs()->get(name);
+		if (unlikely(value.is_null())) {
+			ERR_PRINT(vformat("failed to retrieve value Predefined.%s; check to make sure predefined.gd contains this key.", name));
+		}
+		return value;
+	}) {}
+};

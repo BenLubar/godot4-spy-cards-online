@@ -165,7 +165,7 @@ extern Vector<std::function<void()>> _free_lazy_globals;
 template<typename T>
 class LazyGlobal
 {
-	Ref<T> (*_init)();
+	std::function<Ref<T>()> _init;
 	mutable Ref<T> _ref;
 
 	void _maybe_init() const {
@@ -175,7 +175,7 @@ class LazyGlobal
 		}
 	}
 public:
-	LazyGlobal(Ref<T> (*init)()) : _init(init) {}
+	LazyGlobal(const std::function<Ref<T>()> &init) : _init(init) {}
 
 	operator Ref<T>() const { _maybe_init(); return _ref; }
 	T *operator*() const { _maybe_init(); return _ref.ptr(); }
@@ -186,7 +186,7 @@ public:
 template<typename T>
 class LazyGlobalNode
 {
-	T *(*_init)();
+	std::function<T *()> _init;
 	mutable ObjectID _node;
 
 	void _maybe_init() const {
@@ -197,7 +197,7 @@ class LazyGlobalNode
 		}
 	}
 public:
-	LazyGlobalNode(T *(*init)()) : _init(init) {}
+	LazyGlobalNode(const std::function<T *()> &init) : _init(init) {}
 
 	operator T *() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
 	T *operator*() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }

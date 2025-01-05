@@ -18,23 +18,45 @@ protected:
 public:
 	static Ref<DataContainer> card_set(const PackedStringArray &buf, const Ref<GameMode> &vanilla_default = Ref<GameMode>(), const PackedByteArray &p1_spoiler_guard = PackedByteArray(), const PackedByteArray &p2_spoiler_guard = PackedByteArray());
 private:
-	static LazyGlobal<GameMode> VANILLA_1_0_5;
-	static LazyGlobal<GameMode> VANILLA_1_1;
-	static LazyGlobal<GameMode> VANILLA_1_1_1;
-	static LazyGlobal<GameMode> VANILLA_1_2_1;
+	static LazyPredefined<GameMode> VANILLA_1_0_5;
+	static LazyPredefined<GameMode> VANILLA_1_1;
+	static LazyPredefined<GameMode> VANILLA_1_1_1;
+	static LazyPredefined<GameMode> VANILLA_1_2_1;
 
-	static LazyGlobal<JigsawParameterFileIDOpus> SOUND_ATK_SUCCESS;
-	static LazyGlobal<JigsawParameterFileIDOpus> SOUND_ATK_FAIL;
-	static LazyGlobal<JigsawParameterFileIDOpus> SOUND_NULL;
+	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_ATK_SUCCESS;
+	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_ATK_FAIL;
+	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_NULL;
 
-	static LazyGlobal<JigsawParameterFileIDGLTF> METAL_ISLAND_AUDITORIUM;
-	static LazyGlobal<JigsawParameterFileIDGLTF> GOLDEN_HILLS;
-	static LazyGlobal<JigsawParameterFileIDGLTF> FORSAKEN_LANDS;
-	static LazyGlobal<JigsawParameterFileIDGLTF> UNDERGROUND_TAVERN;
-	static LazyGlobal<JigsawParameterFileIDGLTF> BROODMOTHER;
-	static LazyGlobal<JigsawParameterFileIDGLTF> ABANDONED_TENT;
-	static LazyGlobal<JigsawParameterFileIDGLTF> ANT_KINGDOM_MINE;
-	static LazyGlobal<JigsawParameterFileIDGLTF> ANT_KINGDOM_PLAZA;
+	static LazyPredefined<JigsawParameterFileIDGLTF> METAL_ISLAND_AUDITORIUM;
+	static LazyPredefined<JigsawParameterFileIDGLTF> GOLDEN_HILLS;
+	static LazyPredefined<JigsawParameterFileIDGLTF> FORSAKEN_LANDS;
+	static LazyPredefined<JigsawParameterFileIDGLTF> UNDERGROUND_TAVERN;
+	static LazyPredefined<JigsawParameterFileIDGLTF> BROODMOTHER;
+	static LazyPredefined<JigsawParameterFileIDGLTF> ABANDONED_TENT;
+	static LazyPredefined<JigsawParameterFileIDGLTF> ANT_KINGDOM_MINE;
+	static LazyPredefined<JigsawParameterFileIDGLTF> ANT_KINGDOM_PLAZA;
+
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_GENERIC;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TOURNEY_PLAYER;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_JANET;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_MENDER_SPAM_MOTHIVA;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_MENDER_SPAM_KALI;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_MENDER_SPAM_RANDOM;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_GENERIC;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_JANET;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_BU_GI;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_JOHNNY;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_KAGE;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_RITCHEE;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_SERENE;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_CARMINA;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_CHUCK;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_ARIE;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_SHAY;
+	static LazyPredefined<JigsawProcedureNPCBuildDeck> LEGACY_NPC_BUILD_DECK_TP2_CROW;
+	static LazyPredefined<JigsawProcedureNPCDecideChoice> LEGACY_NPC_DECIDE_CHOICE_GENERIC;
+	static LazyPredefined<JigsawProcedureNPCDecideChoice> LEGACY_NPC_DECIDE_CHOICE_MENDER_SPAM;
+	static LazyPredefined<JigsawProcedureNPCDecideChoice> LEGACY_NPC_DECIDE_CHOICE_TP2;
 
 	static enums::RankDef::Rank card_rank(enums::CardDef::Card id);
 	static String card_name(enums::CardDef::Card id);
@@ -74,11 +96,12 @@ private:
 	static enums::TribeDef::Tribe custom_tribe(const Ref<DataContainer> &container, const Color &color, const String &name);
 	static enums::NPCDef::NPC custom_npc(const Ref<DataContainer> &container, const String &code);
 
+	static enums::NPCDef::NPC add_legacy_npc(const Ref<DataContainer> &container, const String &code, const String &display_name, const String &character, const Ref<JigsawProcedureNPCBuildDeck> &build_deck, const Ref<JigsawProcedureNPCDecideChoice> &decide_choice);
 	static enums::NPCDef::NPC legacy_npc_generic(const Ref<DataContainer> &container, const String &code);
 	static enums::NPCDef::NPC legacy_npc_tourney_player(const Ref<DataContainer> &container, const String &name);
 	static enums::NPCDef::NPC legacy_npc_janet(const Ref<DataContainer> &container);
-	static enums::NPCDef::NPC legacy_npc_card_master(const Ref<DataContainer> &container, const String &name, const String &deck);
-	static enums::NPCDef::NPC legacy_npc_mender_spam(const Ref<DataContainer> &container, enums::CardDef::Card mini_boss);
+	static enums::NPCDef::NPC legacy_npc_card_master(const Ref<DataContainer> &container, const String &code, const String &name, const String &deck);
+	static enums::NPCDef::NPC legacy_npc_mender_spam(const Ref<DataContainer> &container, const String &code);
 	static enums::NPCDef::NPC legacy_npc_tp2_generic(const Ref<DataContainer> &container);
 	static enums::NPCDef::NPC legacy_npc_tp2_janet(const Ref<DataContainer> &container);
 	static enums::NPCDef::NPC legacy_npc_tp2_bu_gi(const Ref<DataContainer> &container);

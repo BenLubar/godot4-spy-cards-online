@@ -19,11 +19,12 @@
 			<description>
 			</description>
 		</method>
-		<method name="game_mode" qualifiers="static">
+		<method name="card_set" qualifiers="static">
 			<return type="DataContainer" />
 			<param index="0" name="buf" type="PackedStringArray" />
-			<param index="1" name="name" type="String" default="&quot;custom&quot;" />
-			<param index="2" name="revision" type="int" default="0" />
+			<param index="1" name="vanilla_default" type="GameMode" default="null" />
+			<param index="2" name="p1_spoiler_guard" type="PackedByteArray" default="PackedByteArray()" />
+			<param index="3" name="p2_spoiler_guard" type="PackedByteArray" default="PackedByteArray()" />
 			<description>
 			</description>
 		</method>

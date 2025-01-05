@@ -13,9 +13,9 @@
 #include "jigsaw/parameter/jigsaw_parameter_stat.h"
 #include "jigsaw/parameter/jigsaw_parameter_string.h"
 
-LazyGlobal<JigsawParameterFileIDOpus> LegacyParse::SOUND_ATK_SUCCESS{ []() -> Ref<JigsawParameterFileIDOpus> { return get_predefined_defs()->get("SOUND_ATK_SUCCESS"); } };
-LazyGlobal<JigsawParameterFileIDOpus> LegacyParse::SOUND_ATK_FAIL{ []() -> Ref<JigsawParameterFileIDOpus> { return get_predefined_defs()->get("SOUND_ATK_FAIL"); } };
-LazyGlobal<JigsawParameterFileIDOpus> LegacyParse::SOUND_NULL{ []() -> Ref<JigsawParameterFileIDOpus> { return get_predefined_defs()->get("SOUND_NULL"); } };
+LazyPredefined<JigsawParameterFileIDOpus> LegacyParse::SOUND_ATK_SUCCESS{ "SOUND_ATK_SUCCESS" };
+LazyPredefined<JigsawParameterFileIDOpus> LegacyParse::SOUND_ATK_FAIL{ "SOUND_ATK_FAIL" };
+LazyPredefined<JigsawParameterFileIDOpus> LegacyParse::SOUND_NULL{ "SOUND_NULL" };
 
 Ref<JigsawParameterAmount> LegacyParse::read_amount_v0_v1(const Ref<FormatHelper> &fh) {
 	int64_t amount = fh->read_sint8();
@@ -2239,14 +2239,14 @@ bool LegacyParse::effect_v5(const Ref<DataContainer> &container, const Ref<Effec
 	return true;
 }
 
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::METAL_ISLAND_AUDITORIUM{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("METAL_ISLAND_AUDITORIUM"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::GOLDEN_HILLS{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("GOLDEN_HILLS"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::FORSAKEN_LANDS{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("FORSAKEN_LANDS"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::UNDERGROUND_TAVERN{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("UNDERGROUND_TAVERN"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::BROODMOTHER{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("BROODMOTHER"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::ABANDONED_TENT{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("ABANDONED_TENT"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::ANT_KINGDOM_MINE{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("ANT_KINGDOM_MINE"); } };
-LazyGlobal<JigsawParameterFileIDGLTF> LegacyParse::ANT_KINGDOM_PLAZA{ []() -> Ref<JigsawParameterFileIDGLTF> { return get_predefined_defs()->get("ANT_KINGDOM_PLAZA"); } };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::METAL_ISLAND_AUDITORIUM{ "METAL_ISLAND_AUDITORIUM" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::GOLDEN_HILLS{ "GOLDEN_HILLS" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::FORSAKEN_LANDS{ "FORSAKEN_LANDS" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::UNDERGROUND_TAVERN{ "UNDERGROUND_TAVERN" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::BROODMOTHER{ "BROODMOTHER" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::ABANDONED_TENT{ "ABANDONED_TENT" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::ANT_KINGDOM_MINE{ "ANT_KINGDOM_MINE" };
+LazyPredefined<JigsawParameterFileIDGLTF> LegacyParse::ANT_KINGDOM_PLAZA{ "ANT_KINGDOM_PLAZA" };
 constexpr static std::initializer_list<uint8_t> LEGACY_STAGE0001_CID0{ 0x01, 0x70, 0x12, 0x20, 0xee, 0xb4, 0x57, 0xb7, 0x33, 0x4b, 0xa0, 0xea, 0x6e, 0x1e, 0xc3, 0x61, 0x8a, 0xae, 0xea, 0x25, 0x3c, 0xa6, 0xf5, 0xdb, 0x79, 0xda, 0xee, 0x01, 0xfd, 0x9e, 0xb8, 0x1b, 0xe2, 0x2e, 0xb2, 0x1f };
 constexpr static std::initializer_list<uint8_t> LEGACY_STAGE0002_CID0{ 0x01, 0x70, 0x12, 0x20, 0x57, 0xfb, 0x38, 0x4d, 0x61, 0x01, 0x58, 0x3f, 0x31, 0xd1, 0xc7, 0x94, 0x2c, 0x69, 0xb3, 0x16, 0x85, 0x36, 0x8b, 0x33, 0x41, 0x08, 0xae, 0x21, 0x6e, 0x55, 0xc7, 0x1d, 0x83, 0x45, 0x09, 0x81 };
 constexpr static std::initializer_list<uint8_t> LEGACY_STAGE0003_CID0{ 0x01, 0x70, 0x12, 0x20, 0x27, 0x68, 0x54, 0xff, 0x4b, 0x10, 0xf4, 0xbb, 0xb0, 0xea, 0xf0, 0x8d, 0xac, 0x1b, 0x35, 0x16, 0xf1, 0xd2, 0x13, 0xde, 0xa6, 0xa1, 0x42, 0x7b, 0x2c, 0xfd, 0x70, 0x9e, 0x7e, 0xe2, 0xa7, 0xd0 };

@@ -23,31 +23,7 @@
 	<constants>
 		<constant name="NONE" value="-1" enum="NPC">
 		</constant>
-		<constant name="GENERIC" value="0" enum="NPC">
-		</constant>
-		<constant name="JANET" value="1" enum="NPC">
-		</constant>
-		<constant name="BU_GI" value="2" enum="NPC">
-		</constant>
-		<constant name="JOHNNY" value="3" enum="NPC">
-		</constant>
-		<constant name="KAGE" value="4" enum="NPC">
-		</constant>
-		<constant name="RITCHEE" value="5" enum="NPC">
-		</constant>
-		<constant name="SERENE" value="6" enum="NPC">
-		</constant>
-		<constant name="CARMINA" value="7" enum="NPC">
-		</constant>
-		<constant name="CHUCK" value="8" enum="NPC">
-		</constant>
-		<constant name="ARIE" value="9" enum="NPC">
-		</constant>
-		<constant name="SHAY" value="10" enum="NPC">
-		</constant>
-		<constant name="CROW" value="11" enum="NPC">
-		</constant>
-		<constant name="FIRST_CUSTOM" value="16" enum="NPC">
+		<constant name="FIRST_CUSTOM" value="0" enum="NPC">
 		</constant>
 	</constants>
 </class>

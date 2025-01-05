@@ -20,6 +20,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="validate" qualifiers="const">
+			<return type="JigsawError[]" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="container_type" type="int" setter="set_container_type" getter="get_container_type" enum="DataContainer.ContainerType" default="1">
@@ -41,6 +46,8 @@
 		<member name="mode_summary" type="GameModeSummary" setter="set_mode_summary" getter="get_mode_summary">
 		</member>
 		<member name="player_data" type="RecordingPlayerData[]" setter="set_player_data" getter="get_player_data" default="[]">
+		</member>
+		<member name="previous_wins" type="PackedInt64Array" setter="set_previous_wins" getter="get_previous_wins" default="PackedInt64Array()">
 		</member>
 		<member name="rematches" type="int" setter="set_rematches" getter="get_rematches" default="0">
 		</member>
