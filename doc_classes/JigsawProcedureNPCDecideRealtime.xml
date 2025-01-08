@@ -6,4 +6,8 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="realtime_type" type="JigsawParameterChoice" setter="set_realtime_type" getter="get_realtime_type">
+		</member>
+	</members>
 </class>

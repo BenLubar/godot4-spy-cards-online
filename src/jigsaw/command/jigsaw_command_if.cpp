@@ -13,6 +13,9 @@ IMPLEMENT_PROPERTY(JigsawCommandIf, Ref<JigsawParameter>, condition);
 IMPLEMENT_PROPERTY(JigsawCommandIf, Ref<JigsawCommandList>, if_true);
 IMPLEMENT_PROPERTY(JigsawCommandIf, Ref<JigsawCommandList>, if_false);
 
+bool JigsawCommandIf::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandIf::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameterBoolean> cond_param;
 	err = context->resolve_variable(_condition, cond_param, "condition");
@@ -84,6 +87,9 @@ void JigsawCommandIf::set_branch(int64_t i, const Ref<JigsawCommandList> &comman
 		_if_false = commands;
 		emit_changed();
 	}
+}
+enums::JigsawProcedure::Mode JigsawCommandIf::get_branch_mode(int64_t i, enums::JigsawProcedure::Mode parent_mode) const {
+	return parent_mode;
 }
 String JigsawCommandIf::get_branch_name(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, 2, "");

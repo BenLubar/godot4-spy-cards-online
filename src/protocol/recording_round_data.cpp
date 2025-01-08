@@ -2,7 +2,6 @@
 
 void RecordingRoundData::_bind_methods() {
 	BIND_ENUM_CONSTANT(CHOICE);
-	BIND_ENUM_CONSTANT(ACTION);
 	BIND_ENUM_CONSTANT(REALTIME);
 
 	BIND_PROPERTY_ENUM(RecordingRoundData::RoundType, type);

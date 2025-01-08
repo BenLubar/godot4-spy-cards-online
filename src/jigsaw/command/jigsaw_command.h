@@ -48,8 +48,7 @@ protected:
 
 public:
 	virtual Type get_type() const = 0;
-	virtual bool modifies_game_state() const = 0;
-	virtual bool can_pause_execution() const = 0;
+	virtual bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config = false) const = 0;
 	virtual JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const = 0;
 	virtual Ref<JigsawError> pop_stack_frame(const Ref<JigsawContext> &context, const Ref<JigsawStackFrame> &popped_frame) const { return Ref<JigsawError>(); }
 
@@ -75,9 +74,10 @@ public:
 	virtual String get_result_name(int64_t i) const = 0;
 
 	virtual int64_t get_num_branches() const { return 0; }
-	virtual Ref<JigsawCommandList> get_branch(int64_t i) const { return Ref<JigsawCommandList>(); }
-	virtual void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) {}
-	virtual String get_branch_name(int64_t i) const { return ""; }
+	virtual Ref<JigsawCommandList> get_branch(int64_t i) const { ERR_FAIL_V(Ref<JigsawCommandList>()); }
+	virtual void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) { ERR_FAIL(); }
+	virtual enums::JigsawProcedure::Mode get_branch_mode(int64_t i, enums::JigsawProcedure::Mode parent_mode) const { ERR_FAIL_V(parent_mode); }
+	virtual String get_branch_name(int64_t i) const { ERR_FAIL_V(""); }
 	virtual TypedArray<JigsawParameter> get_branch_argument_templates(int64_t i) const { return TypedArray<JigsawParameter>(); }
 	virtual PackedStringArray get_branch_argument_names(int64_t i) const { return PackedStringArray(); }
 	virtual TypedArray<Array> get_branch_result_templates(int64_t i, const Ref<JigsawContext> &context) const { return TypedArray<Array>(); }

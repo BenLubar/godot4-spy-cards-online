@@ -15,10 +15,10 @@ void JigsawTrigger::_bind_methods() {
 	} \
 	IMPLEMENT_PROPERTY(JigsawTrigger##m_type##Custom, Ref<JigsawParameterChoice>, custom_tag); \
 	String JigsawTrigger##m_type##Custom::get_editor_name() const { \
-		return "TODO"; \
+		return "Custom " #m_type " Trigger"; \
 	} \
 	String JigsawTrigger##m_type##Custom::get_editor_description() const { \
-		return "TODO"; \
+		return "You decide what this means!"; \
 	} \
 	TypedArray<JigsawParameter> JigsawTrigger##m_type##Custom::get_arguments() const { \
 		return TypedArray<JigsawParameter>(); \
@@ -78,7 +78,7 @@ String JigsawTriggerVariantCosmeticInit::get_editor_name() const {
 	return "Cosmetic Init";
 }
 String JigsawTriggerVariantCosmeticInit::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Set up the game mode's initial cosmetic state based on the date and the random seed.";
 }
 TypedArray<JigsawParameter> JigsawTriggerVariantCosmeticInit::get_arguments() const {
 	return Array::make(
@@ -108,7 +108,7 @@ String JigsawTriggerVariantCharacterInit::get_editor_name() const {
 	return "Character Init";
 }
 String JigsawTriggerVariantCharacterInit::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Set up a visuals for a player's cosmetic choices.";
 }
 TypedArray<JigsawParameter> JigsawTriggerVariantCharacterInit::get_arguments() const {
 	return Array::make(
@@ -136,12 +136,14 @@ String JigsawTriggerVariantDeckInit::get_editor_name() const {
 	return "Deck Init";
 }
 String JigsawTriggerVariantDeckInit::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Record the initial cards in a player's deck.";
 }
 TypedArray<JigsawParameter> JigsawTriggerVariantDeckInit::get_arguments() const {
 	return Array::make(
 		JigsawParameterAmount::make(0),
-		JigsawParameterOrderedList::make_template(Array::make(JigsawParameterCard::make(enums::CardDef::NONE)))
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		))
 	);
 }
 PackedStringArray JigsawTriggerVariantDeckInit::get_argument_names() const {
@@ -162,7 +164,7 @@ String JigsawTriggerVariantMatchStart::get_editor_name() const {
 	return "Match Start";
 }
 String JigsawTriggerVariantMatchStart::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Run additional processing at the start of a match.";
 }
 TypedArray<JigsawParameter> JigsawTriggerVariantMatchStart::get_arguments() const {
 	return TypedArray<JigsawParameter>();

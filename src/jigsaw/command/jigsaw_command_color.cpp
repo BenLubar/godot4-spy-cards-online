@@ -38,6 +38,9 @@ static float amount255_to_float1(const Ref<JigsawParameterAmount> &amount) {
 	return CLAMP(amount->get_amount(), 0, 255) / 255.0f;
 }
 
+bool JigsawCommandColor::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandColor::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	switch (_operation) {
 	case CREATE_FLOAT:

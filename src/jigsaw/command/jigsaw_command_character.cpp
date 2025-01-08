@@ -32,6 +32,24 @@ IMPLEMENT_PROPERTY(JigsawCommandCharacter, Ref<JigsawParameter>, flip);
 IMPLEMENT_PROPERTY(JigsawCommandCharacter, Ref<JigsawParameter>, player_number);
 IMPLEMENT_PROPERTY(JigsawCommandCharacter, Ref<JigsawParameterLocalVariable>, output);
 
+bool JigsawCommandCharacter::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+	case LOGIC:
+	case VISUAL:
+	case INIT:
+	case MAIN:
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+	case REALTIME_VISUAL:
+		break; // TODO
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	static LazyGlobal<GDScript> character_sprite_script([]() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://stage/character_sprite.gd", "GDScript"); });
 

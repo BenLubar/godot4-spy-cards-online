@@ -16,8 +16,7 @@ protected:
 public:
 	enum RoundType {
 		CHOICE = 0,
-		ACTION = 1,
-		REALTIME = 2,
+		REALTIME = 1,
 	};
 
 	DECLARE_PROPERTY(RoundType, type, = CHOICE);

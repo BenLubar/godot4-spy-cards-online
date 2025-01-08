@@ -23,8 +23,7 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawCommandList>, scope);
 
 	Type get_type() const override { return RNG; }
-	bool modifies_game_state() const override { return true; }
-	bool can_pause_execution() const override { return false; }
+	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 	Ref<JigsawError> pop_stack_frame(const Ref<JigsawContext> &context, const Ref<JigsawStackFrame> &popped_frame) const override;
 
@@ -50,6 +49,7 @@ public:
 	int64_t get_num_branches() const override;
 	Ref<JigsawCommandList> get_branch(int64_t i) const override;
 	void set_branch(int64_t i, const Ref<JigsawCommandList> &commands) override;
+	enums::JigsawProcedure::Mode get_branch_mode(int64_t i, enums::JigsawProcedure::Mode parent_mode) const override;
 	String get_branch_name(int64_t i) const override;
 };
 DECLARE_ENUM(JigsawCommandRNG::Operation);

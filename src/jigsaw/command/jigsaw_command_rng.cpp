@@ -21,6 +21,30 @@ IMPLEMENT_PROPERTY(JigsawCommandRNG, Ref<JigsawParameter>, max);
 IMPLEMENT_PROPERTY(JigsawCommandRNG, Ref<JigsawParameterLocalVariable>, output);
 IMPLEMENT_PROPERTY(JigsawCommandRNG, Ref<JigsawCommandList>, scope);
 
+bool JigsawCommandRNG::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+		return false;
+	case LOGIC:
+		return true;
+	case VISUAL:
+		return false;
+	case INIT:
+	case MAIN:
+		return true;
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+		return false;
+	case REALTIME_LOGIC:
+		return true;
+	case REALTIME_VISUAL:
+		return false;
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandRNG::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<::RNG> rng = context->get_rng();
 	if (rng.is_null()) {
@@ -295,6 +319,9 @@ void JigsawCommandRNG::set_branch(int64_t i, const Ref<JigsawCommandList> &comma
 
 	_scope = commands;
 	emit_changed();
+}
+enums::JigsawProcedure::Mode JigsawCommandRNG::get_branch_mode(int64_t i, enums::JigsawProcedure::Mode parent_mode) const {
+	return parent_mode;
 }
 String JigsawCommandRNG::get_branch_name(int64_t i) const {
 	return "Alternate timeline";

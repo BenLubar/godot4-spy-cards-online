@@ -486,7 +486,7 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 		Ref<RecordingRoundData> round;
 		round.instantiate();
 		round->set_type(static_cast<RecordingRoundData::RoundType>(fh->read_uvarint()));
-		ERR_FAIL_COND_V(round->get_type() != RecordingRoundData::CHOICE && round->get_type() != RecordingRoundData::ACTION && round->get_type() != RecordingRoundData::REALTIME, false);
+		ERR_FAIL_COND_V(round->get_type() != RecordingRoundData::CHOICE && round->get_type() != RecordingRoundData::REALTIME, false);
 
 		round->set_initial_checksum(fh->read_bytesvar());
 
@@ -499,7 +499,6 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 			player->set_personal_seed(fh->read_bytesvar());
 			switch (round->get_type()) {
 			case RecordingRoundData::CHOICE:
-			case RecordingRoundData::ACTION:
 			{
 				PackedInt64Array chosen_cards;
 				chosen_cards.resize(fh->read_uvarint());
@@ -526,7 +525,6 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 
 		switch (round->get_type()) {
 		case RecordingRoundData::CHOICE:
-		case RecordingRoundData::ACTION:
 			break;
 		case RecordingRoundData::REALTIME:
 			round->set_final_checksum(fh->read_bytesvar());
@@ -579,7 +577,6 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 			fh->write_bytesvar(player->get_personal_seed());
 			switch (round->get_type()) {
 			case RecordingRoundData::CHOICE:
-			case RecordingRoundData::ACTION:
 			{
 				fh->write_uvarint(player->get_chosen_cards().size());
 				for (int64_t k = 0; k < player->get_chosen_cards().size(); k++) {
@@ -601,7 +598,6 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 
 		switch (round->get_type()) {
 		case RecordingRoundData::CHOICE:
-		case RecordingRoundData::ACTION:
 			break;
 		case RecordingRoundData::REALTIME:
 			fh->write_bytesvar(round->get_final_checksum());

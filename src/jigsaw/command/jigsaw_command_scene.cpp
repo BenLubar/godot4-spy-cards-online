@@ -22,6 +22,24 @@ IMPLEMENT_PROPERTY(JigsawCommandScene, Ref<JigsawParameter>, property_name);
 IMPLEMENT_PROPERTY(JigsawCommandScene, Ref<JigsawParameter>, default_value);
 IMPLEMENT_PROPERTY(JigsawCommandScene, Ref<JigsawParameterLocalVariable>, output);
 
+bool JigsawCommandScene::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+	case LOGIC:
+	case VISUAL:
+	case INIT:
+	case MAIN:
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+	case REALTIME_VISUAL:
+		break; // TODO
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandScene::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	switch (_operation) {
 	case GET_PROPERTY_STRING:

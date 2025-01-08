@@ -39,6 +39,26 @@ IMPLEMENT_PROPERTY(JigsawCommandAudience, Ref<JigsawParameter>, excitement);
 IMPLEMENT_PROPERTY(JigsawCommandAudience, Ref<JigsawParameter>, weight);
 IMPLEMENT_PROPERTY(JigsawCommandAudience, Ref<JigsawParameterLocalVariable>, output);
 
+bool JigsawCommandAudience::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+	case LOGIC:
+		return false;
+	case VISUAL:
+	case INIT:
+	case MAIN:
+		return true;
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+	case REALTIME_VISUAL:
+		return false;
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandAudience::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	switch (_operation) {
 	case CREATE:

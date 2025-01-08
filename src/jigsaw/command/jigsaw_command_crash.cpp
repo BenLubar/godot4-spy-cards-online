@@ -11,6 +11,9 @@ void JigsawCommandCrash::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, message);
 IMPLEMENT_PROPERTY(JigsawCommandCrash, Ref<JigsawParameter>, params);
 
+bool JigsawCommandCrash::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandCrash::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameterString> message;
 	err = context->resolve_variable(_message, message, "message");

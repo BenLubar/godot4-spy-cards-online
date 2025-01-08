@@ -39,6 +39,9 @@ IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, lhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameter>, rhs);
 IMPLEMENT_PROPERTY(JigsawCommandMath, Ref<JigsawParameterLocalVariable>, output);
 
+bool JigsawCommandMath::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandMath::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	if (false) {
 		Ref<JigsawParameter> lhs, rhs;

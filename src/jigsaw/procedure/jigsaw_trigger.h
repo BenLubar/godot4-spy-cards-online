@@ -81,13 +81,14 @@ public:
 };
 DECLARE_ENUM(JigsawTriggerVariant::Type);
 
-#define DECLARE_JIGSAW_TRIGGER(m_type, m_subtype, m_subtype_enum, ...) \
+#define DECLARE_JIGSAW_TRIGGER(m_type, m_subtype, m_subtype_enum, m_mode_enum, ...) \
 	class JigsawTrigger##m_type##m_subtype : public JigsawTrigger##m_type { \
 		GDCLASS(JigsawTrigger##m_type##m_subtype, JigsawTrigger##m_type); \
 	protected: \
 		static void _bind_methods(); \
 	public: \
 		Type get_type() const override { return m_subtype_enum; } \
+		Mode get_mode() const override { return Mode::m_mode_enum; } \
 		String get_editor_name() const override; \
 		String get_editor_description() const override; \
 		TypedArray<JigsawParameter> get_arguments() const override; \
@@ -97,16 +98,16 @@ DECLARE_ENUM(JigsawTriggerVariant::Type);
 		__VA_ARGS__ \
 	}
 
-DECLARE_JIGSAW_TRIGGER(Effect, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
+DECLARE_JIGSAW_TRIGGER(Effect, Custom, CUSTOM, MAIN, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(Modifier, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
+DECLARE_JIGSAW_TRIGGER(Modifier, Custom, CUSTOM, MAIN, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(NPC, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
+DECLARE_JIGSAW_TRIGGER(NPC, Custom, CUSTOM, MAIN, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
 
-DECLARE_JIGSAW_TRIGGER(Variant, Custom, CUSTOM, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
-DECLARE_JIGSAW_TRIGGER(Variant, CosmeticInit, COSMETIC_INIT);
-DECLARE_JIGSAW_TRIGGER(Variant, CharacterInit, CHARACTER_INIT);
-DECLARE_JIGSAW_TRIGGER(Variant, DeckInit, DECK_INIT);
-DECLARE_JIGSAW_TRIGGER(Variant, MatchStart, MATCH_START);
+DECLARE_JIGSAW_TRIGGER(Variant, Custom, CUSTOM, MAIN, DECLARE_PROPERTY(Ref<JigsawParameterChoice>, custom_tag););
+DECLARE_JIGSAW_TRIGGER(Variant, CosmeticInit, COSMETIC_INIT, INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, CharacterInit, CHARACTER_INIT, INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, DeckInit, DECK_INIT, INIT);
+DECLARE_JIGSAW_TRIGGER(Variant, MatchStart, MATCH_START, INIT);
 
 #endif // JIGSAW_TRIGGER_H

@@ -43,8 +43,7 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, value);
 
 	Type get_type() const override { return LOOKUP_DEFINITION_PROPERTY; }
-	bool modifies_game_state() const override { return false; }
-	bool can_pause_execution() const override { return false; }
+	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;

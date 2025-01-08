@@ -14,7 +14,41 @@ TASKS
 - [ ] port whack-a-worm to jigsaw
 - [ ] factorio style loud test suite
 
-GAME LOOP
+GAME FLOW
+
+In this section, the all-caps text refers to which type of code is being run. Different types of code have different actions and data available to them. Networking is done via RPC methods.
+
+- [ ] HARDCODED: Player 1 selects game mode and variant from list of available game modes and their variants.
+- [ ] HARDCODED: If bug player count for this variant is at least 2, a lobby is created through the matchmaking service. Otherwise, the player either plays alone (1 bug player) or spectates alone (0 bug players).
+    - [ ] HARDCODED: Lobby code is either shown on-screen or hidden (based on preferences); in either case, it can be clicked to copy the lobby code. The lobby code or lack thereof is removed once all players have connected.
+    - [ ] HARDCODED: Everything else in here runs for each player separately and care must be taken to make sure it is deterministic and the recording of the match results in the same outcome.
+- [ ] HARDCODED: There is a safety limit to the number of commands that can be run in a row without a state change or delay. Number can be changed if it ends up being too low; it's just there to make sure the game can't freeze in an infinite loop.
+- [x] RPC (background): Each player calls the ping() method on every other player once per second with a sequence number, and if the game is currently in ROLLBACK mode, the number of frames behind the other player the sending player is estimated to be. (If not in ROLLBACK mode, this number is zero.)
+- [x] RPC (background): When the ping() method is called, record the frame advantage and call the pong() method on the sending player with the same sequence number.
+- [x] RPC (background): When the pong() method is called, sequence numbers that are in the future or too far in the past (with a 15 second sliding window) are dropped. Non-dropped pongs record their round trip time. Once a successful call to pong() has occurred, matchmaking for a given peer is considered to be complete and the corresponding connection to the matchmaking server is closed.
+- [ ] RPC: Each joining player connects first to player 1 and receives the game mode data (data container, selected variant, public name/revision, start timestamp, shared seed). Connections to other players are also established, as a dense mesh. Players with higher numbers dial, and players with lower numbers listen.
+- [ ] LOGIC/VISUAL: Game mode init triggers are run in the order they are defined (first for the mode, then for the variant). Time scale is infinity for this section of the code (all waited-for animations and delays complete immediately).
+- [ ] LOGIC: Any NPCs are initialized now as well.
+- [ ] RPC: Players signal to all other players when they have finished initialization.
+- [ ] SELECT: If the game mode has character selection logic defined, it is run now. Otherwise, the player's character is NONE.
+- [ ] HARDCODED: If the game mode variant does not use arcade player naming, the player is given a choice between their saved display name (if one is saved), entering a new display name to save, or using the character's display name (if applicable). If the game mode variant does use arcade player naming, the player is prompted to enter a 3 capital latin letter name, with their previous (saved) arcade display name pre-filled if present.
+- [ ] RPC: Player cosmetic data is sent to all other players as soon as they have both signalled that they finished initialization and also the local player has selected their character and name.
+- [ ] VISUAL: Once a player has reached this step (their character is either chosen or the game mode does not have logic for choosing a character), the player cosmetic init triggers run in the order they are defined. Cosmetic triggers can run for players in any order, so they must be written to be consistent by the game mode author.
+- [ ] SELECT: If the game mode has deck selection logic defined, it is run now. Players can import a deck that was previously saved for this mode (either shared with the community by another player or saved locally or privately) or build a deck using the game's logic. If the game mode does not have deck selection logic, the initial deck is a list containing no cards.
+- [ ] LOGIC: After the player cosmetic init has been run for a player and that player's initial deck has been received, the deck init triggers ae run in the order they are defined. Deck init triggers can run for players in any order, so they must be written to be consistent by the game mode author.
+- [ ] RPC: Initial deck is sent as soon as it is both selected and the receiving player has been sent the cosmetic data.
+- [ ] HARDCODED: When the player has submitted their deck and is waiting for other players to do so, the text "Waiting for other players..." is shown on the screen, along with checkboxes for each player (including the local player) which become checked once the player's cosmetic data and initial deck have been received.
+- [ ] RPC: The game state is checked by computing a checksum. Each player generates a 4-byte fragment of the next random seed. This process also occurs any time the input state is about to change once the main procedure gains control. Once an identical checksum has been received from all players (including the local player), the match continues with the random number generator re-seeded to the shared seed concatenated with all player-specific random seeds in ascending player number order.
+- [ ] HARDCODED: Show "Synchronizing" in the top right corner with checkboxes similar to the "Waiting for other players..." message while this process is occurring.
+- [ ] MAIN: From this point on, the flow of gameplay is controlled by the game mode variant's main procedure.
+    - [ ] LOGIC/VISUAL: The main procedure can temporarily context switch into logic and visual processing modes. Logic allows it to modify game state, and visual allows it to affect what shows up on the screen and make the visuals different per player or even different while spectating versus playing.
+    - [ ] MAIN: The main procedure has commands for managing effect queueing and processing. (Managing input queueing can also be done a bit by LOGIC.)
+    - [ ] SELECT: The main procedure can ask the player for input; however, this input can only be passed to LOGIC if it is done within a CHOICE command/synchronization point. LOGIC cannot run during CHOICE, but the data can be read by VISUAL while it is being assembled. It is the game mode's responsibility to undo any changes made during this VISUAL section. When the CHOICE command ends, a final visual preview is run before passing the data to a LOGIC section. An example of a use case for a SELECT outside of a CHOICE would be adjusting game speed.
+    - [ ] REALTIME: The main procedure can switch into REALTIME mode. In this mode, the game mode is given the frame number, player number, and input state for each player (sequentially, in ascending player number order). This section utilizes rollback netcode with the prediction method being that a player is expected to continue holding the same buttons they were holding on the last known frame. After all players have been processed with LOGIC for a given frame, a VISUAL section runs. A frame becomes "ground truth" if it is the last simulated frame where all player inputs are real rather than predicted. Rollback mode ends when a ground truth frame tells it to finish.
+    - [ ] MAIN: The main procedure can end the match, specifying which player(s) won. One final VISUAL section is run after this to show the end screen.
+    - [ ] HARDCODED: Once the match has ended and the final VISUAL section has been finished, options to rematch and to save/upload a replay are shown.
+
+GAME LOOP (previous docs)
 
 two networking modes
 - lockstep mode for normal card gameplay

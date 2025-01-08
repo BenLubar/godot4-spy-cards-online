@@ -22,17 +22,15 @@ IMPLEMENT_PROPERTY(JigsawCommandFunction, int64_t, function_index);
 IMPLEMENT_PROPERTY(JigsawCommandFunction, TypedArray<JigsawParameter>, args);
 IMPLEMENT_PROPERTY(JigsawCommandFunction, TypedArray<JigsawParameterLocalVariable>, results);
 
-bool JigsawCommandFunction::modifies_game_state() const {
-	Ref<JigsawFunction> func = get_function();
-	ERR_FAIL_COND_V(func.is_null(), false);
+bool JigsawCommandFunction::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	if (any_config) {
+		return true;
+	}
 
-	return func->get_cached_modifies_game_state();
-}
-bool JigsawCommandFunction::can_pause_execution() const {
-	Ref<JigsawFunction> func = get_function();
-	ERR_FAIL_COND_V(func.is_null(), false);
+	Ref<JigsawFunction> function = get_function();
+	ERR_FAIL_COND_V(function.is_null(), false);
 
-	return func->get_cached_can_pause_execution();
+	return mode == function->get_mode();
 }
 JigsawExecutionState JigsawCommandFunction::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	err = context->create_error("internal error: TODO (function)");

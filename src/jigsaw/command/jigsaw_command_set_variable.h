@@ -15,8 +15,7 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawParameter>, variable); // persistent ? variable : local_variable
 
 	Type get_type() const override { return SET_VARIABLE; }
-	bool modifies_game_state() const override { return _persistent; }
-	bool can_pause_execution() const override { return false; }
+	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;
 
 	int64_t get_num_configs() const override;

@@ -183,6 +183,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawProcedureNPCDecideRealtime);
 	GDREGISTER_CLASS(JigsawProcedureStickerShouldShow);
 	GDREGISTER_CLASS(JigsawProcedureStatFormatCost);
+	GDREGISTER_CLASS(JigsawProcedureVariantMain);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerEffect);
 	GDREGISTER_CLASS(JigsawTriggerEffectCustom);

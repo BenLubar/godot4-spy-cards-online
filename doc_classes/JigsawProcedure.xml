@@ -27,6 +27,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_mode" qualifiers="const">
+			<return type="int" enum="JigsawProcedure.Mode" />
+			<description>
+			</description>
+		</method>
 		<method name="get_result_names" qualifiers="const">
 			<return type="PackedStringArray" />
 			<description>
@@ -42,4 +47,24 @@
 		<member name="commands" type="JigsawCommandList" setter="set_commands" getter="get_commands">
 		</member>
 	</members>
+	<constants>
+		<constant name="FUNCTIONAL" value="0" enum="Mode">
+		</constant>
+		<constant name="LOGIC" value="1" enum="Mode">
+		</constant>
+		<constant name="VISUAL" value="2" enum="Mode">
+		</constant>
+		<constant name="INIT" value="3" enum="Mode">
+		</constant>
+		<constant name="MAIN" value="4" enum="Mode">
+		</constant>
+		<constant name="CHOICE_SELECT" value="5" enum="Mode">
+		</constant>
+		<constant name="CHOICE_PREVIEW" value="6" enum="Mode">
+		</constant>
+		<constant name="REALTIME_LOGIC" value="7" enum="Mode">
+		</constant>
+		<constant name="REALTIME_VISUAL" value="8" enum="Mode">
+		</constant>
+	</constants>
 </class>

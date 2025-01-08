@@ -3,6 +3,24 @@
 void JigsawCommandCamera::_bind_methods() {
 }
 
+bool JigsawCommandCamera::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+	case LOGIC:
+	case VISUAL:
+	case INIT:
+	case MAIN:
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+	case REALTIME_VISUAL:
+		break; // TODO
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandCamera::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	return JigsawExecutionState::CONTINUE; // TODO
 }

@@ -7,8 +7,10 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="can_pause_execution" qualifiers="const">
+		<method name="allowed_in_mode" qualifiers="const">
 			<return type="bool" />
+			<param index="0" name="mode" type="int" enum="JigsawProcedure.Mode" />
+			<param index="1" name="any_config" type="bool" default="false" />
 			<description>
 			</description>
 		</method>
@@ -46,6 +48,13 @@
 		<method name="get_branch_argument_templates" qualifiers="const">
 			<return type="JigsawParameter[]" />
 			<param index="0" name="i" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_branch_mode" qualifiers="const">
+			<return type="int" enum="JigsawProcedure.Mode" />
+			<param index="0" name="i" type="int" />
+			<param index="1" name="parent_mode" type="int" enum="JigsawProcedure.Mode" />
 			<description>
 			</description>
 		</method>
@@ -140,11 +149,6 @@
 		<method name="is_result_required" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="i" type="int" />
-			<description>
-			</description>
-		</method>
-		<method name="modifies_game_state" qualifiers="const">
-			<return type="bool" />
 			<description>
 			</description>
 		</method>

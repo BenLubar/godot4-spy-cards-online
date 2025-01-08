@@ -12,7 +12,7 @@ protected:
 public:
 	DECLARE_PROPERTY(PackedByteArray, personal_seed);
 
-	// CHOICE or ACTION only:
+	// CHOICE only:
 	DECLARE_PROPERTY(PackedInt64Array, chosen_cards);
 
 	// REALTIME only:

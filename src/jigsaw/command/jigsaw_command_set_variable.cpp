@@ -12,6 +12,34 @@ IMPLEMENT_PROPERTY_IS(JigsawCommandSetVariable, bool, persistent);
 IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, value);
 IMPLEMENT_PROPERTY(JigsawCommandSetVariable, Ref<JigsawParameter>, variable);
 
+bool JigsawCommandSetVariable::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	if (any_config) {
+		return true;
+	}
+
+	switch (mode) {
+	case FUNCTIONAL:
+		return !_persistent;
+	case LOGIC:
+		return true;
+	case VISUAL:
+		return !_persistent;
+	case INIT:
+	case MAIN:
+		return true;
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+		return !_persistent;
+	case REALTIME_LOGIC:
+		return true;
+	case REALTIME_VISUAL:
+		return !_persistent;
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandSetVariable::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameter> value;
 	err = context->resolve_variable(_value, value, "value");

@@ -8,6 +8,9 @@ void JigsawCommandComment::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandComment, TypedArray<JigsawParameter>, params);
 IMPLEMENT_PROPERTY(JigsawCommandComment, Ref<JigsawCommandList>, command_list);
 
+bool JigsawCommandComment::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandComment::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	return JigsawExecutionState::CONTINUE;
 }

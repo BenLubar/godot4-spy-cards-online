@@ -53,6 +53,9 @@ IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, JigsawCommandLookupDef
 IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, Ref<JigsawParameter>, definition);
 IMPLEMENT_PROPERTY(JigsawCommandLookupDefinitionProperty, Ref<JigsawParameterLocalVariable>, value);
 
+bool JigsawCommandLookupDefinitionProperty::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameter> def;
 	err = context->resolve_variable(_definition, def, get_argument_name(0));

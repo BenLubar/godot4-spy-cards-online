@@ -16,6 +16,9 @@ IMPLEMENT_PROPERTY(JigsawCommandIsSame, Ref<JigsawParameter>, compare_to);
 IMPLEMENT_PROPERTY(JigsawCommandIsSame, Ref<JigsawParameter>, object);
 IMPLEMENT_PROPERTY(JigsawCommandIsSame, Ref<JigsawParameterLocalVariable>, is_same);
 
+bool JigsawCommandIsSame::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandIsSame::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameter> compare_to;
 	Ref<JigsawParameter> object;

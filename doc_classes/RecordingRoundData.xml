@@ -19,9 +19,7 @@
 	<constants>
 		<constant name="CHOICE" value="0" enum="RoundType">
 		</constant>
-		<constant name="ACTION" value="1" enum="RoundType">
-		</constant>
-		<constant name="REALTIME" value="2" enum="RoundType">
+		<constant name="REALTIME" value="1" enum="RoundType">
 		</constant>
 	</constants>
 </class>

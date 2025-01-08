@@ -11,8 +11,21 @@
 #include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
 
 void JigsawProcedure::_bind_methods() {
+	using namespace enums::JigsawProcedure;
+
+	BIND_ENUM_CONSTANT(FUNCTIONAL);
+	BIND_ENUM_CONSTANT(LOGIC);
+	BIND_ENUM_CONSTANT(VISUAL);
+	BIND_ENUM_CONSTANT(INIT);
+	BIND_ENUM_CONSTANT(MAIN);
+	BIND_ENUM_CONSTANT(CHOICE_SELECT);
+	BIND_ENUM_CONSTANT(CHOICE_PREVIEW);
+	BIND_ENUM_CONSTANT(REALTIME_LOGIC);
+	BIND_ENUM_CONSTANT(REALTIME_VISUAL);
+
 	BIND_PROPERTY_RESOURCE(JigsawCommandList, commands);
 
+	ClassDB::bind_method(D_METHOD("get_mode"), &JigsawProcedure::get_mode);
 	ClassDB::bind_method(D_METHOD("get_editor_name"), &JigsawProcedure::get_editor_name);
 	ClassDB::bind_method(D_METHOD("get_editor_description"), &JigsawProcedure::get_editor_description);
 	ClassDB::bind_method(D_METHOD("get_arguments"), &JigsawProcedure::get_arguments);
@@ -24,6 +37,9 @@ void JigsawProcedure::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawProcedure, Ref<JigsawCommandList>, commands);
 
 void JigsawProcedureEffectCurve::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureEffectCurve::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureEffectCurve::get_editor_name() const {
 	return "Effect Curve";
 }
@@ -32,11 +48,12 @@ String JigsawProcedureEffectCurve::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectCurve::get_arguments() const {
 	return Array::make(
+		JigsawParameterCard::make(enums::CardDef::NONE),
 		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
 	);
 }
 PackedStringArray JigsawProcedureEffectCurve::get_argument_names() const {
-	return PackedStringArray{"inst"};
+	return PackedStringArray{"card", "inst"};
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectCurve::get_results() const {
 	return Array::make(
@@ -48,11 +65,14 @@ PackedStringArray JigsawProcedureEffectCurve::get_result_names() const {
 }
 
 void JigsawProcedureEffectDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureEffectDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureEffectDescribe::get_editor_name() const {
 	return "Describe Effect";
 }
 String JigsawProcedureEffectDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate text for a card effect to display in the description area of a card containing the effect.";
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectDescribe::get_arguments() const {
 	return Array::make(
@@ -73,11 +93,14 @@ PackedStringArray JigsawProcedureEffectDescribe::get_result_names() const {
 }
 
 void JigsawProcedureEffectSimpleDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureEffectSimpleDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureEffectSimpleDescribe::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Describe Effect (Simple)";
 }
 String JigsawProcedureEffectSimpleDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate an icon and text to show in the card's description area. Only used if every top-level effect on the card generates an icon and/or text for the simple description.";
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectSimpleDescribe::get_arguments() const {
 	return Array::make(
@@ -99,11 +122,14 @@ PackedStringArray JigsawProcedureEffectSimpleDescribe::get_result_names() const 
 }
 
 void JigsawProcedureEffectExtendedDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureEffectExtendedDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureEffectExtendedDescribe::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Describe Effect (Extended)";
 }
 String JigsawProcedureEffectExtendedDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate a list of facts to show next to a card when hovered. Useful for explaining keywords or showing other cards for reference.";
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectExtendedDescribe::get_arguments() const {
 	return Array::make(
@@ -127,11 +153,14 @@ PackedStringArray JigsawProcedureEffectExtendedDescribe::get_result_names() cons
 }
 
 void JigsawProcedureModifierDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureModifierDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureModifierDescribe::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Describe Modifier";
 }
 String JigsawProcedureModifierDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate text to name a modifier. Can be queried by game mode procedures, and is shown in the log.";
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierDescribe::get_arguments() const {
 	return Array::make(
@@ -152,11 +181,14 @@ PackedStringArray JigsawProcedureModifierDescribe::get_result_names() const {
 }
 
 void JigsawProcedureModifierSimpleDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureModifierSimpleDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureModifierSimpleDescribe::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Describe Modifier (Simple)";
 }
 String JigsawProcedureModifierSimpleDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate text and an icon to display in the card's modifiers area.";
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierSimpleDescribe::get_arguments() const {
 	return Array::make(
@@ -178,11 +210,14 @@ PackedStringArray JigsawProcedureModifierSimpleDescribe::get_result_names() cons
 }
 
 void JigsawProcedureModifierExtendedDescribe::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureModifierExtendedDescribe::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureModifierExtendedDescribe::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Describe Modifier (Extended)";
 }
 String JigsawProcedureModifierExtendedDescribe::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate a list of facts to show next to a card that has this modifier when hovered.";
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierExtendedDescribe::get_arguments() const {
 	return Array::make(
@@ -206,17 +241,22 @@ PackedStringArray JigsawProcedureModifierExtendedDescribe::get_result_names() co
 }
 
 void JigsawProcedureNPCBuildDeck::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureNPCBuildDeck::get_mode() const {
+	return Mode::INIT;
+}
 String JigsawProcedureNPCBuildDeck::get_editor_name() const {
-	return "TODO"; // TODO
+	return "NPC: Generate Deck";
 }
 String JigsawProcedureNPCBuildDeck::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Generate a list of cards to put in an NPC's deck. The game mode does NOT automatically check that these cards make a valid deck.";
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCBuildDeck::get_arguments() const {
-	return TypedArray<JigsawParameter>();
+	return Array::make(
+		JigsawParameterAmount::make(0)
+	);
 }
 PackedStringArray JigsawProcedureNPCBuildDeck::get_argument_names() const {
-	return PackedStringArray{};
+	return PackedStringArray{"side"};
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCBuildDeck::get_results() const {
 	return Array::make(
@@ -229,27 +269,31 @@ PackedStringArray JigsawProcedureNPCBuildDeck::get_result_names() const {
 	return PackedStringArray{"cards"};
 }
 
-void JigsawProcedureNPCDecideChoice::_bind_methods() {}
+void JigsawProcedureNPCDecideChoice::_bind_methods() {
+	BIND_PROPERTY_RESOURCE(JigsawParameterChoice, choice_type);
+}
+IMPLEMENT_PROPERTY(JigsawProcedureNPCDecideChoice, Ref<JigsawParameterChoice>, choice_type);
+enums::JigsawProcedure::Mode JigsawProcedureNPCDecideChoice::get_mode() const {
+	return Mode::MAIN;
+}
 String JigsawProcedureNPCDecideChoice::get_editor_name() const {
-	return "TODO"; // TODO
+	return "NPC: Decide Choice";
 }
 String JigsawProcedureNPCDecideChoice::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Select cards for an NPC to play on their turn.";
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCDecideChoice::get_arguments() const {
 	return Array::make(
-		JigsawParameterOrderedList::make_template(Array::make(
-			JigsawParameterCardInstance::make(Ref<CardInstance>())
-		))
+		JigsawParameterAmount::make(0)
 	);
 }
 PackedStringArray JigsawProcedureNPCDecideChoice::get_argument_names() const {
-	return PackedStringArray{"options"};
+	return PackedStringArray{"side"};
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCDecideChoice::get_results() const {
 	return Array::make(
 		JigsawParameterOrderedList::make_template(Array::make(
-			JigsawParameterCardInstance::make(Ref<CardInstance>())
+			JigsawParameterAmount::make(0)
 		))
 	);
 }
@@ -257,18 +301,27 @@ PackedStringArray JigsawProcedureNPCDecideChoice::get_result_names() const {
 	return PackedStringArray{"choices"};
 }
 
-void JigsawProcedureNPCDecideRealtime::_bind_methods() {}
+void JigsawProcedureNPCDecideRealtime::_bind_methods() {
+	BIND_PROPERTY_RESOURCE(JigsawParameterRealtime, realtime_type);
+}
+IMPLEMENT_PROPERTY(JigsawProcedureNPCDecideRealtime, Ref<JigsawParameterChoice>, realtime_type);
+enums::JigsawProcedure::Mode JigsawProcedureNPCDecideRealtime::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureNPCDecideRealtime::get_editor_name() const {
-	return "TODO"; // TODO
+	return "NPC: Decide Realtime";
 }
 String JigsawProcedureNPCDecideRealtime::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Control the buttons an NPC holds during a realtime segment.";
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCDecideRealtime::get_arguments() const {
-	return TypedArray<JigsawParameter>();
+	return Array::make(
+		JigsawParameterAmount::make(0),
+		JigsawParameterAmount::make(0)
+	);
 }
 PackedStringArray JigsawProcedureNPCDecideRealtime::get_argument_names() const {
-	return PackedStringArray{};
+	return PackedStringArray{"side", "frame_count"};
 }
 TypedArray<JigsawParameter> JigsawProcedureNPCDecideRealtime::get_results() const {
 	return Array::make(
@@ -287,11 +340,14 @@ PackedStringArray JigsawProcedureNPCDecideRealtime::get_result_names() const {
 }
 
 void JigsawProcedureStickerShouldShow::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureStickerShouldShow::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureStickerShouldShow::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Should Show Sticker";
 }
 String JigsawProcedureStickerShouldShow::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Decide whether a sticker is visible on a given card.";
 }
 TypedArray<JigsawParameter> JigsawProcedureStickerShouldShow::get_arguments() const {
 	return Array::make(
@@ -311,11 +367,14 @@ PackedStringArray JigsawProcedureStickerShouldShow::get_result_names() const {
 }
 
 void JigsawProcedureStatFormatCost::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureStatFormatCost::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
 String JigsawProcedureStatFormatCost::get_editor_name() const {
-	return "TODO"; // TODO
+	return "Format Cost";
 }
 String JigsawProcedureStatFormatCost::get_editor_description() const {
-	return "TODO"; // TODO
+	return "Choose an icon and text to display in a card's costs area.";
 }
 TypedArray<JigsawParameter> JigsawProcedureStatFormatCost::get_arguments() const {
 	return Array::make(
@@ -334,4 +393,31 @@ TypedArray<JigsawParameter> JigsawProcedureStatFormatCost::get_results() const {
 }
 PackedStringArray JigsawProcedureStatFormatCost::get_result_names() const {
 	return PackedStringArray{"text", "icon"};
+}
+
+void JigsawProcedureVariantMain::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureVariantMain::get_mode() const {
+	return Mode::MAIN;
+}
+String JigsawProcedureVariantMain::get_editor_name() const {
+	return "Main Loop";
+}
+String JigsawProcedureVariantMain::get_editor_description() const {
+	return "The main gameplay loop, run after initialization finishes.";
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantMain::get_arguments() const {
+	return TypedArray<JigsawParameter>();
+}
+PackedStringArray JigsawProcedureVariantMain::get_argument_names() const {
+	return PackedStringArray{};
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantMain::get_results() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterAmount::make(0)
+		))
+	);
+}
+PackedStringArray JigsawProcedureVariantMain::get_result_names() const {
+	return PackedStringArray{"winners"};
 }

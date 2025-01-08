@@ -10,6 +10,9 @@ void JigsawCommandLoop::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandLoop, Ref<JigsawParameter>, count);
 IMPLEMENT_PROPERTY(JigsawCommandLoop, Ref<JigsawCommandList>, body);
 
+bool JigsawCommandLoop::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandLoop::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	Ref<JigsawParameterAmount> count;
 	err = context->resolve_variable(_count, count, "count");
@@ -103,6 +106,9 @@ void JigsawCommandLoop::set_branch(int64_t i, const Ref<JigsawCommandList> &comm
 
 	_body = commands;
 	emit_changed();
+}
+enums::JigsawProcedure::Mode JigsawCommandLoop::get_branch_mode(int64_t i, enums::JigsawProcedure::Mode parent_mode) const {
+	return parent_mode;
 }
 String JigsawCommandLoop::get_branch_name(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, 1, "");

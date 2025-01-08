@@ -8,6 +8,28 @@ void JigsawCommandLog::_bind_methods() {
 
 IMPLEMENT_PROPERTY(JigsawCommandLog, Ref<JigsawParameter>, message);
 
+bool JigsawCommandLog::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+		return false;
+	case LOGIC:
+		return true;
+	case VISUAL:
+		return false;
+	case INIT:
+	case MAIN:
+		return true;
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+	case REALTIME_VISUAL:
+		return false;
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandLog::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	err = context->create_error("internal error: TODO (log)");
 

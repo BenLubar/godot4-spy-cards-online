@@ -15,6 +15,27 @@ void JigsawCommandAudio::_bind_methods() {
 IMPLEMENT_PROPERTY(JigsawCommandAudio, JigsawCommandAudio::Operation, operation);
 IMPLEMENT_PROPERTY(JigsawCommandAudio, Ref<JigsawParameter>, sound);
 
+bool JigsawCommandAudio::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	using namespace enums::JigsawProcedure;
+
+	switch (mode) {
+	case FUNCTIONAL:
+	case LOGIC:
+		return false;
+	case VISUAL:
+	case INIT:
+	case MAIN:
+		return true;
+	case CHOICE_SELECT:
+	case CHOICE_PREVIEW:
+	case REALTIME_LOGIC:
+		return false;
+	case REALTIME_VISUAL:
+		return true;
+	}
+
+	ERR_FAIL_V(false);
+}
 JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	switch (_operation) {
 	case SET_MUSIC:

@@ -26,8 +26,7 @@ void JigsawCommand::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawCommand::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");
-	ClassDB::bind_method(D_METHOD("modifies_game_state"), &JigsawCommand::modifies_game_state);
-	ClassDB::bind_method(D_METHOD("can_pause_execution"), &JigsawCommand::can_pause_execution);
+	ClassDB::bind_method(D_METHOD("allowed_in_mode", "mode", "any_config"), &JigsawCommand::allowed_in_mode, DEFVAL(false));
 
 	ClassDB::bind_method(D_METHOD("get_num_configs"), &JigsawCommand::get_num_configs);
 	ClassDB::bind_method(D_METHOD("get_config_name", "i"), &JigsawCommand::get_config_name);
@@ -53,6 +52,7 @@ void JigsawCommand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_num_branches"), &JigsawCommand::get_num_branches);
 	ClassDB::bind_method(D_METHOD("get_branch", "i"), &JigsawCommand::get_branch);
 	ClassDB::bind_method(D_METHOD("set_branch", "i", "commands"), &JigsawCommand::set_branch);
+	ClassDB::bind_method(D_METHOD("get_branch_mode", "i", "parent_mode"), &JigsawCommand::get_branch_mode);
 	ClassDB::bind_method(D_METHOD("get_branch_name", "i"), &JigsawCommand::get_branch_name);
 	ClassDB::bind_method(D_METHOD("get_branch_argument_templates", "i"), &JigsawCommand::get_branch_argument_templates);
 	ClassDB::bind_method(D_METHOD("get_branch_argument_names", "i"), &JigsawCommand::get_branch_argument_names);

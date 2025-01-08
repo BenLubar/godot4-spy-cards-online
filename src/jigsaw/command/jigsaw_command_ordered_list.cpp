@@ -18,6 +18,9 @@ IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameter>, list);
 IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameter>, index);
 IMPLEMENT_PROPERTY(JigsawCommandOrderedList, Ref<JigsawParameterLocalVariable>, output);
 
+bool JigsawCommandOrderedList::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandOrderedList::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	switch (_operation) {
 	case GET_NUM_ITEMS:

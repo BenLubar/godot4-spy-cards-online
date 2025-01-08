@@ -36,6 +36,9 @@ IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameter>, font_size);
 
 IMPLEMENT_PROPERTY(JigsawCommandFormatText, Ref<JigsawParameterLocalVariable>, formatted_text);
 
+bool JigsawCommandFormatText::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const {
+	return true;
+}
 JigsawExecutionState JigsawCommandFormatText::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
 	if (unlikely(_command == FormattedText::PUSH_EFFECT_INSTANCE || _command == FormattedText::POP)) {
 		err = context->create_error("invalid formatted text command");
