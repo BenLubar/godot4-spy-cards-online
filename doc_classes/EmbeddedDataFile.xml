@@ -7,9 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="data" type="PackedByteArray" setter="set_data" getter="get_data">
+		<member name="data" type="PackedByteArray" setter="set_data" getter="get_data" default="PackedByteArray()">
 		</member>
-		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id">
+		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
 		</member>
 	</members>
 </class>

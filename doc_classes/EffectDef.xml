@@ -9,21 +9,21 @@
 	<members>
 		<member name="curve" type="JigsawProcedureEffectCurve" setter="set_curve" getter="get_curve">
 		</member>
-		<member name="default_parameters" type="JigsawParameter[]" setter="set_default_parameters" getter="get_default_parameters">
+		<member name="default_parameters" type="JigsawParameter[]" setter="set_default_parameters" getter="get_default_parameters" default="[]">
 		</member>
-		<member name="default_priority" type="int" setter="set_default_priority" getter="get_default_priority">
+		<member name="default_priority" type="int" setter="set_default_priority" getter="get_default_priority" default="65">
 		</member>
 		<member name="describe" type="JigsawProcedureEffectDescribe" setter="set_describe" getter="get_describe">
 		</member>
-		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name">
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>
 		<member name="extended_describe" type="JigsawProcedureEffectExtendedDescribe" setter="set_extended_describe" getter="get_extended_describe">
 		</member>
-		<member name="parameter_names" type="PackedStringArray" setter="set_parameter_names" getter="get_parameter_names">
+		<member name="parameter_names" type="PackedStringArray" setter="set_parameter_names" getter="get_parameter_names" default="PackedStringArray()">
 		</member>
 		<member name="simple_describe" type="JigsawProcedureEffectSimpleDescribe" setter="set_simple_describe" getter="get_simple_describe">
 		</member>
-		<member name="triggers" type="JigsawTriggerEffect[]" setter="set_triggers" getter="get_triggers">
+		<member name="triggers" type="JigsawTriggerEffect[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
 	<constants>

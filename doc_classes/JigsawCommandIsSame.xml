@@ -13,5 +13,6 @@
 		</member>
 		<member name="object" type="JigsawParameter" setter="set_object" getter="get_object">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="9" />
 	</members>
 </class>

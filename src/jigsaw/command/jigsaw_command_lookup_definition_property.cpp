@@ -218,7 +218,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			TypedArray<JigsawParameter> tribes = card_def->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
+			TypedArray<JigsawParameter> tribes = Array(card_def->get_tribes()).map(callable_mp_static(&JigsawParameterTribe::make));
 
 			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(tribes));
 		}
@@ -232,7 +232,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 				return JigsawExecutionState::ERROR;
 			}
 
-			TypedArray<JigsawParameter> tribes = inst->get_tribes().map(callable_mp_static(&JigsawParameterTribe::make));
+			TypedArray<JigsawParameter> tribes = Array(inst->get_tribes()).map(callable_mp_static(&JigsawParameterTribe::make));
 
 			return set_command_result(context, err, 0, JigsawParameterOrderedList::make(tribes));
 		}

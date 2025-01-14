@@ -7,8 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="persistent" type="bool" setter="set_persistent" getter="is_persistent">
+		<member name="persistent" type="bool" setter="set_persistent" getter="is_persistent" default="true">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="7" />
 		<member name="value" type="JigsawParameter" setter="set_value" getter="get_value">
 		</member>
 		<member name="variable" type="JigsawParameter" setter="set_variable" getter="get_variable">

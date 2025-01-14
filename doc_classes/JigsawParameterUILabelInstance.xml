@@ -15,7 +15,8 @@
 		</method>
 	</methods>
 	<members>
-		<member name="label" type="int" setter="set_label" getter="get_label">
+		<member name="label" type="int" setter="set_label" getter="get_label" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-11" />
 	</members>
 </class>

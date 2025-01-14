@@ -14,13 +14,13 @@
 		</method>
 		<method name="choices_confirmed">
 			<return type="void" />
-			<param index="0" name="picked_cards" type="PackedInt64Array" />
+			<param index="0" name="picked_cards" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>
 		<method name="choices_preview">
 			<return type="void" />
-			<param index="0" name="picked_cards" type="PackedInt64Array" />
+			<param index="0" name="picked_cards" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>
@@ -111,7 +111,7 @@
 		</method>
 		<method name="set_local_player_initial_deck">
 			<return type="void" />
-			<param index="0" name="deck" type="int[]" />
+			<param index="0" name="deck" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>
@@ -124,7 +124,7 @@
 		</method>
 		<method name="set_player_initial_deck">
 			<return type="void" />
-			<param index="0" name="packed_deck" type="PackedInt64Array" />
+			<param index="0" name="packed_deck" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>
@@ -137,25 +137,25 @@
 		</method>
 	</methods>
 	<members>
-		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections">
+		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections" default="[]">
 		</member>
 		<member name="crypto" type="Crypto" setter="set_crypto" getter="get_crypto">
 		</member>
-		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config">
+		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config" default="{ &quot;iceServers&quot;: [{ &quot;urls&quot;: [&quot;stun:stun.cloudflare.com:3478&quot;] }] }">
 		</member>
-		<member name="lobby_id" type="String" setter="set_lobby_id" getter="get_lobby_id">
+		<member name="lobby_id" type="String" setter="set_lobby_id" getter="get_lobby_id" default="&quot;&quot;">
 		</member>
-		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players">
+		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players" default="0">
 		</member>
 		<member name="peer" type="WebRTCMultiplayerPeer" setter="set_peer" getter="get_peer">
 		</member>
-		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs">
+		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
 		</member>
 		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
 		</member>
-		<member name="state" type="int" setter="set_state" getter="get_state" enum="MatchmakingHandler.MatchState">
+		<member name="state" type="int" setter="set_state" getter="get_state" enum="MatchmakingHandler.MatchState" default="0">
 		</member>
-		<member name="verification_code" type="String" setter="set_verification_code" getter="get_verification_code">
+		<member name="verification_code" type="String" setter="set_verification_code" getter="get_verification_code" default="&quot;&quot;">
 		</member>
 	</members>
 	<signals>

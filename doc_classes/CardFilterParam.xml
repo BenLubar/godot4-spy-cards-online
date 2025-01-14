@@ -9,5 +9,6 @@
 	<members>
 		<member name="param" type="JigsawParameterVariable" setter="set_param" getter="get_param">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="CardFilter" enum="CardFilter.Type" default="6" />
 	</members>
 </class>

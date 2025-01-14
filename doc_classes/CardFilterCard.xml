@@ -7,7 +7,8 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="card" type="int" setter="set_card" getter="get_card" enum="CardDef.Card">
+		<member name="card" type="int" setter="set_card" getter="get_card" enum="CardDef.Card" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="CardFilter" enum="CardFilter.Type" default="2" />
 	</members>
 </class>

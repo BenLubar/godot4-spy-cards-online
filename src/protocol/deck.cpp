@@ -129,19 +129,17 @@ constexpr static size_t array_index(const T (&array)[N], const T &value) {
 	return N;
 }
 
-PackedByteArray Deck::encode(const TypedArray<enums::CardDef::Card> &cards) {
+PackedByteArray Deck::encode(const PackedArray<enums::CardDef::Card> &cards) {
 	if (cards.size() == 0) {
 		return PackedByteArray();
 	}
-
-	PackedInt64Array cards_int = cards;
 
 	bool any_non_basic = false;
 	bool any_above_255 = false;
 	bool any_below_128 = false;
 
-	for (int64_t i = 0; i < cards_int.size(); i++) {
-		enums::CardDef::Card card = static_cast<enums::CardDef::Card>(cards_int[i]);
+	for (int64_t i = 0; i < cards.size(); i++) {
+		enums::CardDef::Card card = cards[i];
 		if (card < 128) {
 			any_below_128 = true;
 		}
@@ -174,7 +172,7 @@ PackedByteArray Deck::encode(const TypedArray<enums::CardDef::Card> &cards) {
 		}
 	}
 
-	if (cards_int.size() <= 3) {
+	if (cards.size() <= 3) {
 		any_non_basic = true;
 	}
 
@@ -183,62 +181,62 @@ PackedByteArray Deck::encode(const TypedArray<enums::CardDef::Card> &cards) {
 	if (!any_below_128) {
 		fh->write_uint8(0x82);
 
-		for (int64_t i = 0; i < cards_int.size(); i++) {
-			fh->write_uvarint(cards_int[i] - 128);
+		for (int64_t i = 0; i < cards.size(); i++) {
+			fh->write_uvarint(cards[i] - 128);
 		}
 	} else if (any_above_255) {
 		fh->write_uint8(0x81);
 
-		for (int64_t i = 0; i < cards_int.size(); i++) {
-			fh->write_uvarint(cards_int[i]);
+		for (int64_t i = 0; i < cards.size(); i++) {
+			fh->write_uvarint(cards[i]);
 		}
 	} else if (any_non_basic) {
 		fh->write_uint8(0x80);
 
-		for (int64_t i = 0; i < cards_int.size(); i++) {
-			fh->write_uint8(cards_int[i]);
+		for (int64_t i = 0; i < cards.size(); i++) {
+			fh->write_uint8(cards[i]);
 		}
 	} else {
-		uint8_t c0 = array_index(vanilla_boss, static_cast<enums::CardDef::Card>(cards_int[0]));
-		uint8_t c1 = array_index(vanilla_mini_boss, static_cast<enums::CardDef::Card>(cards_int[1]));
-		uint8_t c2 = array_index(vanilla_mini_boss, static_cast<enums::CardDef::Card>(cards_int[2]));
+		uint8_t c0 = array_index(vanilla_boss, cards[0]);
+		uint8_t c1 = array_index(vanilla_mini_boss, cards[1]);
+		uint8_t c2 = array_index(vanilla_mini_boss, cards[2]);
 		uint8_t c3 = 0;
 
 		fh->write_uint8((c0 << 2) | (c1 >> 3));
 		fh->write_uint8((c1 << 5) | c2);
 
-		cards_int = cards_int.slice(3);
+		PackedArray<enums::CardDef::Card> remaining_cards = cards.slice(3);
 
-		while (cards_int.size() >= 4) {
-			c0 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[0]));
-			c1 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[1]));
-			c2 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[2]));
-			c3 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[3]));
+		while (remaining_cards.size() >= 4) {
+			c0 = array_index(vanilla_enemy, remaining_cards[0]);
+			c1 = array_index(vanilla_enemy, remaining_cards[1]);
+			c2 = array_index(vanilla_enemy, remaining_cards[2]);
+			c3 = array_index(vanilla_enemy, remaining_cards[3]);
 
 			fh->write_uint8((c0 << 2) | (c1 >> 4));
 			fh->write_uint8((c1 << 4) | (c2 >> 2));
 			fh->write_uint8((c2 << 6) | c3);
 
-			cards_int = cards_int.slice(4);
+			remaining_cards = remaining_cards.slice(4);
 		}
 
-		switch (cards_int.size()) {
+		switch (remaining_cards.size()) {
 		case 0:
 			break;
 		case 1:
-			c0 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[0]));
+			c0 = array_index(vanilla_enemy, remaining_cards[0]);
 			fh->write_uint8(c0 << 2);
 			break;
 		case 2:
-			c0 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[0]));
-			c1 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[1]));
+			c0 = array_index(vanilla_enemy, remaining_cards[0]);
+			c1 = array_index(vanilla_enemy, remaining_cards[1]);
 			fh->write_uint8((c0 << 2) | (c1 >> 4));
 			fh->write_uint8(c1 << 4);
 			break;
 		case 3:
-			c0 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[0]));
-			c1 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[1]));
-			c2 = array_index(vanilla_enemy, static_cast<enums::CardDef::Card>(cards_int[2]));
+			c0 = array_index(vanilla_enemy, remaining_cards[0]);
+			c1 = array_index(vanilla_enemy, remaining_cards[1]);
+			c2 = array_index(vanilla_enemy, remaining_cards[2]);
 			fh->write_uint8((c0 << 2) | (c1 >> 4));
 			fh->write_uint8((c1 << 4) | (c2 >> 2));
 			fh->write_uint8((c2 << 6) | 63);
@@ -248,17 +246,17 @@ PackedByteArray Deck::encode(const TypedArray<enums::CardDef::Card> &cards) {
 
 	return fh->get_buffer();
 }
-TypedArray<enums::CardDef::Card> Deck::decode(const PackedByteArray &buf) {
-	TypedArray<enums::CardDef::Card> deck;
+PackedArray<enums::CardDef::Card> Deck::decode(const PackedByteArray &buf) {
+	PackedArray<enums::CardDef::Card> deck;
 	if (buf.is_empty()) {
 		return deck;
 	}
 
 	if (buf[0] < 0x80) {
-		ERR_FAIL_COND_V(buf.size() < 2, TypedArray<enums::CardDef::Card>());
+		ERR_FAIL_COND_V(buf.size() < 2, PackedArray<enums::CardDef::Card>());
 
 #define CARD_INDEX(m_array, m_index) \
-		ERR_FAIL_COND_V(uint8_t((m_index)) >= (sizeof((m_array)) / sizeof((m_array)[0])), TypedArray<enums::CardDef::Card>()); \
+		ERR_FAIL_COND_V(uint8_t((m_index)) >= (sizeof((m_array)) / sizeof((m_array)[0])), PackedArray<enums::CardDef::Card>()); \
 		deck.append((m_array)[uint8_t((m_index))])
 
 		CARD_INDEX(vanilla_boss, buf[0] >> 2);
@@ -309,10 +307,10 @@ TypedArray<enums::CardDef::Card> Deck::decode(const PackedByteArray &buf) {
 		}
 		break;
 	default:
-		ERR_FAIL_V(TypedArray<enums::CardDef::Card>());
+		ERR_FAIL_V(PackedArray<enums::CardDef::Card>());
 	}
 
-	ERR_FAIL_COND_V(!fh->is_valid_eof(), TypedArray<enums::CardDef::Card>());
+	ERR_FAIL_COND_V(!fh->is_valid_eof(), PackedArray<enums::CardDef::Card>());
 
 	return deck;
 }

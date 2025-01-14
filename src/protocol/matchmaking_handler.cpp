@@ -325,7 +325,7 @@ void MatchmakingHandler::notify_loaded_mode() {
 
 	// send deck if we have it
 	if (_deck_ready[get_multiplayer()->get_unique_id() - 1]) {
-		PackedInt64Array packed_deck = player_data->get_initial_deck();
+		PackedArray<enums::CardDef::Card> packed_deck = player_data->get_initial_deck();
 		rpc_id(conn->get_remote_id(), "set_player_initial_deck", packed_deck);
 	}
 }
@@ -354,7 +354,7 @@ void MatchmakingHandler::set_player_cosmetic_data(const String &display_name, en
 
 	// TODO: jigsaw trigger
 }
-void MatchmakingHandler::set_player_initial_deck(const PackedInt64Array &packed_deck) {
+void MatchmakingHandler::set_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck) {
 	MatchmakingConnection *conn = find_remote_connection();
 	ERR_FAIL_NULL(conn);
 	ERR_FAIL_COND_MSG(_recording.is_null(), vformat("received set_player_initial_deck from player %d before we were ready", conn->get_remote_id()));
@@ -368,8 +368,6 @@ void MatchmakingHandler::set_player_initial_deck(const PackedInt64Array &packed_
 
 	// TODO: validate deck
 
-	TypedArray<enums::CardDef::Card> deck;
-	deck.append_array(packed_deck);
 	player->set_initial_deck(deck);
 
 	// TODO: jigsaw trigger
@@ -405,7 +403,7 @@ void MatchmakingHandler::set_local_player_cosmetic_data(const String &display_na
 	// TODO: ui
 	_state = DECK;
 }
-void MatchmakingHandler::set_local_player_initial_deck(const TypedArray<enums::CardDef::Card> &deck) {
+void MatchmakingHandler::set_local_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck) {
 	ERR_FAIL_COND_MSG(_recording.is_null(), "set_local_player_initial_deck called before game mode was initialized");
 
 	TypedArray<RecordingPlayerData> player_data = _recording->get_player_data();
@@ -417,13 +415,12 @@ void MatchmakingHandler::set_local_player_initial_deck(const TypedArray<enums::C
 
 	// assume deck was valid because we just got it from our own UI (peers will validate)
 
-	PackedInt64Array packed_deck = deck;
-	player->set_initial_deck(deck.duplicate());
+	player->set_initial_deck(deck);
 
 	for (int64_t i = 0; i < _connections.size(); i++) {
 		MatchmakingConnection *conn = Object::cast_to<MatchmakingConnection>(_connections[i]);
 		if (conn->get_loaded_mode()) {
-			rpc_id(conn->get_remote_id(), "set_player_initial_deck", packed_deck);
+			rpc_id(conn->get_remote_id(), "set_player_initial_deck", deck);
 		}
 	}
 
@@ -441,13 +438,13 @@ void MatchmakingHandler::state_advance(const PackedByteArray &state_checksum, co
 
 	// TODO
 }
-void MatchmakingHandler::choices_preview(const PackedInt64Array &picked_cards) {
+void MatchmakingHandler::choices_preview(const PackedInt32Array &picked_cards) {
 	MatchmakingConnection *conn = find_remote_connection();
 	ERR_FAIL_NULL(conn);
 
 	// TODO
 }
-void MatchmakingHandler::choices_confirmed(const PackedInt64Array &picked_cards) {
+void MatchmakingHandler::choices_confirmed(const PackedInt32Array &picked_cards) {
 	MatchmakingConnection *conn = find_remote_connection();
 	ERR_FAIL_NULL(conn);
 

@@ -8,14 +8,14 @@
 	</tutorials>
 	<methods>
 		<method name="decode" qualifiers="static">
-			<return type="int[]" />
+			<return type="PackedInt32Array" />
 			<param index="0" name="buf" type="PackedByteArray" />
 			<description>
 			</description>
 		</method>
 		<method name="encode" qualifiers="static">
 			<return type="PackedByteArray" />
-			<param index="0" name="cards" type="int[]" />
+			<param index="0" name="cards" type="PackedInt32Array" />
 			<description>
 			</description>
 		</method>

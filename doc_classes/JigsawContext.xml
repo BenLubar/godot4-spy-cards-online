@@ -68,7 +68,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments">
+		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
 		</member>
 		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
 		</member>
@@ -76,13 +76,13 @@
 		</member>
 		<member name="procedure" type="JigsawProcedure" setter="set_procedure" getter="get_procedure">
 		</member>
-		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results">
+		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results" default="[]">
 		</member>
 		<member name="rng" type="RNG" setter="set_rng" getter="get_rng">
 		</member>
-		<member name="stack" type="JigsawStackFrame[]" setter="set_stack" getter="get_stack">
+		<member name="stack" type="JigsawStackFrame[]" setter="set_stack" getter="get_stack" default="[]">
 		</member>
-		<member name="step_limit_remaining" type="int" setter="set_step_limit_remaining" getter="get_step_limit_remaining">
+		<member name="step_limit_remaining" type="int" setter="set_step_limit_remaining" getter="get_step_limit_remaining" default="0">
 		</member>
 	</members>
 	<constants>

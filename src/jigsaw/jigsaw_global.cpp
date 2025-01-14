@@ -83,7 +83,7 @@ void JigsawGlobal::init_sides() {
 
 		TypedArray<NumericValue> stats;
 		stats.resize(enums::StatDef::FIRST_CUSTOM + _mode->get_custom_stats().size());
-		TypedArray<enums::StatDef::Stat> used_stats = _mode->get_stats();
+		PackedArray<enums::StatDef::Stat> used_stats = _mode->get_stats();
 		for (int64_t j = 0; j < stats.size(); j++) {
 			if (used_stats.has(j)) {
 				stats[j] = memnew(NumericValue);

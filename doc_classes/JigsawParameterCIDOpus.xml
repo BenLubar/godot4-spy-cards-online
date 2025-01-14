@@ -17,7 +17,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="cid" type="PackedByteArray" setter="set_cid" getter="get_cid">
+		<member name="cid" type="PackedByteArray" setter="set_cid" getter="get_cid" default="PackedByteArray()">
 		</member>
 	</members>
 </class>

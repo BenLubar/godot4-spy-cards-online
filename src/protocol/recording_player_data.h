@@ -17,7 +17,7 @@ protected:
 public:
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character);
-	DECLARE_PROPERTY(TypedArray<enums::CardDef::Card>, initial_deck);
+	DECLARE_PROPERTY(PackedArray<enums::CardDef::Card>, initial_deck);
 };
 
 #endif // RECORDING_PLAYER_DATA_H

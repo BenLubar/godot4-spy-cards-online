@@ -7,9 +7,10 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="group" type="int" setter="set_group" getter="get_group">
+		<member name="group" type="int" setter="set_group" getter="get_group" default="-1">
 		</member>
-		<member name="member" type="int" setter="set_member" getter="get_member">
+		<member name="member" type="int" setter="set_member" getter="get_member" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-9" />
 	</members>
 </class>

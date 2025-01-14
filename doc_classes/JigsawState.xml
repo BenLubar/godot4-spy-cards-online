@@ -17,11 +17,11 @@
 	<members>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
-		<member name="cards" type="CardInstance[]" setter="set_cards" getter="get_cards">
+		<member name="cards" type="CardInstance[]" setter="set_cards" getter="get_cards" default="[]">
 		</member>
-		<member name="sides" type="JigsawSide[]" setter="set_sides" getter="get_sides">
+		<member name="sides" type="JigsawSide[]" setter="set_sides" getter="get_sides" default="[]">
 		</member>
-		<member name="variables" type="Dictionary[int, JigsawParameter]" setter="set_variables" getter="get_variables">
+		<member name="variables" type="Dictionary[int, JigsawParameter]" setter="set_variables" getter="get_variables" default="{}">
 		</member>
 	</members>
 </class>

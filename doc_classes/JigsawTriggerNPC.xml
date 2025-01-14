@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" enum="JigsawTriggerNPC.Type">
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawTriggerNPC.Type" default="0">
 		</member>
 	</members>
 	<constants>

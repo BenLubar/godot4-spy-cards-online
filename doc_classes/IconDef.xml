@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id">
+		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
 		</member>
 		<member name="image" type="Image" setter="set_image" getter="get_image">
 		</member>

@@ -6,6 +6,7 @@
 
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
+#include <godot_cpp/variant/variant_internal.hpp>
 
 #include <functional>
 
@@ -83,6 +84,11 @@ public: \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::INT) + ":"), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_PACKED_ENUM_ARRAY(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(PackedArrayHelper<m_type>::variant, #m_name), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_RESOURCE_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
@@ -226,6 +232,87 @@ public:
 	T *operator->() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
 	void operator=(T *node) { _node = node ? node->get_instance_id() : ObjectID(); }
 };
+
+template<typename TEnum, size_t TSize = sizeof(TEnum)>
+struct PackedArrayHelper {};
+
+template<typename TEnum>
+struct PackedArrayHelper<TEnum, 4> {
+	typedef PackedInt32Array base_type;
+	static constexpr Variant::Type variant = Variant::PACKED_INT32_ARRAY;
+	static constexpr GDExtensionVariantType extension_variant = GDEXTENSION_VARIANT_TYPE_PACKED_INT32_ARRAY;
+};
+
+template<typename TEnum>
+struct PackedArrayHelper<TEnum, 8> {
+	typedef PackedInt64Array base_type;
+	static constexpr Variant::Type variant = Variant::PACKED_INT64_ARRAY;
+	static constexpr GDExtensionVariantType extension_variant = GDEXTENSION_VARIANT_TYPE_PACKED_INT64_ARRAY;
+};
+
+template<typename TEnum, typename TBase = typename PackedArrayHelper<TEnum>::base_type>
+class PackedArray : public TBase {
+public:
+	_FORCE_INLINE_ PackedArray() : TBase() {};
+	_FORCE_INLINE_ PackedArray(const TBase &p_from) : TBase(p_from) {}
+	_FORCE_INLINE_ PackedArray(const Array &p_from) : TBase(p_from) {}
+	_FORCE_INLINE_ PackedArray(TBase &&p_other) : TBase(p_other) {}
+	_FORCE_INLINE_ PackedArray(std::initializer_list<TEnum> p_init) : TBase(*reinterpret_cast<const std::initializer_list<decltype(*TBase::ptrw())> *>(&p_init)) {}
+
+	_FORCE_INLINE_ const TEnum &operator[](int64_t p_index) const { return reinterpret_cast<const TEnum &>(TBase::operator[](p_index)); }
+	_FORCE_INLINE_ TEnum &operator[](int64_t p_index) { return reinterpret_cast<TEnum &>(TBase::operator[](p_index)); }
+};
+
+namespace godot {
+	template<typename TEnum, typename TBase>
+	struct GetTypeInfo<PackedArray<TEnum, TBase>> {
+		static constexpr GDExtensionVariantType VARIANT_TYPE = GetTypeInfo<TBase>::VARIANT_TYPE;
+		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
+		static inline PropertyInfo get_class_info() {
+			return make_property_info((Variant::Type)VARIANT_TYPE, "");
+		}
+	};
+	template<typename TEnum, typename TBase>
+	struct GetTypeInfo<const PackedArray<TEnum, TBase> &> {
+		static constexpr GDExtensionVariantType VARIANT_TYPE = GetTypeInfo<const TBase &>::VARIANT_TYPE;
+		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
+		static inline PropertyInfo get_class_info() {
+			return make_property_info((Variant::Type)VARIANT_TYPE, "");
+		}
+	};
+	template<typename TEnum, typename TBase>
+	struct PtrToArg<PackedArray<TEnum, TBase>> {
+		_FORCE_INLINE_ static PackedArray<TEnum, TBase> convert(const void *p_ptr) {
+			return *reinterpret_cast<const PackedArray<TEnum, TBase> *>(p_ptr);
+		}
+		typedef PackedArray<TEnum, TBase> EncodeT;
+		_FORCE_INLINE_ static void encode(PackedArray<TEnum, TBase> p_val, void *p_ptr) {
+			*reinterpret_cast<PackedArray<TEnum, TBase> *>(p_ptr) = p_val;
+		}
+	};
+	template<typename TEnum, typename TBase>
+	struct PtrToArg<const PackedArray<TEnum, TBase> &> {
+		_FORCE_INLINE_ static PackedArray<TEnum, TBase> convert(const void *p_ptr) {
+			return *reinterpret_cast<const PackedArray<TEnum, TBase> *>(p_ptr);
+		}
+		typedef PackedArray<TEnum, TBase> EncodeT;
+		_FORCE_INLINE_ static void encode(PackedArray<TEnum, TBase> p_val, void *p_ptr) {
+			*reinterpret_cast<PackedArray<TEnum, TBase> *>(p_ptr) = p_val;
+		}
+	};
+	template<typename TEnum, typename TBase>
+	struct VariantCaster<PackedArray<TEnum, TBase>> {
+		static _FORCE_INLINE_ PackedArray<TEnum, TBase> cast(const Variant &p_variant) {
+			return static_cast<PackedArray<TEnum, TBase>>(p_variant.operator TBase());
+		}
+	};
+	namespace internal {
+		template<typename TEnum, typename TBase>
+		struct VariantInternalType<PackedArray<TEnum, TBase>> {
+			static constexpr Variant::Type type = VariantInternalType<TBase>::type;
+		};
+	}
+}
 
 #include "predefined.hpp"
 

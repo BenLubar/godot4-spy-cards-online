@@ -35,7 +35,7 @@ void DataContainer::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_INT64_ARRAY, previous_wins);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, resumed_from_recording);
 	BIND_PROPERTY(Variant::INT, resumed_from_round);
-	BIND_PROPERTY_ENUM_ARRAY(enums::NPCDef::NPC, player_npc);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::NPCDef::NPC, player_npc);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingPlayerData, player_data);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, shared_seed);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingRoundData, rounds);
@@ -63,7 +63,7 @@ IMPLEMENT_PROPERTY(DataContainer, int64_t, rematches);
 IMPLEMENT_PROPERTY(DataContainer, PackedInt64Array, previous_wins);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, resumed_from_recording);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, resumed_from_round);
-IMPLEMENT_PROPERTY(DataContainer, TypedArray<enums::NPCDef::NPC>, player_npc);
+IMPLEMENT_PROPERTY(DataContainer, PackedArray<enums::NPCDef::NPC>, player_npc);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingPlayerData>, player_data);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, shared_seed);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingRoundData>, rounds);
@@ -153,7 +153,7 @@ bool DataContainer::_encode_game_mode_summary(const Ref<FormatHelper> &fh, const
 	return true;
 }
 template<typename E>
-static bool _decode_sorted_id_list(const Ref<FormatHelper> &fh, TypedArray<E> &list) {
+static bool _decode_sorted_id_list(const Ref<FormatHelper> &fh, PackedArray<E> &list) {
 	list.resize(fh->read_uvarint());
 
 	E value = E::NONE;
@@ -213,22 +213,22 @@ bool DataContainer::_decode_game_mode(const Ref<FormatHelper> &fh) {
 	}
 	_mode->set_variants(variants);
 
-	TypedArray<enums::RankDef::Rank> ranks;
+	PackedArray<enums::RankDef::Rank> ranks;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, ranks), false);
 	_mode->set_ranks(ranks);
-	TypedArray<enums::TribeDef::Tribe> tribes;
+	PackedArray<enums::TribeDef::Tribe> tribes;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, tribes), false);
 	_mode->set_tribes(tribes);
-	TypedArray<enums::StatDef::Stat> stats;
+	PackedArray<enums::StatDef::Stat> stats;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, stats), false);
 	_mode->set_stats(stats);
-	TypedArray<enums::ModifierDef::Modifier> modifiers;
+	PackedArray<enums::ModifierDef::Modifier> modifiers;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, modifiers), false);
 	_mode->set_modifiers(modifiers);
-	TypedArray<enums::EffectDef::Effect> effects;
+	PackedArray<enums::EffectDef::Effect> effects;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, effects), false);
 	_mode->set_effects(effects);
-	TypedArray<enums::NPCDef::NPC> npcs;
+	PackedArray<enums::NPCDef::NPC> npcs;
 	ERR_FAIL_COND_V(!_decode_sorted_id_list(fh, npcs), false);
 	_mode->set_npcs(npcs);
 
@@ -337,17 +337,17 @@ bool DataContainer::_decode_game_mode(const Ref<FormatHelper> &fh) {
 	return fh->is_valid();
 }
 template<typename E>
-static bool _encode_sorted_id_list(const Ref<FormatHelper> &fh, const TypedArray<E> &list) {
+static bool _encode_sorted_id_list(const Ref<FormatHelper> &fh, const PackedArray<E> &list) {
 	// re-sort the list just in case
-	PackedInt64Array list_int = list;
-	list_int.sort();
+	PackedArray<E> list_sorted = list;
+	list_sorted.sort();
 
-	fh->write_uvarint(list_int.size());
+	fh->write_uvarint(list_sorted.size());
 
 	E prev = E::NONE;
-	for (int64_t i = 0; i < list_int.size(); i++) {
-		fh->write_uvarint(list_int[i] - prev - 1);
-		prev = static_cast<E>(list_int[i]);
+	for (int64_t i = 0; i < list_sorted.size(); i++) {
+		fh->write_uvarint(list_sorted[i] - prev - 1);
+		prev = list_sorted[i];
 	}
 
 	return fh->is_valid();
@@ -480,7 +480,7 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 		player->set_character(fh->read_id<enums::CharacterDef::Character>());
 
 		PackedByteArray packed_deck = fh->read_bytesvar();
-		TypedArray<enums::CardDef::Card> initial_deck = Deck::decode(packed_deck);
+		PackedArray<enums::CardDef::Card> initial_deck = Deck::decode(packed_deck);
 		player->set_initial_deck(initial_deck);
 		_player_data[i] = player;
 	}

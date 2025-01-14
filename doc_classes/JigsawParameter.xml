@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" enum="JigsawParameter.Type">
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawParameter.Type" default="1">
 		</member>
 	</members>
 	<constants>

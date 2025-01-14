@@ -74,14 +74,14 @@ public:
 	void _do_notify_loaded_mode(MatchmakingConnection *conn);
 	void notify_loaded_mode();
 	void set_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character);
-	void set_player_initial_deck(const PackedInt64Array &packed_deck);
+	void set_player_initial_deck(const PackedArray<enums::CardDef::Card> &packed_deck);
 
 	void set_local_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character);
-	void set_local_player_initial_deck(const TypedArray<enums::CardDef::Card> &deck);
+	void set_local_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck);
 
 	void state_advance(const PackedByteArray &state_checksum, const PackedByteArray &next_random_seed);
-	void choices_preview(const PackedInt64Array &picked_cards);
-	void choices_confirmed(const PackedInt64Array &picked_cards);
+	void choices_preview(const PackedInt32Array &picked_cards);
+	void choices_confirmed(const PackedInt32Array &picked_cards);
 	void request_repick();
 	void acknowledge_repick();
 	void reject_repick();

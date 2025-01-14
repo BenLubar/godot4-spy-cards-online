@@ -58,15 +58,15 @@
 		</method>
 	</methods>
 	<members>
-		<member name="history" type="JigsawSoundCommandHistory[]" setter="set_history" getter="get_history">
+		<member name="history" type="JigsawSoundCommandHistory[]" setter="set_history" getter="get_history" default="[]">
 		</member>
 		<member name="node" type="Node" setter="set_node" getter="get_node">
 		</member>
-		<member name="space" type="int" setter="set_space" getter="get_space" enum="JigsawSound.Space">
+		<member name="space" type="int" setter="set_space" getter="get_space" enum="JigsawSound.Space" default="0">
 		</member>
 		<member name="track" type="JigsawParameterAudio" setter="set_track" getter="get_track">
 		</member>
-		<member name="type" type="int" setter="set_type" getter="get_type" enum="JigsawSound.Type">
+		<member name="type" type="int" setter="set_type" getter="get_type" enum="JigsawSound.Type" default="0">
 		</member>
 	</members>
 	<constants>

@@ -80,7 +80,20 @@ bool LegacyParse::field_metadata(const Ref<DataContainer> &container, const Ref<
 		}
 	}
 
-	WARN_PRINT_ONCE("TODO: field_metadata");
+	if (variant.is_null()) {
+		Ref<GameMode> mode = container->get_mode();
+		if (mode->get_title().is_empty() && mode->get_author().is_empty() && mode->get_description().is_empty() && mode->get_latest_changes().is_empty() && mode->get_mode_thumbnail() == enums::IconDef::NONE) {
+			mode->set_title(title);
+			mode->set_author(author);
+			mode->set_description(description);
+			mode->set_latest_changes(latest_changes);
+			mode->set_mode_thumbnail(portrait);
+		} else {
+			WARN_PRINT_ONCE("TODO: field_metadata (additional)");
+		}
+	} else {
+		WARN_PRINT_ONCE("TODO: field_metadata (variant)");
+	}
 
 	return true;
 }
@@ -101,7 +114,7 @@ bool LegacyParse::field_banned_cards(const Ref<DataContainer> &container, const 
 		ERR_FAIL_COND_V(!banned && !unpickable && !hidden_on_home, false);
 	}
 
-	TypedArray<enums::CardDef::Card> banned_cards;
+	PackedArray<enums::CardDef::Card> banned_cards;
 	banned_cards.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < banned_cards.size(); i++) {
 		banned_cards[i] = static_cast<enums::CardDef::Card>(fh->read_uvarint());
@@ -260,7 +273,7 @@ bool LegacyParse::field_card_group(const Ref<DataContainer> &container, const Re
 
 	String title = fh->read_stringvar();
 
-	TypedArray<enums::CardDef::Card> cards;
+	PackedArray<enums::CardDef::Card> cards;
 	cards.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < cards.size(); i++) {
 		cards[i] = static_cast<enums::CardDef::Card>(fh->read_uvarint());

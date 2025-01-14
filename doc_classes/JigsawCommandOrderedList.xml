@@ -11,10 +11,11 @@
 		</member>
 		<member name="list" type="JigsawParameter" setter="set_list" getter="get_list">
 		</member>
-		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandOrderedList.Operation">
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandOrderedList.Operation" default="0">
 		</member>
 		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="10" />
 	</members>
 	<constants>
 		<constant name="GET_NUM_ITEMS" value="0" enum="Operation">

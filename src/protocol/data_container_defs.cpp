@@ -47,7 +47,7 @@ bool DataContainer::_decode_card_def(const Ref<FormatHelper> &fh, const Ref<Card
 	DECODE_VARIANT(card_def, name);
 	DECODE_VARIANT(card_def, portrait);
 
-	TypedArray<enums::TribeDef::Tribe> tribes;
+	PackedArray<enums::TribeDef::Tribe> tribes;
 	tribes.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < tribes.size(); i++) {
 		tribes[i] = fh->read_id<enums::TribeDef::Tribe>();
@@ -83,7 +83,7 @@ bool DataContainer::_encode_card_def(const Ref<FormatHelper> &fh, const Ref<Card
 	ENCODE_VARIANT(card_def, name);
 	ENCODE_VARIANT(card_def, portrait);
 
-	TypedArray<enums::TribeDef::Tribe> tribes = card_def->get_tribes();
+	PackedArray<enums::TribeDef::Tribe> tribes = card_def->get_tribes();
 	fh->write_uvarint(tribes.size());
 	for (int64_t i = 0; i < tribes.size(); i++) {
 		int64_t tribe = tribes[i];
@@ -972,7 +972,7 @@ bool DataContainer::_decode_variant_def(const Ref<FormatHelper> &fh, const Ref<V
 	variant_def->set_flags(fh->read_uvarint());
 	variant_def->set_player_count(fh->read_uvarint());
 
-	TypedArray<enums::NPCDef::NPC> npcs;
+	PackedArray<enums::NPCDef::NPC> npcs;
 	npcs.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < npcs.size(); i++) {
 		npcs[i] = fh->read_id<enums::NPCDef::NPC>();
@@ -998,7 +998,7 @@ bool DataContainer::_encode_variant_def(const Ref<FormatHelper> &fh, const Ref<V
 	fh->write_uvarint(variant_def->get_flags());
 	fh->write_uvarint(variant_def->get_player_count());
 
-	TypedArray<enums::NPCDef::NPC> npcs = variant_def->get_npcs();
+	PackedArray<enums::NPCDef::NPC> npcs = variant_def->get_npcs();
 	fh->write_uvarint(npcs.size());
 	for (int64_t i = 0; i < npcs.size(); i++) {
 		int64_t npc = npcs[i];

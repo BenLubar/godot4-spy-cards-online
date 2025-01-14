@@ -21,7 +21,7 @@ public:
 	// immutable state
 	DECLARE_PROPERTY(String, player_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
-	DECLARE_PROPERTY(TypedArray<enums::CardDef::Card>, initial_deck);
+	DECLARE_PROPERTY(PackedArray<enums::CardDef::Card>, initial_deck);
 
 	// mutable state (hybrid copy on write)
 	DECLARE_PROPERTY(TypedArray<PackedInt32Array>, location_card_instances);

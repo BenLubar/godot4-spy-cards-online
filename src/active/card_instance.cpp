@@ -14,7 +14,7 @@ void CardInstance::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, portrait);
 	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
-	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, description);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
 	BIND_PROPERTY_RESOURCE_ARRAY(ModifierInstance, modifiers);
@@ -24,7 +24,7 @@ void CardInstance::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("update_description", "global", "parent_context"), &CardInstance::update_description);
 	ClassDB::bind_method(D_METHOD("update_simple_description", "global", "parent_context"), &CardInstance::update_simple_description);
 	ClassDB::bind_method(D_METHOD("description_requires_update"), &CardInstance::description_requires_update);
-	ClassDB::bind_method(D_METHOD("get_design"), &CardInstance::get_design);
+	ClassDB::bind_method(D_METHOD("get_design", "global"), &CardInstance::get_design);
 	ClassDB::bind_method(D_METHOD("assign", "instance"), &CardInstance::assign);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
@@ -38,7 +38,7 @@ IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, back);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<StatValue>, costs);
 IMPLEMENT_PROPERTY(CardInstance, enums::IconDef::Icon, portrait);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<EffectInstance>, effects);
-IMPLEMENT_PROPERTY(CardInstance, TypedArray<enums::TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(CardInstance, PackedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<ModifierInstance>, modifiers);
@@ -197,7 +197,7 @@ void CardInstance::assign(const Ref<CardInstance> &instance) {
 	_costs.assign(instance->_costs);
 	_portrait = instance->_portrait;
 	_effects.assign(instance->_effects);
-	_tribes.assign(instance->_tribes);
+	_tribes = instance->_tribes;
 	_description.assign(instance->_description);
 	_simple_description.assign(instance->_simple_description);
 	_modifiers = instance->_modifiers.duplicate(true);

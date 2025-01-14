@@ -18,7 +18,7 @@
 	<members>
 		<member name="specifier" type="JigsawParameter" setter="set_specifier" getter="get_specifier">
 		</member>
-		<member name="variable" type="int" setter="set_variable" getter="get_variable" enum="VariableDef.Variable">
+		<member name="variable" type="int" setter="set_variable" getter="get_variable" enum="VariableDef.Variable" default="-1">
 		</member>
 	</members>
 </class>

@@ -7,13 +7,14 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="args" type="JigsawParameter[]" setter="set_args" getter="get_args">
+		<member name="args" type="JigsawParameter[]" setter="set_args" getter="get_args" default="[]">
 		</member>
 		<member name="editor_global" type="JigsawGlobal" setter="set_editor_global" getter="get_editor_global">
 		</member>
-		<member name="function_index" type="int" setter="set_function_index" getter="get_function_index">
+		<member name="function_index" type="int" setter="set_function_index" getter="get_function_index" default="-1">
 		</member>
-		<member name="results" type="JigsawParameterLocalVariable[]" setter="set_results" getter="get_results">
+		<member name="results" type="JigsawParameterLocalVariable[]" setter="set_results" getter="get_results" default="[]">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="2" />
 	</members>
 </class>

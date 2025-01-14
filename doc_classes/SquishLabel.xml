@@ -19,11 +19,16 @@
 		</method>
 	</methods>
 	<members>
-		<member name="centered" type="bool" setter="set_centered" getter="is_centered">
+		<member name="bbcode_enabled" type="bool" setter="set_use_bbcode" getter="is_using_bbcode" overrides="RichTextLabel" default="true" />
+		<member name="centered" type="bool" setter="set_centered" getter="is_centered" default="false">
 		</member>
-		<member name="max_size" type="Vector2" setter="set_max_size" getter="get_max_size">
+		<member name="clip_contents" type="bool" setter="set_clip_contents" getter="is_clipping_contents" overrides="Control" default="false" />
+		<member name="custom_effects" type="Array" setter="set_effects" getter="get_effects" overrides="RichTextLabel" default="[Object(OutlineCurrentEffect,&quot;resource_local_to_scene&quot;:false,&quot;resource_name&quot;:&quot;&quot;,&quot;script&quot;:null) , Object(RichTextRainbowEffect,&quot;bbcode&quot;:&quot;sc_rainbow&quot;,&quot;resource_local_to_scene&quot;:false,&quot;resource_name&quot;:&quot;&quot;,&quot;script&quot;:null) , Object(RichTextShakeEffect,&quot;bbcode&quot;:&quot;sc_shake&quot;,&quot;resource_local_to_scene&quot;:false,&quot;resource_name&quot;:&quot;&quot;,&quot;script&quot;:null) , Object(RichTextGlitchEffect,&quot;bbcode&quot;:&quot;sc_glitch&quot;,&quot;resource_local_to_scene&quot;:false,&quot;resource_name&quot;:&quot;&quot;,&quot;script&quot;:null) ]" />
+		<member name="fit_content" type="bool" setter="set_fit_content" getter="is_fit_content_enabled" overrides="RichTextLabel" default="true" />
+		<member name="max_size" type="Vector2" setter="set_max_size" getter="get_max_size" default="Vector2(0, 0)">
 		</member>
-		<member name="text_scale" type="Vector2" setter="set_text_scale" getter="get_text_scale">
+		<member name="scroll_active" type="bool" setter="set_scroll_active" getter="is_scroll_active" overrides="RichTextLabel" default="false" />
+		<member name="text_scale" type="Vector2" setter="set_text_scale" getter="get_text_scale" default="Vector2(1, 1)">
 		</member>
 	</members>
 </class>

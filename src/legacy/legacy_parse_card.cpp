@@ -213,7 +213,7 @@ bool LegacyParse::card_v0_v1(const Ref<DataContainer> &container, const Ref<Form
 		card->set_effects(effects);
 	}
 
-	TypedArray<enums::TribeDef::Tribe> tribe_ids = card->get_tribes();
+	PackedArray<enums::TribeDef::Tribe> tribe_ids = card->get_tribes();
 	for (int64_t i = 0; i < tribe_ids.size(); i++) {
 		int64_t tribe_id = tribe_ids[i];
 		if (tribe_id != enums::TribeDef::LEGACY_CUSTOM) {
@@ -247,7 +247,7 @@ bool LegacyParse::card_v2_v4(const Ref<DataContainer> &container, const Ref<Form
 	uint8_t legacy_tribes = fh->read_uint8();
 
 	ERR_FAIL_COND_V((legacy_tribes >> 4) == enums::TribeDef::LEGACY_NONE, false);
-	TypedArray<enums::TribeDef::Tribe> tribes;
+	PackedArray<enums::TribeDef::Tribe> tribes;
 	tribes.append(legacy_tribes >> 4);
 
 	if ((legacy_tribes & 15) != enums::TribeDef::LEGACY_NONE) {
@@ -357,7 +357,7 @@ bool LegacyParse::card_v5(const Ref<DataContainer> &container, const Ref<FormatH
 	card->set_rank(static_cast<enums::RankDef::Rank>(rank_tribe >> 4));
 	ERR_FAIL_COND_V(card->get_rank() > enums::RankDef::TOKEN, false);
 
-	TypedArray<enums::TribeDef::Tribe> tribes;
+	PackedArray<enums::TribeDef::Tribe> tribes;
 	ERR_FAIL_COND_V((rank_tribe & 15) == enums::TribeDef::LEGACY_NONE, false);
 	if ((rank_tribe & 15) == enums::TribeDef::LEGACY_CUSTOM) {
 		Color tribe_color = fh->read_color_rgb888();

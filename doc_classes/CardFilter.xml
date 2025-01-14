@@ -73,9 +73,9 @@
 		</method>
 	</methods>
 	<members>
-		<member name="negate" type="bool" setter="set_negate" getter="get_negate">
+		<member name="negate" type="bool" setter="set_negate" getter="get_negate" default="false">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" enum="CardFilter.Type">
+		<member name="type" type="int" setter="" getter="get_type" enum="CardFilter.Type" default="0">
 		</member>
 	</members>
 	<constants>

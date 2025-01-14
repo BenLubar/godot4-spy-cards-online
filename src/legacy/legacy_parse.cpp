@@ -21,7 +21,7 @@ LazyPredefined<GameMode> LegacyParse::VANILLA_1_1_1{ "VANILLA_1_1_1" };
 LazyPredefined<GameMode> LegacyParse::VANILLA_1_2_1{ "VANILLA_1_2_1" };
 
 void LegacyParse::_bind_methods() {
-	ClassDB::bind_static_method("LegacyParse", D_METHOD("card_set", "buf", "vanilla_default", "p1_spoiler_guard", "p2_spoiler_guard"), &LegacyParse::card_set, DEFVAL(Ref<GameMode>()), DEFVAL(PackedByteArray()), DEFVAL(PackedByteArray()));
+	ClassDB::bind_static_method("LegacyParse", D_METHOD("card_set", "buf", "vanilla_default", "p1_spoiler_guard", "p2_spoiler_guard"), &LegacyParse::card_set, DEFVAL(PackedByteArray()), DEFVAL(PackedByteArray()));
 	ClassDB::bind_static_method("LegacyParse", D_METHOD("card_recording", "buf"), &LegacyParse::card_recording);
 	ClassDB::bind_static_method("LegacyParse", D_METHOD("arcade_recording", "buf"), &LegacyParse::arcade_recording);
 }
@@ -227,7 +227,7 @@ enums::TribeDef::Tribe LegacyParse::custom_tribe(const Ref<DataContainer> &conta
 
 	container->get_mode()->set_custom_tribes(custom_tribes);
 
-	TypedArray<enums::TribeDef::Tribe> mode_tribes = container->get_mode()->get_tribes();
+	PackedArray<enums::TribeDef::Tribe> mode_tribes = container->get_mode()->get_tribes();
 	mode_tribes.append(tribe);
 	container->get_mode()->set_tribes(mode_tribes);
 
@@ -359,8 +359,8 @@ enums::NPCDef::NPC LegacyParse::legacy_npc_janet(const Ref<DataContainer> &conta
 	return add_legacy_npc(container, "janet", "Legacy Tourney Player (janet)", "janet", LEGACY_NPC_BUILD_DECK_JANET->duplicate(true), LEGACY_NPC_DECIDE_CHOICE_GENERIC->duplicate(true));
 }
 enums::NPCDef::NPC LegacyParse::legacy_npc_card_master(const Ref<DataContainer> &container, const String &code, const String &name, const String &deck) {
-	TypedArray<enums::CardDef::Card> card_ids = Deck::decode(Base32::decode_crockford(deck));
-	TypedArray<JigsawParameter> card_params = card_ids.map(callable_mp_static(&JigsawParameterCard::make));
+	PackedArray<enums::CardDef::Card> card_ids = Deck::decode(Base32::decode_crockford(deck));
+	TypedArray<JigsawParameter> card_params = Array(card_ids).map(callable_mp_static(&JigsawParameterCard::make));
 
 	Ref<JigsawCommandSetVariable> build_deck_command;
 	build_deck_command.instantiate();

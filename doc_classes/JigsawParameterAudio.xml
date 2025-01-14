@@ -9,9 +9,10 @@
 	<members>
 		<member name="audio" type="AudioStreamWAV" setter="set_audio" getter="get_audio">
 		</member>
-		<member name="loop_end" type="float" setter="set_loop_end" getter="get_loop_end">
+		<member name="loop_end" type="float" setter="set_loop_end" getter="get_loop_end" default="0.0">
 		</member>
-		<member name="loop_start" type="float" setter="set_loop_start" getter="get_loop_start">
+		<member name="loop_start" type="float" setter="set_loop_start" getter="get_loop_start" default="0.0">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="16" />
 	</members>
 </class>

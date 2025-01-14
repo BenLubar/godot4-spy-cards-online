@@ -13,12 +13,13 @@
 		</member>
 		<member name="green" type="JigsawParameter" setter="set_green" getter="get_green">
 		</member>
-		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandColor.Operation">
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandColor.Operation" default="0">
 		</member>
 		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
 		</member>
 		<member name="red" type="JigsawParameter" setter="set_red" getter="get_red">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="20" />
 	</members>
 	<constants>
 		<constant name="CREATE_FLOAT" value="0" enum="Operation">

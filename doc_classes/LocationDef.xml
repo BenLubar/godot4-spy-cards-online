@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name">
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
 		</member>
 	</members>
 	<constants>

@@ -9,15 +9,15 @@
 	<members>
 		<member name="build_deck" type="JigsawProcedureNPCBuildDeck" setter="set_build_deck" getter="get_build_deck">
 		</member>
-		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character">
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="-1">
 		</member>
 		<member name="decide_choice" type="JigsawProcedureNPCDecideChoice" setter="set_decide_choice" getter="get_decide_choice">
 		</member>
 		<member name="decide_realtime" type="JigsawProcedureNPCDecideRealtime" setter="set_decide_realtime" getter="get_decide_realtime">
 		</member>
-		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name">
+		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
-		<member name="triggers" type="JigsawTriggerNPC[]" setter="set_triggers" getter="get_triggers">
+		<member name="triggers" type="JigsawTriggerNPC[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
 	<constants>

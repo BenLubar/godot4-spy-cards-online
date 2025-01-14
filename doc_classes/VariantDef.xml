@@ -7,17 +7,17 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="content_warning" type="String" setter="set_content_warning" getter="get_content_warning">
+		<member name="content_warning" type="String" setter="set_content_warning" getter="get_content_warning" default="&quot;&quot;">
 		</member>
-		<member name="flags" type="int" setter="set_flags" getter="get_flags" enum="VariantDef.VariantFlags" is_bitfield="true">
+		<member name="flags" type="int" setter="set_flags" getter="get_flags" enum="VariantDef.VariantFlags" is_bitfield="true" default="0">
 		</member>
-		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs">
+		<member name="npcs" type="PackedInt32Array" setter="set_npcs" getter="get_npcs" default="PackedInt32Array()">
 		</member>
-		<member name="player_count" type="int" setter="set_player_count" getter="get_player_count">
+		<member name="player_count" type="int" setter="set_player_count" getter="get_player_count" default="2">
 		</member>
-		<member name="title" type="String" setter="set_title" getter="get_title">
+		<member name="title" type="String" setter="set_title" getter="get_title" default="&quot;&quot;">
 		</member>
-		<member name="triggers" type="JigsawTriggerVariant[]" setter="set_triggers" getter="get_triggers">
+		<member name="triggers" type="JigsawTriggerVariant[]" setter="set_triggers" getter="get_triggers" default="[]">
 		</member>
 	</members>
 	<constants>

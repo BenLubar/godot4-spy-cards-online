@@ -8,12 +8,12 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTriggerVariant, base_triggers);
 	BIND_PROPERTY_RESOURCE_ARRAY(VariantDef, variants);
 
-	BIND_PROPERTY_ENUM_ARRAY(enums::RankDef::Rank, ranks);
-	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
-	BIND_PROPERTY_ENUM_ARRAY(enums::StatDef::Stat, stats);
-	BIND_PROPERTY_ENUM_ARRAY(enums::ModifierDef::Modifier, modifiers);
-	BIND_PROPERTY_ENUM_ARRAY(enums::EffectDef::Effect, effects);
-	BIND_PROPERTY_ENUM_ARRAY(enums::NPCDef::NPC, npcs);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::RankDef::Rank, ranks);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::StatDef::Stat, stats);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::ModifierDef::Modifier, modifiers);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::EffectDef::Effect, effects);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::NPCDef::NPC, npcs);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(RankDef, custom_ranks);
 	BIND_PROPERTY_RESOURCE_ARRAY(TribeDef, custom_tribes);
@@ -45,12 +45,12 @@ IMPLEMENT_PROPERTY(GameMode, Ref<CardDesign>, default_card_design);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<JigsawTriggerVariant>, base_triggers);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<VariantDef>, variants);
 
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::RankDef::Rank>, ranks);
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::TribeDef::Tribe>, tribes);
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::StatDef::Stat>, stats);
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::ModifierDef::Modifier>, modifiers);
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::EffectDef::Effect>, effects);
-IMPLEMENT_PROPERTY(GameMode, TypedArray<enums::NPCDef::NPC>, npcs);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::RankDef::Rank>, ranks);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::StatDef::Stat>, stats);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::ModifierDef::Modifier>, modifiers);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::EffectDef::Effect>, effects);
+IMPLEMENT_PROPERTY(GameMode, PackedArray<enums::NPCDef::NPC>, npcs);
 
 IMPLEMENT_PROPERTY(GameMode, TypedArray<RankDef>, custom_ranks);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<TribeDef>, custom_tribes);

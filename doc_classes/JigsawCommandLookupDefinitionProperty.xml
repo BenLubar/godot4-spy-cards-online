@@ -9,8 +9,9 @@
 	<members>
 		<member name="definition" type="JigsawParameter" setter="set_definition" getter="get_definition">
 		</member>
-		<member name="property" type="int" setter="set_property" getter="get_property" enum="JigsawCommandLookupDefinitionProperty.Property">
+		<member name="property" type="int" setter="set_property" getter="get_property" enum="JigsawCommandLookupDefinitionProperty.Property" default="1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="8" />
 		<member name="value" type="JigsawParameterLocalVariable" setter="set_value" getter="get_value">
 		</member>
 	</members>

@@ -16,7 +16,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	static Ref<DataContainer> card_set(const PackedStringArray &buf, const Ref<GameMode> &vanilla_default = Ref<GameMode>(), const PackedByteArray &p1_spoiler_guard = PackedByteArray(), const PackedByteArray &p2_spoiler_guard = PackedByteArray());
+	static Ref<DataContainer> card_set(const PackedStringArray &buf, const Ref<GameMode> &vanilla_default, const PackedByteArray &p1_spoiler_guard = PackedByteArray(), const PackedByteArray &p2_spoiler_guard = PackedByteArray());
 private:
 	static LazyPredefined<GameMode> VANILLA_1_0_5;
 	static LazyPredefined<GameMode> VANILLA_1_1;

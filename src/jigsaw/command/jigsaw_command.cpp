@@ -38,14 +38,14 @@ void JigsawCommand::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_num_arguments"), &JigsawCommand::get_num_arguments);
 	ClassDB::bind_method(D_METHOD("get_argument", "i"), &JigsawCommand::get_argument);
-	ClassDB::bind_method(D_METHOD("get_argument_template", "i"), &JigsawCommand::get_argument_template);
+	ClassDB::bind_method(D_METHOD("get_argument_template", "i", "context"), &JigsawCommand::get_argument_template);
 	ClassDB::bind_method(D_METHOD("is_argument_required", "i"), &JigsawCommand::is_argument_required);
 	ClassDB::bind_method(D_METHOD("set_argument", "i", "arg"), &JigsawCommand::set_argument);
 	ClassDB::bind_method(D_METHOD("get_argument_name", "i"), &JigsawCommand::get_argument_name);
 
 	ClassDB::bind_method(D_METHOD("get_num_results"), &JigsawCommand::get_num_results);
 	ClassDB::bind_method(D_METHOD("get_result", "i"), &JigsawCommand::get_result);
-	ClassDB::bind_method(D_METHOD("get_result_template", "i"), &JigsawCommand::get_result_template);
+	ClassDB::bind_method(D_METHOD("get_result_template", "i", "context"), &JigsawCommand::get_result_template);
 	ClassDB::bind_method(D_METHOD("is_result_required", "i"), &JigsawCommand::is_result_required);
 	ClassDB::bind_method(D_METHOD("set_result", "i", "result"), &JigsawCommand::set_result);
 	ClassDB::bind_method(D_METHOD("get_result_name", "i"), &JigsawCommand::get_result_name);
@@ -57,7 +57,7 @@ void JigsawCommand::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_branch_name", "i"), &JigsawCommand::get_branch_name);
 	ClassDB::bind_method(D_METHOD("get_branch_argument_templates", "i"), &JigsawCommand::get_branch_argument_templates);
 	ClassDB::bind_method(D_METHOD("get_branch_argument_names", "i"), &JigsawCommand::get_branch_argument_names);
-	ClassDB::bind_method(D_METHOD("get_branch_result_templates", "i"), &JigsawCommand::get_branch_result_templates);
+	ClassDB::bind_method(D_METHOD("get_branch_result_templates", "i", "context"), &JigsawCommand::get_branch_result_templates);
 	ClassDB::bind_method(D_METHOD("get_branch_result_names", "i"), &JigsawCommand::get_branch_result_names);
 }
 

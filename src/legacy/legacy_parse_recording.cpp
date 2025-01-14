@@ -139,12 +139,12 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 	}
 
 	PackedByteArray packed_deck = fh->read_bytesvar();
-	TypedArray<enums::CardDef::Card> p1_initial_deck;
+	PackedArray<enums::CardDef::Card> p1_initial_deck;
 	p1_initial_deck = Deck::decode(packed_deck);
 	ERR_FAIL_COND_V(p1_initial_deck.is_empty() && !packed_deck.is_empty(), Ref<DataContainer>());
 
 	packed_deck = fh->read_bytesvar();
-	TypedArray<enums::CardDef::Card> p2_initial_deck;
+	PackedArray<enums::CardDef::Card> p2_initial_deck;
 	p2_initial_deck = Deck::decode(packed_deck);
 	ERR_FAIL_COND_V(p2_initial_deck.is_empty() && !packed_deck.is_empty(), Ref<DataContainer>());
 
@@ -154,7 +154,7 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 		Ref<VariantDef> variant = variants[i];
 		if (!variant->get_npcs().is_empty()) {
 			variant->set_player_count(variant->get_player_count() + variant->get_npcs().size());
-			variant->set_npcs(TypedArray<enums::NPCDef::NPC>());
+			variant->set_npcs(PackedArray<enums::NPCDef::NPC>());
 		}
 	}
 

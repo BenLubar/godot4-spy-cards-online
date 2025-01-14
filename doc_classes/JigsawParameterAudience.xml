@@ -15,7 +15,8 @@
 		</method>
 	</methods>
 	<members>
-		<member name="audience" type="int" setter="set_audience" getter="get_audience" enum="AudienceDef.Audience">
+		<member name="audience" type="int" setter="set_audience" getter="get_audience" enum="AudienceDef.Audience" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="22" />
 	</members>
 </class>

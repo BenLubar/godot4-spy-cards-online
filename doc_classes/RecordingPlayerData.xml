@@ -7,11 +7,11 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character">
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="480">
 		</member>
-		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name">
+		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
-		<member name="initial_deck" type="int[]" setter="set_initial_deck" getter="get_initial_deck">
+		<member name="initial_deck" type="PackedInt32Array" setter="set_initial_deck" getter="get_initial_deck" default="PackedInt32Array()">
 		</member>
 	</members>
 </class>

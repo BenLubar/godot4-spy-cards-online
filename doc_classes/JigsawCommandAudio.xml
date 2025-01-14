@@ -6,4 +6,7 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<members>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="14" />
+	</members>
 </class>

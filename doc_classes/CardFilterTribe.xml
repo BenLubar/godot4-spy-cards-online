@@ -7,7 +7,8 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="tribe" type="int" setter="set_tribe" getter="get_tribe" enum="TribeDef.Tribe">
+		<member name="tribe" type="int" setter="set_tribe" getter="get_tribe" enum="TribeDef.Tribe" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="CardFilter" enum="CardFilter.Type" default="4" />
 	</members>
 </class>

@@ -15,7 +15,8 @@
 		</method>
 	</methods>
 	<members>
-		<member name="string" type="String" setter="set_string" getter="get_string">
+		<member name="string" type="String" setter="set_string" getter="get_string" default="&quot;&quot;">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="6" />
 	</members>
 </class>

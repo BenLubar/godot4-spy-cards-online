@@ -20,7 +20,7 @@
 		</method>
 		<method name="get_design" qualifiers="const">
 			<return type="CardDesign" />
-			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
+			<param index="0" name="global" type="JigsawGlobal" />
 			<description>
 			</description>
 		</method>
@@ -33,47 +33,47 @@
 		</method>
 		<method name="update_description">
 			<return type="void" />
-			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
-			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="parent_context" type="JigsawContext" />
 			<description>
 			</description>
 		</method>
 		<method name="update_simple_description">
 			<return type="bool" />
-			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
-			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
+			<param index="0" name="global" type="JigsawGlobal" />
+			<param index="1" name="parent_context" type="JigsawContext" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon">
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
 		</member>
-		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs">
+		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs" default="[]">
 		</member>
 		<member name="def" type="CardDef" setter="set_def" getter="get_def">
 		</member>
-		<member name="description" type="FormattedText[]" setter="set_description" getter="get_description">
+		<member name="description" type="FormattedText[]" setter="set_description" getter="get_description" default="[]">
 		</member>
-		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects">
+		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects" default="[]">
 		</member>
-		<member name="face_down_for_side" type="PackedInt32Array" setter="set_face_down_for_side" getter="get_face_down_for_side">
+		<member name="face_down_for_side" type="PackedInt32Array" setter="set_face_down_for_side" getter="get_face_down_for_side" default="PackedInt32Array()">
 		</member>
-		<member name="index" type="int" setter="set_index" getter="get_index">
+		<member name="index" type="int" setter="set_index" getter="get_index" default="-1">
 		</member>
-		<member name="linked_parent" type="int" setter="set_linked_parent" getter="get_linked_parent">
+		<member name="linked_parent" type="int" setter="set_linked_parent" getter="get_linked_parent" default="-1">
 		</member>
-		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers">
+		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers" default="[]">
 		</member>
-		<member name="name" type="FormattedText[]" setter="set_name" getter="get_name">
+		<member name="name" type="FormattedText[]" setter="set_name" getter="get_name" default="[]">
 		</member>
-		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon">
+		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
 		</member>
-		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank">
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
 		</member>
-		<member name="simple_description" type="FormattedTextWithIcon[]" setter="set_simple_description" getter="get_simple_description">
+		<member name="simple_description" type="FormattedTextWithIcon[]" setter="set_simple_description" getter="get_simple_description" default="[]">
 		</member>
-		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes">
+		<member name="tribes" type="PackedInt32Array" setter="set_tribes" getter="get_tribes" default="PackedInt32Array()">
 		</member>
 	</members>
 </class>

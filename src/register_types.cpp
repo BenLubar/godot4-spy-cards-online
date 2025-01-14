@@ -133,8 +133,6 @@
 #include "protocol/matchmaking_connection.h"
 #include "defs/game_mode_summary.h"
 #include "defs/game_mode.h"
-#include "protocol/recording.h"
-#include "protocol/recording_round.h"
 #include "protocol/button_input_history.h"
 #include "legacy/legacy_parse.h"
 #include "protocol/deck.h"
@@ -314,8 +312,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(MatchmakingConnection);
 	GDREGISTER_CLASS(GameModeSummary);
 	GDREGISTER_CLASS(GameMode);
-	GDREGISTER_CLASS(Recording);
-	GDREGISTER_CLASS(RecordingRound);
 	GDREGISTER_ABSTRACT_CLASS(ButtonInputHistory);
 	GDREGISTER_ABSTRACT_CLASS(LegacyParse);
 	GDREGISTER_ABSTRACT_CLASS(Deck);

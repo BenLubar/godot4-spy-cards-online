@@ -15,7 +15,8 @@
 		</method>
 	</methods>
 	<members>
-		<member name="sprite" type="int" setter="set_sprite" getter="get_sprite">
+		<member name="sprite" type="int" setter="set_sprite" getter="get_sprite" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-7" />
 	</members>
 </class>

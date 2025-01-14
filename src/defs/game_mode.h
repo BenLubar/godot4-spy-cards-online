@@ -38,12 +38,12 @@ public:
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerVariant>, base_triggers);
 	DECLARE_PROPERTY(TypedArray<VariantDef>, variants);
 
-	DECLARE_PROPERTY(TypedArray<enums::RankDef::Rank>, ranks);
-	DECLARE_PROPERTY(TypedArray<enums::TribeDef::Tribe>, tribes);
-	DECLARE_PROPERTY(TypedArray<enums::StatDef::Stat>, stats);
-	DECLARE_PROPERTY(TypedArray<enums::ModifierDef::Modifier>, modifiers);
-	DECLARE_PROPERTY(TypedArray<enums::EffectDef::Effect>, effects);
-	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, npcs);
+	DECLARE_PROPERTY(PackedArray<enums::RankDef::Rank>, ranks);
+	DECLARE_PROPERTY(PackedArray<enums::TribeDef::Tribe>, tribes);
+	DECLARE_PROPERTY(PackedArray<enums::StatDef::Stat>, stats);
+	DECLARE_PROPERTY(PackedArray<enums::ModifierDef::Modifier>, modifiers);
+	DECLARE_PROPERTY(PackedArray<enums::EffectDef::Effect>, effects);
+	DECLARE_PROPERTY(PackedArray<enums::NPCDef::NPC>, npcs);
 
 	DECLARE_PROPERTY(TypedArray<RankDef>, custom_ranks);
 	DECLARE_PROPERTY(TypedArray<TribeDef>, custom_tribes);

@@ -12,8 +12,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	static PackedByteArray encode(const TypedArray<enums::CardDef::Card> &cards);
-	static TypedArray<enums::CardDef::Card> decode(const PackedByteArray &buf);
+	static PackedByteArray encode(const PackedArray<enums::CardDef::Card> &cards);
+	static PackedArray<enums::CardDef::Card> decode(const PackedByteArray &buf);
 };
 
 #endif // DECK_H

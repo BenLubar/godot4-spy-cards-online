@@ -15,17 +15,17 @@
 		</method>
 	</methods>
 	<members>
-		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character">
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="-1">
 		</member>
-		<member name="initial_deck" type="int[]" setter="set_initial_deck" getter="get_initial_deck">
+		<member name="initial_deck" type="PackedInt32Array" setter="set_initial_deck" getter="get_initial_deck" default="PackedInt32Array()">
 		</member>
-		<member name="location_card_instances" type="PackedInt32Array[]" setter="set_location_card_instances" getter="get_location_card_instances">
+		<member name="location_card_instances" type="PackedInt32Array[]" setter="set_location_card_instances" getter="get_location_card_instances" default="[]">
 		</member>
-		<member name="player_name" type="String" setter="set_player_name" getter="get_player_name">
+		<member name="player_name" type="String" setter="set_player_name" getter="get_player_name" default="&quot;&quot;">
 		</member>
-		<member name="stats" type="NumericValue[]" setter="set_stats" getter="get_stats">
+		<member name="stats" type="NumericValue[]" setter="set_stats" getter="get_stats" default="[]">
 		</member>
-		<member name="variables" type="Dictionary[int, JigsawParameter]" setter="set_variables" getter="get_variables">
+		<member name="variables" type="Dictionary[int, JigsawParameter]" setter="set_variables" getter="get_variables" default="{}">
 		</member>
 	</members>
 </class>

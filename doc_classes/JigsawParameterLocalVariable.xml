@@ -16,10 +16,11 @@
 		</method>
 	</methods>
 	<members>
-		<member name="frame" type="int" setter="set_frame" getter="get_frame">
+		<member name="frame" type="int" setter="set_frame" getter="get_frame" default="0">
 		</member>
-		<member name="slot" type="int" setter="set_slot" getter="get_slot">
+		<member name="slot" type="int" setter="set_slot" getter="get_slot" default="-1">
 		</member>
+		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="0" />
 	</members>
 	<constants>
 		<constant name="FRAME_ARGUMENTS" value="-1">

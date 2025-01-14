@@ -108,7 +108,7 @@ void CardDef::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(StatValue, costs);
 	BIND_PROPERTY(Variant::STRING, name);
 	BIND_PROPERTY_ENUM(enums::IconDef::Icon, portrait);
-	BIND_PROPERTY_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
+	BIND_PROPERTY_PACKED_ENUM_ARRAY(enums::TribeDef::Tribe, tribes);
 	BIND_PROPERTY_RESOURCE_ARRAY(EffectInstance, effects);
 	BIND_PROPERTY(Variant::FLOAT, curve_adjust);
 }
@@ -118,6 +118,6 @@ IMPLEMENT_PROPERTY(CardDef, enums::RankDef::Rank, rank);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<StatValue>, costs);
 IMPLEMENT_PROPERTY(CardDef, String, name);
 IMPLEMENT_PROPERTY(CardDef, enums::IconDef::Icon, portrait);
-IMPLEMENT_PROPERTY(CardDef, TypedArray<enums::TribeDef::Tribe>, tribes);
+IMPLEMENT_PROPERTY(CardDef, PackedArray<enums::TribeDef::Tribe>, tribes);
 IMPLEMENT_PROPERTY(CardDef, TypedArray<EffectInstance>, effects);
 IMPLEMENT_PROPERTY(CardDef, float, curve_adjust);
