@@ -182,7 +182,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="type" type="int" setter="" getter="get_type" enum="JigsawCommand.Type" default="0">
+		<member name="type" type="int" setter="" getter="get_type" enum="JigsawCommand.Type">
 		</member>
 	</members>
 	<constants>
@@ -229,6 +229,8 @@
 		<constant name="LOOP" value="19" enum="Type">
 		</constant>
 		<constant name="COLOR" value="20" enum="Type">
+		</constant>
+		<constant name="CLEANUP" value="21" enum="Type">
 		</constant>
 	</constants>
 </class>

@@ -7,13 +7,13 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="final_checksum" type="PackedByteArray" setter="set_final_checksum" getter="get_final_checksum" default="PackedByteArray()">
+		<member name="final_checksum" type="PackedByteArray" setter="set_final_checksum" getter="get_final_checksum">
 		</member>
-		<member name="initial_checksum" type="PackedByteArray" setter="set_initial_checksum" getter="get_initial_checksum" default="PackedByteArray()">
+		<member name="initial_checksum" type="PackedByteArray" setter="set_initial_checksum" getter="get_initial_checksum">
 		</member>
-		<member name="player_data" type="RecordingRoundPlayerData[]" setter="set_player_data" getter="get_player_data" default="[]">
+		<member name="player_data" type="RecordingRoundPlayerData[]" setter="set_player_data" getter="get_player_data">
 		</member>
-		<member name="type" type="int" setter="set_type" getter="get_type" enum="RecordingRoundData.RoundType" default="0">
+		<member name="type" type="int" setter="set_type" getter="get_type" enum="RecordingRoundData.RoundType">
 		</member>
 	</members>
 	<constants>

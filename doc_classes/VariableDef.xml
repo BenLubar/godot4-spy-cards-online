@@ -9,9 +9,9 @@
 	<members>
 		<member name="default_value" type="JigsawParameter" setter="set_default_value" getter="get_default_value">
 		</member>
-		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name">
 		</member>
-		<member name="uniqueness" type="int" setter="set_uniqueness" getter="get_uniqueness" enum="VariableDef.Uniqueness" default="0">
+		<member name="uniqueness" type="int" setter="set_uniqueness" getter="get_uniqueness" enum="VariableDef.Uniqueness">
 		</member>
 	</members>
 	<constants>

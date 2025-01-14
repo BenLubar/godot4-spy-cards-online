@@ -5,8 +5,8 @@
 
 #include "enums/enums_modifier_def.h"
 
-class ModifierInstance : public RefCounted {
-	GDCLASS(ModifierInstance, RefCounted);
+class ModifierInstance : public Resource {
+	GDCLASS(ModifierInstance, Resource);
 
 protected:
 	static void _bind_methods();

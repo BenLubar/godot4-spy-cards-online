@@ -38,6 +38,8 @@ public:
 	void cheer_left(uint8_t repeats);
 	void cheer_right(uint8_t repeats);
 
+	void assign(const Ref<Audience> &audience);
+
 	DEFAULT_TO_STRING();
 };
 

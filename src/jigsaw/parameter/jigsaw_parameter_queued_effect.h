@@ -14,11 +14,14 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Ref<QueuedEffect>, effect);
+	DECLARE_PROPERTY(int64_t, queue_index, = -1);
+	DECLARE_PROPERTY(int64_t, queue_reset_count, = -1);
 
 	Type get_type() const override { return QUEUED_EFFECT; }
 
-	static Ref<JigsawParameterQueuedEffect> make(const Ref<QueuedEffect> &effect);
+	Ref<QueuedEffect> resolve(JigsawGlobal *global) const;
+
+	static Ref<JigsawParameterQueuedEffect> make(int64_t queue_index, int64_t queue_reset_count);
 };
 
 #endif // JIGSAW_PARAMETER_QUEUED_EFFECT_H

@@ -13,7 +13,7 @@
 		</member>
 		<member name="color" type="JigsawParameter" setter="set_color" getter="get_color">
 		</member>
-		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command" default="0">
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command">
 		</member>
 		<member name="font_size" type="JigsawParameter" setter="set_font_size" getter="get_font_size">
 		</member>
@@ -25,6 +25,5 @@
 		</member>
 		<member name="text" type="JigsawParameter" setter="set_text" getter="get_text">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="5" />
 	</members>
 </class>

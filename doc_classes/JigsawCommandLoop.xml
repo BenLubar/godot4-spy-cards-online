@@ -11,6 +11,5 @@
 		</member>
 		<member name="count" type="JigsawParameter" setter="set_count" getter="get_count">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="19" />
 	</members>
 </class>

@@ -17,7 +17,11 @@ IMPLEMENT_PROPERTY(EffectInstance, EffectDef::Effect, effect);
 IMPLEMENT_PROPERTY(EffectInstance, int64_t, priority);
 IMPLEMENT_PROPERTY(EffectInstance, TypedArray<JigsawParameter>, params);
 
-TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context) const {
+TypedArray<FormattedText> EffectInstance::format_description(JigsawGlobal *global, int64_t card_instance_id, const Ref<JigsawContext> &parent_context) const {
+	ERR_FAIL_NULL_V(global, FormattedText::make_plain("MISSING GLOBAL"));
+	Ref<CardInstance> card = global->get_state()->get_cards()[card_instance_id];
+	ERR_FAIL_COND_V(card.is_null(), FormattedText::make_plain("MISSING CARD"));
+
 	TypedArray<FormattedText> description;
 
 	Ref<FormattedText> before;
@@ -26,11 +30,7 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 	before->set_instance(const_cast<EffectInstance *>(this));
 	description.append(before);
 
-	ERR_FAIL_COND_V(card.is_null(), FormattedText::make_plain("MISSING CARD"));
-	ERR_FAIL_NULL_V(card->get_global(), FormattedText::make_plain("MISSING GLOBAL"));
-	ERR_FAIL_COND_V(card->get_global()->get_mode().is_null(), FormattedText::make_plain("MISSING MODE"));
-
-	Ref<EffectDef> def = card->get_global()->get_mode()->get_effect(get_effect());
+	Ref<EffectDef> def = global->get_mode()->get_effect(get_effect());
 	Ref<JigsawProcedureEffectDescribe> describe = def.is_valid() ? def->get_describe() : Ref<JigsawProcedureEffectDescribe>();
 	if (def.is_null()) {
 		Ref<FormattedText> before_text;
@@ -86,11 +86,11 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 		Ref<JigsawParameterFormattedText> effect_description;
 		effect_description.instantiate();
 
-		Ref<JigsawContext> context = JigsawContext::make(card->get_global(), parent_context);
+		Ref<JigsawContext> context = JigsawContext::make(global, parent_context);
 		TypedArray<JigsawParameter> results = Array::make(effect_description);
 
 		Ref<JigsawError> error = context->evaluate(describe, Array::make(
-			JigsawParameterCardInstance::make(card),
+			JigsawParameterCardInstance::make(card_instance_id),
 			JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
 		), results);
 		if (error.is_valid()) {
@@ -137,12 +137,12 @@ TypedArray<FormattedText> EffectInstance::format_description(const Ref<CardInsta
 	return description;
 }
 
-Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context) const {
+Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(JigsawGlobal *global, int64_t card_instance_id, const Ref<JigsawContext> &parent_context) const {
+	ERR_FAIL_NULL_V(global, Ref<FormattedTextWithIcon>());
+	Ref<CardInstance> card = global->get_state()->get_cards()[card_instance_id];
 	ERR_FAIL_COND_V(card.is_null(), Ref<FormattedTextWithIcon>());
-	ERR_FAIL_NULL_V(card->get_global(), Ref<FormattedTextWithIcon>());
-	ERR_FAIL_COND_V(card->get_global()->get_mode().is_null(), Ref<FormattedTextWithIcon>());
 
-	Ref<EffectDef> def = card->get_global()->get_mode()->get_effect(get_effect());
+	Ref<EffectDef> def = global->get_mode()->get_effect(get_effect());
 	ERR_FAIL_COND_V(def.is_null(), Ref<FormattedTextWithIcon>());
 
 	Ref<JigsawProcedureEffectSimpleDescribe> simple_describe = def->get_simple_describe();
@@ -164,11 +164,11 @@ Ref<FormattedTextWithIcon> EffectInstance::format_simple_description(const Ref<C
 	Ref<JigsawParameterIcon> icon;
 	icon.instantiate();
 
-	Ref<JigsawContext> context = JigsawContext::make(card->get_global(), parent_context);
+	Ref<JigsawContext> context = JigsawContext::make(global, parent_context);
 	TypedArray<JigsawParameter> results = Array::make(effect_description, icon);
 
 	Ref<JigsawError> error = context->evaluate(simple_describe, Array::make(
-		JigsawParameterCardInstance::make(card),
+		JigsawParameterCardInstance::make(card_instance_id),
 		JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
 	), results);
 	if (error.is_valid()) {

@@ -14,17 +14,15 @@
 		</method>
 	</methods>
 	<members>
-		<member name="ambient_light_intensity" type="float" setter="set_ambient_light_intensity" getter="get_ambient_light_intensity" default="1.0">
+		<member name="ambient_light_intensity" type="float" setter="set_ambient_light_intensity" getter="get_ambient_light_intensity">
 		</member>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
-		<member name="music" type="JigsawParameterAudio" setter="set_music" getter="get_music">
-		</member>
-		<member name="scene_background_color" type="Color" setter="set_scene_background_color" getter="get_scene_background_color" default="Color(0.3, 0.3, 0.3, 1)">
+		<member name="scene_background_color" type="Color" setter="set_scene_background_color" getter="get_scene_background_color">
 		</member>
 		<member name="simple_background" type="Texture2D" setter="set_simple_background" getter="get_simple_background">
 		</member>
-		<member name="simple_background_stretch" type="bool" setter="set_simple_background_stretch" getter="get_simple_background_stretch" default="true">
+		<member name="simple_background_stretch" type="bool" setter="set_simple_background_stretch" getter="get_simple_background_stretch">
 		</member>
 	</members>
 </class>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawState" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="assign">
+			<return type="void" />
+			<param index="0" name="state" type="JigsawState" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
+		</member>
+		<member name="cards" type="CardInstance[]" setter="set_cards" getter="get_cards">
+		</member>
+		<member name="sides" type="JigsawSide[]" setter="set_sides" getter="get_sides">
+		</member>
+		<member name="variables" type="Dictionary[int, JigsawParameter]" setter="set_variables" getter="get_variables">
+		</member>
+	</members>
+</class>

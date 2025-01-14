@@ -13,14 +13,20 @@ bool OutlineCurrentEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 	}
 
 	Dictionary env = p_char_fx->get_environment();
-	Ref<CardInstance> card = env["card"];
-	Ref<EffectInstance> effect = env["effect"];
 
-	ERR_FAIL_COND_V(card.is_null(), false);
+	JigsawGlobal *global = Object::cast_to<JigsawGlobal>(env["global"].get_validated_object());
+	ERR_FAIL_NULL_V(global, false);
+
+	int64_t card_index = env["card"];
+
+	Ref<EffectInstance> effect = env["effect"];
 	ERR_FAIL_COND_V(effect.is_null(), false);
 
-	JigsawGlobal *global = card->get_global();
-	ERR_FAIL_NULL_V(global, false);
+	TypedArray<CardInstance> cards = global->get_state()->get_cards();
+	ERR_FAIL_INDEX_V(card_index, cards.size(), false);
+
+	Ref<CardInstance> card = cards[card_index];
+	ERR_FAIL_COND_V(card.is_null(), false);
 
 	if (global->get_current_card_instance() != card) {
 		return true;
@@ -30,7 +36,7 @@ bool OutlineCurrentEffect::_process_custom_fx(const Ref<CharFXTransform> &p_char
 		return true;
 	}
 
-	Ref<CardDesign> design = card->get_design();
+	Ref<CardDesign> design = card->get_design(global);
 	ERR_FAIL_COND_V(design.is_null(), false);
 
 	// TODO: waiting for https://github.com/godotengine/godot/pull/97300

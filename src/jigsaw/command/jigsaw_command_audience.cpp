@@ -63,8 +63,7 @@ JigsawExecutionState JigsawCommandAudience::evaluate(const Ref<JigsawContext> &c
 	switch (_operation) {
 	case CREATE:
 	{
-		JigsawGlobal *global = context->get_global();
-		Ref<Audience> audience = likely(global) ? global->get_audience() : Ref<Audience>();
+		Ref<Audience> audience = context->get_global()->get_state()->get_audience();
 		if (unlikely(audience.is_null())) {
 			err = context->create_error("internal error: missing audience manager!");
 			return JigsawExecutionState::ERROR;

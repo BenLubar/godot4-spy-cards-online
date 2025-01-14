@@ -23,14 +23,13 @@
 		</method>
 	</methods>
 	<members>
-		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		<member name="amount" type="int" setter="set_amount" getter="get_amount">
 		</member>
-		<member name="amount_inf" type="int" setter="set_amount_inf" getter="get_amount_inf" default="0">
+		<member name="amount_inf" type="int" setter="set_amount_inf" getter="get_amount_inf">
 		</member>
-		<member name="nan" type="bool" setter="set_nan" getter="is_nan" default="false">
+		<member name="nan" type="bool" setter="set_nan" getter="is_nan">
 		</member>
-		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat" default="-1">
+		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="24" />
 	</members>
 </class>

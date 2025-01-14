@@ -14,11 +14,12 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Ref<ModifierInstance>, instance);
+	DECLARE_PROPERTY(int64_t, card_instance, = -1);
+	DECLARE_PROPERTY(int64_t, modifier_index, = -1);
 
 	Type get_type() const override { return MODIFIER_INSTANCE; }
 
-	static Ref<JigsawParameterModifierInstance> make(const Ref<ModifierInstance> &instance);
+	static Ref<JigsawParameterModifierInstance> make(int64_t card_instance, int64_t modifier_index);
 };
 
 #endif // JIGSAW_PARAMETER_MODIFIER_INSTANCE_H

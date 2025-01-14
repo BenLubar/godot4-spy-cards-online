@@ -24,7 +24,6 @@ const double JigsawVisual::HUD_FOV_HORIZONTAL = Math::rad_to_deg(2 * Math::atan(
 
 void JigsawVisual::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(Audience, audience);
-	BIND_PROPERTY_RESOURCE(JigsawParameterAudio, music);
 
 	BIND_PROPERTY_RESOURCE(Texture2D, simple_background);
 	BIND_PROPERTY(Variant::BOOL, simple_background_stretch);
@@ -126,8 +125,8 @@ JigsawVisual::JigsawVisual() {
 	_hud_camera->set_near(1);
 	_hud_camera->set_far(20);
 	_hud_camera->set_position(Vector3(
-		HUD_EMULATED_SIZE_X * HUD_3D_SCALE / 2.0,
-		HUD_EMULATED_SIZE_Y * HUD_3D_SCALE / -2.0,
+		HUD_EMULATED_SIZE_X * HUD_3D_SCALE / 2.0f,
+		HUD_EMULATED_SIZE_Y * HUD_3D_SCALE / -2.0f,
 		HUD_EMULATED_SIZE_X * HUD_3D_SCALE * Math::sin(Math::deg_to_rad(HUD_FOV_VERTICAL))
 	));
 	add_child(_hud_camera);
@@ -140,11 +139,6 @@ JigsawVisual::JigsawVisual() {
 	_hud_light->set_name("HUDLight");
 	_hud_light->set_bake_mode(Light3D::BAKE_STATIC);
 	add_child(_hud_light);
-
-	_music_player = memnew(AudioStreamPlayer);
-	_music_player->set_name("MusicPlayer");
-	_music_player->set_bus(MUSIC_BUS);
-	add_child(_music_player);
 }
 
 void JigsawVisual::_ready() {
@@ -257,37 +251,6 @@ SubViewport *JigsawVisual::get_stage_viewport() const {
 	return _stage_viewport;
 }
 
-Ref<JigsawParameterAudio> JigsawVisual::get_music() const {
-	return _music;
-}
-void JigsawVisual::set_music(Ref<JigsawParameterAudio> new_music) {
-	if (new_music == _music) {
-		return;
-	}
-
-	if (_music.is_valid() && new_music.is_valid() && _music->get_type() == new_music->get_type()) {
-		Ref<JigsawParameterFileIDOpus> prev = _music;
-		Ref<JigsawParameterFileIDOpus> next = new_music;
-		if (prev.is_valid() && next.is_valid() && prev->get_file_id() == next->get_file_id()) {
-			return;
-		}
-
-		Ref<JigsawParameterCIDOpus> legacy_prev = _music;
-		Ref<JigsawParameterCIDOpus> legacy_next = new_music;
-		if (legacy_prev.is_valid() && legacy_next.is_valid() && legacy_prev->get_cid() == legacy_next->get_cid()) {
-			return;
-		}
-	}
-
-	_music = new_music;
-
-	_music_player->stop();
-	Ref<AudioStreamWAV> audio = new_music.is_valid() ? new_music->get_audio() : Ref<AudioStreamWAV>();
-	_music_player->set_stream(audio);
-	if (audio.is_valid()) {
-		_music_player->play();
-	}
-}
 Ref<Texture2D> JigsawVisual::get_simple_background() const {
 	return _stage_simple_background->get_texture();
 }

@@ -7,13 +7,13 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="chosen_cards" type="PackedInt64Array" setter="set_chosen_cards" getter="get_chosen_cards" default="PackedInt64Array()">
+		<member name="chosen_cards" type="PackedInt64Array" setter="set_chosen_cards" getter="get_chosen_cards">
 		</member>
-		<member name="personal_seed" type="PackedByteArray" setter="set_personal_seed" getter="get_personal_seed" default="PackedByteArray()">
+		<member name="personal_seed" type="PackedByteArray" setter="set_personal_seed" getter="get_personal_seed">
 		</member>
-		<member name="personal_seed_after" type="PackedByteArray" setter="set_personal_seed_after" getter="get_personal_seed_after" default="PackedByteArray()">
+		<member name="personal_seed_after" type="PackedByteArray" setter="set_personal_seed_after" getter="get_personal_seed_after">
 		</member>
-		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs">
 		</member>
 	</members>
 </class>

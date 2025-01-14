@@ -16,10 +16,9 @@
 		</method>
 	</methods>
 	<members>
-		<member name="choices" type="int" setter="set_choices" getter="get_choices" enum="ChoicesDef.Choices" default="-1">
+		<member name="choices" type="int" setter="set_choices" getter="get_choices" enum="ChoicesDef.Choices">
 		</member>
-		<member name="index" type="int" setter="set_index" getter="get_index" default="-1">
+		<member name="index" type="int" setter="set_index" getter="get_index">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="20" />
 	</members>
 </class>

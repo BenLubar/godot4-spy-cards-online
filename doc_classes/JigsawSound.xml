@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawSound" inherits="JigsawPresentationData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="init_node">
+			<return type="void" />
+			<param index="0" name="visual" type="JigsawVisual" />
+			<description>
+			</description>
+		</method>
+		<method name="pause">
+			<return type="void" />
+			<param index="0" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="play">
+			<return type="void" />
+			<param index="0" name="seek" type="float" default="0.0" />
+			<param index="1" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="resume">
+			<return type="void" />
+			<param index="0" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="set_pitch">
+			<return type="void" />
+			<param index="0" name="pitch" type="float" />
+			<param index="1" name="duration" type="float" default="0.0" />
+			<param index="2" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="set_position">
+			<return type="void" />
+			<param index="0" name="position" type="Vector3" />
+			<param index="1" name="duration" type="float" default="0.0" />
+			<param index="2" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="set_volume">
+			<return type="void" />
+			<param index="0" name="volume" type="float" />
+			<param index="1" name="duration" type="float" default="0.0" />
+			<param index="2" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="history" type="JigsawSoundCommandHistory[]" setter="set_history" getter="get_history">
+		</member>
+		<member name="node" type="Node" setter="set_node" getter="get_node">
+		</member>
+		<member name="space" type="int" setter="set_space" getter="get_space" enum="JigsawSound.Space">
+		</member>
+		<member name="track" type="JigsawParameterAudio" setter="set_track" getter="get_track">
+		</member>
+		<member name="type" type="int" setter="set_type" getter="get_type" enum="JigsawSound.Type">
+		</member>
+	</members>
+	<constants>
+		<constant name="GLOBAL" value="0" enum="Space">
+		</constant>
+		<constant name="STAGE_3D" value="1" enum="Space">
+		</constant>
+		<constant name="HUD_3D" value="2" enum="Space">
+		</constant>
+		<constant name="STAGE_2D" value="3" enum="Space">
+		</constant>
+		<constant name="HUD_2D" value="4" enum="Space">
+		</constant>
+		<constant name="OTHER" value="0" enum="Type">
+		</constant>
+		<constant name="CARD_SOUND" value="1" enum="Type">
+		</constant>
+		<constant name="MUSIC" value="2" enum="Type">
+		</constant>
+	</constants>
+</class>

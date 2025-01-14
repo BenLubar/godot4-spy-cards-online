@@ -23,8 +23,8 @@ public:
 	DECLARE_PROPERTY(int64_t, priority, = 65);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, params);
 
-	TypedArray<FormattedText> format_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
-	Ref<FormattedTextWithIcon> format_simple_description(const Ref<CardInstance> &card, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
+	TypedArray<FormattedText> format_description(JigsawGlobal *global, int64_t card_instance_id, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
+	Ref<FormattedTextWithIcon> format_simple_description(JigsawGlobal *global, int64_t card_instance_id, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>()) const;
 
 	DEFAULT_TO_STRING();
 };

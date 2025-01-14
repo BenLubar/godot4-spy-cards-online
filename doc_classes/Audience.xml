@@ -7,6 +7,12 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="assign">
+			<return type="void" />
+			<param index="0" name="audience" type="Audience" />
+			<description>
+			</description>
+		</method>
 		<method name="cheer">
 			<return type="void" />
 			<param index="0" name="repeats" type="int" />
@@ -33,7 +39,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="meshes" type="MultiMesh[]" setter="set_meshes" getter="get_meshes" default="[]">
+		<member name="meshes" type="MultiMesh[]" setter="set_meshes" getter="get_meshes">
 		</member>
 	</members>
 </class>

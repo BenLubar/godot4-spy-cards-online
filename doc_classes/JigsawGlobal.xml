@@ -23,41 +23,37 @@
 		</method>
 	</methods>
 	<members>
-		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
+		<member name="base_frame" type="int" setter="set_base_frame" getter="get_base_frame">
 		</member>
-		<member name="card_grids_2d" type="CardGrid2D[]" setter="set_card_grids_2d" getter="get_card_grids_2d" default="[]">
+		<member name="base_state" type="JigsawState" setter="set_base_state" getter="get_base_state">
 		</member>
-		<member name="card_grids_3d" type="CardGrid3D[]" setter="set_card_grids_3d" getter="get_card_grids_3d" default="[]">
-		</member>
-		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
-		</member>
-		<member name="context_stack" type="JigsawContext[]" setter="set_context_stack" getter="get_context_stack" default="[]">
+		<member name="context_stack" type="JigsawContext[]" setter="set_context_stack" getter="get_context_stack">
 		</member>
 		<member name="current_card_instance" type="CardInstance" setter="set_current_card_instance" getter="get_current_card_instance">
 		</member>
 		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
 		</member>
+		<member name="current_frame" type="int" setter="set_current_frame" getter="get_current_frame">
+		</member>
 		<member name="current_queued_effect" type="QueuedEffect" setter="set_current_queued_effect" getter="get_current_queued_effect">
 		</member>
-		<member name="current_side" type="int" setter="set_current_side" getter="get_current_side" default="0">
-		</member>
-		<member name="icon_nodes" type="TextureRect[]" setter="set_icon_nodes" getter="get_icon_nodes" default="[]">
-		</member>
-		<member name="label_nodes" type="SquishLabel[]" setter="set_label_nodes" getter="get_label_nodes" default="[]">
+		<member name="current_side" type="int" setter="set_current_side" getter="get_current_side">
 		</member>
 		<member name="mode" type="GameMode" setter="set_mode" getter="get_mode">
 		</member>
-		<member name="pause_frames" type="int" setter="set_pause_frames" getter="get_pause_frames" default="0">
+		<member name="pause_frames" type="int" setter="set_pause_frames" getter="get_pause_frames">
 		</member>
-		<member name="scene_nodes" type="Node3D[]" setter="set_scene_nodes" getter="get_scene_nodes" default="[]">
+		<member name="queue" type="QueuedEffect[]" setter="set_queue" getter="get_queue">
+		</member>
+		<member name="queue_reset_count" type="int" setter="set_queue_reset_count" getter="get_queue_reset_count">
 		</member>
 		<member name="selected_variant" type="VariantDef" setter="set_selected_variant" getter="get_selected_variant">
 		</member>
-		<member name="sides" type="JigsawSide[]" setter="set_sides" getter="get_sides" default="[]">
+		<member name="sounds" type="JigsawSound[]" setter="set_sounds" getter="get_sounds">
 		</member>
-		<member name="sprite_nodes" type="Sprite3D[]" setter="set_sprite_nodes" getter="get_sprite_nodes" default="[]">
+		<member name="state" type="JigsawState" setter="set_state" getter="get_state">
 		</member>
-		<member name="time_scale" type="float" setter="set_time_scale" getter="get_time_scale" default="1.0">
+		<member name="time_scale" type="float" setter="set_time_scale" getter="get_time_scale">
 		</member>
 		<member name="visual" type="JigsawVisual" setter="set_visual" getter="get_visual">
 		</member>

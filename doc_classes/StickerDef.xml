@@ -7,9 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon">
 		</member>
-		<member name="position" type="Rect2" setter="set_position" getter="get_position" default="Rect2(0, 0, 30, 10)">
+		<member name="position" type="Rect2" setter="set_position" getter="get_position">
 		</member>
 		<member name="should_show" type="JigsawProcedureStickerShouldShow" setter="set_should_show" getter="get_should_show">
 		</member>

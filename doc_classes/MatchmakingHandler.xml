@@ -137,25 +137,25 @@
 		</method>
 	</methods>
 	<members>
-		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections" default="[]">
+		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections">
 		</member>
 		<member name="crypto" type="Crypto" setter="set_crypto" getter="get_crypto">
 		</member>
-		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config" default="{ &quot;iceServers&quot;: [{ &quot;urls&quot;: [&quot;stun:stun.cloudflare.com:3478&quot;] }] }">
+		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config">
 		</member>
-		<member name="lobby_id" type="String" setter="set_lobby_id" getter="get_lobby_id" default="&quot;&quot;">
+		<member name="lobby_id" type="String" setter="set_lobby_id" getter="get_lobby_id">
 		</member>
-		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players" default="0">
+		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players">
 		</member>
 		<member name="peer" type="WebRTCMultiplayerPeer" setter="set_peer" getter="get_peer">
 		</member>
-		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
+		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs">
 		</member>
 		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
 		</member>
-		<member name="state" type="int" setter="set_state" getter="get_state" enum="MatchmakingHandler.MatchState" default="0">
+		<member name="state" type="int" setter="set_state" getter="get_state" enum="MatchmakingHandler.MatchState">
 		</member>
-		<member name="verification_code" type="String" setter="set_verification_code" getter="get_verification_code" default="&quot;&quot;">
+		<member name="verification_code" type="String" setter="set_verification_code" getter="get_verification_code">
 		</member>
 	</members>
 	<signals>

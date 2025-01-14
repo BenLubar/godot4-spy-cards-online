@@ -25,10 +25,9 @@
 	<members>
 		<member name="effect_instance" type="JigsawParameter" setter="set_effect_instance" getter="get_effect_instance">
 		</member>
-		<member name="index" type="int" setter="set_index" getter="get_index" default="-1">
+		<member name="index" type="int" setter="set_index" getter="get_index">
 		</member>
-		<member name="template_effect" type="int" setter="set_template_effect" getter="get_template_effect" enum="EffectDef.Effect" default="-1">
+		<member name="template_effect" type="int" setter="set_template_effect" getter="get_template_effect" enum="EffectDef.Effect">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="23" />
 	</members>
 </class>

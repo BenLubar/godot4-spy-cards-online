@@ -2,7 +2,6 @@
 #include "util/rng.h"
 #include "util/base32.h"
 #include "util/why_isnt_this_in_godot.h"
-#include "node/single_use_audio_stream_player.h"
 
 #include "defs/formatted_text.h"
 #include "node/squish_label.h"
@@ -14,8 +13,8 @@
 #include "jigsaw/procedure/jigsaw_command_list.h"
 #include "jigsaw/jigsaw_global.h"
 #include "jigsaw/jigsaw_visual.h"
+#include "jigsaw/jigsaw_state.h"
 #include "jigsaw/jigsaw_side.h"
-#include "jigsaw/jigsaw_side_location.h"
 #include "jigsaw/jigsaw_context.h"
 #include "jigsaw/jigsaw_stack_frame.h"
 #include "jigsaw/jigsaw_error.h"
@@ -46,6 +45,7 @@
 #include "jigsaw/command/jigsaw_command_ui.h"
 #include "jigsaw/command/jigsaw_command_loop.h"
 #include "jigsaw/command/jigsaw_command_color.h"
+#include "jigsaw/command/jigsaw_command_cleanup.h"
 
 #include "jigsaw/parameter/jigsaw_parameter.h"
 #include "jigsaw/parameter/jigsaw_parameter_card_grid.h"
@@ -86,6 +86,8 @@
 #include "jigsaw/parameter/jigsaw_parameter_audience.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance_parameter.h"
 #include "jigsaw/parameter/jigsaw_parameter_stat_value.h"
+
+#include "jigsaw/presentation/jigsaw_audio.h"
 
 #include "defs/card_filter.h"
 #include "defs/card_filter_and.h"
@@ -149,9 +151,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(RNG);
 	GDREGISTER_CLASS(Base32);
 	GDREGISTER_ABSTRACT_CLASS(WhyIsntThisInGodot);
-	GDREGISTER_CLASS(SingleUseAudioStreamPlayer);
-	GDREGISTER_CLASS(SingleUseAudioStreamPlayer2D);
-	GDREGISTER_CLASS(SingleUseAudioStreamPlayer3D);
 
 	GDREGISTER_CLASS(FormattedText);
 	GDREGISTER_CLASS(FormattedTextWithIcon);
@@ -164,8 +163,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandList);
 	GDREGISTER_CLASS(JigsawGlobal);
 	GDREGISTER_CLASS(JigsawVisual);
+	GDREGISTER_CLASS(JigsawState);
 	GDREGISTER_CLASS(JigsawSide);
-	GDREGISTER_CLASS(JigsawSideLocation);
 	GDREGISTER_CLASS(JigsawContext);
 	GDREGISTER_CLASS(JigsawStackFrame);
 	GDREGISTER_CLASS(JigsawError);
@@ -221,6 +220,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawCommandUI);
 	GDREGISTER_CLASS(JigsawCommandLoop);
 	GDREGISTER_CLASS(JigsawCommandColor);
+	GDREGISTER_CLASS(JigsawCommandCleanup);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
@@ -261,6 +261,13 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterAudience);
 	GDREGISTER_CLASS(JigsawParameterEffectInstanceParameter);
 	GDREGISTER_CLASS(JigsawParameterStatValue);
+
+	GDREGISTER_ABSTRACT_CLASS(JigsawPresentationData);
+	GDREGISTER_CLASS(JigsawSoundCommandHistory);
+	GDREGISTER_CLASS(JigsawSound);
+	GDREGISTER_CLASS(JigsawAudio);
+	GDREGISTER_CLASS(JigsawAudio2D);
+	GDREGISTER_CLASS(JigsawAudio3D);
 
 	GDREGISTER_ABSTRACT_CLASS(CardFilter);
 	GDREGISTER_CLASS(CardFilterAnd);

@@ -9,14 +9,13 @@
 	<methods>
 		<method name="make" qualifiers="static">
 			<return type="JigsawParameterCardInstance" />
-			<param index="0" name="instance" type="CardInstance" />
+			<param index="0" name="instance" type="int" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="instance" type="CardInstance" setter="set_instance" getter="get_instance">
+		<member name="instance" type="int" setter="set_instance" getter="get_instance">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-3" />
 	</members>
 </class>

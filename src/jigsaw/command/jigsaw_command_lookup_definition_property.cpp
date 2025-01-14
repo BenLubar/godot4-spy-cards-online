@@ -72,7 +72,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 	case CARD_DEF:
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card ID of null card instance");
@@ -103,7 +103,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card name of null card instance");
@@ -132,7 +132,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card rank of null card instance");
@@ -163,7 +163,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card costs of null card instance");
@@ -194,7 +194,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card portrait of null card instance");
@@ -225,7 +225,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card tribes of null card instance");
@@ -265,7 +265,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read card effects of null card instance");
@@ -317,7 +317,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank name of null card instance");
@@ -376,7 +376,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank color of null card instance");
@@ -435,7 +435,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank color of null card instance");
@@ -494,7 +494,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank color of null card instance");
@@ -553,7 +553,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank front of null card instance");
@@ -612,7 +612,7 @@ JigsawExecutionState JigsawCommandLookupDefinitionProperty::evaluate(const Ref<J
 
 		if (likely(def->get_type() == JigsawParameter::CARD_INSTANCE)) {
 			Ref<JigsawParameterCardInstance> inst_param = def;
-			Ref<CardInstance> inst = inst_param->get_instance();
+			Ref<CardInstance> inst = inst_param->resolve(context->get_global());
 
 			if (unlikely(inst.is_null())) {
 				err = context->create_error("cannot read rank back of null card instance");
@@ -874,21 +874,21 @@ TypedArray<JigsawParameter> JigsawCommandLookupDefinitionProperty::get_argument_
 
 	switch (_property) {
 	case CARD_DEF:
-		return Array::make(JigsawParameterCardInstance::make(Ref<CardInstance>()));
+		return Array::make(JigsawParameterCardInstance::make(-1));
 	case CARD_NAME:
 	case CARD_RANK:
 	case CARD_COSTS:
 	case CARD_PORTRAIT:
 	case CARD_TRIBES:
 	case CARD_EFFECTS:
-		return Array::make(JigsawParameterCard::make(enums::CardDef::NONE), JigsawParameterCardInstance::make(Ref<CardInstance>()));
+		return Array::make(JigsawParameterCard::make(enums::CardDef::NONE), JigsawParameterCardInstance::make(-1));
 	case RANK_NAME:
 	case RANK_COLOR:
 	case RANK_COLOR_ALT:
 	case RANK_COLOR_BASED_ON_PREFERENCES:
 	case RANK_FRONT:
 	case RANK_BACK:
-		return Array::make(JigsawParameterRank::make(enums::RankDef::NONE), JigsawParameterCard::make(enums::CardDef::NONE), JigsawParameterCardInstance::make(Ref<CardInstance>()));
+		return Array::make(JigsawParameterRank::make(enums::RankDef::NONE), JigsawParameterCard::make(enums::CardDef::NONE), JigsawParameterCardInstance::make(-1));
 	case TRIBE_NAME:
 	case TRIBE_COLOR:
 	case TRIBE_IS_HIDDEN:

@@ -5,22 +5,21 @@
 
 class QueuedEffect;
 
-#include "active/card_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter.h"
 #include "defs/effect_instance.h"
 
-#include <godot_cpp/templates/hash_map.hpp>
-
-class QueuedEffect : public RefCounted {
-	GDCLASS(QueuedEffect, RefCounted);
+class QueuedEffect : public Resource {
+	GDCLASS(QueuedEffect, Resource);
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Ref<CardInstance>, card);
+	DECLARE_PROPERTY(int64_t, card_instance);
 	DECLARE_PROPERTY(Ref<EffectInstance>, effect);
+	DECLARE_PROPERTY(VariableParameterDict, variables);
 
-	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
+	void assign(const Ref<QueuedEffect> &queued);
 
 	DEFAULT_TO_STRING();
 };

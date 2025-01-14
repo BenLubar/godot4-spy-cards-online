@@ -7,19 +7,19 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="argument_names" type="PackedStringArray" setter="set_argument_names" getter="get_argument_names" default="PackedStringArray()">
+		<member name="argument_names" type="PackedStringArray" setter="set_argument_names" getter="get_argument_names">
 		</member>
-		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments" default="[]">
+		<member name="arguments" type="JigsawParameter[]" setter="set_arguments" getter="get_arguments">
 		</member>
-		<member name="editor_description" type="String" setter="set_editor_description" getter="get_editor_description" default="&quot;&quot;">
+		<member name="editor_description" type="String" setter="set_editor_description" getter="get_editor_description">
 		</member>
-		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name">
 		</member>
-		<member name="mode" type="int" setter="set_mode" getter="get_mode" enum="JigsawProcedure.Mode" default="0">
+		<member name="mode" type="int" setter="set_mode" getter="get_mode" enum="JigsawProcedure.Mode">
 		</member>
-		<member name="result_names" type="PackedStringArray" setter="set_result_names" getter="get_result_names" default="PackedStringArray()">
+		<member name="result_names" type="PackedStringArray" setter="set_result_names" getter="get_result_names">
 		</member>
-		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results" default="[]">
+		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results">
 		</member>
 	</members>
 </class>

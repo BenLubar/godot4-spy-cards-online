@@ -19,11 +19,10 @@
 		</member>
 		<member name="member" type="JigsawParameter" setter="set_member" getter="get_member">
 		</member>
-		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandAudience.Operation" default="0">
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandAudience.Operation">
 		</member>
 		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="12" />
 		<member name="weight" type="JigsawParameter" setter="set_weight" getter="get_weight">
 		</member>
 		<member name="x" type="JigsawParameter" setter="set_x" getter="get_x">

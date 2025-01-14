@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="bbcode" type="String" setter="set_bbcode" getter="get_bbcode" default="&quot;sc_glitch&quot;">
+		<member name="bbcode" type="String" setter="set_bbcode" getter="get_bbcode">
 		</member>
 	</members>
 </class>

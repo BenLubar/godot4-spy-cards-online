@@ -9,14 +9,16 @@
 	<methods>
 		<method name="make" qualifiers="static">
 			<return type="JigsawParameterQueuedEffect" />
-			<param index="0" name="effect" type="QueuedEffect" />
+			<param index="0" name="queue_index" type="int" />
+			<param index="1" name="queue_reset_count" type="int" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="effect" type="QueuedEffect" setter="set_effect" getter="get_effect">
+		<member name="queue_index" type="int" setter="set_queue_index" getter="get_queue_index">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-5" />
+		<member name="queue_reset_count" type="int" setter="set_queue_reset_count" getter="get_queue_reset_count">
+		</member>
 	</members>
 </class>

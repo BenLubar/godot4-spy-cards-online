@@ -7,11 +7,11 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		<member name="color" type="Color" setter="set_color" getter="get_color">
 		</member>
-		<member name="display" type="int" setter="set_display" getter="get_display" enum="TribeDef.DisplayMode" default="0">
+		<member name="display" type="int" setter="set_display" getter="get_display" enum="TribeDef.DisplayMode">
 		</member>
-		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		<member name="name" type="String" setter="set_name" getter="get_name">
 		</member>
 	</members>
 	<constants>

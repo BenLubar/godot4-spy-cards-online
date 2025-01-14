@@ -8,16 +8,12 @@ class JigsawCommandAudio : public JigsawCommand {
 
 public:
 	enum Operation {
-		SET_MUSIC = 0,
 	};
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Operation, operation, = SET_MUSIC);
-	DECLARE_PROPERTY(Ref<JigsawParameter>, sound);
-
 	Type get_type() const override { return AUDIO; }
 	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;

@@ -21,19 +21,19 @@
 		</method>
 	</methods>
 	<members>
-		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		<member name="color" type="Color" setter="set_color" getter="get_color">
 		</member>
-		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command" default="0">
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="FormattedText.Command">
 		</member>
-		<member name="font_size" type="float" setter="set_font_size" getter="get_font_size" default="1.0">
+		<member name="font_size" type="float" setter="set_font_size" getter="get_font_size">
 		</member>
-		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon">
 		</member>
 		<member name="instance" type="EffectInstance" setter="set_instance" getter="get_instance">
 		</member>
-		<member name="table_columns" type="int" setter="set_table_columns" getter="get_table_columns" default="0">
+		<member name="table_columns" type="int" setter="set_table_columns" getter="get_table_columns">
 		</member>
-		<member name="text" type="String" setter="set_text" getter="get_text" default="&quot;&quot;">
+		<member name="text" type="String" setter="set_text" getter="get_text">
 		</member>
 	</members>
 	<constants>

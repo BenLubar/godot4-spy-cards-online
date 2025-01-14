@@ -15,19 +15,19 @@
 		</method>
 	</methods>
 	<members>
-		<member name="author" type="String" setter="set_author" getter="get_author" default="&quot;&quot;">
+		<member name="author" type="String" setter="set_author" getter="get_author">
 		</member>
-		<member name="custom_icons" type="IconDef[]" setter="set_custom_icons" getter="get_custom_icons" default="[]">
+		<member name="custom_icons" type="IconDef[]" setter="set_custom_icons" getter="get_custom_icons">
 		</member>
-		<member name="description" type="String" setter="set_description" getter="get_description" default="&quot;&quot;">
+		<member name="description" type="String" setter="set_description" getter="get_description">
 		</member>
-		<member name="latest_changes" type="String" setter="set_latest_changes" getter="get_latest_changes" default="&quot;&quot;">
+		<member name="latest_changes" type="String" setter="set_latest_changes" getter="get_latest_changes">
 		</member>
 		<member name="mode_list_card_design" type="CardDesign" setter="set_mode_list_card_design" getter="get_mode_list_card_design">
 		</member>
-		<member name="mode_thumbnail" type="int" setter="set_mode_thumbnail" getter="get_mode_thumbnail" enum="IconDef.Icon" default="-1">
+		<member name="mode_thumbnail" type="int" setter="set_mode_thumbnail" getter="get_mode_thumbnail" enum="IconDef.Icon">
 		</member>
-		<member name="title" type="String" setter="set_title" getter="get_title" default="&quot;&quot;">
+		<member name="title" type="String" setter="set_title" getter="get_title">
 		</member>
 	</members>
 </class>

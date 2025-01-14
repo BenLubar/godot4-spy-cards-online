@@ -242,13 +242,13 @@
 		</method>
 	</methods>
 	<members>
-		<member name="buffer" type="PackedByteArray" setter="set_buffer" getter="get_buffer" default="PackedByteArray()">
+		<member name="buffer" type="PackedByteArray" setter="set_buffer" getter="get_buffer">
 		</member>
-		<member name="debug_name" type="String" setter="set_debug_name" getter="get_debug_name" default="&quot;unnamed buffer&quot;">
+		<member name="debug_name" type="String" setter="set_debug_name" getter="get_debug_name">
 		</member>
-		<member name="offset" type="int" setter="set_offset" getter="get_offset" default="0">
+		<member name="offset" type="int" setter="set_offset" getter="get_offset">
 		</member>
-		<member name="valid" type="bool" setter="set_valid" getter="is_valid" default="true">
+		<member name="valid" type="bool" setter="set_valid" getter="is_valid">
 		</member>
 	</members>
 </class>

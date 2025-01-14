@@ -3,6 +3,8 @@
 
 #include "dry.h"
 
+#include "enums/enums_variable_def.h"
+
 class JigsawParameter : public Resource {
 	GDCLASS(JigsawParameter, Resource);
 
@@ -58,5 +60,9 @@ public:
 	static bool is_saved_type(Type type) { return type > NONE; }
 };
 DECLARE_ENUM(JigsawParameter::Type);
+
+// TODO: https://github.com/godotengine/godot-cpp/issues/1684
+//using VariableParameterDict = TypedDictionary<enums::VariableDef::Variable, JigsawParameter>;
+using VariableParameterDict = TypedDictionary<int, JigsawParameter>;
 
 #endif // JIGSAW_PARAMETER_H

@@ -8,7 +8,7 @@ void SquishLabel::_bind_methods() {
 	BIND_PROPERTY_IS(Variant::BOOL, centered);
 
 	ClassDB::bind_method(D_METHOD("_resize"), &SquishLabel::_resize);
-	ClassDB::bind_method(D_METHOD("set_formatted_text", "formatted_text", "card", "outline_effect_inactive_color", "outline_effect_highlight_width"), &SquishLabel::set_formatted_text);
+	ClassDB::bind_method(D_METHOD("set_formatted_text", "formatted_text", "global", "card_index", "outline_effect_inactive_color", "outline_effect_highlight_width"), &SquishLabel::set_formatted_text);
 }
 SquishLabel::SquishLabel() {
 	set_use_bbcode(true);
@@ -66,17 +66,18 @@ void SquishLabel::_resize() {
 	}
 }
 
-void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_text, const Ref<CardInstance> &card, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width) {
+void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_text, JigsawGlobal *global, int64_t card_index, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width) {
 	clear();
 
 	Ref<GameMode> mode;
-
-	bool uses_outline_current = false;
-	if (card.is_valid()) {
-		JigsawGlobal *global = card->get_global();
-		ERR_FAIL_NULL(global);
+	if (global) {
 		mode = global->get_mode();
 		ERR_FAIL_COND(mode.is_null());
+	}
+
+	bool uses_outline_current = false;
+	if (card_index != -1) {
+		ERR_FAIL_NULL(global);
 
 		for (int64_t i = 0; i < formatted_text.size(); i++) {
 			Ref<FormattedText> command = formatted_text[i];
@@ -133,7 +134,8 @@ void SquishLabel::set_formatted_text(const TypedArray<FormattedText> &formatted_
 			case FormattedText::PUSH_EFFECT_INSTANCE:
 				{
 					Dictionary env;
-					env[String("card")] = card;
+					env[String("global")] = global;
+					env[String("card")] = card_index;
 					env[String("effect")] = command->get_instance();
 					push_customfx(_outline_current_effect, env);
 				}

@@ -23,6 +23,7 @@
 #include "jigsaw/command/jigsaw_command_ui.h"
 #include "jigsaw/command/jigsaw_command_loop.h"
 #include "jigsaw/command/jigsaw_command_color.h"
+#include "jigsaw/command/jigsaw_command_cleanup.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"
 #include "jigsaw/parameter/jigsaw_parameter_audience.h"
@@ -457,6 +458,9 @@ bool DataContainer::_decode_jigsaw_command(const Ref<FormatHelper> &fh, Ref<Jigs
 	case JigsawCommand::COLOR:
 		command.reference_ptr(memnew(JigsawCommandColor));
 		break;
+	case JigsawCommand::CLEANUP:
+		command.reference_ptr(memnew(JigsawCommandCleanup));
+		break;
 	}
 
 	ERR_FAIL_COND_V_MSG(command.is_null(), false, vformat("DataContainer cannot decode Jigsaw command type %s (not implemented)", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommand", "Type", type)));
@@ -584,17 +588,17 @@ bool DataContainer::_decode_jigsaw_parameter(const Ref<FormatHelper> &fh, Ref<Ji
 	}
 	case JigsawParameter::QUEUED_EFFECT:
 	{
-		parameter = JigsawParameterQueuedEffect::make(Ref<QueuedEffect>());
+		parameter = JigsawParameterQueuedEffect::make(-1, -1);
 		return fh->is_valid();
 	}
 	case JigsawParameter::MODIFIER_INSTANCE:
 	{
-		parameter = JigsawParameterModifierInstance::make(Ref<ModifierInstance>());
+		parameter = JigsawParameterModifierInstance::make(-1, -1);
 		return fh->is_valid();
 	}
 	case JigsawParameter::CARD_INSTANCE:
 	{
-		parameter = JigsawParameterCardInstance::make(Ref<CardInstance>());
+		parameter = JigsawParameterCardInstance::make(-1);
 		return fh->is_valid();
 	}
 	case JigsawParameter::FORMATTED_TEXT:

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawSoundCommandHistory" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_duration_in_frames" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="JigsawSoundCommandHistory.Command">
+		</member>
+		<member name="duration" type="float" setter="set_duration" getter="get_duration">
+		</member>
+		<member name="from_pos" type="Vector3" setter="set_from_pos" getter="get_from_pos">
+		</member>
+		<member name="from_value" type="float" setter="set_from_value" getter="get_from_value">
+		</member>
+		<member name="paused" type="bool" setter="set_paused" getter="is_paused">
+		</member>
+		<member name="rollback_frame" type="int" setter="set_rollback_frame" getter="get_rollback_frame">
+		</member>
+		<member name="to_pos" type="Vector3" setter="set_to_pos" getter="get_to_pos">
+		</member>
+		<member name="to_value" type="float" setter="set_to_value" getter="get_to_value">
+		</member>
+	</members>
+	<constants>
+		<constant name="PLAY" value="0" enum="Command">
+		</constant>
+		<constant name="POSITION" value="1" enum="Command">
+		</constant>
+		<constant name="VOLUME" value="2" enum="Command">
+		</constant>
+		<constant name="PITCH" value="3" enum="Command">
+		</constant>
+	</constants>
+</class>

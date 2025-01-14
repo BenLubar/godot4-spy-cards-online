@@ -11,13 +11,12 @@
 		</member>
 		<member name="min" type="JigsawParameter" setter="set_min" getter="get_min">
 		</member>
-		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandRNG.Operation" default="0">
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandRNG.Operation">
 		</member>
 		<member name="output" type="JigsawParameterLocalVariable" setter="set_output" getter="get_output">
 		</member>
 		<member name="scope" type="JigsawCommandList" setter="set_scope" getter="get_scope">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="11" />
 	</members>
 	<constants>
 		<constant name="FLOAT" value="0" enum="Operation">

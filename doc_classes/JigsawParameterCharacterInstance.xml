@@ -7,8 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="character" type="int" setter="set_character" getter="get_character" default="-1">
+		<member name="character" type="int" setter="set_character" getter="get_character">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-8" />
 	</members>
 </class>

@@ -34,7 +34,7 @@ public:
 	DECLARE_PROPERTY_IS(bool, centered, = false);
 
 	void _resize();
-	void set_formatted_text(const TypedArray<FormattedText> &formatted_text, const Ref<CardInstance> &card, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width);
+	void set_formatted_text(const TypedArray<FormattedText> &formatted_text, JigsawGlobal *global, int64_t card_index, Color outline_effect_inactive_color, int64_t outline_effect_highlight_width);
 
 	DEFAULT_TO_STRING();
 };

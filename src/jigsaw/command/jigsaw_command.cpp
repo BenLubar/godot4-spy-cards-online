@@ -23,6 +23,7 @@ void JigsawCommand::_bind_methods() {
 	BIND_ENUM_CONSTANT(UI);
 	BIND_ENUM_CONSTANT(LOOP);
 	BIND_ENUM_CONSTANT(COLOR);
+	BIND_ENUM_CONSTANT(CLEANUP);
 
 	ClassDB::bind_method(D_METHOD("get_type"), &JigsawCommand::get_type);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "type"), "", "get_type");

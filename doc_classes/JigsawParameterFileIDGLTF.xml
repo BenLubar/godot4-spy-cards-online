@@ -16,7 +16,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id" default="PackedByteArray()">
+		<member name="file_id" type="PackedByteArray" setter="set_file_id" getter="get_file_id">
 		</member>
 	</members>
 </class>

@@ -62,7 +62,6 @@ private:
 	Camera3D *_hud_camera = nullptr;
 	RayCast3D *_hud_ray_cast = nullptr;
 	DirectionalLight3D *_hud_light = nullptr;
-	AudioStreamPlayer *_music_player = nullptr;
 
 	Vector2i _last_size;
 	Ref<AudioEffectSpectrumAnalyzerInstance> _fft;
@@ -71,7 +70,6 @@ private:
 
 public:
 	DECLARE_PROPERTY(Ref<Audience>, audience);
-	DECLARE_PROPERTY(Ref<JigsawParameterAudio>, music);
 	DECLARE_PROPERTY(bool, force_simple_background, = false);
 
 	JigsawVisual();

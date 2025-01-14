@@ -7,19 +7,19 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon">
 		</member>
-		<member name="back_cheer" type="int" setter="set_back_cheer" getter="get_back_cheer" enum="IconDef.Icon" default="-1">
+		<member name="back_cheer" type="int" setter="set_back_cheer" getter="get_back_cheer" enum="IconDef.Icon">
 		</member>
-		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name" default="&quot;&quot;">
+		<member name="editor_name" type="String" setter="set_editor_name" getter="get_editor_name">
 		</member>
-		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon" default="-1">
+		<member name="front" type="int" setter="set_front" getter="get_front" enum="IconDef.Icon">
 		</member>
-		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon" default="-1">
+		<member name="front_cheer" type="int" setter="set_front_cheer" getter="get_front_cheer" enum="IconDef.Icon">
 		</member>
-		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size" default="0.01">
+		<member name="pixel_size" type="float" setter="set_pixel_size" getter="get_pixel_size">
 		</member>
-		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">
+		<member name="weight" type="float" setter="set_weight" getter="get_weight">
 		</member>
 	</members>
 	<constants>

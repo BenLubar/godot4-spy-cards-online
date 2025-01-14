@@ -9,6 +9,7 @@ void Audience::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("cheer", "repeats"), &Audience::cheer);
 	ClassDB::bind_method(D_METHOD("cheer_left", "repeats"), &Audience::cheer_left);
 	ClassDB::bind_method(D_METHOD("cheer_right", "repeats"), &Audience::cheer_right);
+	ClassDB::bind_method(D_METHOD("assign", "audience"), &Audience::assign);
 }
 
 IMPLEMENT_PROPERTY_ONCHANGE(Audience, TypedArray<MultiMesh>, meshes, _members.resize(new_meshes.size()));
@@ -93,4 +94,12 @@ void Audience::cheer_right(uint8_t repeats) {
 			}
 		}
 	}
+}
+
+void Audience::assign(const Ref<Audience> &audience) {
+	ERR_FAIL_COND(audience.is_null());
+
+	_members = audience->_members;
+	_hop_offset = audience->_hop_offset;
+	_meshes.assign(audience->_meshes);
 }

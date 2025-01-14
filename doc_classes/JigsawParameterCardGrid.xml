@@ -16,10 +16,9 @@
 		</method>
 	</methods>
 	<members>
-		<member name="grid" type="int" setter="set_grid" getter="get_grid" default="-1">
+		<member name="grid" type="int" setter="set_grid" getter="get_grid">
 		</member>
-		<member name="is_3d" type="bool" setter="set_is_3d" getter="get_is_3d" default="true">
+		<member name="is_3d" type="bool" setter="set_is_3d" getter="get_is_3d">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-12" />
 	</members>
 </class>

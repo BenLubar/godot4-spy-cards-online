@@ -51,49 +51,49 @@
 		</method>
 	</methods>
 	<members>
-		<member name="audience" type="AudienceDef[]" setter="set_audience" getter="get_audience" default="[]">
+		<member name="audience" type="AudienceDef[]" setter="set_audience" getter="get_audience">
 		</member>
-		<member name="base_triggers" type="JigsawTriggerVariant[]" setter="set_base_triggers" getter="get_base_triggers" default="[]">
+		<member name="base_triggers" type="JigsawTriggerVariant[]" setter="set_base_triggers" getter="get_base_triggers">
 		</member>
-		<member name="card_defs" type="CardDef[]" setter="set_card_defs" getter="get_card_defs" default="[]">
+		<member name="card_defs" type="CardDef[]" setter="set_card_defs" getter="get_card_defs">
 		</member>
-		<member name="characters" type="CharacterDef[]" setter="set_characters" getter="get_characters" default="[]">
+		<member name="characters" type="CharacterDef[]" setter="set_characters" getter="get_characters">
 		</member>
-		<member name="custom_choices" type="ChoicesDef[]" setter="set_custom_choices" getter="get_custom_choices" default="[]">
+		<member name="custom_choices" type="ChoicesDef[]" setter="set_custom_choices" getter="get_custom_choices">
 		</member>
-		<member name="custom_effects" type="EffectDef[]" setter="set_custom_effects" getter="get_custom_effects" default="[]">
+		<member name="custom_effects" type="EffectDef[]" setter="set_custom_effects" getter="get_custom_effects">
 		</member>
-		<member name="custom_functions" type="JigsawFunction[]" setter="set_custom_functions" getter="get_custom_functions" default="[]">
+		<member name="custom_functions" type="JigsawFunction[]" setter="set_custom_functions" getter="get_custom_functions">
 		</member>
-		<member name="custom_locations" type="LocationDef[]" setter="set_custom_locations" getter="get_custom_locations" default="[]">
+		<member name="custom_locations" type="LocationDef[]" setter="set_custom_locations" getter="get_custom_locations">
 		</member>
-		<member name="custom_modifiers" type="ModifierDef[]" setter="set_custom_modifiers" getter="get_custom_modifiers" default="[]">
+		<member name="custom_modifiers" type="ModifierDef[]" setter="set_custom_modifiers" getter="get_custom_modifiers">
 		</member>
-		<member name="custom_npcs" type="NPCDef[]" setter="set_custom_npcs" getter="get_custom_npcs" default="[]">
+		<member name="custom_npcs" type="NPCDef[]" setter="set_custom_npcs" getter="get_custom_npcs">
 		</member>
-		<member name="custom_ranks" type="RankDef[]" setter="set_custom_ranks" getter="get_custom_ranks" default="[]">
+		<member name="custom_ranks" type="RankDef[]" setter="set_custom_ranks" getter="get_custom_ranks">
 		</member>
-		<member name="custom_stats" type="StatDef[]" setter="set_custom_stats" getter="get_custom_stats" default="[]">
+		<member name="custom_stats" type="StatDef[]" setter="set_custom_stats" getter="get_custom_stats">
 		</member>
-		<member name="custom_tribes" type="TribeDef[]" setter="set_custom_tribes" getter="get_custom_tribes" default="[]">
+		<member name="custom_tribes" type="TribeDef[]" setter="set_custom_tribes" getter="get_custom_tribes">
 		</member>
-		<member name="custom_variables" type="VariableDef[]" setter="set_custom_variables" getter="get_custom_variables" default="[]">
+		<member name="custom_variables" type="VariableDef[]" setter="set_custom_variables" getter="get_custom_variables">
 		</member>
 		<member name="default_card_design" type="CardDesign" setter="set_default_card_design" getter="get_default_card_design">
 		</member>
-		<member name="effects" type="int[]" setter="set_effects" getter="get_effects" default="[]">
+		<member name="effects" type="int[]" setter="set_effects" getter="get_effects">
 		</member>
-		<member name="modifiers" type="int[]" setter="set_modifiers" getter="get_modifiers" default="[]">
+		<member name="modifiers" type="int[]" setter="set_modifiers" getter="get_modifiers">
 		</member>
-		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs" default="[]">
+		<member name="npcs" type="int[]" setter="set_npcs" getter="get_npcs">
 		</member>
-		<member name="ranks" type="int[]" setter="set_ranks" getter="get_ranks" default="[]">
+		<member name="ranks" type="int[]" setter="set_ranks" getter="get_ranks">
 		</member>
-		<member name="stats" type="int[]" setter="set_stats" getter="get_stats" default="[]">
+		<member name="stats" type="int[]" setter="set_stats" getter="get_stats">
 		</member>
-		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes">
 		</member>
-		<member name="variants" type="VariantDef[]" setter="set_variants" getter="get_variants" default="[]">
+		<member name="variants" type="VariantDef[]" setter="set_variants" getter="get_variants">
 		</member>
 	</members>
 </class>

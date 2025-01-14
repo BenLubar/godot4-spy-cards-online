@@ -35,6 +35,7 @@ void DataContainer::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_INT64_ARRAY, previous_wins);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, resumed_from_recording);
 	BIND_PROPERTY(Variant::INT, resumed_from_round);
+	BIND_PROPERTY_ENUM_ARRAY(enums::NPCDef::NPC, player_npc);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingPlayerData, player_data);
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, shared_seed);
 	BIND_PROPERTY_RESOURCE_ARRAY(RecordingRoundData, rounds);
@@ -62,6 +63,7 @@ IMPLEMENT_PROPERTY(DataContainer, int64_t, rematches);
 IMPLEMENT_PROPERTY(DataContainer, PackedInt64Array, previous_wins);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, resumed_from_recording);
 IMPLEMENT_PROPERTY(DataContainer, int64_t, resumed_from_round);
+IMPLEMENT_PROPERTY(DataContainer, TypedArray<enums::NPCDef::NPC>, player_npc);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingPlayerData>, player_data);
 IMPLEMENT_PROPERTY(DataContainer, PackedByteArray, shared_seed);
 IMPLEMENT_PROPERTY(DataContainer, TypedArray<RecordingRoundData>, rounds);
@@ -466,6 +468,10 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 	_resumed_from_recording = fh->read_bytesvar();
 	_resumed_from_round = int64_t(fh->read_uvarint()) - 1;
 
+	_player_npc.resize(fh->read_uvarint());
+	for (int64_t i = 0; i < _player_npc.size(); i++) {
+		_player_npc[i] = static_cast<enums::NPCDef::NPC>(fh->read_uvarint());
+	}
 	_player_data.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < _player_data.size(); i++) {
 		Ref<RecordingPlayerData> player;
@@ -555,6 +561,10 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 	fh->write_bytesvar(_resumed_from_recording);
 	fh->write_uvarint(_resumed_from_round + 1);
 
+	fh->write_uvarint(_player_npc.size());
+	for (int64_t i = 0; i < _player_npc.size(); i++) {
+		fh->write_uvarint(_player_npc[i]);
+	}
 	fh->write_uvarint(_player_data.size());
 	for (int64_t i = 0; i < _player_data.size(); i++) {
 		Ref<RecordingPlayerData> player = _player_data[i];

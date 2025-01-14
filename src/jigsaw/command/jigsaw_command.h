@@ -39,6 +39,7 @@ public:
 		UI = 18,
 		LOOP = 19,
 		COLOR = 20,
+		CLEANUP = 21,
 	};
 
 protected:

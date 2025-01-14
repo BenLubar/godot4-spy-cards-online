@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="list" type="CardFilter[]" setter="set_list" getter="get_list" default="[]">
+		<member name="list" type="CardFilter[]" setter="set_list" getter="get_list">
 		</member>
 	</members>
 </class>

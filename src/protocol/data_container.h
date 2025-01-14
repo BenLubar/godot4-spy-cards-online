@@ -55,6 +55,7 @@ public:
 	DECLARE_PROPERTY(PackedInt64Array, previous_wins);
 	DECLARE_PROPERTY(PackedByteArray, resumed_from_recording);
 	DECLARE_PROPERTY(int64_t, resumed_from_round, = -1);
+	DECLARE_PROPERTY(TypedArray<enums::NPCDef::NPC>, player_npc);
 	DECLARE_PROPERTY(TypedArray<RecordingPlayerData>, player_data);
 	DECLARE_PROPERTY(PackedByteArray, shared_seed);
 	DECLARE_PROPERTY(TypedArray<RecordingRoundData>, rounds);

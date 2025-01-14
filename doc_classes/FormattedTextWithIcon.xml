@@ -7,9 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon">
 		</member>
-		<member name="text" type="FormattedText[]" setter="set_text" getter="get_text" default="[]">
+		<member name="text" type="FormattedText[]" setter="set_text" getter="get_text">
 		</member>
 	</members>
 </class>

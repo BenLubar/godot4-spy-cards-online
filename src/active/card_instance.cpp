@@ -6,7 +6,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_string.h"
 
 void CardInstance::_bind_methods() {
-	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
+	BIND_PROPERTY(Variant::INT, index);
 	BIND_PROPERTY_RESOURCE(CardDef, def);
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedText, name);
 	BIND_PROPERTY_ENUM(enums::RankDef::Rank, rank);
@@ -19,16 +19,18 @@ void CardInstance::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(FormattedTextWithIcon, simple_description);
 	BIND_PROPERTY_RESOURCE_ARRAY(ModifierInstance, modifiers);
 	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, face_down_for_side);
+	BIND_PROPERTY(Variant::INT, linked_parent);
 
-	ClassDB::bind_method(D_METHOD("update_description"), &CardInstance::update_description);
-	ClassDB::bind_method(D_METHOD("update_simple_description"), &CardInstance::update_simple_description);
+	ClassDB::bind_method(D_METHOD("update_description", "global", "parent_context"), &CardInstance::update_description);
+	ClassDB::bind_method(D_METHOD("update_simple_description", "global", "parent_context"), &CardInstance::update_simple_description);
 	ClassDB::bind_method(D_METHOD("description_requires_update"), &CardInstance::description_requires_update);
 	ClassDB::bind_method(D_METHOD("get_design"), &CardInstance::get_design);
+	ClassDB::bind_method(D_METHOD("assign", "instance"), &CardInstance::assign);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }
 
-IMPLEMENT_PROPERTY(CardInstance, JigsawGlobal *, global);
+IMPLEMENT_PROPERTY(CardInstance, int64_t, index);
 IMPLEMENT_PROPERTY(CardInstance, Ref<CardDef>, def);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, name);
 IMPLEMENT_PROPERTY(CardInstance, enums::RankDef::Rank, rank);
@@ -41,6 +43,7 @@ IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedText>, description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<FormattedTextWithIcon>, simple_description);
 IMPLEMENT_PROPERTY(CardInstance, TypedArray<ModifierInstance>, modifiers);
 IMPLEMENT_PROPERTY(CardInstance, PackedInt32Array, face_down_for_side);
+IMPLEMENT_PROPERTY(CardInstance, int64_t, linked_parent);
 
 Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &def) {
 	ERR_FAIL_NULL_V(global, nullptr);
@@ -48,9 +51,18 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 	Ref<GameMode> mode = global->get_mode();
 	ERR_FAIL_COND_V(mode.is_null(), nullptr);
 
+	TypedArray<CardInstance> cards = global->get_state()->get_cards();
+	int64_t index = cards.find(Ref<CardInstance>());
+	if (index == -1) {
+		index = cards.size();
+		cards.append(Ref<CardInstance>());
+		global->get_state()->set_cards(cards);
+	}
+
 	Ref<CardInstance> inst;
 	inst.instantiate();
-	inst->set_global(global);
+	cards[index] = inst;
+	inst->set_index(index);
 	inst->set_def(def);
 	inst->set_name(FormattedText::make_plain(def->get_name()));
 
@@ -62,21 +74,21 @@ Ref<CardInstance> CardInstance::make(JigsawGlobal *global, const Ref<CardDef> &d
 	inst->set_effects(Array(def->get_effects()));
 	inst->set_tribes(Array(def->get_tribes()));
 
-	if (!inst->update_simple_description()) {
-		inst->update_description();
+	if (!inst->update_simple_description(global)) {
+		inst->update_description(global);
 	}
 
 	return inst;
 }
 
-void CardInstance::update_description() {
+void CardInstance::update_description(JigsawGlobal *global, const Ref<JigsawContext> &parent_context) {
 	TypedArray<FormattedText> description;
 	bool first = true;
 	for (int64_t i = 0; i < _effects.size(); i++) {
 		Ref<EffectInstance> effect = _effects[i];
 		ERR_CONTINUE(effect.is_null());
 
-		TypedArray<FormattedText> effect_description = effect->format_description(this);
+		TypedArray<FormattedText> effect_description = effect->format_description(global, get_index(), parent_context);
 		if (effect_description.is_empty()) {
 			continue;
 		}
@@ -93,13 +105,13 @@ void CardInstance::update_description() {
 	set_description(description);
 }
 
-bool CardInstance::update_simple_description() {
+bool CardInstance::update_simple_description(JigsawGlobal *global, const Ref<JigsawContext> &parent_context) {
 	TypedArray<FormattedTextWithIcon> simple_description;
 	for (int64_t i = 0; i < _effects.size(); i++) {
 		Ref<EffectInstance> e = _effects[i];
 		ERR_CONTINUE(e.is_null());
 
-		Ref<FormattedTextWithIcon> simple_desc = e->format_simple_description(this);
+		Ref<FormattedTextWithIcon> simple_desc = e->format_simple_description(global, get_index(), parent_context);
 		if (simple_desc.is_null()) {
 			set_simple_description(TypedArray<FormattedTextWithIcon>());
 			return false;
@@ -160,8 +172,7 @@ bool CardInstance::description_requires_update() const {
 	return false;
 }
 
-Ref<CardDesign> CardInstance::get_design() const {
-	JigsawGlobal *global = get_global();
+Ref<CardDesign> CardInstance::get_design(JigsawGlobal *global) const {
 	ERR_FAIL_NULL_V(global, Ref<CardDesign>());
 	Ref<GameMode> mode = global->get_mode();
 	ERR_FAIL_COND_V(mode.is_null(), Ref<CardDesign>());
@@ -173,4 +184,23 @@ Ref<CardDesign> CardInstance::get_design() const {
 	}
 
 	return mode->get_default_card_design();
+}
+
+void CardInstance::assign(const Ref<CardInstance> &instance) {
+	ERR_FAIL_COND(instance.is_null());
+
+	_index = instance->_index;
+	_def = instance->_def;
+	_name.assign(instance->_name);
+	_rank = instance->_rank;
+	_back = instance->_back;
+	_costs.assign(instance->_costs);
+	_portrait = instance->_portrait;
+	_effects.assign(instance->_effects);
+	_tribes.assign(instance->_tribes);
+	_description.assign(instance->_description);
+	_simple_description.assign(instance->_simple_description);
+	_modifiers = instance->_modifiers.duplicate(true);
+	_face_down_for_side = instance->_face_down_for_side;
+	_linked_parent = instance->_linked_parent;
 }

@@ -9,6 +9,5 @@
 	<members>
 		<member name="message" type="JigsawParameter" setter="set_message" getter="get_message">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="4" />
 	</members>
 </class>

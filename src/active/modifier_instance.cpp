@@ -7,7 +7,7 @@ void ModifierInstance::_bind_methods() {
 	BIND_PROPERTY_IS(Variant::BOOL, nan);
 }
 
-IMPLEMENT_PROPERTY_SIMPLE(ModifierInstance, enums::ModifierDef::Modifier, modifier);
-IMPLEMENT_PROPERTY_SIMPLE(ModifierInstance, int64_t, amount);
-IMPLEMENT_PROPERTY_SIMPLE(ModifierInstance, int64_t, amount_inf);
-IMPLEMENT_PROPERTY_SIMPLE_IS(ModifierInstance, bool, nan);
+IMPLEMENT_PROPERTY(ModifierInstance, enums::ModifierDef::Modifier, modifier);
+IMPLEMENT_PROPERTY(ModifierInstance, int64_t, amount);
+IMPLEMENT_PROPERTY(ModifierInstance, int64_t, amount_inf);
+IMPLEMENT_PROPERTY_IS(ModifierInstance, bool, nan);

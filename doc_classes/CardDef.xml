@@ -7,21 +7,21 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs" default="[]">
+		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs">
 		</member>
-		<member name="curve_adjust" type="float" setter="set_curve_adjust" getter="get_curve_adjust" default="0.0">
+		<member name="curve_adjust" type="float" setter="set_curve_adjust" getter="get_curve_adjust">
 		</member>
-		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects" default="[]">
+		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects">
 		</member>
-		<member name="id" type="int" setter="set_id" getter="get_id" enum="CardDef.Card" default="-1">
+		<member name="id" type="int" setter="set_id" getter="get_id" enum="CardDef.Card">
 		</member>
-		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		<member name="name" type="String" setter="set_name" getter="get_name">
 		</member>
-		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
+		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon">
 		</member>
-		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank">
 		</member>
-		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes">
 		</member>
 	</members>
 	<constants>

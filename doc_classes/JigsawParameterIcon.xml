@@ -15,8 +15,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon" default="-1">
+		<member name="icon" type="int" setter="set_icon" getter="get_icon" enum="IconDef.Icon">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="15" />
 	</members>
 </class>

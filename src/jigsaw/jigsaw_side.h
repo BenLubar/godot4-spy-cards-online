@@ -8,13 +8,11 @@
 
 class JigsawSide;
 
-#include "jigsaw/jigsaw_side_location.h"
 #include "defs/numeric_value.h"
+#include "jigsaw/parameter/jigsaw_parameter.h"
 
-#include <godot_cpp/templates/hash_map.hpp>
-
-class JigsawSide : public RefCounted {
-	GDCLASS(JigsawSide, RefCounted);
+class JigsawSide : public Resource {
+	GDCLASS(JigsawSide, Resource);
 
 protected:
 	static void _bind_methods();
@@ -25,11 +23,12 @@ public:
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character, = enums::CharacterDef::Character::NONE);
 	DECLARE_PROPERTY(TypedArray<enums::CardDef::Card>, initial_deck);
 
-	// mutable state
-	DECLARE_PROPERTY(TypedArray<JigsawSideLocation>, locations);
+	// mutable state (hybrid copy on write)
+	DECLARE_PROPERTY(TypedArray<PackedInt32Array>, location_card_instances);
 	DECLARE_PROPERTY(TypedArray<NumericValue>, stats);
+	DECLARE_PROPERTY(VariableParameterDict, variables);
 
-	HashMap<enums::VariableDef::Variable, Ref<JigsawParameter>> _variables;
+	void assign(const Ref<JigsawSide> &side);
 
 	DEFAULT_TO_STRING();
 };

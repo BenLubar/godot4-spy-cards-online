@@ -22,7 +22,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
+	DECLARE_PROPERTY(int64_t, index, = -1);
 	DECLARE_PROPERTY(Ref<CardDef>, def);
 	DECLARE_PROPERTY(TypedArray<FormattedText>, name);
 	DECLARE_PROPERTY(enums::RankDef::Rank, rank, = enums::RankDef::Rank::NONE);
@@ -35,11 +35,13 @@ public:
 	DECLARE_PROPERTY(TypedArray<FormattedTextWithIcon>, simple_description);
 	DECLARE_PROPERTY(TypedArray<ModifierInstance>, modifiers);
 	DECLARE_PROPERTY(PackedInt32Array, face_down_for_side);
+	DECLARE_PROPERTY(int64_t, linked_parent, = -1);
 
-	void update_description();
-	bool update_simple_description();
+	void update_description(JigsawGlobal *global, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>());
+	bool update_simple_description(JigsawGlobal *global, const Ref<JigsawContext> &parent_context = Ref<JigsawContext>());
 	bool description_requires_update() const;
-	Ref<CardDesign> get_design() const;
+	Ref<CardDesign> get_design(JigsawGlobal *global) const;
+	void assign(const Ref<CardInstance> &instance);
 
 	DEFAULT_TO_STRING();
 

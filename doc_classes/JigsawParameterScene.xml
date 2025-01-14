@@ -7,10 +7,9 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="json_data" type="Dictionary" setter="set_json_data" getter="get_json_data" default="{}">
+		<member name="json_data" type="Dictionary" setter="set_json_data" getter="get_json_data">
 		</member>
 		<member name="scene" type="GLTFState" setter="set_scene" getter="get_scene">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="18" />
 	</members>
 </class>

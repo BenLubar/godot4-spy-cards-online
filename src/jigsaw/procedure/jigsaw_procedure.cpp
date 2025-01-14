@@ -76,7 +76,7 @@ String JigsawProcedureEffectDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
 	);
 }
@@ -104,7 +104,7 @@ String JigsawProcedureEffectSimpleDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectSimpleDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
 	);
 }
@@ -133,7 +133,7 @@ String JigsawProcedureEffectExtendedDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectExtendedDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
 	);
 }
@@ -144,7 +144,7 @@ TypedArray<JigsawParameter> JigsawProcedureEffectExtendedDescribe::get_results()
 	return Array::make(
 		JigsawParameterOrderedList::make_template(Array::make(
 			JigsawParameterFormattedText::make(TypedArray<FormattedText>()),
-			JigsawParameterCardInstance::make(Ref<CardInstance>())
+			JigsawParameterCardInstance::make(-1)
 		))
 	);
 }
@@ -164,7 +164,7 @@ String JigsawProcedureModifierDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterAmount::make(0)
 	);
 }
@@ -192,7 +192,7 @@ String JigsawProcedureModifierSimpleDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierSimpleDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterAmount::make(0)
 	);
 }
@@ -221,7 +221,7 @@ String JigsawProcedureModifierExtendedDescribe::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureModifierExtendedDescribe::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterAmount::make(0)
 	);
 }
@@ -232,7 +232,7 @@ TypedArray<JigsawParameter> JigsawProcedureModifierExtendedDescribe::get_results
 	return Array::make(
 		JigsawParameterOrderedList::make_template(Array::make(
 			JigsawParameterFormattedText::make(TypedArray<FormattedText>()),
-			JigsawParameterCardInstance::make(Ref<CardInstance>())
+			JigsawParameterCardInstance::make(-1)
 		))
 	);
 }
@@ -351,7 +351,7 @@ String JigsawProcedureStickerShouldShow::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureStickerShouldShow::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>())
+		JigsawParameterCardInstance::make(-1)
 	);
 }
 PackedStringArray JigsawProcedureStickerShouldShow::get_argument_names() const {
@@ -378,7 +378,7 @@ String JigsawProcedureStatFormatCost::get_editor_description() const {
 }
 TypedArray<JigsawParameter> JigsawProcedureStatFormatCost::get_arguments() const {
 	return Array::make(
-		JigsawParameterCardInstance::make(Ref<CardInstance>()),
+		JigsawParameterCardInstance::make(-1),
 		JigsawParameterAmount::make(0)
 	);
 }

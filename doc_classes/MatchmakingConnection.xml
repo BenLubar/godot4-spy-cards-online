@@ -21,51 +21,51 @@
 	<members>
 		<member name="conn" type="WebRTCPeerConnection" setter="set_conn" getter="get_conn">
 		</member>
-		<member name="fatal_error" type="String" setter="set_fatal_error" getter="get_fatal_error" default="&quot;&quot;">
+		<member name="fatal_error" type="String" setter="set_fatal_error" getter="get_fatal_error">
 		</member>
-		<member name="frame_ack" type="int" setter="set_frame_ack" getter="get_frame_ack" default="0">
+		<member name="frame_ack" type="int" setter="set_frame_ack" getter="get_frame_ack">
 		</member>
 		<member name="handler" type="MatchmakingHandler" setter="set_handler" getter="get_handler">
 		</member>
-		<member name="highest_remote_ping_id" type="int" setter="set_highest_remote_ping_id" getter="get_highest_remote_ping_id" default="0">
+		<member name="highest_remote_ping_id" type="int" setter="set_highest_remote_ping_id" getter="get_highest_remote_ping_id">
 		</member>
-		<member name="loaded_mode" type="bool" setter="set_loaded_mode" getter="get_loaded_mode" default="false">
+		<member name="loaded_mode" type="bool" setter="set_loaded_mode" getter="get_loaded_mode">
 		</member>
-		<member name="local_frame_advantage" type="int" setter="set_local_frame_advantage" getter="get_local_frame_advantage" default="0">
+		<member name="local_frame_advantage" type="int" setter="set_local_frame_advantage" getter="get_local_frame_advantage">
 		</member>
-		<member name="ping_id" type="int" setter="set_ping_id" getter="get_ping_id" default="0">
+		<member name="ping_id" type="int" setter="set_ping_id" getter="get_ping_id">
 		</member>
-		<member name="ping_start_times" type="PackedInt64Array" setter="set_ping_start_times" getter="get_ping_start_times" default="PackedInt64Array()">
+		<member name="ping_start_times" type="PackedInt64Array" setter="set_ping_start_times" getter="get_ping_start_times">
 		</member>
-		<member name="ping_times" type="PackedInt64Array" setter="set_ping_times" getter="get_ping_times" default="PackedInt64Array()">
+		<member name="ping_times" type="PackedInt64Array" setter="set_ping_times" getter="get_ping_times">
 		</member>
 		<member name="poller" type="HTTPRequest" setter="set_poller" getter="get_poller">
 		</member>
-		<member name="prev_local_frame_advantage" type="int" setter="set_prev_local_frame_advantage" getter="get_prev_local_frame_advantage" default="0">
+		<member name="prev_local_frame_advantage" type="int" setter="set_prev_local_frame_advantage" getter="get_prev_local_frame_advantage">
 		</member>
-		<member name="prev_remote_frame_advantage" type="int" setter="set_prev_remote_frame_advantage" getter="get_prev_remote_frame_advantage" default="0">
+		<member name="prev_remote_frame_advantage" type="int" setter="set_prev_remote_frame_advantage" getter="get_prev_remote_frame_advantage">
 		</member>
-		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs">
 		</member>
-		<member name="recv_commands" type="int" setter="set_recv_commands" getter="get_recv_commands" default="0">
+		<member name="recv_commands" type="int" setter="set_recv_commands" getter="get_recv_commands">
 		</member>
-		<member name="remote_frame_advantage" type="int" setter="set_remote_frame_advantage" getter="get_remote_frame_advantage" default="0">
+		<member name="remote_frame_advantage" type="int" setter="set_remote_frame_advantage" getter="get_remote_frame_advantage">
 		</member>
-		<member name="remote_id" type="int" setter="set_remote_id" getter="get_remote_id" default="0">
+		<member name="remote_id" type="int" setter="set_remote_id" getter="get_remote_id">
 		</member>
-		<member name="send_queue" type="String" setter="set_send_queue" getter="get_send_queue" default="&quot;&quot;">
+		<member name="send_queue" type="String" setter="set_send_queue" getter="get_send_queue">
 		</member>
 		<member name="sender" type="HTTPRequest" setter="set_sender" getter="get_sender">
 		</member>
-		<member name="sender_active" type="bool" setter="set_sender_active" getter="get_sender_active" default="false">
+		<member name="sender_active" type="bool" setter="set_sender_active" getter="get_sender_active">
 		</member>
-		<member name="sent_commands" type="int" setter="set_sent_commands" getter="get_sent_commands" default="0">
+		<member name="sent_commands" type="int" setter="set_sent_commands" getter="get_sent_commands">
 		</member>
-		<member name="since_last_ping" type="int" setter="set_since_last_ping" getter="get_since_last_ping" default="0">
+		<member name="since_last_ping" type="int" setter="set_since_last_ping" getter="get_since_last_ping">
 		</member>
-		<member name="suggested_drop_inputs" type="int" setter="set_suggested_drop_inputs" getter="get_suggested_drop_inputs" default="0">
+		<member name="suggested_drop_inputs" type="int" setter="set_suggested_drop_inputs" getter="get_suggested_drop_inputs">
 		</member>
-		<member name="was_fully_connected" type="bool" setter="set_was_fully_connected" getter="get_was_fully_connected" default="false">
+		<member name="was_fully_connected" type="bool" setter="set_was_fully_connected" getter="get_was_fully_connected">
 		</member>
 	</members>
 	<signals>

@@ -81,9 +81,9 @@
 		</method>
 	</methods>
 	<members>
-		<member name="alphabet" type="String" setter="set_alphabet" getter="get_alphabet" default="&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&quot;">
+		<member name="alphabet" type="String" setter="set_alphabet" getter="get_alphabet">
 		</member>
-		<member name="padding" type="String" setter="set_padding" getter="get_padding" default="&quot;=&quot;">
+		<member name="padding" type="String" setter="set_padding" getter="get_padding">
 		</member>
 	</members>
 </class>

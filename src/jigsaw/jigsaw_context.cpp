@@ -113,16 +113,16 @@ Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<Jigs
 		case VariableDef::EFFECT_QUEUE_TREE:
 		{
 			Ref<JigsawParameterQueuedEffect> queue_specifier = variable_param->get_specifier();
-			Ref<QueuedEffect> queued_effect = queue_specifier.is_valid() ? queue_specifier->get_effect() : global->get_current_queued_effect();
-			if (queued_effect.is_valid() && queued_effect->_variables.has(variable_param->get_variable())) {
-				ret = queued_effect->_variables[variable_param->get_variable()];
+			Ref<QueuedEffect> queued_effect = queue_specifier.is_valid() ? queue_specifier->resolve(global) : global->get_current_queued_effect();
+			if (queued_effect.is_valid() && queued_effect->get_variables().has(variable_param->get_variable())) {
+				ret = queued_effect->get_variables()[variable_param->get_variable()];
 				return Ref<JigsawError>();
 			}
 			break;
 		}
 		case VariableDef::SIDE:
 		{
-			TypedArray<JigsawSide> sides = global->get_sides();
+			TypedArray<JigsawSide> sides = global->get_state()->get_sides();
 
 			Ref<JigsawParameterAmount> side_specifier = variable_param->get_specifier();
 			if (side_specifier.is_valid() && unlikely(side_specifier->is_nan() || side_specifier->get_amount_inf() != 0 || side_specifier->get_amount() < 0 || side_specifier->get_amount() >= sides.size())) {
@@ -131,16 +131,16 @@ Ref<JigsawError> JigsawContext::resolve_variable<JigsawParameter>(const Ref<Jigs
 
 			int32_t side_number = side_specifier.is_valid() ? side_specifier->get_amount() : global->get_current_side();
 			Ref<JigsawSide> side = sides[side_number];
-			if (side->_variables.has(variable_param->get_variable())) {
-				ret = side->_variables[variable_param->get_variable()];
+			if (side->get_variables().has(variable_param->get_variable())) {
+				ret = side->get_variables()[variable_param->get_variable()];
 				return Ref<JigsawError>();
 			}
 			break;
 		}
 		case VariableDef::GLOBAL:
 		{
-			if (global->_variables.has(variable_param->get_variable())) {
-				ret = global->_variables[variable_param->get_variable()];
+			if (global->get_state()->get_variables().has(variable_param->get_variable())) {
+				ret = global->get_state()->get_variables()[variable_param->get_variable()];
 				return Ref<JigsawError>();
 			}
 			break;
@@ -279,7 +279,7 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 	}
 	case VariableDef::SIDE:
 	{
-		TypedArray<JigsawSide> sides = global->get_sides();
+		TypedArray<JigsawSide> sides = global->get_state()->get_sides();
 
 		Ref<JigsawParameterAmount> side_specifier = var->get_specifier();
 		if (side_specifier.is_valid() && unlikely(side_specifier->is_nan() || side_specifier->get_amount_inf() != 0 || side_specifier->get_amount() < 0 || side_specifier->get_amount() >= sides.size())) {
@@ -288,12 +288,12 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 
 		int32_t side_number = side_specifier.is_valid() ? side_specifier->get_amount() : global->get_current_side();
 		Ref<JigsawSide> side = sides[side_number];
-		side->_variables[var->get_variable()] = value;
+		side->get_variables()[var->get_variable()] = value;
 		break;
 	}
 	case VariableDef::GLOBAL:
 	{
-		global->_variables[var->get_variable()] = value;
+		global->get_state()->get_variables()[var->get_variable()] = value;
 		break;
 	}
 	}

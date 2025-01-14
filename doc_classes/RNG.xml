@@ -57,13 +57,13 @@
 		</method>
 	</methods>
 	<members>
-		<member name="bug_max_value_fencepost" type="bool" setter="set_bug_max_value_fencepost" getter="get_bug_max_value_fencepost" default="false">
+		<member name="bug_max_value_fencepost" type="bool" setter="set_bug_max_value_fencepost" getter="get_bug_max_value_fencepost">
 		</member>
-		<member name="bug_max_value_shift" type="bool" setter="set_bug_max_value_shift" getter="get_bug_max_value_shift" default="false">
+		<member name="bug_max_value_shift" type="bool" setter="set_bug_max_value_shift" getter="get_bug_max_value_shift">
 		</member>
-		<member name="bug_reverse_float" type="bool" setter="set_bug_reverse_float" getter="get_bug_reverse_float" default="false">
+		<member name="bug_reverse_float" type="bool" setter="set_bug_reverse_float" getter="get_bug_reverse_float">
 		</member>
-		<member name="bug_separate_update_seed" type="PackedByteArray" setter="set_bug_separate_update_seed" getter="get_bug_separate_update_seed" default="PackedByteArray()">
+		<member name="bug_separate_update_seed" type="PackedByteArray" setter="set_bug_separate_update_seed" getter="get_bug_separate_update_seed">
 		</member>
 	</members>
 </class>

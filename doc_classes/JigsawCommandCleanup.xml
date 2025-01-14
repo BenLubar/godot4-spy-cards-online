@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawCommandCleanup" inherits="JigsawCommand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandCleanup.Operation">
+		</member>
+	</members>
+	<constants>
+		<constant name="GC_CARD_INSTANCES" value="0" enum="Operation">
+		</constant>
+	</constants>
+</class>

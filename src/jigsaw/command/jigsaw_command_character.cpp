@@ -85,6 +85,7 @@ JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &
 			return JigsawExecutionState::ERROR;
 		}
 
+#if 0 // TODO!!!
 		JigsawGlobal *global = context->get_global();
 		Ref<GameMode> mode = likely(global) ? global->get_mode() : Ref<GameMode>();
 		TypedArray<MeshInstance3D> character_nodes = likely(global) ? global->get_character_nodes() : TypedArray<MeshInstance3D>();
@@ -116,6 +117,9 @@ JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &
 		} else {
 			i = -1;
 		}
+#else
+		int64_t i = -1;
+#endif
 
 		return set_command_result(context, err, 0, JigsawParameterCharacterInstance::make(i));
 	}

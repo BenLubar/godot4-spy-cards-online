@@ -23,7 +23,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat" default="-1">
+		<member name="stat" type="int" setter="set_stat" getter="get_stat" enum="StatDef.Stat">
 		</member>
 	</members>
 </class>

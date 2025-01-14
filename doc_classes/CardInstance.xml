@@ -7,6 +7,12 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="assign">
+			<return type="void" />
+			<param index="0" name="instance" type="CardInstance" />
+			<description>
+			</description>
+		</method>
 		<method name="description_requires_update" qualifiers="const">
 			<return type="bool" />
 			<description>
@@ -14,6 +20,7 @@
 		</method>
 		<method name="get_design" qualifiers="const">
 			<return type="CardDesign" />
+			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
 			<description>
 			</description>
 		</method>
@@ -26,41 +33,47 @@
 		</method>
 		<method name="update_description">
 			<return type="void" />
+			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
+			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
 			<description>
 			</description>
 		</method>
 		<method name="update_simple_description">
 			<return type="bool" />
+			<param index="0" name="_unnamed_arg0" type="JigsawGlobal" />
+			<param index="1" name="_unnamed_arg1" type="JigsawContext" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">
+		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon">
 		</member>
-		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs" default="[]">
+		<member name="costs" type="StatValue[]" setter="set_costs" getter="get_costs">
 		</member>
 		<member name="def" type="CardDef" setter="set_def" getter="get_def">
 		</member>
-		<member name="description" type="FormattedText[]" setter="set_description" getter="get_description" default="[]">
+		<member name="description" type="FormattedText[]" setter="set_description" getter="get_description">
 		</member>
-		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects" default="[]">
+		<member name="effects" type="EffectInstance[]" setter="set_effects" getter="get_effects">
 		</member>
-		<member name="face_down_for_side" type="PackedInt32Array" setter="set_face_down_for_side" getter="get_face_down_for_side" default="PackedInt32Array()">
+		<member name="face_down_for_side" type="PackedInt32Array" setter="set_face_down_for_side" getter="get_face_down_for_side">
 		</member>
-		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
+		<member name="index" type="int" setter="set_index" getter="get_index">
 		</member>
-		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers" default="[]">
+		<member name="linked_parent" type="int" setter="set_linked_parent" getter="get_linked_parent">
 		</member>
-		<member name="name" type="FormattedText[]" setter="set_name" getter="get_name" default="[]">
+		<member name="modifiers" type="ModifierInstance[]" setter="set_modifiers" getter="get_modifiers">
 		</member>
-		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon" default="-1">
+		<member name="name" type="FormattedText[]" setter="set_name" getter="get_name">
 		</member>
-		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank" default="-1">
+		<member name="portrait" type="int" setter="set_portrait" getter="get_portrait" enum="IconDef.Icon">
 		</member>
-		<member name="simple_description" type="FormattedTextWithIcon[]" setter="set_simple_description" getter="get_simple_description" default="[]">
+		<member name="rank" type="int" setter="set_rank" getter="get_rank" enum="RankDef.Rank">
 		</member>
-		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes" default="[]">
+		<member name="simple_description" type="FormattedTextWithIcon[]" setter="set_simple_description" getter="get_simple_description">
+		</member>
+		<member name="tribes" type="int[]" setter="set_tribes" getter="get_tribes">
 		</member>
 	</members>
 </class>

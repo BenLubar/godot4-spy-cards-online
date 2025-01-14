@@ -15,8 +15,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="scene" type="int" setter="set_scene" getter="get_scene" default="-1">
+		<member name="scene" type="int" setter="set_scene" getter="get_scene">
 		</member>
-		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawParameter" enum="JigsawParameter.Type" default="-6" />
 	</members>
 </class>

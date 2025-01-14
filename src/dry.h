@@ -32,6 +32,13 @@ public: \
 	m_type is_##m_name() const; \
 	void set_##m_name(m_type new_##m_name)
 
+#define DECLARE_PROPERTY_OBJECTID(m_type, m_name, ...) \
+private: \
+	ObjectID _##m_name __VA_ARGS__; \
+public: \
+	m_type *get_##m_name() const; \
+	void set_##m_name(m_type *new_##m_name)
+
 #define BIND_PROPERTY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
@@ -82,10 +89,20 @@ public: \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
 
+#define BIND_PROPERTY_ENUM_DICTIONARY_RESOURCE(m_enum, m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, #m_name, PROPERTY_HINT_DICTIONARY_TYPE, String::num(Variant::INT) + ":;" + String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
+
 #define BIND_PROPERTY_IS(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("is_" #m_name), &self_type::is_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "is_" #m_name)
+
+#define BIND_PROPERTY_OBJECTID_NOT_SAVED(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_NONE), "set_" #m_name, "get_" #m_name)
 
 #define IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, m_onchange) \
 	m_type m_class::get_##m_name() const { return _##m_name; } \
@@ -111,6 +128,11 @@ public: \
 	IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, )
 #define IMPLEMENT_PROPERTY_SIMPLE_IS(m_class, m_type, m_name) \
 	IMPLEMENT_PROPERTY_ONCHANGE_IS(m_class, m_type, m_name, )
+#define IMPLEMENT_PROPERTY_OBJECTID_SIMPLE(m_class, m_type, m_name) \
+	m_type *m_class::get_##m_name() const { return Object::cast_to<m_type>(ObjectDB::get_instance(_##m_name)); } \
+	void m_class::set_##m_name(m_type *new_##m_name) { \
+		_##m_name = new_##m_name ? new_##m_name->get_instance_id() : ObjectID(); \
+	}
 
 // TODO: https://github.com/godotengine/godot-cpp/issues/1584
 #define DECLARE_ENUM(m_enum) \
