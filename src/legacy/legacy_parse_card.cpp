@@ -121,6 +121,9 @@ String LegacyParse::card_name(enums::CardDef::Card id) {
 			return vformat("Custom Mini-Boss #%d", n);
 		case enums::RankDef::BOSS:
 			return vformat("Custom Boss #%d", n);
+		default:
+			// unreachable
+			break;
 		}
 	}
 

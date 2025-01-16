@@ -477,6 +477,8 @@ void LegacyParse::finalize_effect_param(const Ref<DataContainer> &container, con
 		}
 		return;
 	}
+	default:
+		return;
 	}
 }
 
@@ -513,5 +515,7 @@ void LegacyParse::finalize_card_filter(const Ref<DataContainer> &container, cons
 		}
 		return;
 	}
+	default:
+		return;
 	}
 }
