@@ -15,7 +15,7 @@ protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(int64_t, card_instance);
+	DECLARE_PROPERTY(int64_t, card_instance, = -1);
 	DECLARE_PROPERTY(Ref<EffectInstance>, effect);
 	DECLARE_PROPERTY(VariableParameterDict, variables);
 
