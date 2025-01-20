@@ -96,6 +96,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="read_svarint32">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
 		<method name="read_uint8">
 			<return type="int" />
 			<description>
@@ -117,6 +122,11 @@
 			</description>
 		</method>
 		<method name="read_uvarint">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="read_uvarint32">
 			<return type="int" />
 			<description>
 			</description>

@@ -13,7 +13,7 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, personal_seed);
 
 	// CHOICE only:
-	DECLARE_PROPERTY(PackedInt64Array, chosen_cards);
+	DECLARE_PROPERTY(PackedInt32Array, chosen_cards);
 
 	// REALTIME only:
 	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);

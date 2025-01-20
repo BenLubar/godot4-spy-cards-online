@@ -74,6 +74,9 @@ DECLARE_JIGSAW_PROCEDURE(JigsawProcedureStickerShouldShow);
 
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureStatFormatCost);
 
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureVariantSelectCharacter);
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureVariantBuildDeck);
+DECLARE_JIGSAW_PROCEDURE(JigsawProcedureVariantValidateDeck);
 DECLARE_JIGSAW_PROCEDURE(JigsawProcedureVariantMain);
 
 #endif // JIGSAW_PROCEDURE_H

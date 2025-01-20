@@ -155,7 +155,7 @@ bool LegacyParse::field_variant(const Ref<DataContainer> &container, const Ref<F
 	String npc = fh->read_stringvar();
 	if (!npc.is_empty()) {
 		variant->set_player_count(1);
-		variant->set_meta("legacy_npc", npc);
+		variant->set_meta(meta_legacy_npc, npc);
 	}
 
 	TypedArray<VariantDef> variants = container->get_mode()->get_variants();
@@ -201,7 +201,7 @@ bool LegacyParse::field_deck_limit_filter(const Ref<DataContainer> &container, c
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(rank_tribe & 15);
 		Ref<CardFilter> tribe_filter = tribe != enums::TribeDef::LEGACY_NONE ? CardFilter::make_tribe(tribe) : Ref<CardFilter>();
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_stringvar());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_stringvar());
 		}
 
 		filter = CardFilter::make_and(Array::make(rank_filter, tribe_filter));

@@ -3,6 +3,7 @@
 #include "util/base32.h"
 #include "util/why_isnt_this_in_godot.h"
 #include "protocol/button_input_history.h"
+#include "jigsaw/jigsaw_global.h"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/multiplayer_api.hpp>
@@ -41,13 +42,15 @@ void MatchmakingHandler::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(MatchmakingConnection, connections);
 	BIND_PROPERTY_RESOURCE(DataContainer, recording);
 
-	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, realtime_inputs);
+	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
+	BIND_PROPERTY(Variant::BOOL, need_rollback);
+	BIND_PROPERTY_RESOURCE(JigsawState, base_state);
+	BIND_PROPERTY(Variant::INT, current_frame);
+	BIND_PROPERTY(Variant::INT, base_frame);
 
 	ClassDB::bind_method(D_METHOD("clear"), &MatchmakingHandler::clear);
 	ClassDB::bind_method(D_METHOD("create_lobby", "game_mode_container", "selected_variant", "mode_public_name", "mode_public_revision"), &MatchmakingHandler::create_lobby, DEFVAL(""), DEFVAL(0));
 	ClassDB::bind_method(D_METHOD("join_lobby", "lobby_id"), &MatchmakingHandler::join_lobby);
-
-	ClassDB::bind_method(D_METHOD("find_remote_connection"), &MatchmakingHandler::find_remote_connection);
 
 	ClassDB::bind_method(D_METHOD("ping", "i", "frames_behind"), &MatchmakingHandler::ping, DEFVAL(0));
 	ClassDB::bind_method(D_METHOD("pong", "i"), &MatchmakingHandler::pong);
@@ -126,7 +129,11 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<WebRTCMultiplayerPeer>, peer);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, TypedArray<MatchmakingConnection>, connections);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<DataContainer>, recording);
 
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, PackedByteArray, realtime_inputs);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, PackedInt32Array, realtime_inputs);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, bool, need_rollback);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<JigsawState>, base_state);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, int64_t, current_frame);
+IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, int64_t, base_frame);
 
 void MatchmakingHandler::clear() {
 	_state = INIT_WAIT;
@@ -220,7 +227,10 @@ void MatchmakingHandler::join_lobby(const String &lobby_id) {
 }
 
 MatchmakingConnection *MatchmakingHandler::find_remote_connection() const {
-	int32_t remote_id = get_multiplayer()->get_remote_sender_id();
+	return find_remote_connection(get_multiplayer()->get_remote_sender_id());
+}
+
+MatchmakingConnection *MatchmakingHandler::find_remote_connection(int32_t remote_id) const {
 	for (int64_t i = 0; i < _connections.size(); i++) {
 		MatchmakingConnection *conn = Object::cast_to<MatchmakingConnection>(_connections[i]);
 		if (conn->get_remote_id() == remote_id) {
@@ -478,17 +488,31 @@ void MatchmakingHandler::realtime_update(int64_t acknowledge_frame, int64_t star
 	ERR_FAIL_COND(unpacked_inputs.is_empty() && !packed_inputs.is_empty());
 
 	PackedInt32Array rti = conn->get_realtime_inputs();
-	ERR_FAIL_INDEX(starting_frame, rti.size() + 1);
+	int64_t last_known_frame = rti.size() - 1;
+	ERR_FAIL_INDEX(starting_frame, last_known_frame + 2);
 
 	for (int64_t i = starting_frame, j = 0; i < rti.size() && j < unpacked_inputs.size(); i++, j++) {
 		ERR_FAIL_COND(rti[i] != unpacked_inputs[j]);
 	}
 
+	if (unlikely(last_known_frame > starting_frame + unpacked_inputs.size())) {
+		// we already had all of these frames
+		return;
+	}
+
+	ERR_FAIL_COND(get_base_frame() > last_known_frame);
+
 	rti.append_array(unpacked_inputs.slice(rti.size() - starting_frame));
 	conn->set_realtime_inputs(rti);
 	conn->set_frame_ack(acknowledge_frame);
 
-	// TODO: check for rollback
+	int32_t last_known_input = rti[last_known_frame];
+	for (int64_t i = last_known_frame + 1; i < rti.size() && i <= get_current_frame(); i++) {
+		if (last_known_input != rti[i]) {
+			set_need_rollback(true);
+			break;
+		}
+	}
 }
 
 void MatchmakingHandler::_on_lobby_created(const String &lobby_id, const String &verification_code) {
@@ -537,4 +561,35 @@ void MatchmakingHandler::_create_remaining_connections() {
 }
 void MatchmakingHandler::_start_match() {
 	// TODO
+}
+
+BitField<ButtonInputHistory::InputButton> MatchmakingHandler::get_player_realtime_inputs(int32_t side, int64_t frame) const {
+	ERR_FAIL_COND_V(frame < 0, 0);
+
+	if (get_multiplayer()->get_multiplayer_peer()->get_unique_id() == side) {
+		PackedInt32Array inputs = get_realtime_inputs();
+		if (frame >= inputs.size()) {
+			return unlikely(inputs.is_empty()) ? 0 : inputs[inputs.size() - 1];
+		}
+
+		return inputs[frame];
+	}
+
+	MatchmakingConnection *conn = find_remote_connection(side);
+	ERR_FAIL_NULL_V(conn, 0);
+
+	PackedInt32Array inputs = conn->get_realtime_inputs();
+	if (frame >= inputs.size()) {
+		return unlikely(inputs.is_empty()) ? 0 : inputs[inputs.size() - 1];
+	}
+
+	return inputs[frame];
+}
+
+void MatchmakingHandler::update_player_realtime_inputs(int64_t frame) {
+	ERR_FAIL_COND(frame != _realtime_inputs.size());
+
+	_realtime_inputs.append(ButtonInputHistory::get_current_inputs());
+
+	// TODO: send packets
 }

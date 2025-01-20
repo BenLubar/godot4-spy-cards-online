@@ -8,12 +8,14 @@ class MatchmakingHandler;
 #include "protocol/data_container.h"
 #include "protocol/matchmaking_connection.h"
 
+#include "jigsaw/jigsaw_input_source.h"
+#include "jigsaw/jigsaw_state.h"
+
 #include <godot_cpp/classes/crypto.hpp>
-#include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/web_rtc_multiplayer_peer.hpp>
 
-class MatchmakingHandler : public Node {
-	GDCLASS(MatchmakingHandler, Node);
+class MatchmakingHandler : public JigsawInputSource {
+	GDCLASS(MatchmakingHandler, JigsawInputSource);
 
 protected:
 	static void _bind_methods();
@@ -50,7 +52,11 @@ public:
 	DECLARE_PROPERTY(TypedArray<MatchmakingConnection>, connections);
 	DECLARE_PROPERTY(Ref<DataContainer>, recording);
 
-	DECLARE_PROPERTY(PackedByteArray, realtime_inputs);
+	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
+	DECLARE_PROPERTY(bool, need_rollback, = false);
+	DECLARE_PROPERTY(Ref<JigsawState>, base_state);
+	DECLARE_PROPERTY(int64_t, current_frame, = -1);
+	DECLARE_PROPERTY(int64_t, base_frame, = -1);
 
 private:
 	// authority only
@@ -65,6 +71,7 @@ public:
 	void join_lobby(const String &lobby_id);
 
 	MatchmakingConnection *find_remote_connection() const;
+	MatchmakingConnection *find_remote_connection(int32_t remote_id) const;
 
 	void ping(int64_t i, int32_t frames_behind);
 	void pong(int64_t i);
@@ -91,6 +98,9 @@ public:
 	void _on_player_id(int32_t player_id, const String &verification_code);
 	void _create_remaining_connections();
 	void _start_match();
+
+	BitField<ButtonInputHistory::InputButton> get_player_realtime_inputs(int32_t side, int64_t frame) const override;
+	void update_player_realtime_inputs(int64_t frame) override;
 };
 DECLARE_ENUM(MatchmakingHandler::MatchState);
 

@@ -8,11 +8,9 @@ bool JigsawCommandUI::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool an
 
 	switch (mode) {
 	case FUNCTIONAL:
-	case LOGIC:
-	case VISUAL:
 	case INIT:
 	case MAIN:
-	case CHOICE_SELECT:
+	case SELECT:
 	case CHOICE_PREVIEW:
 	case REALTIME_LOGIC:
 	case REALTIME_VISUAL:

@@ -44,15 +44,15 @@ bool JigsawCommandAudience::allowed_in_mode(enums::JigsawProcedure::Mode mode, b
 
 	switch (mode) {
 	case FUNCTIONAL:
-	case LOGIC:
 		return false;
-	case VISUAL:
 	case INIT:
 	case MAIN:
 		return true;
-	case CHOICE_SELECT:
+	case SELECT:
 	case CHOICE_PREVIEW:
+		return false;
 	case REALTIME_LOGIC:
+		return true;
 	case REALTIME_VISUAL:
 		return false;
 	}

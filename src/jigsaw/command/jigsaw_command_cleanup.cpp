@@ -28,13 +28,11 @@ bool JigsawCommandCleanup::allowed_in_mode(enums::JigsawProcedure::Mode mode, bo
 
 	switch (mode) {
 	case FUNCTIONAL:
-	case LOGIC:
-	case VISUAL:
 		return false;
 	case INIT:
 	case MAIN:
 		return true;
-	case CHOICE_SELECT:
+	case SELECT:
 	case CHOICE_PREVIEW:
 	case REALTIME_LOGIC:
 	case REALTIME_VISUAL:

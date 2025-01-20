@@ -27,8 +27,8 @@ In this section, the all-caps text refers to which type of code is being run. Di
 - [x] RPC (background): When the ping() method is called, record the frame advantage and call the pong() method on the sending player with the same sequence number.
 - [x] RPC (background): When the pong() method is called, sequence numbers that are in the future or too far in the past (with a 15 second sliding window) are dropped. Non-dropped pongs record their round trip time. Once a successful call to pong() has occurred, matchmaking for a given peer is considered to be complete and the corresponding connection to the matchmaking server is closed.
 - [ ] RPC: Each joining player connects first to player 1 and receives the game mode data (data container, selected variant, public name/revision, start timestamp, shared seed). Connections to other players are also established, as a dense mesh. Players with higher numbers dial, and players with lower numbers listen.
-- [ ] INIT: Game mode init triggers are run in the order they are defined (first for the mode, then for the variant). Time scale is infinity for this section of the code (all waited-for animations and delays complete immediately).
-- [ ] LOGIC: Any NPCs are initialized now as well.
+- [ ] INIT: Game mode init triggers are run in the order they are defined (first for the mode, then for the variant).
+- [ ] INIT: Any NPCs are initialized now as well.
 - [ ] RPC: Players signal to all other players when they have finished initialization.
 - [ ] SELECT: If the game mode has character selection logic defined, it is run now. Otherwise, the player's character is NONE.
 - [ ] HARDCODED: If the game mode variant does not use arcade player naming, the player is given a choice between their saved display name (if one is saved), entering a new display name to save, or using the character's display name (if applicable). If the game mode variant does use arcade player naming, the player is prompted to enter a 3 capital latin letter name, with their previous (saved) arcade display name pre-filled if present.

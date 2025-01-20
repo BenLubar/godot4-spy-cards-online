@@ -23,6 +23,11 @@ private:
 	static LazyPredefined<GameMode> VANILLA_1_1_1;
 	static LazyPredefined<GameMode> VANILLA_1_2_1;
 
+	static LazyStringName meta_legacy_exile;
+	static LazyStringName meta_legacy_npc;
+	static LazyStringName meta_legacy_tribe;
+	static LazyStringName meta_legacy_unpickable;
+
 	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_ATK_SUCCESS;
 	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_ATK_FAIL;
 	static LazyPredefined<JigsawParameterFileIDOpus> SOUND_NULL;

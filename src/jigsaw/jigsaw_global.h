@@ -14,6 +14,7 @@ class JigsawVisual;
 #include "defs/game_mode.h"
 #include "defs/variant_def.h"
 #include "jigsaw/jigsaw_context.h"
+#include "jigsaw/jigsaw_input_source.h"
 #include "jigsaw/jigsaw_state.h"
 #include "jigsaw/presentation/jigsaw_audio.h"
 #include "util/rng.h"
@@ -25,6 +26,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(JigsawInputSource *, input_source, = nullptr);
 	DECLARE_PROPERTY(JigsawVisual *, visual, = nullptr);
 	DECLARE_PROPERTY(Ref<GameMode>, mode);
 	DECLARE_PROPERTY(Ref<VariantDef>, selected_variant);
@@ -35,9 +37,6 @@ public:
 	DECLARE_PROPERTY(int32_t, current_side, = 0);
 
 	DECLARE_PROPERTY(Ref<JigsawState>, state);
-	DECLARE_PROPERTY(Ref<JigsawState>, base_state);
-	DECLARE_PROPERTY(int64_t, current_frame, = -1);
-	DECLARE_PROPERTY(int64_t, base_frame, = -1);
 
 	DECLARE_PROPERTY(double, time_scale, = 1.0);
 	DECLARE_PROPERTY(uint32_t, pause_frames, = 0);

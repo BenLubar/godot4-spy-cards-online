@@ -20,6 +20,11 @@ LazyPredefined<GameMode> LegacyParse::VANILLA_1_1{ "VANILLA_1_1" };
 LazyPredefined<GameMode> LegacyParse::VANILLA_1_1_1{ "VANILLA_1_1_1" };
 LazyPredefined<GameMode> LegacyParse::VANILLA_1_2_1{ "VANILLA_1_2_1" };
 
+LazyStringName LegacyParse::meta_legacy_exile{ "legacy_exile" };
+LazyStringName LegacyParse::meta_legacy_npc{ "legacy_npc" };
+LazyStringName LegacyParse::meta_legacy_tribe{ "legacy_tribe" };
+LazyStringName LegacyParse::meta_legacy_unpickable{ "legacy_unpickable" };
+
 void LegacyParse::_bind_methods() {
 	ClassDB::bind_static_method("LegacyParse", D_METHOD("card_set", "buf", "vanilla_default", "p1_spoiler_guard", "p2_spoiler_guard"), &LegacyParse::card_set, DEFVAL(PackedByteArray()), DEFVAL(PackedByteArray()));
 	ClassDB::bind_static_method("LegacyParse", D_METHOD("card_recording", "buf"), &LegacyParse::card_recording);
@@ -46,6 +51,7 @@ Ref<DataContainer> LegacyParse::card_set(const PackedStringArray &buf, const Ref
 
 	if (likely(buf.size() > 0)) {
 		PackedByteArray first_data = Marshalls::get_singleton()->base64_to_raw(buf[0]);
+
 		int64_t first_card_index = 0;
 		if (likely(first_data.size() > 0 && first_data[0] == 3)) {
 			first_card_index = 1;
@@ -85,8 +91,8 @@ Ref<DataContainer> LegacyParse::card_set(const PackedStringArray &buf, const Ref
 	TypedArray<CardDef> cards = mode->get_card_defs();
 	for (int64_t i = 0; i < cards.size(); i++) {
 		Ref<CardDef> card = cards[i];
-		if (card->get_meta("legacy_unpickable", false)) {
-			card->remove_meta("legacy_unpickable");
+		if (card->get_meta(meta_legacy_unpickable, false)) {
+			card->remove_meta(meta_legacy_unpickable);
 
 			Ref<FormatHelper> legacy_unpickable_enc = FormatHelper::write("legacy unpickable");
 			legacy_unpickable_enc->write_uint8(0);
@@ -134,10 +140,10 @@ Ref<DataContainer> LegacyParse::card_set(const PackedStringArray &buf, const Ref
 	TypedArray<VariantDef> variants = mode->get_variants();
 	for (int64_t i = 0; i < variants.size(); i++) {
 		Ref<VariantDef> variant = variants[i];
-		String legacy_npc = variant->get_meta("legacy_npc", "");
+		String legacy_npc = variant->get_meta(meta_legacy_npc, "");
 		if (!legacy_npc.is_empty()) {
 			variant->set_npcs(Array::make(custom_npc(container, legacy_npc)));
-			variant->remove_meta("legacy_npc");
+			variant->remove_meta(meta_legacy_npc);
 		}
 	}
 
@@ -146,7 +152,7 @@ Ref<DataContainer> LegacyParse::card_set(const PackedStringArray &buf, const Ref
 	TypedArray<NPCDef> npcs = mode->get_custom_npcs();
 	for (int64_t i = 0; i < npcs.size(); i++) {
 		Ref<NPCDef> npc = npcs[i];
-		npc->remove_meta("legacy_npc");
+		npc->remove_meta(meta_legacy_npc);
 	}
 
 	return container;
@@ -238,7 +244,7 @@ enums::NPCDef::NPC LegacyParse::custom_npc(const Ref<DataContainer> &container, 
 	TypedArray<NPCDef> npcs = container->get_mode()->get_custom_npcs();
 	for (int64_t i = 0; i < npcs.size(); i++) {
 		Ref<NPCDef> npc = npcs[i];
-		if (npc->get_meta("legacy_npc", "") == code) {
+		if (npc->get_meta(meta_legacy_npc, "") == code) {
 			return static_cast<enums::NPCDef::NPC>(i + enums::NPCDef::FIRST_CUSTOM);
 		}
 	}
@@ -304,7 +310,7 @@ enums::NPCDef::NPC LegacyParse::custom_npc(const Ref<DataContainer> &container, 
 enums::NPCDef::NPC LegacyParse::add_legacy_npc(const Ref<DataContainer> &container, const String &code, const String &display_name, const String &character, const Ref<JigsawProcedureNPCBuildDeck> &build_deck, const Ref<JigsawProcedureNPCDecideChoice> &decide_choice) {
 	Ref<NPCDef> npc;
 	npc.instantiate();
-	npc->set_meta("legacy_npc", code);
+	npc->set_meta(meta_legacy_npc, code);
 	npc->set_display_name(display_name);
 	if (!character.is_empty()) {
 		TypedArray<CharacterDef> characters = container->get_mode()->get_characters();
@@ -376,7 +382,10 @@ enums::NPCDef::NPC LegacyParse::legacy_npc_card_master(const Ref<DataContainer> 
 	build_deck.instantiate();
 	build_deck->set_commands(build_deck_list);
 
-	return add_legacy_npc(container, code, vformat("Legacy Card Master (%s)", code), name, build_deck, LEGACY_NPC_DECIDE_CHOICE_GENERIC->duplicate(true));
+	enums::NPCDef::NPC npc_id = add_legacy_npc(container, code, vformat("Legacy Card Master (%s)", code), name, build_deck, LEGACY_NPC_DECIDE_CHOICE_GENERIC->duplicate(true));
+	ERR_FAIL_COND_V(card_ids.is_empty() && !deck.is_empty(), npc_id);
+
+	return npc_id;
 }
 enums::NPCDef::NPC LegacyParse::legacy_npc_mender_spam(const Ref<DataContainer> &container, const String &code) {
 	Ref<JigsawProcedureNPCBuildDeck> build_deck;
@@ -455,8 +464,8 @@ void LegacyParse::finalize_effect_param(const Ref<DataContainer> &container, con
 	{
 		Ref<JigsawParameterLocation> param_location = param;
 		if (param_location->get_location() == enums::LocationDef::FIRST_CUSTOM) {
-			String exile = vformat("Exile: %s", param_location->get_meta("legacy_exile", ""));
-			param_location->remove_meta("legacy_exile");
+			String exile = vformat("Exile: %s", param_location->get_meta(meta_legacy_exile, ""));
+			param_location->remove_meta(meta_legacy_exile);
 
 			TypedArray<LocationDef> locations = container->get_mode()->get_custom_locations();
 			for (int64_t i = 0; i < locations.size(); i++) {
@@ -510,8 +519,8 @@ void LegacyParse::finalize_card_filter(const Ref<DataContainer> &container, cons
 	{
 		Ref<CardFilterTribe> filter_tribe = filter;
 		if (filter_tribe->get_tribe() == enums::TribeDef::LEGACY_CUSTOM) {
-			filter_tribe->set_tribe(custom_tribe(container, Color(1.0f, 0.0f, 1.0f), filter_tribe->get_meta("legacy_tribe", "")));
-			filter_tribe->remove_meta("legacy_tribe");
+			filter_tribe->set_tribe(custom_tribe(container, Color(1.0f, 0.0f, 1.0f), filter_tribe->get_meta(meta_legacy_tribe, "")));
+			filter_tribe->remove_meta(meta_legacy_tribe);
 		}
 		return;
 	}

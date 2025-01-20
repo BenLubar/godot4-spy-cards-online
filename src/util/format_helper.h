@@ -37,8 +37,10 @@ public:
 	void write_stringvar(const String &s);
 
 	uint64_t read_uvarint();
+	uint32_t read_uvarint32();
 	void write_uvarint(uint64_t x);
 	int64_t read_svarint();
+	int32_t read_svarint32();
 	void write_svarint(int64_t x);
 
 	template<typename E, typename = std::enable_if_t<std::is_enum_v<E> && E::NONE == -1>>
@@ -84,14 +86,22 @@ E FormatHelper::read_id() {
 	static_assert(std::is_enum_v<E>);
 	static_assert(E::NONE == -1);
 
-	return static_cast<E>(int64_t(read_uvarint()) - 1);
+	if constexpr (sizeof(E) == 4) {
+		return static_cast<E>(int32_t(read_uvarint32()) - 1);
+	} else {
+		return static_cast<E>(int64_t(read_uvarint()) - 1);
+	}
 }
 template<typename E, typename>
 void FormatHelper::write_id(E id) {
 	static_assert(std::is_enum_v<E>);
 	static_assert(E::NONE == -1);
 
-	write_uvarint(uint64_t(int64_t(id) + 1));
+	if constexpr (sizeof(E) == 4) {
+		write_uvarint(uint32_t(int32_t(id) + 1));
+	} else {
+		write_uvarint(uint64_t(int64_t(id) + 1));
+	}
 }
 
 #endif // FORMAT_HELPER_H

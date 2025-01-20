@@ -22,16 +22,24 @@ String WhyIsntThisInGodot::find_builtin_enum_key_name(const StringName &type, co
 	return vformat("%s.%s(%d)", type, enum_name, enum_value);
 }
 
-uint64_t WhyIsntThisInGodot::get_directory_size(const String &path) {
+static uint64_t get_path_size_recursive(const std::filesystem::path &path) {
 	std::error_code ec;
+
 	uint64_t total_size = 0;
-	for (const std::filesystem::directory_entry &entry : std::filesystem::directory_iterator{path.utf8().ptr(), ec}) {
+	for (const std::filesystem::directory_entry &entry : std::filesystem::directory_iterator{path, ec}) {
+		if (entry.is_directory(ec)) {
+			total_size += get_path_size_recursive(entry);
+		}
 		if (entry.is_regular_file(ec)) {
 			total_size += entry.file_size(ec);
 		}
 	}
 
 	return total_size;
+}
+
+uint64_t WhyIsntThisInGodot::get_directory_size(const String &path) {
+	return get_path_size_recursive(path.utf8().ptr());
 }
 
 Vector3i WhyIsntThisInGodot::get_project_version_vector() {

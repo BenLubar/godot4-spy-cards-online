@@ -17,7 +17,8 @@ protected:
 
 public:
 	enum VariantFlags {
-		ARCADE_NAMES = 0x0000000000000001,
+		ARCADE_NAMES   = 0x0000000000000001,
+		HAS_SAVED_DATA = 0x0000000000000002,
 	};
 
 	DECLARE_PROPERTY(String, title);
@@ -25,6 +26,10 @@ public:
 	DECLARE_PROPERTY(BitField<VariantFlags>, flags, = 0);
 	DECLARE_PROPERTY(int64_t, player_count, = 2);
 	DECLARE_PROPERTY(PackedArray<enums::NPCDef::NPC>, npcs);
+	DECLARE_PROPERTY(Ref<JigsawProcedureVariantSelectCharacter>, select_character);
+	DECLARE_PROPERTY(Ref<JigsawProcedureVariantBuildDeck>, build_deck);
+	DECLARE_PROPERTY(Ref<JigsawProcedureVariantValidateDeck>, validate_deck);
+	DECLARE_PROPERTY(Ref<JigsawProcedureVariantMain>, main);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerVariant>, triggers);
 
 	DEFAULT_TO_STRING();

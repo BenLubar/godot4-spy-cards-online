@@ -13,9 +13,6 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, current_side);
 
 	BIND_PROPERTY_RESOURCE(JigsawState, state);
-	BIND_PROPERTY_RESOURCE(JigsawState, base_state);
-	BIND_PROPERTY(Variant::INT, current_frame);
-	BIND_PROPERTY(Variant::INT, base_frame);
 
 	BIND_PROPERTY(Variant::FLOAT, time_scale);
 	BIND_PROPERTY(Variant::INT, pause_frames);
@@ -41,9 +38,6 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<QueuedEffect>, current_queued_effect
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<JigsawState>, state);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<JigsawState>, base_state);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, current_frame);
-IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, base_frame);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, uint32_t, pause_frames);

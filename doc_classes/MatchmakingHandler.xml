@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="MatchmakingHandler" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="MatchmakingHandler" inherits="JigsawInputSource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
 	</brief_description>
 	<description>
@@ -41,11 +41,6 @@
 		<method name="fatal_error_encountered">
 			<return type="void" />
 			<param index="0" name="message" type="String" />
-			<description>
-			</description>
-		</method>
-		<method name="find_remote_connection" qualifiers="const">
-			<return type="MatchmakingConnection" />
 			<description>
 			</description>
 		</method>
@@ -137,9 +132,15 @@
 		</method>
 	</methods>
 	<members>
+		<member name="base_frame" type="int" setter="set_base_frame" getter="get_base_frame" default="-1">
+		</member>
+		<member name="base_state" type="JigsawState" setter="set_base_state" getter="get_base_state">
+		</member>
 		<member name="connections" type="MatchmakingConnection[]" setter="set_connections" getter="get_connections" default="[]">
 		</member>
 		<member name="crypto" type="Crypto" setter="set_crypto" getter="get_crypto">
+		</member>
+		<member name="current_frame" type="int" setter="set_current_frame" getter="get_current_frame" default="-1">
 		</member>
 		<member name="ice_config" type="Dictionary" setter="set_ice_config" getter="get_ice_config" default="{ &quot;iceServers&quot;: [{ &quot;urls&quot;: [&quot;stun:stun.cloudflare.com:3478&quot;] }] }">
 		</member>
@@ -147,9 +148,11 @@
 		</member>
 		<member name="max_players" type="int" setter="set_max_players" getter="get_max_players" default="0">
 		</member>
+		<member name="need_rollback" type="bool" setter="set_need_rollback" getter="get_need_rollback" default="false">
+		</member>
 		<member name="peer" type="WebRTCMultiplayerPeer" setter="set_peer" getter="get_peer">
 		</member>
-		<member name="realtime_inputs" type="PackedByteArray" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedByteArray()">
+		<member name="realtime_inputs" type="PackedInt32Array" setter="set_realtime_inputs" getter="get_realtime_inputs" default="PackedInt32Array()">
 		</member>
 		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
 		</member>

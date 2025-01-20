@@ -69,6 +69,7 @@ enums::RankDef::Rank LegacyParse::card_rank(enums::CardDef::Card id) {
 	case enums::CardDef::MONSIEUR_SCARLET:
 	case enums::CardDef::CARMINA:
 	case enums::CardDef::ASTOTHELES:
+	case enums::CardDef::AHONEYNATION:
 	case enums::CardDef::DUNE_SCORPION:
 	case enums::CardDef::KALI:
 	case enums::CardDef::GENERAL_ULTIMAX:
@@ -91,7 +92,6 @@ enums::RankDef::Rank LegacyParse::card_rank(enums::CardDef::Card id) {
 	case enums::CardDef::SEEDLING_KING:
 	case enums::CardDef::BROODMOTHER:
 	case enums::CardDef::MOTHER_CHOMPER:
-	case enums::CardDef::AHONEYNATION:
 	case enums::CardDef::HEAVY_DRONE_B33:
 	case enums::CardDef::TIDAL_WYRM:
 	case enums::CardDef::THE_WATCHER:
@@ -173,10 +173,8 @@ bool LegacyParse::card_v0_v1(const Ref<DataContainer> &container, const Ref<Form
 		card->set_costs(Array::make(StatValue::make(enums::StatDef::TP, rank_tp & 15)));
 	} else {
 		card->set_costs(Array::make(StatValue::make(enums::StatDef::TP, 1)));
-		card->set_meta("legacy_unpickable", true);
+		card->set_meta(meta_legacy_unpickable, true);
 	}
-
-	ERR_FAIL_COND_V(((rank_tp >> 4) & 3) != card->get_rank(), false);
 
 	bool external_portrait = (rank_tp & 0x40) != 0;
 
@@ -193,6 +191,8 @@ bool LegacyParse::card_v0_v1(const Ref<DataContainer> &container, const Ref<Form
 	if (card->get_name().is_empty()) {
 		card->set_name(card_name(card->get_id()));
 	}
+
+	ERR_FAIL_COND_V_MSG(((rank_tp >> 4) & 3) != card->get_rank(), false, vformat("expected card #%d '%s' to have rank %s but it has rank %s", card->get_id(), card->get_name(), WhyIsntThisInGodot::find_builtin_enum_key_name("RankDef", "Rank", card->get_rank()), WhyIsntThisInGodot::find_builtin_enum_key_name("RankDef", "Rank", (rank_tp >> 4) & 3)));
 
 	if (format_version == 0 && card->get_rank() == enums::RankDef::ATTACKER && (fh->is_eof() || fh->peek_byte(0) == 137)) {
 		Ref<EffectInstance> atk;
@@ -278,7 +278,7 @@ bool LegacyParse::card_v2_v4(const Ref<DataContainer> &container, const Ref<Form
 		tp_cost = StatValue::make(enums::StatDef::TP, special);
 	} else {
 		tp_cost = StatValue::make(enums::StatDef::TP, 1);
-		card->set_meta("legacy_unpickable", true);
+		card->set_meta(meta_legacy_unpickable, true);
 	}
 	card->set_costs(Array::make(tp_cost));
 

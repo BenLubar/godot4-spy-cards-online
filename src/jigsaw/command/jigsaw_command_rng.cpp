@@ -27,14 +27,10 @@ bool JigsawCommandRNG::allowed_in_mode(enums::JigsawProcedure::Mode mode, bool a
 	switch (mode) {
 	case FUNCTIONAL:
 		return false;
-	case LOGIC:
-		return true;
-	case VISUAL:
-		return false;
 	case INIT:
 	case MAIN:
 		return true;
-	case CHOICE_SELECT:
+	case SELECT:
 	case CHOICE_PREVIEW:
 		return false;
 	case REALTIME_LOGIC:

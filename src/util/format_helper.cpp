@@ -28,6 +28,8 @@ void FormatHelper::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("write_uvarint", "x"), &FormatHelper::write_uvarint);
 	ClassDB::bind_method(D_METHOD("read_svarint"), &FormatHelper::read_svarint);
 	ClassDB::bind_method(D_METHOD("write_svarint", "x"), &FormatHelper::write_svarint);
+	ClassDB::bind_method(D_METHOD("read_uvarint32"), &FormatHelper::read_uvarint32);
+	ClassDB::bind_method(D_METHOD("read_svarint32"), &FormatHelper::read_svarint32);
 
 	ClassDB::bind_method(D_METHOD("read_uint8"), &FormatHelper::read_uint8);
 	ClassDB::bind_method(D_METHOD("write_uint8", "x"), &FormatHelper::write_uint8);
@@ -174,6 +176,17 @@ uint64_t FormatHelper::read_uvarint() {
 
 	return x;
 }
+uint32_t FormatHelper::read_uvarint32() {
+	ERR_FAIL_COND_V(!_valid, 0);
+
+	uint64_t x = read_uvarint();
+	if (x > UINT32_MAX) {
+		_valid = false;
+		WARN_PRINT(vformat("%s: uvarint overflow", _debug_name));
+	}
+
+	return uint32_t(x);
+}
 void FormatHelper::write_uvarint(uint64_t x) {
 	while (x >= 0x80) {
 		_buffer.append(uint8_t(x) | 0x80u);
@@ -188,6 +201,17 @@ int64_t FormatHelper::read_svarint() {
 	}
 
 	return int64_t(x) >> 1;
+}
+int32_t FormatHelper::read_svarint32() {
+	ERR_FAIL_COND_V(!_valid, 0);
+
+	int64_t x = read_svarint();
+	if (x < INT32_MIN || x > INT32_MAX) {
+		_valid = false;
+		WARN_PRINT(vformat("%s: uvarint overflow", _debug_name));
+	}
+
+	return int32_t(x);
 }
 void FormatHelper::write_svarint(int64_t x) {
 	if (x < 0) {

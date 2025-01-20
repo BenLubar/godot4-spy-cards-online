@@ -131,6 +131,7 @@
 #include "protocol/recording_round_player_data.h"
 #include "protocol/matchmaking_handler.h"
 #include "protocol/matchmaking_connection.h"
+#include "protocol/playback_handler.h"
 #include "defs/game_mode_summary.h"
 #include "defs/game_mode.h"
 #include "protocol/button_input_history.h"
@@ -166,6 +167,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawContext);
 	GDREGISTER_CLASS(JigsawStackFrame);
 	GDREGISTER_CLASS(JigsawError);
+	GDREGISTER_ABSTRACT_CLASS(JigsawInputSource);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawProcedure);
 	GDREGISTER_CLASS(JigsawProcedureEffectCurve);
@@ -180,6 +182,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawProcedureNPCDecideRealtime);
 	GDREGISTER_CLASS(JigsawProcedureStickerShouldShow);
 	GDREGISTER_CLASS(JigsawProcedureStatFormatCost);
+	GDREGISTER_CLASS(JigsawProcedureVariantSelectCharacter);
+	GDREGISTER_CLASS(JigsawProcedureVariantBuildDeck);
+	GDREGISTER_CLASS(JigsawProcedureVariantValidateDeck);
 	GDREGISTER_CLASS(JigsawProcedureVariantMain);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTrigger);
 	GDREGISTER_ABSTRACT_CLASS(JigsawTriggerEffect);
@@ -310,6 +315,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(RecordingRoundPlayerData);
 	GDREGISTER_CLASS(MatchmakingHandler);
 	GDREGISTER_CLASS(MatchmakingConnection);
+	GDREGISTER_CLASS(PlaybackHandler);
 	GDREGISTER_CLASS(GameModeSummary);
 	GDREGISTER_CLASS(GameMode);
 	GDREGISTER_ABSTRACT_CLASS(ButtonInputHistory);

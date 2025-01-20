@@ -95,6 +95,11 @@ public: \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
 
+#define BIND_PROPERTY_VARIANT_DICTIONARY_RESOURCE(m_key, m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, #m_name, PROPERTY_HINT_DICTIONARY_TYPE, String::num(m_key) + ":;" + String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
+
 #define BIND_PROPERTY_ENUM_DICTIONARY_RESOURCE(m_enum, m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
@@ -191,8 +196,7 @@ public: \
 
 extern Vector<std::function<void()>> _free_lazy_globals;
 template<typename T>
-class LazyGlobal
-{
+class LazyGlobal {
 	std::function<Ref<T>()> _init;
 	mutable Ref<T> _ref;
 
@@ -212,8 +216,7 @@ public:
 };
 
 template<typename T>
-class LazyGlobalNode
-{
+class LazyGlobalNode {
 	std::function<T *()> _init;
 	mutable ObjectID _node;
 
@@ -231,6 +234,24 @@ public:
 	T *operator*() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
 	T *operator->() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
 	void operator=(T *node) { _node = node ? node->get_instance_id() : ObjectID(); }
+};
+
+class LazyStringName {
+	const char * const _text;
+	mutable StringName *_string_name = nullptr;
+
+public:
+	LazyStringName(const char *text) : _text(text) {}
+
+	_FORCE_INLINE_ operator StringName() const {
+		if (likely(_string_name)) {
+			return *_string_name;
+		}
+
+		_string_name = memnew(StringName(_text));
+		_free_lazy_globals.append([this]() -> void { memdelete(_string_name); _string_name = nullptr; });
+		return *_string_name;
+	}
 };
 
 template<typename TEnum, size_t TSize = sizeof(TEnum)>

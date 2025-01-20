@@ -123,7 +123,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(fh->read_uint8());
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		Ref<JigsawParameterAmount> amount = read_amount_v0_v1(fh);
 
@@ -256,7 +256,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(rank_tribe & 15);
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		int64_t count = fh->read_uint8();
 
@@ -277,7 +277,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(fh->read_uint8());
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		Ref<JigsawParameterAmount> amount = read_amount_v0_v1(fh);
 
@@ -496,7 +496,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(fh->read_uint8());
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		int64_t count = 1;
 		if (format_version == 1) {
@@ -531,7 +531,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(fh->read_uint8());
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		int64_t count = 1;
 		if (format_version == 1) {
@@ -881,7 +881,7 @@ bool LegacyParse::effect_v0_v1(const Ref<DataContainer> &container, const Ref<Ef
 		enums::TribeDef::Tribe tribe = static_cast<enums::TribeDef::Tribe>(fh->read_uint8());
 		Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 		if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-			tribe_filter->set_meta("legacy_tribe", fh->read_string1());
+			tribe_filter->set_meta(meta_legacy_tribe, fh->read_string1());
 		}
 		Ref<EffectInstance> result;
 		result.instantiate();
@@ -994,7 +994,7 @@ Ref<CardFilter> LegacyParse::read_card_filter_v2_v4(const Ref<FormatHelper> &fh,
 	Ref<CardFilter> tribe_filter = tribe != enums::TribeDef::LEGACY_NONE ? CardFilter::make_tribe(tribe) : Ref<CardFilter>();
 
 	if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-		tribe_filter->set_meta("legacy_tribe", fh->read_stringvar());
+		tribe_filter->set_meta(meta_legacy_tribe, fh->read_stringvar());
 	}
 
 	return CardFilter::make_and(Array::make(rank_filter, tribe_filter));
@@ -1484,7 +1484,7 @@ Ref<CardFilter> LegacyParse::read_card_filter_v5(const Ref<FormatHelper> &fh) {
 			ERR_FAIL_COND_V(tribe == enums::TribeDef::LEGACY_NONE, Ref<CardFilter>());
 			Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 			if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-				tribe_filter->set_meta("legacy_tribe", fh->read_stringvar());
+				tribe_filter->set_meta(meta_legacy_tribe, fh->read_stringvar());
 			}
 			tribe_filters.append(tribe_filter);
 			break;
@@ -1496,7 +1496,7 @@ Ref<CardFilter> LegacyParse::read_card_filter_v5(const Ref<FormatHelper> &fh) {
 			Ref<CardFilter> tribe_filter = CardFilter::make_tribe(tribe);
 			tribe_filter->set_negate(true);
 			if (tribe == enums::TribeDef::LEGACY_CUSTOM) {
-				tribe_filter->set_meta("legacy_tribe", fh->read_stringvar());
+				tribe_filter->set_meta(meta_legacy_tribe, fh->read_stringvar());
 			}
 			negated_tribe_filters.append(tribe_filter);
 			break;
@@ -1814,7 +1814,7 @@ bool LegacyParse::effect_v5(const Ref<DataContainer> &container, const Ref<Effec
 		}
 
 		Ref<JigsawParameterLocation> exile_group = JigsawParameterLocation::make(enums::LocationDef::FIRST_CUSTOM);
-		exile_group->set_meta("legacy_exile", (flags & 0x200) != 0 ? fh->read_stringvar() : "");
+		exile_group->set_meta(meta_legacy_exile, (flags & 0x200) != 0 ? fh->read_stringvar() : "");
 
 		effect->set_params(Array::make(
 			JigsawParameterAmount::make(count),
@@ -2218,7 +2218,7 @@ bool LegacyParse::effect_v5(const Ref<DataContainer> &container, const Ref<Effec
 		Ref<JigsawParameterLocation> location = JigsawParameterLocation::make(enums::LocationDef::NONE);
 		if ((flags & 0x01) != 0) {
 			location = JigsawParameterLocation::make(enums::LocationDef::FIRST_CUSTOM);
-			location->set_meta("legacy_exile", fh->read_stringvar());
+			location->set_meta(meta_legacy_exile, fh->read_stringvar());
 		}
 		Ref<EffectInstance> result;
 		result.instantiate();

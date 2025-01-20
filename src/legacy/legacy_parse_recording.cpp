@@ -231,18 +231,18 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 		}
 
 		uint64_t player_1_ready = fh->read_uvarint();
-		PackedInt64Array player_1_choices;
-		for (int64_t j = 0; j < 64; j++) {
-			if (player_1_ready & (1 << j)) {
+		PackedInt32Array player_1_choices;
+		for (int32_t j = 0; j < 64; j++) {
+			if (player_1_ready & (1LLU << j)) {
 				player_1_choices.append(j);
 			}
 		}
 		player_1_round_data->set_chosen_cards(player_1_choices);
 
 		uint64_t player_2_ready = fh->read_uvarint();
-		PackedInt64Array player_2_choices;
-		for (int64_t j = 0; j < 64; j++) {
-			if (player_2_ready & (1 << j)) {
+		PackedInt32Array player_2_choices;
+		for (int32_t j = 0; j < 64; j++) {
+			if (player_2_ready & (1LLU << j)) {
 				player_2_choices.append(j);
 			}
 		}

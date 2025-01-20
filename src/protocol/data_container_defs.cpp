@@ -979,6 +979,34 @@ bool DataContainer::_decode_variant_def(const Ref<FormatHelper> &fh, const Ref<V
 	}
 	variant_def->set_npcs(npcs);
 
+	Ref<JigsawProcedureVariantSelectCharacter> select_character;
+	if (fh->read_bool()) {
+		select_character.instantiate();
+		ERR_FAIL_COND_V(!_decode_jigsaw_procedure(fh, select_character), false);
+	}
+	variant_def->set_select_character(select_character);
+
+	Ref<JigsawProcedureVariantBuildDeck> build_deck;
+	if (fh->read_bool()) {
+		build_deck.instantiate();
+		ERR_FAIL_COND_V(!_decode_jigsaw_procedure(fh, build_deck), false);
+	}
+	variant_def->set_main(build_deck);
+
+	Ref<JigsawProcedureVariantValidateDeck> validate_deck;
+	if (fh->read_bool()) {
+		validate_deck.instantiate();
+		ERR_FAIL_COND_V(!_decode_jigsaw_procedure(fh, validate_deck), false);
+	}
+	variant_def->set_validate_deck(validate_deck);
+
+	Ref<JigsawProcedureVariantMain> main;
+	if (fh->read_bool()) {
+		main.instantiate();
+		ERR_FAIL_COND_V(!_decode_jigsaw_procedure(fh, main), false);
+	}
+	variant_def->set_main(main);
+
 	TypedArray<JigsawTriggerVariant> triggers;
 	triggers.resize(fh->read_uvarint());
 	for (int64_t i = 0; i < triggers.size(); i++) {
@@ -1003,6 +1031,30 @@ bool DataContainer::_encode_variant_def(const Ref<FormatHelper> &fh, const Ref<V
 	for (int64_t i = 0; i < npcs.size(); i++) {
 		int64_t npc = npcs[i];
 		fh->write_id(static_cast<enums::NPCDef::NPC>(npc));
+	}
+
+	Ref<JigsawProcedureVariantSelectCharacter> select_character = variant_def->get_select_character();
+	fh->write_bool(select_character.is_valid());
+	if (select_character.is_valid()) {
+		ERR_FAIL_COND_V(!_encode_jigsaw_procedure(fh, select_character), false);
+	}
+
+	Ref<JigsawProcedureVariantBuildDeck> build_deck = variant_def->get_build_deck();
+	fh->write_bool(build_deck.is_valid());
+	if (build_deck.is_valid()) {
+		ERR_FAIL_COND_V(!_encode_jigsaw_procedure(fh, build_deck), false);
+	}
+
+	Ref<JigsawProcedureVariantValidateDeck> validate_deck = variant_def->get_validate_deck();
+	fh->write_bool(validate_deck.is_valid());
+	if (validate_deck.is_valid()) {
+		ERR_FAIL_COND_V(!_encode_jigsaw_procedure(fh, validate_deck), false);
+	}
+
+	Ref<JigsawProcedureVariantMain> main = variant_def->get_main();
+	fh->write_bool(main.is_valid());
+	if (main.is_valid()) {
+		ERR_FAIL_COND_V(!_encode_jigsaw_procedure(fh, main), false);
 	}
 
 	TypedArray<JigsawTriggerVariant> triggers = variant_def->get_triggers();

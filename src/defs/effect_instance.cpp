@@ -6,6 +6,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
 #include "jigsaw/parameter/jigsaw_parameter_icon.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
 
 void EffectInstance::_bind_methods() {
 	BIND_PROPERTY_ENUM(EffectDef::Effect, effect);
@@ -91,7 +92,8 @@ TypedArray<FormattedText> EffectInstance::format_description(JigsawGlobal *globa
 
 		Ref<JigsawError> error = context->evaluate(describe, Array::make(
 			JigsawParameterCardInstance::make(card_instance_id),
-			JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this))
+			JigsawParameterEffectInstance::make(const_cast<EffectInstance *>(this)),
+			JigsawParameterOrderedList::make(TypedArray<JigsawParameter>())
 		), results);
 		if (error.is_valid()) {
 			// TODO: log error

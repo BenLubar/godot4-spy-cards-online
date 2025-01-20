@@ -22,14 +22,10 @@ bool JigsawCommandSetVariable::allowed_in_mode(enums::JigsawProcedure::Mode mode
 	switch (mode) {
 	case FUNCTIONAL:
 		return !_persistent;
-	case LOGIC:
-		return true;
-	case VISUAL:
-		return !_persistent;
 	case INIT:
 	case MAIN:
 		return true;
-	case CHOICE_SELECT:
+	case SELECT:
 	case CHOICE_PREVIEW:
 		return !_persistent;
 	case REALTIME_LOGIC:

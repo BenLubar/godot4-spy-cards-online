@@ -8,6 +8,8 @@ class RecordingPlayerData;
 #include "enums/enums_card_def.h"
 #include "enums/enums_character_def.h"
 
+#include "jigsaw/parameter/jigsaw_parameter.h"
+
 class RecordingPlayerData : public Resource {
 	GDCLASS(RecordingPlayerData, Resource);
 
@@ -18,6 +20,8 @@ public:
 	DECLARE_PROPERTY(String, display_name);
 	DECLARE_PROPERTY(enums::CharacterDef::Character, character);
 	DECLARE_PROPERTY(PackedArray<enums::CardDef::Card>, initial_deck);
+	using SaveDataDictionary = TypedDictionary<String, JigsawParameter>;
+	DECLARE_PROPERTY(SaveDataDictionary, save_data);
 };
 
 #endif // RECORDING_PLAYER_DATA_H

@@ -482,6 +482,17 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 		PackedByteArray packed_deck = fh->read_bytesvar();
 		PackedArray<enums::CardDef::Card> initial_deck = Deck::decode(packed_deck);
 		player->set_initial_deck(initial_deck);
+
+		TypedDictionary<String, JigsawParameter> save_data;
+		for (int64_t save_data_remaining = fh->read_uvarint(); save_data_remaining > 0; save_data_remaining--) {
+			String key = fh->read_stringvar();
+			ERR_FAIL_COND_V(save_data.has(key), false);
+			Ref<JigsawParameter> value;
+			ERR_FAIL_COND_V(!_decode_jigsaw_parameter(fh, value), false);
+			save_data.set(key, value);
+		}
+		player->set_save_data(save_data);
+
 		_player_data[i] = player;
 	}
 
@@ -506,10 +517,10 @@ bool DataContainer::_decode_recording(const Ref<FormatHelper> &fh) {
 			switch (round->get_type()) {
 			case RecordingRoundData::CHOICE:
 			{
-				PackedInt64Array chosen_cards;
+				PackedInt32Array chosen_cards;
 				chosen_cards.resize(fh->read_uvarint());
 				for (int64_t k = 0; k < chosen_cards.size(); k++) {
-					chosen_cards[k] = fh->read_uvarint();
+					chosen_cards[k] = fh->read_uvarint32();
 				}
 				player->set_chosen_cards(chosen_cards);
 				break;
@@ -571,6 +582,16 @@ bool DataContainer::_encode_recording(const Ref<FormatHelper> &fh) const {
 		fh->write_stringvar(player->get_display_name());
 		fh->write_id(player->get_character());
 		fh->write_bytesvar(Deck::encode(player->get_initial_deck()));
+
+		TypedDictionary<String, JigsawParameter> save_data = player->get_save_data();
+		fh->write_uvarint(save_data.size());
+
+		PackedStringArray keys = save_data.keys();
+		TypedArray<JigsawParameter> values = save_data.values();
+		for (int64_t i = 0; i < keys.size(); i++) {
+			fh->write_stringvar(keys[i]);
+			ERR_FAIL_COND_V(!_encode_jigsaw_parameter(fh, values[i]), false);
+		}
 	}
 
 	fh->write_bytesvar(_shared_seed);
@@ -640,9 +661,9 @@ Ref<DataContainer> DataContainer::from_byte_array(const PackedByteArray &buf, co
 
 	data->set_container_type(static_cast<DataContainer::ContainerType>(fh->read_uvarint()));
 	Vector3i game_version;
-	game_version.x = fh->read_uvarint();
-	game_version.y = fh->read_uvarint();
-	game_version.z = fh->read_uvarint();
+	game_version.x = fh->read_uvarint32();
+	game_version.y = fh->read_uvarint32();
+	game_version.z = fh->read_uvarint32();
 	data->set_game_version(game_version);
 
 	data->set_timestamp(fh->read_uvarint());

@@ -4,6 +4,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_boolean.h"
 #include "jigsaw/parameter/jigsaw_parameter_card.h"
 #include "jigsaw/parameter/jigsaw_parameter_card_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_character.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"
 #include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
@@ -14,11 +15,9 @@ void JigsawProcedure::_bind_methods() {
 	using namespace enums::JigsawProcedure;
 
 	BIND_ENUM_CONSTANT(FUNCTIONAL);
-	BIND_ENUM_CONSTANT(LOGIC);
-	BIND_ENUM_CONSTANT(VISUAL);
 	BIND_ENUM_CONSTANT(INIT);
 	BIND_ENUM_CONSTANT(MAIN);
-	BIND_ENUM_CONSTANT(CHOICE_SELECT);
+	BIND_ENUM_CONSTANT(SELECT);
 	BIND_ENUM_CONSTANT(CHOICE_PREVIEW);
 	BIND_ENUM_CONSTANT(REALTIME_LOGIC);
 	BIND_ENUM_CONSTANT(REALTIME_VISUAL);
@@ -77,11 +76,14 @@ String JigsawProcedureEffectDescribe::get_editor_description() const {
 TypedArray<JigsawParameter> JigsawProcedureEffectDescribe::get_arguments() const {
 	return Array::make(
 		JigsawParameterCardInstance::make(-1),
-		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		JigsawParameterEffectInstance::make(Ref<EffectInstance>()),
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		))
 	);
 }
 PackedStringArray JigsawProcedureEffectDescribe::get_argument_names() const {
-	return PackedStringArray{"card", "inst"};
+	return PackedStringArray{"card", "effect", "parents"};
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectDescribe::get_results() const {
 	return Array::make(
@@ -105,11 +107,14 @@ String JigsawProcedureEffectSimpleDescribe::get_editor_description() const {
 TypedArray<JigsawParameter> JigsawProcedureEffectSimpleDescribe::get_arguments() const {
 	return Array::make(
 		JigsawParameterCardInstance::make(-1),
-		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		JigsawParameterEffectInstance::make(Ref<EffectInstance>()),
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		))
 	);
 }
 PackedStringArray JigsawProcedureEffectSimpleDescribe::get_argument_names() const {
-	return PackedStringArray{"card", "inst"};
+	return PackedStringArray{"card", "effect", "parents"};
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectSimpleDescribe::get_results() const {
 	return Array::make(
@@ -134,11 +139,14 @@ String JigsawProcedureEffectExtendedDescribe::get_editor_description() const {
 TypedArray<JigsawParameter> JigsawProcedureEffectExtendedDescribe::get_arguments() const {
 	return Array::make(
 		JigsawParameterCardInstance::make(-1),
-		JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		JigsawParameterEffectInstance::make(Ref<EffectInstance>()),
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterEffectInstance::make(Ref<EffectInstance>())
+		))
 	);
 }
 PackedStringArray JigsawProcedureEffectExtendedDescribe::get_argument_names() const {
-	return PackedStringArray{"card", "inst"};
+	return PackedStringArray{"card", "effect", "parents"};
 }
 TypedArray<JigsawParameter> JigsawProcedureEffectExtendedDescribe::get_results() const {
 	return Array::make(
@@ -393,6 +401,96 @@ TypedArray<JigsawParameter> JigsawProcedureStatFormatCost::get_results() const {
 }
 PackedStringArray JigsawProcedureStatFormatCost::get_result_names() const {
 	return PackedStringArray{"text", "icon"};
+}
+
+void JigsawProcedureVariantSelectCharacter::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureVariantSelectCharacter::get_mode() const {
+	return Mode::SELECT;
+}
+String JigsawProcedureVariantSelectCharacter::get_editor_name() const {
+	return "Character Select";
+}
+String JigsawProcedureVariantSelectCharacter::get_editor_description() const {
+	return "TODO";
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantSelectCharacter::get_arguments() const {
+	return TypedArray<JigsawParameter>();
+}
+PackedStringArray JigsawProcedureVariantSelectCharacter::get_argument_names() const {
+	return PackedStringArray{};
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantSelectCharacter::get_results() const {
+	return Array::make(
+		JigsawParameterCharacter::make(enums::CharacterDef::NONE)
+	);
+}
+PackedStringArray JigsawProcedureVariantSelectCharacter::get_result_names() const {
+	return PackedStringArray{"character"};
+}
+
+void JigsawProcedureVariantBuildDeck::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureVariantBuildDeck::get_mode() const {
+	return Mode::SELECT;
+}
+String JigsawProcedureVariantBuildDeck::get_editor_name() const {
+	return "Build Deck";
+}
+String JigsawProcedureVariantBuildDeck::get_editor_description() const {
+	return "TODO";
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantBuildDeck::get_arguments() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		)),
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		)),
+		JigsawParameterAmount::make(0)
+	);
+}
+PackedStringArray JigsawProcedureVariantBuildDeck::get_argument_names() const {
+	return PackedStringArray{"current_deck", "next_card_options", "next_card_index"};
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantBuildDeck::get_results() const {
+	return Array::make(
+		JigsawParameterCard::make(enums::CardDef::NONE)
+	);
+}
+PackedStringArray JigsawProcedureVariantBuildDeck::get_result_names() const {
+	return PackedStringArray{"selected_card"};
+}
+
+void JigsawProcedureVariantValidateDeck::_bind_methods() {}
+enums::JigsawProcedure::Mode JigsawProcedureVariantValidateDeck::get_mode() const {
+	return Mode::FUNCTIONAL;
+}
+String JigsawProcedureVariantValidateDeck::get_editor_name() const {
+	return "Validate Deck";
+}
+String JigsawProcedureVariantValidateDeck::get_editor_description() const {
+	return "TODO";
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantValidateDeck::get_arguments() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		))
+	);
+}
+PackedStringArray JigsawProcedureVariantValidateDeck::get_argument_names() const {
+	return PackedStringArray{"&current_deck"};
+}
+TypedArray<JigsawParameter> JigsawProcedureVariantValidateDeck::get_results() const {
+	return Array::make(
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		)),
+		JigsawParameterAmount::make(-1)
+	);
+}
+PackedStringArray JigsawProcedureVariantValidateDeck::get_result_names() const {
+	return PackedStringArray{"next_card_options", "next_card_index"};
 }
 
 void JigsawProcedureVariantMain::_bind_methods() {}

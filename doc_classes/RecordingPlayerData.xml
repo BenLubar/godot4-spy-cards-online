@@ -7,11 +7,13 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="480">
+		<member name="character" type="int" setter="set_character" getter="get_character" enum="CharacterDef.Character" default="0">
 		</member>
 		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
 		<member name="initial_deck" type="PackedInt32Array" setter="set_initial_deck" getter="get_initial_deck" default="PackedInt32Array()">
+		</member>
+		<member name="save_data" type="Dictionary[String, JigsawParameter]" setter="set_save_data" getter="get_save_data" default="{}">
 		</member>
 	</members>
 </class>

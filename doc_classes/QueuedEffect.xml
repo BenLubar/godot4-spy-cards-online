@@ -15,7 +15,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="card_instance" type="int" setter="set_card_instance" getter="get_card_instance" default="450971566194">
+		<member name="card_instance" type="int" setter="set_card_instance" getter="get_card_instance" default="0">
 		</member>
 		<member name="effect" type="EffectInstance" setter="set_effect" getter="get_effect">
 		</member>

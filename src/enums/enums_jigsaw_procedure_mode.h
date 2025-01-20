@@ -5,14 +5,12 @@ namespace enums {
 namespace JigsawProcedure {
 enum Mode {
 	FUNCTIONAL = 0,
-	LOGIC = 1,
-	VISUAL = 2,
-	INIT = 3,
-	MAIN = 4,
-	CHOICE_SELECT = 5,
-	CHOICE_PREVIEW = 6,
-	REALTIME_LOGIC = 7,
-	REALTIME_VISUAL = 8,
+	INIT = 1,
+	MAIN = 2,
+	SELECT = 3,
+	CHOICE_PREVIEW = 4,
+	REALTIME_LOGIC = 5,
+	REALTIME_VISUAL = 6,
 };
 }
 }
