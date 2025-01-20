@@ -327,6 +327,12 @@ namespace godot {
 			return static_cast<PackedArray<TEnum, TBase>>(p_variant.operator TBase());
 		}
 	};
+	template<typename TEnum, typename TBase>
+	struct VariantCaster<const PackedArray<TEnum, TBase> &> {
+		static _FORCE_INLINE_ PackedArray<TEnum, TBase> cast(const Variant &p_variant) {
+			return static_cast<PackedArray<TEnum, TBase>>(p_variant.operator TBase());
+		}
+	};
 	namespace internal {
 		template<typename TEnum, typename TBase>
 		struct VariantInternalType<PackedArray<TEnum, TBase>> {
