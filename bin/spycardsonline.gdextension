@@ -17,6 +17,7 @@ windows.release.arm64 = "res://bin/windows/spycardsonlinenative.windows.template
 linux.debug.x86_32 = "res://bin/linux/libspycardsonlinenative.linux.template_debug.x86_32.so"
 linux.release.x86_32 = "res://bin/linux/libspycardsonlinenative.linux.template_release.x86_32.so"
 linux.debug.x86_64 = "res://bin/linux/libspycardsonlinenative.linux.template_debug.x86_64.so"
+linux.debug.x86_64.editor = "res://bin/linux/libspycardsonlinenative.linux.template_debug.dev.x86_64.so"
 linux.release.x86_64 = "res://bin/linux/libspycardsonlinenative.linux.template_release.x86_64.so"
 linux.debug.arm32 = "res://bin/linux/libspycardsonlinenative.linux.template_debug.arm32.so"
 linux.release.arm32 = "res://bin/linux/libspycardsonlinenative.linux.template_release.arm32.so"

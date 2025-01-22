@@ -2,26 +2,25 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 
 template<typename T>
-struct PredefinedScriptKey
-{
+struct PredefinedScriptKey {
 };
 
 #define DECLARE_PREDEFINED_KEY(m_type, m_name) \
 	template<> \
-	struct PredefinedScriptKey<m_type> \
-	{ \
+	struct PredefinedScriptKey<m_type> { \
 		static constexpr char name[] = #m_name; \
 	}
 
 inline Ref<GDScript> get_predefined_defs() {
-	static LazyGlobal<GDScript> defs{ []() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://predefined/predefined.gd", "GDScript"); } };
+	static LazyGlobal<GDScript> defs{ []() -> Ref<GDScript> {
+		return ResourceLoader::get_singleton()->load("res://predefined/predefined.gd", "GDScript");
+	} };
 
 	return defs;
 }
 
 template<typename T, typename E>
-Ref<T> get_predefined(E index)
-{
+Ref<T> get_predefined(E index) {
 	if (index == -1) {
 		return Ref<T>();
 	}
