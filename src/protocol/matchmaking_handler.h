@@ -24,19 +24,21 @@ public:
 	static constexpr int32_t SHARED_SEED_LENGTH = 32;
 
 	enum MatchState {
-		INIT_WAIT = 0,
-		ABORTED = 1,
-		COSMETIC = 2,
-		DECK = 3,
-		START_WAIT = 4,
-		RESOLVE = 5,
-		CHOICE = 6,
-		REALTIME = 7,
-		REALTIME_WAIT = 8,
-		FINALIZE = 9,
-		COMPLETED = 10,
-		REMATCH_WAIT = 11,
-		REMATCH_ABORTED = 12,
+		INIT_WAIT,
+		ABORTED,
+		ASSETS,
+		CONSENT,
+		COSMETIC,
+		DECK,
+		START_WAIT,
+		RESOLVE,
+		CHOICE,
+		REALTIME,
+		REALTIME_WAIT,
+		FINALIZE,
+		COMPLETED,
+		REMATCH_WAIT,
+		REMATCH_ABORTED,
 	};
 
 	MatchmakingHandler();
@@ -45,12 +47,15 @@ public:
 	DECLARE_PROPERTY(Dictionary, ice_config);
 	DECLARE_PROPERTY(String, lobby_id);
 	DECLARE_PROPERTY(String, verification_code);
+	DECLARE_PROPERTY(String, display_name);
+	DECLARE_PROPERTY(String, save_file_path);
 	DECLARE_PROPERTY(int32_t, max_players, = 0);
 
 	DECLARE_PROPERTY(Ref<Crypto>, crypto);
 	DECLARE_PROPERTY(Ref<WebRTCMultiplayerPeer>, peer);
 	DECLARE_PROPERTY(TypedArray<MatchmakingConnection>, connections);
 	DECLARE_PROPERTY(Ref<DataContainer>, recording);
+	DECLARE_PROPERTY(JigsawGlobal *, global, = nullptr);
 
 	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
 	DECLARE_PROPERTY(bool, need_rollback, = false);
@@ -58,17 +63,15 @@ public:
 	DECLARE_PROPERTY(int64_t, current_frame, = -1);
 	DECLARE_PROPERTY(int64_t, base_frame, = -1);
 
+	DECLARE_PROPERTY(bool, handled_fatal_error, = false);
+
 private:
 	// authority only
 	PackedByteArray _game_mode_container_serialized;
 
-	// all players
-	Vector<bool> _deck_ready;
-
 public:
-	void clear();
-	void create_lobby(const Ref<DataContainer> &game_mode_container, int64_t selected_variant, const String &mode_public_name = "", int64_t mode_public_revision = 0);
-	void join_lobby(const String &lobby_id);
+	static MatchmakingHandler *create_lobby(const Ref<DataContainer> &game_mode_container, int64_t selected_variant, const String &mode_public_name = "", int64_t mode_public_revision = 0);
+	static MatchmakingHandler *join_lobby(const String &lobby_id);
 
 	MatchmakingConnection *find_remote_connection() const;
 	MatchmakingConnection *find_remote_connection(int32_t remote_id) const;
@@ -78,6 +81,8 @@ public:
 	void fatal_error_encountered(const String &message);
 
 	void init_game_data(const PackedByteArray &game_mode_container_bytes, int64_t selected_variant, const String &mode_public_name, int64_t mode_public_revision, uint64_t match_start_timestamp, const PackedByteArray &shared_seed);
+	void on_consent(const String &display_name, const String &save_file_path);
+	void _on_game_mode_assets_loaded();
 	void _do_notify_loaded_mode(MatchmakingConnection *conn);
 	void notify_loaded_mode();
 	void set_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character);
@@ -97,7 +102,9 @@ public:
 	void _on_lobby_created(const String &lobby_id, const String &verification_code);
 	void _on_player_id(int32_t player_id, const String &verification_code);
 	void _create_remaining_connections();
+	void _check_start_match();
 	void _start_match();
+	void _on_connection_encountered_fatal_error(const String &message, MatchmakingConnection *conn);
 
 	BitField<ButtonInputHistory::InputButton> get_player_realtime_inputs(int32_t side, int64_t frame) const override;
 	void update_player_realtime_inputs(int64_t frame) override;

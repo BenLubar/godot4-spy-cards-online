@@ -3,6 +3,7 @@
 #include "jigsaw/jigsaw_visual.h"
 
 void JigsawGlobal::_bind_methods() {
+	BIND_PROPERTY_RESOURCE(JigsawInputSource, input_source);
 	BIND_PROPERTY_RESOURCE(JigsawVisual, visual);
 	BIND_PROPERTY_RESOURCE(GameMode, mode);
 	BIND_PROPERTY_RESOURCE(VariantDef, selected_variant);
@@ -29,6 +30,7 @@ void JigsawGlobal::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("run_variant_triggers", "type", "args", "rng", "copy_rng"), &JigsawGlobal::run_variant_triggers);
 }
 
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawInputSource *, input_source);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawVisual *, visual);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
@@ -71,7 +73,7 @@ void JigsawGlobal::init_sides() {
 		Ref<JigsawSide> side;
 		side.instantiate();
 
-		TypedArray<PackedInt64Array> locations;
+		TypedArray<PackedInt32Array> locations;
 		locations.resize(enums::LocationDef::FIRST_CUSTOM + _mode->get_custom_locations().size());
 		side->set_location_card_instances(locations);
 

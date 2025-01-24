@@ -8,8 +8,15 @@
 	</tutorials>
 	<methods>
 		<method name="create_portrait" qualifiers="const">
-			<return type="AtlasTexture" />
+			<return type="Mesh" />
 			<param index="0" name="mode" type="GameMode" />
+			<description>
+			</description>
+		</method>
+		<method name="set_portrait_2d" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="mode" type="GameMode" />
+			<param index="1" name="inst" type="MeshInstance2D" />
 			<description>
 			</description>
 		</method>

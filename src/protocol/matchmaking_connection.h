@@ -40,6 +40,7 @@ public:
 
 	DECLARE_PROPERTY(bool, was_fully_connected, = false);
 	DECLARE_PROPERTY(bool, loaded_mode, = false);
+	DECLARE_PROPERTY_IS(bool, deck_ready, = false);
 
 	DECLARE_PROPERTY(int64_t, frame_ack, = 0);
 	DECLARE_PROPERTY(int32_t, local_frame_advantage, = 0);

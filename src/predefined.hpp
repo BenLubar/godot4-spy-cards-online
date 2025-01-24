@@ -42,7 +42,9 @@ template<typename T>
 class LazyPredefined : public LazyGlobal<T> {
 public:
 	LazyPredefined(const char *name) : LazyGlobal<T>([name]() -> Ref<T> {
-		Ref<T> value = get_predefined_defs()->get(name);
+		Ref<GDScript> defs = get_predefined_defs();
+		ERR_FAIL_COND_V(defs.is_null(), Ref<T>());
+		Ref<T> value = defs->get(name);
 		if (unlikely(value.is_null())) {
 			ERR_PRINT(vformat("failed to retrieve value Predefined.%s; check to make sure predefined.gd contains this key.", name));
 		}

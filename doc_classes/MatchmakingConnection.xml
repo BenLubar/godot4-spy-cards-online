@@ -21,6 +21,8 @@
 	<members>
 		<member name="conn" type="WebRTCPeerConnection" setter="set_conn" getter="get_conn">
 		</member>
+		<member name="deck_ready" type="bool" setter="set_deck_ready" getter="is_deck_ready" default="false">
+		</member>
 		<member name="fatal_error" type="String" setter="set_fatal_error" getter="get_fatal_error" default="&quot;&quot;">
 		</member>
 		<member name="frame_ack" type="int" setter="set_frame_ack" getter="get_frame_ack" default="0">

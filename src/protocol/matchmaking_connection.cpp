@@ -37,6 +37,7 @@ void MatchmakingConnection::_bind_methods() {
 
 	BIND_PROPERTY(Variant::BOOL, was_fully_connected);
 	BIND_PROPERTY(Variant::BOOL, loaded_mode);
+	BIND_PROPERTY_IS(Variant::BOOL, deck_ready);
 
 	BIND_PROPERTY(Variant::INT, frame_ack);
 	BIND_PROPERTY(Variant::INT, local_frame_advantage);
@@ -71,6 +72,7 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, String, fatal_error);
 
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, bool, was_fully_connected);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, bool, loaded_mode);
+IMPLEMENT_PROPERTY_SIMPLE_IS(MatchmakingConnection, bool, deck_ready);
 
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int64_t, frame_ack);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, int32_t, local_frame_advantage);
@@ -310,9 +312,11 @@ void MatchmakingConnection::_on_sender_request_completed(HTTPRequest::Result res
 		ERR_FAIL_COND_MSG(_remote_id != 1, "connecting to a player other than player 1 before we know our player number");
 
 		PackedStringArray lines = body_str.split("\n");
-		ERR_FAIL_COND(lines.size() != 2);
+		ERR_FAIL_COND(lines.size() != 3);
 		ERR_FAIL_COND(!lines[0].is_valid_int());
-		_handler->_on_player_id(lines[0].to_int(), lines[1]);
+		ERR_FAIL_COND(!lines[1].is_valid_int());
+		_handler->set_max_players(lines[0].to_int());
+		_handler->_on_player_id(lines[1].to_int(), lines[2]);
 	} else if (response_code == HTTPClient::RESPONSE_NOT_FOUND) {
 		_on_fatal_error(vformat("Matchmaking server responded with:\n%s", body_str));
 	} else {

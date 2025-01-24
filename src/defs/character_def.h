@@ -6,7 +6,8 @@
 #include "enums/enums_character_def.h"
 #include "enums/enums_icon_def.h"
 
-#include <godot_cpp/classes/atlas_texture.hpp>
+#include <godot_cpp/classes/mesh.hpp>
+#include <godot_cpp/classes/mesh_instance2d.hpp>
 
 class CharacterDef;
 
@@ -41,7 +42,8 @@ public:
 	DECLARE_PROPERTY(bool, portrait_crop_top, = false);
 	DECLARE_PROPERTY(bool, portrait_crop_front, = false);
 
-	Ref<AtlasTexture> create_portrait(const Ref<GameMode> &mode) const;
+	Ref<Mesh> create_portrait(const Ref<GameMode> &mode) const;
+	void set_portrait_2d(const Ref<GameMode> &mode, MeshInstance2D *inst) const;
 	DEFAULT_TO_STRING();
 };
 
