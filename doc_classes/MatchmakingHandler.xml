@@ -101,8 +101,7 @@
 		</method>
 		<method name="set_local_player_cosmetic_data">
 			<return type="void" />
-			<param index="0" name="display_name" type="String" />
-			<param index="1" name="character" type="int" enum="CharacterDef.Character" />
+			<param index="0" name="character" type="int" enum="CharacterDef.Character" />
 			<description>
 			</description>
 		</method>

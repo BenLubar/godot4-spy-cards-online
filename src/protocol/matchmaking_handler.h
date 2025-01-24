@@ -88,7 +88,7 @@ public:
 	void set_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character);
 	void set_player_initial_deck(const PackedArray<enums::CardDef::Card> &packed_deck);
 
-	void set_local_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character);
+	void set_local_player_cosmetic_data(enums::CharacterDef::Character character);
 	void set_local_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck);
 
 	void state_advance(const PackedByteArray &state_checksum, const PackedByteArray &next_random_seed);
@@ -102,12 +102,15 @@ public:
 	void _on_lobby_created(const String &lobby_id, const String &verification_code);
 	void _on_player_id(int32_t player_id, const String &verification_code);
 	void _create_remaining_connections();
+	void _bind_init_game_data(MatchmakingConnection *conn);
+	void _send_init_game_data(int64_t remote_id);
 	void _check_start_match();
 	void _start_match();
 	void _on_connection_encountered_fatal_error(const String &message, MatchmakingConnection *conn);
 
 	BitField<ButtonInputHistory::InputButton> get_player_realtime_inputs(int32_t side, int64_t frame) const override;
 	void update_player_realtime_inputs(int64_t frame) override;
+	void on_jigsaw_error(const Ref<JigsawError> &err) override;
 };
 DECLARE_ENUM(MatchmakingHandler::MatchState);
 

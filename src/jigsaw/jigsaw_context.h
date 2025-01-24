@@ -53,7 +53,6 @@ public:
 	Ref<JigsawError> set_persistent_variable(const Ref<JigsawParameterVariable> &var, const Ref<JigsawParameter> &value, const String &debug_name);
 
 private:
-	void cleanup();
 	JigsawExecutionState evaluate_next(Ref<JigsawError> &err, bool first);
 
 public:

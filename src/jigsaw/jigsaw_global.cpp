@@ -1,6 +1,12 @@
 #include "jigsaw/jigsaw_global.h"
 
 #include "jigsaw/jigsaw_visual.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_card.h"
+#include "jigsaw/parameter/jigsaw_parameter_character.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
+
+#include <godot_cpp/classes/time.hpp>
 
 void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawInputSource, input_source);
@@ -23,11 +29,19 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(QueuedEffect, queue);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSound, sounds);
+	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
 
 	ADD_SIGNAL(MethodInfo("current_effect_changed"));
 
 	ClassDB::bind_method(D_METHOD("init_sides"), &JigsawGlobal::init_sides);
-	ClassDB::bind_method(D_METHOD("run_variant_triggers", "type", "args", "rng", "copy_rng"), &JigsawGlobal::run_variant_triggers);
+
+	ClassDB::bind_method(D_METHOD("run_procedure_sync", "procedure", "arguments", "results", "rng", "parent"), &JigsawGlobal::run_procedure_sync, DEFVAL(Ref<JigsawContext>()));
+	ClassDB::bind_method(D_METHOD("run_select", "side", "procedure", "callback"), &JigsawGlobal::run_select);
+
+	ClassDB::bind_method(D_METHOD("run_mode_init", "timestamp", "shared_seed"), &JigsawGlobal::run_mode_init);
+	ClassDB::bind_method(D_METHOD("run_mode_trigger", "type", "arguments", "rng", "parent"), &JigsawGlobal::run_mode_trigger, DEFVAL(Ref<JigsawContext>()));
+	ClassDB::bind_method(D_METHOD("run_character_select", "side"), &JigsawGlobal::run_character_select);
+	ClassDB::bind_method(D_METHOD("run_deck_builder", "side"), &JigsawGlobal::run_deck_builder);
 }
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawInputSource *, input_source);
@@ -49,6 +63,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, queue_reset_count);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<QueuedEffect>, queue);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSound>, sounds);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
 
 JigsawGlobal::~JigsawGlobal() {
 	for (int64_t i = 0; i < _sounds.size(); i++) {
@@ -93,32 +108,81 @@ void JigsawGlobal::init_sides() {
 	_state->set_sides(sides);
 }
 
-Ref<JigsawError> JigsawGlobal::run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng) {
-	ERR_FAIL_COND_V(!_context_stack.is_empty(), Ref<JigsawError>());
+void JigsawGlobal::run_procedure_sync(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &arguments, const TypedArray<JigsawParameter> &results, const Ref<RNG> &rng, const Ref<JigsawContext> &parent) {
+	Ref<JigsawContext> context = JigsawContext::make(this, parent);
+	context->set_rng(rng);
 
-	TypedArray<JigsawTriggerVariant> triggers;
+	_context_stack.append(context);
 
-	if (likely(_mode.is_valid())) {
-		triggers.append_array(_mode->get_base_triggers());
+	Ref<JigsawError> err = context->evaluate(procedure, arguments, results);
+	if (unlikely(err.is_valid())) {
+		_input_source->on_jigsaw_error(err);
 	}
 
-	if (likely(_selected_variant.is_valid())) {
-		triggers.append_array(_selected_variant->get_triggers());
-	}
+	ERR_FAIL_COND(_context_stack.back() != context);
+	_context_stack.remove_at(_context_stack.size() - 1);
+}
 
+void JigsawGlobal::run_select(int64_t side, const Ref<JigsawProcedure> &procedure, const Callable &callback) {
+	TypedArray<JigsawParameter> results = procedure->get_results().duplicate();
+	run_procedure_sync(procedure, Array(), results, Ref<RNG>()); // TODO
+	callback.callv(results);
+}
+
+void JigsawGlobal::run_mode_init(uint64_t timestamp, const PackedByteArray &shared_seed) {
+	Dictionary datetime = Time::get_singleton()->get_datetime_dict_from_unix_time(timestamp / 1000);
+	Ref<RNG> rng = RNG::with_seed(shared_seed);
+
+	TypedArray<JigsawParameter> args = Array::make(
+		JigsawParameterAmount::make(datetime["year"]),
+		JigsawParameterAmount::make(datetime["month"]),
+		JigsawParameterAmount::make(datetime["day"]),
+		JigsawParameterAmount::make(shared_seed.decode_u32(0))
+	);
+
+	run_mode_trigger(JigsawTriggerVariant::COSMETIC_INIT, args, rng);
+}
+
+void JigsawGlobal::run_mode_trigger(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &arguments, const Ref<RNG> &rng, const Ref<JigsawContext> &parent) {
+	TypedArray<JigsawTriggerVariant> triggers = _mode->get_base_triggers() + _selected_variant->get_triggers();
 	for (int64_t i = 0; i < triggers.size(); i++) {
 		Ref<JigsawTriggerVariant> trigger = triggers[i];
-		if (trigger->get_type() == type) {
-			Ref<JigsawContext> context = JigsawContext::make(this, Ref<JigsawContext>());
-			context->set_rng(copy_rng ? rng->duplicate() : rng);
-			_context_stack.push_back(context);
-			Ref<JigsawError> err = context->evaluate(trigger, args, TypedArray<JigsawParameter>());
-			_context_stack.pop_back();
-			if (unlikely(err.is_valid())) {
-				return err;
-			}
+		if (trigger->get_type() != type) {
+			continue;
 		}
+
+		run_procedure_sync(trigger, arguments.duplicate(), TypedArray<JigsawParameter>(), rng, parent);
+	}
+}
+
+static void unwrap_character(const Ref<JigsawParameterCharacter> &character, const Callable &callback) {
+	callback.call(character->get_character());
+}
+
+void JigsawGlobal::run_character_select(int64_t side, const Callable &on_character) {
+	Ref<JigsawProcedureVariantSelectCharacter> select_character = _selected_variant->get_select_character();
+	if (select_character.is_null()) {
+		on_character.call(enums::CharacterDef::NONE);
+		return;
 	}
 
-	return Ref<JigsawError>();
+	run_select(side, select_character, callable_mp_static(&unwrap_character).bind(on_character));
+}
+
+static enums::CardDef::Card unwrap_single_card(const Ref<JigsawParameterCard> &card) {
+	return card->get_card();
+}
+
+static void unwrap_deck(const Ref<JigsawParameterOrderedList> &cards, const Callable &callback) {
+	callback.call(PackedArray<enums::CardDef::Card>(cards->get_list().map(callable_mp_static(&unwrap_single_card))));
+}
+
+void JigsawGlobal::run_deck_builder(int64_t side, const Callable &on_deck) {
+	Ref<JigsawProcedureVariantBuildDeck> build_deck = _selected_variant->get_build_deck();
+	if (build_deck.is_null()) {
+		on_deck.call(PackedArray<enums::CardDef::Card>());
+		return;
+	}
+
+	run_select(side, build_deck, callable_mp_static(&unwrap_deck).bind(on_deck));
 }

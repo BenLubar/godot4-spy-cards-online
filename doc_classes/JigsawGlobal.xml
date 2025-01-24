@@ -12,17 +12,58 @@
 			<description>
 			</description>
 		</method>
-		<method name="run_variant_triggers">
-			<return type="JigsawError" />
+		<method name="run_character_select">
+			<return type="void" />
+			<param index="0" name="side" type="int" />
+			<param index="1" name="_unnamed_arg1" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="run_deck_builder">
+			<return type="void" />
+			<param index="0" name="side" type="int" />
+			<param index="1" name="_unnamed_arg1" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="run_mode_init">
+			<return type="void" />
+			<param index="0" name="timestamp" type="int" />
+			<param index="1" name="shared_seed" type="PackedByteArray" />
+			<description>
+			</description>
+		</method>
+		<method name="run_mode_trigger">
+			<return type="void" />
 			<param index="0" name="type" type="int" enum="JigsawTriggerVariant.Type" />
-			<param index="1" name="args" type="JigsawParameter[]" />
+			<param index="1" name="arguments" type="JigsawParameter[]" />
 			<param index="2" name="rng" type="RNG" />
-			<param index="3" name="copy_rng" type="bool" />
+			<param index="3" name="parent" type="JigsawContext" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="run_procedure_sync">
+			<return type="void" />
+			<param index="0" name="procedure" type="JigsawProcedure" />
+			<param index="1" name="arguments" type="JigsawParameter[]" />
+			<param index="2" name="results" type="JigsawParameter[]" />
+			<param index="3" name="rng" type="RNG" />
+			<param index="4" name="parent" type="JigsawContext" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="run_select">
+			<return type="void" />
+			<param index="0" name="side" type="int" />
+			<param index="1" name="procedure" type="JigsawProcedure" />
+			<param index="2" name="callback" type="Callable" />
 			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
+		<member name="character_nodes" type="MeshInstance3D[]" setter="set_character_nodes" getter="get_character_nodes" default="[]">
+		</member>
 		<member name="context_stack" type="JigsawContext[]" setter="set_context_stack" getter="get_context_stack" default="[]">
 		</member>
 		<member name="current_card_instance" type="CardInstance" setter="set_current_card_instance" getter="get_current_card_instance">

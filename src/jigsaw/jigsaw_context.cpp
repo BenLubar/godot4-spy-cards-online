@@ -301,15 +301,6 @@ Ref<JigsawError> JigsawContext::set_persistent_variable(const Ref<JigsawParamete
 	return Ref<JigsawError>();
 }
 
-void JigsawContext::cleanup() {
-	_procedure = Ref<JigsawProcedure>();
-	_rng = Ref<RNG>();
-	_stack.clear();
-	_arguments = TypedArray<JigsawParameter>();
-	// _results is not cleared
-	_step_limit_remaining = 0;
-}
-
 JigsawExecutionState JigsawContext::evaluate_next(Ref<JigsawError> &err, bool first) {
 	if (_step_limit_remaining <= 0) {
 		err = create_error("Procedure step count safety limit exceeded - infinite loop? If you don't think this error should have happened, let Ben know what you were doing.");
@@ -402,11 +393,9 @@ Ref<JigsawError> JigsawContext::evaluate(const Ref<JigsawProcedure> &procedure, 
 
 		if (unlikely(state == JigsawExecutionState::PAUSE)) {
 			err = create_error("internal error: cannot pause a procedure that returns a value");
-			cleanup();
 			return err;
 		}
 
-		cleanup();
 		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
 		return err;
 	}
@@ -437,7 +426,6 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 			return Ref<JigsawError>();
 		}
 
-		cleanup();
 		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
 		return err;
 	}
@@ -461,7 +449,6 @@ Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
 			return Ref<JigsawError>();
 		}
 
-		cleanup();
 		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
 		return err;
 	}

@@ -4,6 +4,7 @@
 #include "dry.h"
 
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
 
 class JigsawGlobal;
 class JigsawVisual;
@@ -46,11 +47,19 @@ public:
 	DECLARE_PROPERTY(TypedArray<QueuedEffect>, queue);
 
 	DECLARE_PROPERTY(TypedArray<JigsawSound>, sounds);
+	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes); // TODO
 
 	~JigsawGlobal();
 
 	void init_sides();
-	Ref<JigsawError> run_variant_triggers(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &args, const Ref<RNG> &rng, bool copy_rng);
+
+	void run_procedure_sync(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &arguments, const TypedArray<JigsawParameter> &results, const Ref<RNG> &rng, const Ref<JigsawContext> &parent = Ref<JigsawContext>());
+	void run_select(int64_t side, const Ref<JigsawProcedure> &procedure, const Callable &callback);
+
+	void run_mode_init(uint64_t timestamp, const PackedByteArray &shared_seed);
+	void run_mode_trigger(JigsawTriggerVariant::Type type, const TypedArray<JigsawParameter> &arguments, const Ref<RNG> &rng, const Ref<JigsawContext> &parent = Ref<JigsawContext>());
+	void run_character_select(int64_t side, const Callable &on_character);
+	void run_deck_builder(int64_t side, const Callable &on_deck);
 
 	DEFAULT_TO_STRING();
 };

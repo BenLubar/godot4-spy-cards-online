@@ -1,10 +1,15 @@
 #include "protocol/matchmaking_handler.h"
 
-#include "util/base32.h"
-#include "util/why_isnt_this_in_godot.h"
-#include "protocol/button_input_history.h"
 #include "jigsaw/jigsaw_global.h"
 #include "jigsaw/jigsaw_visual.h"
+#include "jigsaw/parameter/jigsaw_parameter_amount.h"
+#include "jigsaw/parameter/jigsaw_parameter_card.h"
+#include "jigsaw/parameter/jigsaw_parameter_character.h"
+#include "jigsaw/parameter/jigsaw_parameter_ordered_list.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
+#include "protocol/button_input_history.h"
+#include "util/base32.h"
+#include "util/why_isnt_this_in_godot.h"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/multiplayer_api.hpp>
@@ -49,10 +54,10 @@ void MatchmakingHandler::_bind_methods() {
 	BIND_PROPERTY(Variant::STRING, save_file_path);
 	BIND_PROPERTY(Variant::INT, max_players);
 
-	BIND_PROPERTY_RESOURCE_NOT_SAVED(Crypto, crypto);
-	BIND_PROPERTY_RESOURCE_NOT_SAVED(WebRTCMultiplayerPeer, peer);
+	BIND_PROPERTY_RESOURCE(Crypto, crypto);
+	BIND_PROPERTY_RESOURCE(WebRTCMultiplayerPeer, peer);
 	BIND_PROPERTY_RESOURCE_ARRAY(MatchmakingConnection, connections);
-	BIND_PROPERTY_RESOURCE_NOT_SAVED(JigsawGlobal, global);
+	BIND_PROPERTY_RESOURCE(JigsawGlobal, global);
 	BIND_PROPERTY_RESOURCE(DataContainer, recording);
 
 	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
@@ -76,7 +81,7 @@ void MatchmakingHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_player_cosmetic_data", "display_name", "character"), &MatchmakingHandler::set_player_cosmetic_data);
 	ClassDB::bind_method(D_METHOD("set_player_initial_deck", "packed_deck"), &MatchmakingHandler::set_player_initial_deck);
 
-	ClassDB::bind_method(D_METHOD("set_local_player_cosmetic_data", "display_name", "character"), &MatchmakingHandler::set_local_player_cosmetic_data);
+	ClassDB::bind_method(D_METHOD("set_local_player_cosmetic_data", "character"), &MatchmakingHandler::set_local_player_cosmetic_data);
 	ClassDB::bind_method(D_METHOD("set_local_player_initial_deck", "deck"), &MatchmakingHandler::set_local_player_initial_deck);
 
 	ClassDB::bind_method(D_METHOD("state_advance", "state_checksum", "next_random_seed"), &MatchmakingHandler::state_advance);
@@ -106,9 +111,6 @@ MatchmakingHandler::MatchmakingHandler() {
 	ice_server["urls"] = Array::make("stun:stun.cloudflare.com:3478");
 
 	_ice_config["iceServers"] = Array::make(ice_server);
-
-	_crypto.instantiate();
-	_peer.instantiate();
 
 	rpc_config("ping", make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TRANSFER_MODE_UNRELIABLE));
 	rpc_config("pong", make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TRANSFER_MODE_UNRELIABLE));
@@ -175,6 +177,9 @@ MatchmakingHandler *MatchmakingHandler::create_lobby(const Ref<DataContainer> &g
 
 	MatchmakingHandler *handler = memnew(MatchmakingHandler);
 
+	handler->_crypto.instantiate();
+	handler->_peer.instantiate();
+
 	handler->_max_players = max_players;
 	handler->_game_mode_container_serialized = game_mode_container->to_byte_array("game mode for networking");
 
@@ -201,7 +206,9 @@ MatchmakingHandler *MatchmakingHandler::create_lobby(const Ref<DataContainer> &g
 		handler->_peer->create_mesh(1);
 
 		MatchmakingConnection *conn = memnew(MatchmakingConnection(handler, 2));
+		conn->connect("encountered_fatal_error", callable_mp(handler, &MatchmakingHandler::_on_connection_encountered_fatal_error).bind(conn));
 		handler->_connections.append(conn);
+		handler->_bind_init_game_data(conn);
 		handler->add_child(conn);
 	} else {
 		// special case: singleplayer modes get a fake lobby id and a fake connection
@@ -222,6 +229,9 @@ MatchmakingHandler *MatchmakingHandler::create_lobby(const Ref<DataContainer> &g
 }
 MatchmakingHandler *MatchmakingHandler::join_lobby(const String &lobby_id) {
 	MatchmakingHandler *handler = memnew(MatchmakingHandler);
+
+	handler->_crypto.instantiate();
+	handler->_peer.instantiate();
 
 	handler->_lobby_id = lobby_id;
 	handler->set_name("MatchmakingHandler_" + lobby_id);
@@ -309,7 +319,7 @@ void MatchmakingHandler::init_game_data(const PackedByteArray &game_mode_contain
 	FILE_REQUESTER->call("fetch_container", game_mode_container);
 	if (FILE_REQUESTER->call("count_pending_requests").operator int64_t() > 0) {
 		Object *file_requester_inst = FILE_REQUESTER->get("_instance");
-		file_requester_inst->connect("request_queue_empty", callable_mp(this, &MatchmakingHandler::_on_game_mode_assets_loaded), Object::CONNECT_ONE_SHOT);
+		file_requester_inst->connect("request_queue_empty", callable_mp(this, &MatchmakingHandler::_on_game_mode_assets_loaded), CONNECT_ONE_SHOT);
 	} else {
 		_on_game_mode_assets_loaded();
 	}
@@ -320,8 +330,13 @@ void MatchmakingHandler::on_consent(const String &display_name, const String &sa
 	_display_name = display_name;
 	_save_file_path = save_file_path;
 
-	// TODO: if variant has character select script, select character. otherwise, select NONE.
-	_state = COSMETIC;
+	_global->run_mode_init(_recording->get_timestamp(), _recording->get_shared_seed());
+	if (_max_players > 0) {
+		_state = COSMETIC;
+		_global->run_character_select(get_multiplayer()->get_unique_id(), callable_mp(this, &MatchmakingHandler::set_local_player_cosmetic_data));
+	} else {
+		_start_match();
+	}
 }
 void MatchmakingHandler::_on_game_mode_assets_loaded() {
 	if (unlikely(_state == ABORTED)) {
@@ -407,8 +422,8 @@ void MatchmakingHandler::set_player_cosmetic_data(const String &display_name, en
 	ERR_FAIL_COND_MSG(player.is_valid(), vformat("received set_player_cosmetic_data from player %d multiple times", conn->get_remote_id()));
 
 	Ref<CharacterDef> character_def = _recording->get_mode()->get_character(character);
-	ERR_FAIL_COND_MSG(character_def.is_null(), vformat("received invalid character %d in set_player_cosmetic_data from player %d", character, conn->get_remote_id()));
-	ERR_FAIL_COND_MSG(character_def->is_hidden(), vformat("received hidden character %d (%s) in set_player_cosmetic_data from player %d", character, character_def->get_name(), conn->get_remote_id()));
+	ERR_FAIL_COND_MSG(character != enums::CharacterDef::NONE && character_def.is_null(), vformat("received invalid character %d in set_player_cosmetic_data from player %d", character, conn->get_remote_id()));
+	ERR_FAIL_COND_MSG(character_def.is_valid() && character_def->is_hidden(), vformat("received hidden character %d (%s) in set_player_cosmetic_data from player %d", character, character_def->get_name(), conn->get_remote_id()));
 
 	// TODO: validate arcade display name rules
 	// TODO: validate non-arcade display name rules
@@ -420,7 +435,11 @@ void MatchmakingHandler::set_player_cosmetic_data(const String &display_name, en
 	player_data[conn->get_remote_id() - 1] = player;
 	_recording->set_player_data(player_data);
 
-	// TODO: jigsaw trigger
+	_global->run_mode_trigger(JigsawTriggerVariant::CHARACTER_INIT, Array::make(
+		JigsawParameterAmount::make(conn->get_remote_id()),
+		JigsawParameterString::make(display_name),
+		JigsawParameterCharacter::make(character)
+	), Ref<RNG>());
 }
 void MatchmakingHandler::set_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck) {
 	MatchmakingConnection *conn = find_remote_connection();
@@ -443,7 +462,7 @@ void MatchmakingHandler::set_player_initial_deck(const PackedArray<enums::CardDe
 	_check_start_match();
 }
 
-void MatchmakingHandler::set_local_player_cosmetic_data(const String &display_name, enums::CharacterDef::Character character) {
+void MatchmakingHandler::set_local_player_cosmetic_data(enums::CharacterDef::Character character) {
 	ERR_FAIL_COND_MSG(_recording.is_null(), "set_local_player_cosmetic_data called before game mode was initialized");
 
 	TypedArray<RecordingPlayerData> player_data = _recording->get_player_data();
@@ -453,7 +472,7 @@ void MatchmakingHandler::set_local_player_cosmetic_data(const String &display_na
 	// assume name and character were valid because we just got them from our own UI (peers will validate)
 
 	player.instantiate();
-	player->set_display_name(display_name);
+	player->set_display_name(_display_name);
 	player->set_character(character);
 
 	player_data[get_multiplayer()->get_unique_id() - 1] = player;
@@ -462,12 +481,18 @@ void MatchmakingHandler::set_local_player_cosmetic_data(const String &display_na
 	for (int64_t i = 0; i < _connections.size(); i++) {
 		MatchmakingConnection *conn = Object::cast_to<MatchmakingConnection>(_connections[i]);
 		if (conn->get_loaded_mode()) {
-			rpc_id(conn->get_remote_id(), "set_player_cosmetic_data", display_name, character);
+			rpc_id(conn->get_remote_id(), "set_player_cosmetic_data", _display_name, character);
 		}
 	}
 
-	// TODO: ui
+	_global->run_mode_trigger(JigsawTriggerVariant::CHARACTER_INIT, Array::make(
+		JigsawParameterAmount::make(get_multiplayer()->get_unique_id()),
+		JigsawParameterString::make(_display_name),
+		JigsawParameterCharacter::make(character)
+	), Ref<RNG>());
+
 	_state = DECK;
+	_global->run_deck_builder(get_multiplayer()->get_unique_id(), callable_mp(this, &MatchmakingHandler::set_local_player_initial_deck));
 }
 void MatchmakingHandler::set_local_player_initial_deck(const PackedArray<enums::CardDef::Card> &deck) {
 	ERR_FAIL_COND(_state != DECK);
@@ -606,9 +631,19 @@ void MatchmakingHandler::_create_remaining_connections() {
 		}
 
 		MatchmakingConnection *conn = memnew(MatchmakingConnection(this, i));
+		conn->connect("encountered_fatal_error", callable_mp(this, &MatchmakingHandler::_on_connection_encountered_fatal_error).bind(conn));
 		_connections.append(conn);
+		if (local_player_id == 1) {
+			_bind_init_game_data(conn);
+		}
 		add_child(conn);
 	}
+}
+void MatchmakingHandler::_bind_init_game_data(MatchmakingConnection *conn) {
+	conn->connect("fully_connected", callable_mp(this, &MatchmakingHandler::_send_init_game_data).bind(conn->get_remote_id()), CONNECT_ONE_SHOT);
+}
+void MatchmakingHandler::_send_init_game_data(int64_t remote_id) {
+	rpc_id(remote_id, "init_game_data", _game_mode_container_serialized, _recording->get_selected_variant(), _recording->get_mode_public_name(), _recording->get_mode_public_revision(), _recording->get_timestamp(), _recording->get_shared_seed());
 }
 void MatchmakingHandler::_check_start_match() {
 	if (_state != START_WAIT) {
@@ -625,7 +660,7 @@ void MatchmakingHandler::_check_start_match() {
 	_start_match();
 }
 void MatchmakingHandler::_start_match() {
-	// TODO
+	ERR_FAIL(); // TODO
 }
 
 void MatchmakingHandler::_on_connection_encountered_fatal_error(const String &message, MatchmakingConnection *conn) {
@@ -634,6 +669,7 @@ void MatchmakingHandler::_on_connection_encountered_fatal_error(const String &me
 		return;
 	}
 
+	_state = ABORTED;
 	set_handled_fatal_error(true);
 
 	Node *crash_handler = CRASH_HANDLER->instantiate();
@@ -672,4 +708,22 @@ void MatchmakingHandler::update_player_realtime_inputs(int64_t frame) {
 	_realtime_inputs.append(ButtonInputHistory::get_current_inputs());
 
 	// TODO: send packets
+}
+
+void MatchmakingHandler::on_jigsaw_error(const Ref<JigsawError> &err) {
+	ERR_FAIL_COND(err.is_null());
+
+	if (get_handled_fatal_error()) {
+		WARN_PRINT(vformat("additional jigsaw error: %s", err->get_message()));
+		return;
+	}
+
+	_state = ABORTED;
+	set_handled_fatal_error(true);
+
+	Node *crash_handler = CRASH_HANDLER->instantiate();
+	add_child(crash_handler);
+
+	crash_handler->connect("cleanup", callable_mp(static_cast<Node *>(this), &Node::queue_free));
+	crash_handler->call("set_jigsaw_error", err);
 }

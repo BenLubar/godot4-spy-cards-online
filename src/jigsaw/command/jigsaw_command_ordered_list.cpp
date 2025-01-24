@@ -162,6 +162,17 @@ void JigsawCommandOrderedList::set_argument(int64_t i, const Ref<JigsawParameter
 		emit_changed();
 		return;
 	}
+	if (i == 1) {
+		switch (_operation) {
+		case GET_NUM_ITEMS:
+			break;
+		case GET_ITEM_AT_INDEX:
+			_index = arg;
+			emit_changed();
+			return;
+		}
+	}
+	ERR_FAIL();
 }
 String JigsawCommandOrderedList::get_argument_name(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), "");

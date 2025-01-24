@@ -85,7 +85,6 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingConnection, PackedInt32Array, realtime_inpu
 MatchmakingConnection::MatchmakingConnection(MatchmakingHandler *handler, int32_t remote_id) {
 	_handler = handler;
 	_remote_id = remote_id;
-	_loaded_mode = remote_id == 1;
 
 	_conn.instantiate();
 	_conn->initialize(handler->get_ice_config());

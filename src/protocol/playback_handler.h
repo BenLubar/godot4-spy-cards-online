@@ -15,6 +15,7 @@ public:
 
 	BitField<ButtonInputHistory::InputButton> get_player_realtime_inputs(int32_t side, int64_t frame) const override;
 	void update_player_realtime_inputs(int64_t frame) override {}
+	void on_jigsaw_error(const Ref<JigsawError> &err) override;
 };
 
 #endif // PLAYBACK_HANDLER_H

@@ -7,5 +7,9 @@ void PlaybackHandler::_bind_methods() {
 IMPLEMENT_PROPERTY_SIMPLE(PlaybackHandler, Ref<DataContainer>, recording);
 
 BitField<ButtonInputHistory::InputButton> PlaybackHandler::get_player_realtime_inputs(int32_t side, int64_t frame) const {
-	ERR_FAIL_V_MSG(0, "TODO: PlaybackHandler::get_player_realtime_inputs");
+	ERR_FAIL_V_MSG(0, "TODO: PlaybackHandler::get_player_realtime_inputs"); // TODO
+}
+
+void PlaybackHandler::on_jigsaw_error(const Ref<JigsawError> &err) {
+	ERR_FAIL_MSG("TODO: PlaybackHandler::on_jigsaw_error"); // TODO
 }

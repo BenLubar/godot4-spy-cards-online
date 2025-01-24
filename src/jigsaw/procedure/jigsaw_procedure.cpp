@@ -439,26 +439,20 @@ String JigsawProcedureVariantBuildDeck::get_editor_description() const {
 	return "TODO";
 }
 TypedArray<JigsawParameter> JigsawProcedureVariantBuildDeck::get_arguments() const {
-	return Array::make(
-		JigsawParameterOrderedList::make_template(Array::make(
-			JigsawParameterCard::make(enums::CardDef::NONE)
-		)),
-		JigsawParameterOrderedList::make_template(Array::make(
-			JigsawParameterCard::make(enums::CardDef::NONE)
-		)),
-		JigsawParameterAmount::make(0)
-	);
+	return TypedArray<JigsawParameter>();
 }
 PackedStringArray JigsawProcedureVariantBuildDeck::get_argument_names() const {
-	return PackedStringArray{"current_deck", "next_card_options", "next_card_index"};
+	return PackedStringArray{};
 }
 TypedArray<JigsawParameter> JigsawProcedureVariantBuildDeck::get_results() const {
 	return Array::make(
-		JigsawParameterCard::make(enums::CardDef::NONE)
+		JigsawParameterOrderedList::make_template(Array::make(
+			JigsawParameterCard::make(enums::CardDef::NONE)
+		))
 	);
 }
 PackedStringArray JigsawProcedureVariantBuildDeck::get_result_names() const {
-	return PackedStringArray{"selected_card"};
+	return PackedStringArray{"deck"};
 }
 
 void JigsawProcedureVariantValidateDeck::_bind_methods() {}
@@ -483,14 +477,14 @@ PackedStringArray JigsawProcedureVariantValidateDeck::get_argument_names() const
 }
 TypedArray<JigsawParameter> JigsawProcedureVariantValidateDeck::get_results() const {
 	return Array::make(
+		JigsawParameterBoolean::make(false),
 		JigsawParameterOrderedList::make_template(Array::make(
 			JigsawParameterCard::make(enums::CardDef::NONE)
-		)),
-		JigsawParameterAmount::make(-1)
+		))
 	);
 }
 PackedStringArray JigsawProcedureVariantValidateDeck::get_result_names() const {
-	return PackedStringArray{"next_card_options", "next_card_index"};
+	return PackedStringArray{"valid_as_is", "next_card_options"};
 }
 
 void JigsawProcedureVariantMain::_bind_methods() {}
