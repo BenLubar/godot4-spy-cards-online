@@ -3,6 +3,7 @@
 
 #include "dry.h"
 
+#include <godot_cpp/classes/hashing_context.hpp>
 #include <godot_cpp/classes/multi_mesh.hpp>
 
 struct AudienceMember_t {
@@ -39,6 +40,7 @@ public:
 	void cheer_right(uint8_t repeats);
 
 	void assign(const Ref<Audience> &audience);
+	void write_hash(const Ref<HashingContext> &hash) const;
 
 	DEFAULT_TO_STRING();
 };

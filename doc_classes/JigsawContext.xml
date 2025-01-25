@@ -50,6 +50,16 @@
 			<description>
 			</description>
 		</method>
+		<method name="run_async">
+			<return type="JigsawError" />
+			<param index="0" name="procedure" type="JigsawProcedure" />
+			<param index="1" name="args" type="JigsawParameter[]" />
+			<param index="2" name="results" type="JigsawParameter[]" />
+			<param index="3" name="callback" type="Callable" />
+			<param index="4" name="max_steps" type="int" default="10000" />
+			<description>
+			</description>
+		</method>
 		<method name="set_local_variable">
 			<return type="JigsawError" />
 			<param index="0" name="variable" type="JigsawParameterLocalVariable" />
@@ -77,6 +87,8 @@
 		<member name="procedure" type="JigsawProcedure" setter="set_procedure" getter="get_procedure">
 		</member>
 		<member name="results" type="JigsawParameter[]" setter="set_results" getter="get_results" default="[]">
+		</member>
+		<member name="results_callback" type="Callable" setter="set_results_callback" getter="get_results_callback" default="Callable()">
 		</member>
 		<member name="rng" type="RNG" setter="set_rng" getter="get_rng">
 		</member>

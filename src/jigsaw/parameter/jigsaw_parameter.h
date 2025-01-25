@@ -63,6 +63,6 @@ DECLARE_ENUM(JigsawParameter::Type);
 
 // TODO: https://github.com/godotengine/godot-cpp/issues/1684
 //using VariableParameterDict = TypedDictionary<enums::VariableDef::Variable, JigsawParameter>;
-using VariableParameterDict = TypedDictionary<int, JigsawParameter>;
+using VariableParameterDict = TypedDictionary<int32_t, JigsawParameter>;
 
 #endif // JIGSAW_PARAMETER_H

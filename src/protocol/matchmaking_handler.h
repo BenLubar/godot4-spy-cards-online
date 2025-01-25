@@ -108,6 +108,8 @@ public:
 	void _start_match();
 	void _on_connection_encountered_fatal_error(const String &message, MatchmakingConnection *conn);
 
+	void _physics_process(double p_delta) override;
+
 	BitField<ButtonInputHistory::InputButton> get_player_realtime_inputs(int32_t side, int64_t frame) const override;
 	void update_player_realtime_inputs(int64_t frame) override;
 	void on_jigsaw_error(const Ref<JigsawError> &err) override;

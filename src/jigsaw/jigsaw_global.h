@@ -52,6 +52,7 @@ public:
 	~JigsawGlobal();
 
 	void init_sides();
+	void next_frame();
 
 	void run_procedure_sync(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &arguments, const TypedArray<JigsawParameter> &results, const Ref<RNG> &rng, const Ref<JigsawContext> &parent = Ref<JigsawContext>());
 	void run_select(int64_t side, const Ref<JigsawProcedure> &procedure, const Callable &callback);

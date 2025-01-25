@@ -49,7 +49,7 @@ bool JigsawCommandCharacter::allowed_in_mode(enums::JigsawProcedure::Mode mode, 
 	ERR_FAIL_V(false);
 }
 JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
-	static LazyGlobal<GDScript> character_sprite_script([]() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://stage/character_sprite.gd", "GDScript"); });
+	static LazyGlobalFile<GDScript> character_sprite_script{"res://stage/character_sprite.gd"};
 
 	switch (_operation) {
 	case CREATE:

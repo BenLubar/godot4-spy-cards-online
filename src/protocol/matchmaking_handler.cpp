@@ -21,8 +21,8 @@
 
 // TODO: convert ERR_FAIL macros to send errors to the match
 
-static LazyGlobal<GDScript> FILE_REQUESTER{ []() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://api/file_requester.gd"); } };
-static LazyGlobal<GDScript> AUDIENCE_MESH{ []() -> Ref<GDScript> { return ResourceLoader::get_singleton()->load("res://stage/audience_mesh.gd"); } };
+static LazyGlobalFile<GDScript> FILE_REQUESTER{"res://api/file_requester.gd"};
+static LazyGlobalFile<GDScript> AUDIENCE_MESH{"res://stage/audience_mesh.gd"};
 static LazyPredefined<PackedScene> MATCH_SETUP{"MATCH_SETUP"};
 static LazyPredefined<PackedScene> NETWORK_OVERLAY{"NETWORK_OVERLAY"};
 static LazyPredefined<PackedScene> CRASH_HANDLER{"CRASH_HANDLER"};
@@ -677,6 +677,12 @@ void MatchmakingHandler::_on_connection_encountered_fatal_error(const String &me
 
 	crash_handler->connect("cleanup", callable_mp(static_cast<Node *>(this), &Node::queue_free));
 	crash_handler->call("set_generic_error", message);
+}
+
+void MatchmakingHandler::_physics_process(double p_delta) {
+	if (likely(_state > CONSENT && _global)) {
+		_global->next_frame();
+	}
 }
 
 BitField<ButtonInputHistory::InputButton> MatchmakingHandler::get_player_realtime_inputs(int32_t side, int64_t frame) const {

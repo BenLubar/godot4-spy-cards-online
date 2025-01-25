@@ -26,6 +26,7 @@ void CardInstance::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("description_requires_update"), &CardInstance::description_requires_update);
 	ClassDB::bind_method(D_METHOD("get_design", "global"), &CardInstance::get_design);
 	ClassDB::bind_method(D_METHOD("assign", "instance"), &CardInstance::assign);
+	ClassDB::bind_method(D_METHOD("write_hash", "hash"), &CardInstance::write_hash);
 
 	ClassDB::bind_static_method("CardInstance", D_METHOD("make", "global", "def"), &CardInstance::make);
 }

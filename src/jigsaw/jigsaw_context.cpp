@@ -21,12 +21,14 @@ void JigsawContext::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawStackFrame, stack);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, arguments);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, results);
+	BIND_PROPERTY(Variant::CALLABLE, results_callback);
 	BIND_PROPERTY(Variant::INT, step_limit_remaining);
 
 	ClassDB::bind_method(D_METHOD("set_local_variable", "variable", "value", "debug_name"), &JigsawContext::set_local_variable);
 	ClassDB::bind_method(D_METHOD("set_persistent_variable", "variable", "value", "debug_name"), &JigsawContext::set_persistent_variable);
 	ClassDB::bind_method(D_METHOD("evaluate", "procedure", "args", "results", "max_steps"), &JigsawContext::evaluate, DEFVAL(DEFAULT_MAX_STEPS));
 	ClassDB::bind_method(D_METHOD("run", "procedure", "args", "max_steps"), &JigsawContext::run, DEFVAL(DEFAULT_MAX_STEPS));
+	ClassDB::bind_method(D_METHOD("run_async", "procedure", "args", "results", "callback", "max_steps"), &JigsawContext::run_async, DEFVAL(DEFAULT_MAX_STEPS));
 	ClassDB::bind_method(D_METHOD("continue_run", "max_steps"), &JigsawContext::continue_run, DEFVAL(DEFAULT_MAX_STEPS));
 	ClassDB::bind_method(D_METHOD("is_in_progress"), &JigsawContext::is_in_progress);
 	ClassDB::bind_method(D_METHOD("create_error", "message", "params", "include_global_snapshot"), &JigsawContext::create_error, DEFVAL(TypedArray<JigsawParameter>()), DEFVAL(false));
@@ -41,6 +43,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Ref<RNG>, rng);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawStackFrame>, stack);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, arguments);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, TypedArray<JigsawParameter>, results);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, Callable, results_callback);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawContext, int64_t, step_limit_remaining);
 
 Ref<JigsawError> JigsawContext::append_stack_frame(const Ref<JigsawCommandList> &commands, int64_t branch, const TypedArray<JigsawParameter> &args) {
@@ -404,8 +407,6 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 	ERR_FAIL_COND_V(is_in_progress(), create_error("internal error: a procedure was already running in this context"));
 	ERR_FAIL_COND_V(procedure.is_null(), create_error("internal error: null procedure"));
 
-	get_global()->set_pause_frames(0);
-
 	set_procedure(procedure);
 	set_arguments(args);
 	set_results(TypedArray<JigsawParameter>());
@@ -430,10 +431,42 @@ Ref<JigsawError> JigsawContext::run(const Ref<JigsawProcedure> &procedure, const
 		return err;
 	}
 }
-Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
-	ERR_FAIL_COND_V(!is_in_progress(), create_error("internal error: no procedure was running in this context"));
+Ref<JigsawError> JigsawContext::run_async(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, const Callable &callback, int64_t max_steps) {
+	ERR_FAIL_COND_V(is_in_progress(), create_error("internal error: a procedure was already running in this context"));
+	ERR_FAIL_COND_V(procedure.is_null(), create_error("internal error: null procedure"));
 
 	get_global()->set_pause_frames(0);
+
+	set_procedure(procedure);
+	set_arguments(args);
+	set_results(results);
+	set_results_callback(callback);
+	set_step_limit_remaining(max_steps);
+
+	Ref<JigsawError> err = append_stack_frame(procedure->get_commands(), -1);
+	if (err.is_valid()) {
+		return err;
+	}
+
+	for (;;) {
+		JigsawExecutionState state = evaluate_next(err, true);
+		if (likely(state == JigsawExecutionState::CONTINUE)) {
+			continue;
+		}
+
+		if (unlikely(state == JigsawExecutionState::PAUSE)) {
+			return Ref<JigsawError>();
+		}
+
+		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
+		if (state == JigsawExecutionState::DONE) {
+			callback.callv(get_results());
+		}
+		return err;
+	}
+}
+Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
+	ERR_FAIL_COND_V(!is_in_progress(), create_error("internal error: no procedure was running in this context"));
 
 	Ref<JigsawError> err;
 	bool new_command = false;
@@ -450,6 +483,9 @@ Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
 		}
 
 		ERR_FAIL_COND_V(state != JigsawExecutionState::DONE && state != JigsawExecutionState::ERROR, err); // redundant condition for error message
+		if (state == JigsawExecutionState::DONE && get_results_callback().is_valid()) {
+			get_results_callback().callv(get_results());
+		}
 		return err;
 	}
 }

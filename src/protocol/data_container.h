@@ -163,6 +163,8 @@ private:
 	bool _encode_jigsaw_command_list(const Ref<FormatHelper> &fh, const Ref<JigsawCommandList> &commands) const;
 	bool _decode_jigsaw_command(const Ref<FormatHelper> &fh, Ref<JigsawCommand> &command);
 	bool _encode_jigsaw_command(const Ref<FormatHelper> &fh, const Ref<JigsawCommand> &command) const;
+
+public: // these are used by jigsaw state hashing
 	bool _decode_jigsaw_parameter(const Ref<FormatHelper> &fh, Ref<JigsawParameter> &parameter);
 	bool _encode_jigsaw_parameter(const Ref<FormatHelper> &fh, const Ref<JigsawParameter> &parameter) const;
 

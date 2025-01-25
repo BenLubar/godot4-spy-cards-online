@@ -45,6 +45,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="write_hash" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="hash" type="HashingContext" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="back" type="int" setter="set_back" getter="get_back" enum="IconDef.Icon" default="-1">

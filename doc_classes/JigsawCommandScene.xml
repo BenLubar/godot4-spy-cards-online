@@ -24,5 +24,7 @@
 		</constant>
 		<constant name="GET_PROPERTY_FLOAT" value="1" enum="Operation">
 		</constant>
+		<constant name="INSTANTIATE" value="2" enum="Operation">
+		</constant>
 	</constants>
 </class>

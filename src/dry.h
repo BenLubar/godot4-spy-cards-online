@@ -2,6 +2,7 @@
 #define DRY_H
 
 #include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/variant/variant.hpp>
 
 #include <godot_cpp/core/binder_common.hpp>
@@ -213,6 +214,14 @@ public:
 	T *operator*() const { _maybe_init(); return _ref.ptr(); }
 	T *operator->() const { _maybe_init(); return _ref.ptr(); }
 	void operator=(const Ref<T> &ref) { _ref = ref; }
+};
+
+template<typename T>
+class LazyGlobalFile : public LazyGlobal<T> {
+public:
+	LazyGlobalFile(const char *const path) : LazyGlobal<T>([path]() -> Ref<T> {
+		return ResourceLoader::get_singleton()->load(path, T::get_class_static());
+	}) {}
 };
 
 template<typename T>

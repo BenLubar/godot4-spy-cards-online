@@ -3,6 +3,8 @@
 
 #include "dry.h"
 
+#include <godot_cpp/classes/hashing_context.hpp>
+
 #include "jigsaw/jigsaw_side.h"
 #include "jigsaw/parameter/jigsaw_parameter.h"
 #include "active/audience.h"
@@ -21,6 +23,7 @@ public:
 	DECLARE_PROPERTY(Ref<Audience>, audience);
 
 	void assign(const Ref<JigsawState> &state);
+	void write_hash(const Ref<HashingContext> &hash) const;
 };
 
 #endif // JIGSAW_STATE_H

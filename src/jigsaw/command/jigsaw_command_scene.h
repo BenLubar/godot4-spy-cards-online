@@ -10,6 +10,7 @@ public:
 	enum Operation {
 		GET_PROPERTY_STRING = 0,
 		GET_PROPERTY_FLOAT = 1,
+		INSTANTIATE = 2,
 	};
 
 protected:

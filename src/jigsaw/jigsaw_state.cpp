@@ -7,6 +7,7 @@ void JigsawState::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(Audience, audience);
 
 	ClassDB::bind_method(D_METHOD("assign", "state"), &JigsawState::assign);
+	ClassDB::bind_method(D_METHOD("write_hash", "hash"), &JigsawState::write_hash);
 }
 
 IMPLEMENT_PROPERTY(JigsawState, TypedArray<CardInstance>, cards);

@@ -1,13 +1,29 @@
 #include "jigsaw_command_scene.h"
 
+#include <godot_cpp/classes/gd_script.hpp>
+#include <godot_cpp/classes/gltf_document.hpp>
+#include <godot_cpp/classes/light3d.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/sub_viewport.hpp>
+
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/jigsaw_visual.h"
 #include "jigsaw/parameter/jigsaw_parameter_file_id_gltf.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"
 #include "jigsaw/parameter/jigsaw_parameter_scene_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_string.h"
+#include "util/player_preferences_helper.h"
+
+static LazyGlobalFile<GDScript> FILE_REQUEST{"res://api/file_request.gd"};
+static LazyGlobal<GLTFDocument> GLTF_DOCUMENT{ []() -> Ref<GLTFDocument> {
+	ERR_FAIL_NULL_V(*FILE_REQUEST, Ref<GLTFDocument>());
+	return FILE_REQUEST->get("_gltf_document");
+} };
 
 void JigsawCommandScene::_bind_methods() {
 	BIND_ENUM_CONSTANT(GET_PROPERTY_STRING);
 	BIND_ENUM_CONSTANT(GET_PROPERTY_FLOAT);
+	BIND_ENUM_CONSTANT(INSTANTIATE);
 
 	BIND_PROPERTY_ENUM(JigsawCommandScene::Operation, operation);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, scene);
@@ -96,6 +112,46 @@ JigsawExecutionState JigsawCommandScene::evaluate(const Ref<JigsawContext> &cont
 
 		return set_command_result(context, err, 0, JigsawParameterFloat::make(value));
 	}
+	case INSTANTIATE:
+	{
+		Ref<JigsawParameterScene> scene_id;
+		err = context->resolve_variable(_scene, scene_id, "scene_id");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		Node *scene = GLTF_DOCUMENT->generate_scene(scene_id->get_scene());
+
+		// TODO!
+		TypedArray<Node> children = scene->find_children("*");
+		for (int64_t i = 0; i < children.size(); i++) {
+			Light3D *light = Object::cast_to<Light3D>(children[i]);
+			if (light) {
+				// make all lights static for GI
+				light->set_bake_mode(Light3D::BAKE_STATIC);
+
+				// enable shadows on lights where shadows are requested
+				if (likely(*FILE_REQUEST) && FILE_REQUEST->call("_check_suffix", light->get_name(), "shadow")) {
+					light->set_shadow(PlayerPreferences::shadows());
+				}
+			}
+		}
+
+		// TODO!!!
+		context->get_global()->get_visual()->get_stage_viewport()->add_child(scene);
+
+		// TODO!!!!!
+		if (scene_id->get_json_data().has("clear_color") && scene_id->get_json_data().get("clear_color", Variant()).get_type() == Variant::STRING) {
+			context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment()->set_background(Environment::BG_COLOR);
+			context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment()->set_bg_color(scene_id->get_json_data().get("clear_color", Variant()).stringify());
+		} else {
+			context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment()->set_background(Environment::BG_CLEAR_COLOR);
+		}
+		context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment()->set_ambient_light_sky_contribution(scene_id->get_json_data().get("ambient_light_intensity", 1.0f));
+
+		// TODO
+		return set_command_result(context, err, 0, JigsawParameterSceneInstance::make(-1));
+	}
 	}
 
 	err = context->create_error(vformat("internal error: unhandled scene operation %s", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawCommandScene", "Operation", _operation)));
@@ -132,10 +188,12 @@ PackedStringArray JigsawCommandScene::get_config_options(int64_t i) const {
 	// If these asserts fail, you have broken compatibility with existing game modes.
 	static_assert(GET_PROPERTY_STRING == 0);
 	static_assert(GET_PROPERTY_FLOAT == 1);
+	static_assert(INSTANTIATE == 2);
 
 	return PackedStringArray{
 		"Get property (string)",
 		"Get property (float)",
+		"Instantiate",
 	};
 }
 
@@ -144,6 +202,8 @@ int64_t JigsawCommandScene::get_num_arguments() const {
 	case GET_PROPERTY_STRING:
 	case GET_PROPERTY_FLOAT:
 		return 3;
+	case INSTANTIATE:
+		return 1;
 	}
 
 	return 0;
@@ -162,9 +222,14 @@ Ref<JigsawParameter> JigsawCommandScene::get_argument(int64_t i) const {
 			return _default_value;
 		}
 		break;
+	case INSTANTIATE:
+		if (i == 0) {
+			return _scene;
+		}
+		break;
 	}
 
-	return Ref<JigsawParameter>();
+	ERR_FAIL_V(Ref<JigsawParameter>());
 }
 TypedArray<JigsawParameter> JigsawCommandScene::get_argument_template(int64_t i, const Ref<JigsawContext> &context) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), TypedArray<JigsawParameter>());
@@ -188,9 +253,14 @@ TypedArray<JigsawParameter> JigsawCommandScene::get_argument_template(int64_t i,
 			return Array::make(JigsawParameterFloat::make(0.0));
 		}
 		break;
+	case INSTANTIATE:
+		if (i == 0) {
+			return Array::make(JigsawParameterFileIDGLTF::make(PackedByteArray(), Dictionary()));
+		}
+		break;
 	}
 
-	return TypedArray<JigsawParameter>();
+	ERR_FAIL_V(TypedArray<JigsawParameter>());
 }
 void JigsawCommandScene::set_argument(int64_t i, const Ref<JigsawParameter> &arg) {
 	ERR_FAIL_INDEX(i, get_num_arguments());
@@ -201,15 +271,27 @@ void JigsawCommandScene::set_argument(int64_t i, const Ref<JigsawParameter> &arg
 		if (i == 0) {
 			_scene = arg;
 			emit_changed();
+			return;
 		} else if (i == 1) {
 			_property_name = arg;
 			emit_changed();
+			return;
 		} else if (i == 2) {
 			_default_value = arg;
 			emit_changed();
+			return;
+		}
+		break;
+	case INSTANTIATE:
+		if (i == 0) {
+			_scene = arg;
+			emit_changed();
+			return;
 		}
 		break;
 	}
+
+	ERR_FAIL();
 }
 String JigsawCommandScene::get_argument_name(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), "");
@@ -225,19 +307,25 @@ String JigsawCommandScene::get_argument_name(int64_t i) const {
 			return "default_value";
 		}
 		break;
+	case INSTANTIATE:
+		if (i == 0) {
+			return "scene_id";
+		}
+		break;
 	}
 
-	return "";
+	ERR_FAIL_V("");
 }
 
 int64_t JigsawCommandScene::get_num_results() const {
 	switch (_operation) {
 	case GET_PROPERTY_STRING:
 	case GET_PROPERTY_FLOAT:
+	case INSTANTIATE:
 		return 1;
 	}
 
-	return 0;
+	ERR_FAIL_V(0);
 }
 Ref<JigsawParameterLocalVariable> JigsawCommandScene::get_result(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_results(), Ref<JigsawParameterLocalVariable>());
@@ -252,6 +340,8 @@ TypedArray<JigsawParameter> JigsawCommandScene::get_result_template(int64_t i, c
 		return Array::make(JigsawParameterString::make(""));
 	case GET_PROPERTY_FLOAT:
 		return Array::make(JigsawParameterFloat::make(0.0));
+	case INSTANTIATE:
+		return Array::make(JigsawParameterSceneInstance::make(-1));
 	}
 
 	return TypedArray<JigsawParameter>();
@@ -272,7 +362,12 @@ String JigsawCommandScene::get_result_name(int64_t i) const {
 			return "value";
 		}
 		break;
+	case INSTANTIATE:
+		if (i == 0) {
+			return "scene";
+		}
+		break;
 	}
 
-	return "";
+	ERR_FAIL_V("");
 }

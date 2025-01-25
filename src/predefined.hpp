@@ -12,9 +12,7 @@ struct PredefinedScriptKey {
 	}
 
 inline Ref<GDScript> get_predefined_defs() {
-	static LazyGlobal<GDScript> defs{ []() -> Ref<GDScript> {
-		return ResourceLoader::get_singleton()->load("res://predefined/predefined.gd", "GDScript");
-	} };
+	static LazyGlobalFile<GDScript> defs{"res://predefined/predefined.gd"};
 
 	return defs;
 }

@@ -41,6 +41,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<JigsawStackFrame>, stack);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, arguments);
 	DECLARE_PROPERTY(TypedArray<JigsawParameter>, results);
+	DECLARE_PROPERTY(Callable, results_callback);
 	DECLARE_PROPERTY(int64_t, step_limit_remaining, = 0);
 
 public:
@@ -58,6 +59,7 @@ private:
 public:
 	Ref<JigsawError> evaluate(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, int64_t max_steps = DEFAULT_MAX_STEPS);
 	Ref<JigsawError> run(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, int64_t max_steps = DEFAULT_MAX_STEPS);
+	Ref<JigsawError> run_async(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &args, const TypedArray<JigsawParameter> &results, const Callable &callback, int64_t max_steps = DEFAULT_MAX_STEPS);
 	Ref<JigsawError> continue_run(int64_t max_steps = DEFAULT_MAX_STEPS);
 	bool is_in_progress() const;
 	Ref<JigsawError> create_error(const String &message, const TypedArray<JigsawParameter> &params = TypedArray<JigsawParameter>(), bool include_global_snapshot = false) const;

@@ -34,6 +34,7 @@ void JigsawGlobal::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("current_effect_changed"));
 
 	ClassDB::bind_method(D_METHOD("init_sides"), &JigsawGlobal::init_sides);
+	ClassDB::bind_method(D_METHOD("next_frame"), &JigsawGlobal::next_frame);
 
 	ClassDB::bind_method(D_METHOD("run_procedure_sync", "procedure", "arguments", "results", "rng", "parent"), &JigsawGlobal::run_procedure_sync, DEFVAL(Ref<JigsawContext>()));
 	ClassDB::bind_method(D_METHOD("run_select", "side", "procedure", "callback"), &JigsawGlobal::run_select);
@@ -108,6 +109,25 @@ void JigsawGlobal::init_sides() {
 	_state->set_sides(sides);
 }
 
+void JigsawGlobal::next_frame() {
+	while (!_context_stack.is_empty()) {
+		Ref<JigsawContext> top = _context_stack.back();
+		ERR_FAIL_COND(!top->is_in_progress());
+
+		Ref<JigsawError> err = top->continue_run();
+		if (unlikely(err.is_valid())) {
+			_input_source->on_jigsaw_error(err);
+			return;
+		}
+
+		if (likely(top->is_in_progress())) {
+			break;
+		}
+
+		_context_stack.pop_back();
+	}
+}
+
 void JigsawGlobal::run_procedure_sync(const Ref<JigsawProcedure> &procedure, const TypedArray<JigsawParameter> &arguments, const TypedArray<JigsawParameter> &results, const Ref<RNG> &rng, const Ref<JigsawContext> &parent) {
 	Ref<JigsawContext> context = JigsawContext::make(this, parent);
 	context->set_rng(rng);
@@ -124,9 +144,23 @@ void JigsawGlobal::run_procedure_sync(const Ref<JigsawProcedure> &procedure, con
 }
 
 void JigsawGlobal::run_select(int64_t side, const Ref<JigsawProcedure> &procedure, const Callable &callback) {
+	TypedArray<JigsawParameter> arguments = Array::make(
+		JigsawParameterAmount::make(side)
+	);
 	TypedArray<JigsawParameter> results = procedure->get_results().duplicate();
-	run_procedure_sync(procedure, Array(), results, Ref<RNG>()); // TODO
-	callback.callv(results);
+
+	Ref<JigsawContext> context = JigsawContext::make(this, Ref<JigsawContext>());
+	_context_stack.append(context);
+
+	Ref<JigsawError> err = context->run_async(procedure, arguments, results, callback);
+	if (unlikely(err.is_valid())) {
+		_input_source->on_jigsaw_error(err);
+	}
+
+	if (!context->is_in_progress()) {
+		ERR_FAIL_COND(_context_stack.back() != context);
+		_context_stack.pop_back();
+	}
 }
 
 void JigsawGlobal::run_mode_init(uint64_t timestamp, const PackedByteArray &shared_seed) {

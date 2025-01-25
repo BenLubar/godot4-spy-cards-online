@@ -10,6 +10,7 @@ void Audience::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("cheer_left", "repeats"), &Audience::cheer_left);
 	ClassDB::bind_method(D_METHOD("cheer_right", "repeats"), &Audience::cheer_right);
 	ClassDB::bind_method(D_METHOD("assign", "audience"), &Audience::assign);
+	ClassDB::bind_method(D_METHOD("write_hash", "hash"), &Audience::write_hash);
 }
 
 IMPLEMENT_PROPERTY_ONCHANGE(Audience, TypedArray<MultiMesh>, meshes, _members.resize(new_meshes.size()));

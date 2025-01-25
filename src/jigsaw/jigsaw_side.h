@@ -6,6 +6,8 @@
 #include "enums/enums_card_def.h"
 #include "enums/enums_character_def.h"
 
+#include <godot_cpp/classes/hashing_context.hpp>
+
 class JigsawSide;
 
 #include "defs/numeric_value.h"
@@ -29,6 +31,7 @@ public:
 	DECLARE_PROPERTY(VariableParameterDict, variables);
 
 	void assign(const Ref<JigsawSide> &side);
+	void write_hash(const Ref<HashingContext> &hash) const;
 
 	DEFAULT_TO_STRING();
 };

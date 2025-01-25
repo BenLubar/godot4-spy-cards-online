@@ -12,6 +12,11 @@
 			<description>
 			</description>
 		</method>
+		<method name="next_frame">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
 		<method name="run_character_select">
 			<return type="void" />
 			<param index="0" name="side" type="int" />

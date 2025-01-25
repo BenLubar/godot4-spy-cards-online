@@ -6,6 +6,8 @@
 #include "enums/enums_icon_def.h"
 #include "enums/enums_rank_def.h"
 
+#include <godot_cpp/classes/hashing_context.hpp>
+
 class CardInstance;
 class JigsawGlobal;
 
@@ -42,6 +44,7 @@ public:
 	bool description_requires_update() const;
 	Ref<CardDesign> get_design(JigsawGlobal *global) const;
 	void assign(const Ref<CardInstance> &instance);
+	void write_hash(const Ref<HashingContext> &hash) const;
 
 	DEFAULT_TO_STRING();
 
