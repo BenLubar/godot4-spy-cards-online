@@ -32,8 +32,8 @@ void DedicatedServerRPC::_ready() {
 	CRASH_SOCKET(_socket == -1, "socket");
 
 	const sockaddr_un name = {
-		.sun_family = AF_UNIX,
-		.sun_path = "/go/src/spy-cards/godot.sock",
+		AF_UNIX,
+		"/go/src/spy-cards/godot.sock",
 	};
 	const int bind_ret = bind(_socket, reinterpret_cast<const sockaddr *>(&name), sizeof(name));
 	CRASH_SOCKET(bind_ret == -1, "bind");
