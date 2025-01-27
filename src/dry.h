@@ -1,6 +1,16 @@
 #ifndef DRY_H
 #define DRY_H
 
+#if defined(__GNUC__) && defined(DEBUG_ENABLED)
+// some warnings that are very useful in development
+// TODO: https://github.com/godotengine/godot-cpp/pull/1693
+//#pragma GCC diagnostic error "-Wdouble-promotion"
+#pragma GCC diagnostic error "-Wimplicit-fallthrough"
+#pragma GCC diagnostic error "-Winit-self"
+#pragma GCC diagnostic error "-Wsequence-point"
+#pragma GCC diagnostic error "-Wswitch"
+#endif
+
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/variant/variant.hpp>
@@ -8,6 +18,7 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
 #include <godot_cpp/variant/variant_internal.hpp>
+#include <godot_cpp/variant/typed_dictionary.hpp>
 
 #include <functional>
 

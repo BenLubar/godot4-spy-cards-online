@@ -20,8 +20,8 @@ void Audience::update(Vector2i dir) {
 		Ref<MultiMesh> mesh = _meshes[i];
 		ERR_CONTINUE(mesh.is_null());
 
-		int64_t mesh_instances = next_power_of_2(_members[i].size());
-		if (unlikely(mesh->get_instance_count() != next_power_of_2(_members[i].size()))) {
+		int32_t mesh_instances = next_power_of_2(_members[i].size());
+		if (unlikely(mesh->get_instance_count() != mesh_instances)) {
 			mesh->set_instance_count(mesh_instances);
 		}
 

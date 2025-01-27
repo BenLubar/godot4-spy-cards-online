@@ -40,6 +40,7 @@ bool JigsawCommandCharacter::allowed_in_mode(enums::JigsawProcedure::Mode mode, 
 	case INIT:
 	case MAIN:
 	case SELECT:
+	case VISUAL:
 	case CHOICE_PREVIEW:
 	case REALTIME_LOGIC:
 	case REALTIME_VISUAL:

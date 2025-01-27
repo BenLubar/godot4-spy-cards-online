@@ -26,6 +26,7 @@ bool JigsawCommandSetVariable::allowed_in_mode(enums::JigsawProcedure::Mode mode
 	case MAIN:
 		return true;
 	case SELECT:
+	case VISUAL:
 	case CHOICE_PREVIEW:
 		return !_persistent;
 	case REALTIME_LOGIC:

@@ -137,6 +137,7 @@
 #include "protocol/button_input_history.h"
 #include "legacy/legacy_parse.h"
 #include "protocol/deck.h"
+#include "protocol/dedicated_server_rpc.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/godot.hpp>
@@ -321,6 +322,10 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_ABSTRACT_CLASS(ButtonInputHistory);
 	GDREGISTER_ABSTRACT_CLASS(LegacyParse);
 	GDREGISTER_ABSTRACT_CLASS(Deck);
+#ifdef UNIX_ENABLED
+	GDREGISTER_CLASS(DedicatedServerRPC);
+	GDREGISTER_INTERNAL_CLASS(DedicatedServerRPCConnection);
+#endif
 }
 
 Vector<std::function<void()>> _free_lazy_globals;

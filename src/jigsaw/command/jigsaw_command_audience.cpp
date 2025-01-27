@@ -49,6 +49,7 @@ bool JigsawCommandAudience::allowed_in_mode(enums::JigsawProcedure::Mode mode, b
 	case MAIN:
 		return true;
 	case SELECT:
+	case VISUAL:
 	case CHOICE_PREVIEW:
 		return false;
 	case REALTIME_LOGIC:

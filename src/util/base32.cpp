@@ -127,16 +127,16 @@ String Base32::encode(const PackedByteArray &data) const {
 		val |= uint32_t(data[si + 3]);
 		dst[di + 6] = encode[(val << 3) & 0x1f];
 		dst[di + 5] = encode[(val >> 2) & 0x1f];
-		// fallthrough
+		[[fallthrough]];
 	case 3:
 		val |= uint32_t(data[si + 2]) << 8;
 		dst[di + 4] = encode[(val >> 7) & 0x1f];
-		// fallthrough
+		[[fallthrough]];
 	case 2:
 		val |= uint32_t(data[si + 1]) << 16;
 		dst[di + 3] = encode[(val >> 12) & 0x1f];
 		dst[di + 2] = encode[(val >> 17) & 0x1f];
-		// fallthrough
+		[[fallthrough]];
 	case 1:
 		val |= uint32_t(data[si + 0]) << 24;
 		dst[di + 1] = encode[(val >> 22) & 0x1f];
