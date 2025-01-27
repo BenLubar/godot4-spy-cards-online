@@ -9,7 +9,10 @@ env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp") + Glob("src/*/*.cpp") + Glob("src/*/*/*.cpp")
 
 if env["target"] == "template_debug":
-    env.Append(CXXFLAGS=["-Werror"])
+    if env.get("is_msvc", False):
+        env.Append(CXXFLAGS=["/WX"])
+    else:
+        env.Append(CXXFLAGS=["-Werror"])
 
 if env["target"] in ["editor", "template_debug"]:
     try:
