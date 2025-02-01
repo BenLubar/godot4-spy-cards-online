@@ -10,6 +10,7 @@ class JigsawVisual;
 
 #include <godot_cpp/classes/audio_effect_spectrum_analyzer_instance.hpp>
 #include <godot_cpp/classes/camera_attributes_practical.hpp>
+#include <godot_cpp/classes/color_rect.hpp>
 #include <godot_cpp/classes/environment.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/texture2d.hpp>
@@ -47,6 +48,7 @@ public:
 
 private:
 	CanvasLayer *_stage_layer = nullptr;
+	ColorRect *_stage_compatibility_background_color = nullptr;
 	TextureRect *_stage_viewport_container = nullptr;
 	Ref<Environment> _stage_environment;
 	Ref<CameraAttributesPractical> _stage_camera_attributes;
@@ -67,6 +69,8 @@ private:
 	Ref<AudioEffectSpectrumAnalyzerInstance> _fft;
 	Vector2 _fft_average;
 	Vector<MultiMeshInstance3D *> _audience_meshes;
+
+	void _set_use_simple_background(bool force_2d);
 
 public:
 	DECLARE_PROPERTY(Ref<Audience>, audience);

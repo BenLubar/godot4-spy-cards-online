@@ -18,6 +18,8 @@
 		</member>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
+		<member name="force_simple_background" type="bool" setter="set_force_simple_background" getter="get_force_simple_background" default="false">
+		</member>
 		<member name="scene_background_color" type="Color" setter="set_scene_background_color" getter="get_scene_background_color" default="Color(0.3, 0.3, 0.3, 1)">
 		</member>
 		<member name="simple_background" type="Texture2D" setter="set_simple_background" getter="get_simple_background">

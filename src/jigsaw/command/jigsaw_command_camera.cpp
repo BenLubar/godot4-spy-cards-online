@@ -1,6 +1,7 @@
 #include "jigsaw/command/jigsaw_command_camera.h"
 
 #include <godot_cpp/classes/environment.hpp>
+#include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/sub_viewport.hpp>
 
 #include "jigsaw/jigsaw_global.h"
@@ -69,13 +70,7 @@ JigsawExecutionState JigsawCommandCamera::evaluate(const Ref<JigsawContext> &con
 			return JigsawExecutionState::ERROR;
 		}
 
-		Ref<Environment> environment = context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment();
-		if (color->get_color().a <= 0.0f) {
-			environment->set_background(Environment::BG_CLEAR_COLOR);
-		} else {
-			environment->set_background(Environment::BG_COLOR);
-			environment->set_bg_color(color->get_color());
-		}
+		context->get_global()->get_visual()->set_scene_background_color(color->get_color());
 
 		return JigsawExecutionState::DONE;
 	}
@@ -92,8 +87,7 @@ JigsawExecutionState JigsawCommandCamera::evaluate(const Ref<JigsawContext> &con
 			return JigsawExecutionState::ERROR;
 		}
 
-		Ref<Environment> environment = context->get_global()->get_visual()->get_stage_viewport()->get_world_3d()->get_environment();
-		environment->set_ambient_light_sky_contribution(intensity->get_value());
+		context->get_global()->get_visual()->set_ambient_light_intensity(intensity->get_value());
 
 		return JigsawExecutionState::DONE;
 	}

@@ -6,7 +6,7 @@
 #include <godot_cpp/classes/directional_light3d.hpp>
 #include <godot_cpp/classes/multi_mesh_instance3d.hpp>
 #include <godot_cpp/classes/physics_body3d.hpp>
-#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/ray_cast3d.hpp>
 #include <godot_cpp/classes/sub_viewport.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
@@ -24,6 +24,7 @@ const double JigsawVisual::HUD_FOV_HORIZONTAL = Math::rad_to_deg(2 * Math::atan(
 
 void JigsawVisual::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(Audience, audience);
+	BIND_PROPERTY(Variant::BOOL, force_simple_background);
 
 	BIND_PROPERTY_RESOURCE(Texture2D, simple_background);
 	BIND_PROPERTY(Variant::BOOL, simple_background_stretch);
@@ -35,13 +36,21 @@ void JigsawVisual::_bind_methods() {
 }
 
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawVisual, Ref<Audience>, audience, _init_audience());
-IMPLEMENT_PROPERTY_ONCHANGE(JigsawVisual, bool, force_simple_background, _stage_simple_background->set_visible(PlayerPreferences::disable_3d() || new_force_simple_background));
+IMPLEMENT_PROPERTY_ONCHANGE(JigsawVisual, bool, force_simple_background, _set_use_simple_background(PlayerPreferences::disable_3d() || new_force_simple_background));
 
 JigsawVisual::JigsawVisual() {
 	_stage_layer = memnew(CanvasLayer);
 	_stage_layer->set_name("StageLayer");
 	_stage_layer->set_layer(-1);
 	add_child(_stage_layer);
+
+	if (RenderingServer::get_singleton()->get_current_rendering_method() == "gl_compatibility") {
+		_stage_compatibility_background_color = memnew(ColorRect);
+		_stage_compatibility_background_color->set_name("StageCompatibilityBackgroundColor");
+		_stage_compatibility_background_color->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+		_stage_compatibility_background_color->set_color(Color(0.0f, 0.0f, 0.0f, 0.0f));
+		_stage_layer->add_child(_stage_compatibility_background_color);
+	}
 
 	_stage_viewport_container = memnew(TextureRect);
 	_stage_viewport_container->set_name("StageViewportContainer");
@@ -55,14 +64,13 @@ JigsawVisual::JigsawVisual() {
 	_stage_environment->set_glow_enabled(true);
 
 	_stage_camera_attributes.instantiate();
-	_stage_camera_attributes->set_dof_blur_near_distance(4.5);
-	_stage_camera_attributes->set_dof_blur_amount(0.25);
+	_stage_camera_attributes->set_dof_blur_near_distance(4.25);
+	_stage_camera_attributes->set_dof_blur_near_transition(2.0);
+	_stage_camera_attributes->set_dof_blur_amount(0.15);
 
 	// certain features are only available on the Vulkan/WebGPU backend
-	if (ProjectSettings::get_singleton()->get_setting("rendering/renderer/rendering_method", "") == "forward_plus") {
+	if (RenderingServer::get_singleton()->get_current_rendering_method() == "forward_plus") {
 		_stage_camera_attributes->set_dof_blur_near_enabled(true);
-		_stage_environment->set_sdfgi_enabled(PlayerPreferences::shadows());
-		_stage_environment->set_ssil_enabled(PlayerPreferences::shadows());
 	}
 
 	_stage_world_3d.instantiate();
@@ -77,8 +85,11 @@ JigsawVisual::JigsawVisual() {
 	_stage_viewport->set_as_audio_listener_3d(true);
 	_stage_viewport->set_handle_input_locally(false);
 	_stage_viewport->set_world_3d(_stage_world_3d);
-	_stage_viewport->set_disable_3d(PlayerPreferences::disable_3d());
 	_stage_viewport_container->add_child(_stage_viewport);
+
+	if (_stage_compatibility_background_color) {
+		_stage_viewport->set_transparent_background(true);
+	}
 
 	_stage_camera_target = memnew(Node3D);
 	_stage_camera_target->set_name("CameraTarget");
@@ -100,7 +111,6 @@ JigsawVisual::JigsawVisual() {
 	_stage_simple_background->set_name("SimpleBackground");
 	_stage_simple_background->set_expand_mode(TextureRect::EXPAND_IGNORE_SIZE);
 	_stage_simple_background->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-	_stage_simple_background->set_visible(PlayerPreferences::disable_3d());
 	_stage_viewport->add_child(_stage_simple_background);
 
 	_hud_environment.instantiate();
@@ -139,6 +149,8 @@ JigsawVisual::JigsawVisual() {
 	_hud_light->set_name("HUDLight");
 	_hud_light->set_bake_mode(Light3D::BAKE_STATIC);
 	add_child(_hud_light);
+
+	_set_use_simple_background(PlayerPreferences::disable_3d());
 }
 
 void JigsawVisual::_ready() {
@@ -264,14 +276,33 @@ void JigsawVisual::set_simple_background_stretch(bool stretch) {
 	_stage_simple_background->set_stretch_mode(stretch ? TextureRect::STRETCH_SCALE : TextureRect::STRETCH_KEEP_ASPECT_COVERED);
 }
 Color JigsawVisual::get_scene_background_color() const {
+	if (_stage_environment->get_background() == Environment::BG_CLEAR_COLOR) {
+		return Color(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+
 	return _stage_environment->get_bg_color();
 }
 void JigsawVisual::set_scene_background_color(Color new_color) {
-	_stage_environment->set_bg_color(new_color);
+	if (new_color.a <= 0.0f) {
+		_stage_environment->set_background(Environment::BG_CLEAR_COLOR);
+	} else {
+		_stage_environment->set_background(Environment::BG_COLOR);
+		_stage_environment->set_bg_color(new_color);
+	}
+
+	if (_stage_compatibility_background_color) {
+		// we need to make glow not affect the background color, just like in the higher fidelity render modes
+		_stage_compatibility_background_color->set_color(new_color);
+	}
 }
 float JigsawVisual::get_ambient_light_intensity() const {
 	return _stage_environment->get_ambient_light_sky_contribution();
 }
 void JigsawVisual::set_ambient_light_intensity(float new_intensity) {
 	_stage_environment->set_ambient_light_sky_contribution(new_intensity);
+}
+
+void JigsawVisual::_set_use_simple_background(bool force_2d) {
+	_stage_simple_background->set_visible(force_2d);
+	_stage_viewport->set_disable_3d(force_2d);
 }
