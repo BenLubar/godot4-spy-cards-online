@@ -1,4 +1,4 @@
-#include "jigsaw_command_ui.h"
+#include "jigsaw/command/jigsaw_command_ui.h"
 
 void JigsawCommandUI::_bind_methods() {
 }

@@ -10,6 +10,7 @@ class JigsawParameter : public Resource {
 
 public:
 	enum Type {
+		SOUND_INSTANCE = -13,
 		CARD_GRID = -12,
 		UI_LABEL_INSTANCE = -11,
 		UI_ICON_INSTANCE = -10,

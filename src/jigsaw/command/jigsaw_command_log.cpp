@@ -1,4 +1,4 @@
-#include "jigsaw_command_log.h"
+#include "jigsaw/command/jigsaw_command_log.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_formatted_text.h"
 

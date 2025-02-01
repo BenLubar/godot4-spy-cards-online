@@ -60,7 +60,6 @@ public:
 	DECLARE_PROPERTY(PackedInt32Array, realtime_inputs);
 	DECLARE_PROPERTY(bool, need_rollback, = false);
 	DECLARE_PROPERTY(Ref<JigsawState>, base_state);
-	DECLARE_PROPERTY(int64_t, current_frame, = -1);
 	DECLARE_PROPERTY(int64_t, base_frame, = -1);
 
 	DECLARE_PROPERTY(bool, handled_fatal_error, = false);

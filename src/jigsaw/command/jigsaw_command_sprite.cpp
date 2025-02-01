@@ -1,4 +1,4 @@
-#include "jigsaw_command_sprite.h"
+#include "jigsaw/command/jigsaw_command_sprite.h"
 
 void JigsawCommandSprite::_bind_methods() {
 }

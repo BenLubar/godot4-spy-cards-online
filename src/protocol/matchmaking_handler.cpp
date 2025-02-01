@@ -63,7 +63,6 @@ void MatchmakingHandler::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_INT32_ARRAY, realtime_inputs);
 	BIND_PROPERTY(Variant::BOOL, need_rollback);
 	BIND_PROPERTY_RESOURCE(JigsawState, base_state);
-	BIND_PROPERTY(Variant::INT, current_frame);
 	BIND_PROPERTY(Variant::INT, base_frame);
 
 	BIND_PROPERTY(Variant::BOOL, handled_fatal_error);
@@ -162,7 +161,6 @@ IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, JigsawGlobal *, global);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, PackedInt32Array, realtime_inputs);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, bool, need_rollback);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, Ref<JigsawState>, base_state);
-IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, int64_t, current_frame);
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, int64_t, base_frame);
 
 IMPLEMENT_PROPERTY_SIMPLE(MatchmakingHandler, bool, handled_fatal_error);
@@ -583,7 +581,7 @@ void MatchmakingHandler::realtime_update(int64_t acknowledge_frame, int64_t star
 	conn->set_frame_ack(acknowledge_frame);
 
 	int32_t last_known_input = rti[last_known_frame];
-	for (int64_t i = last_known_frame + 1; i < rti.size() && i <= get_current_frame(); i++) {
+	for (int64_t i = last_known_frame + 1; i < rti.size() && i <= _global->get_current_frame(); i++) {
 		if (last_known_input != rti[i]) {
 			set_need_rollback(true);
 			break;

@@ -471,6 +471,8 @@ Ref<JigsawError> JigsawContext::continue_run(int64_t max_steps) {
 	Ref<JigsawError> err;
 	bool new_command = false;
 
+	set_step_limit_remaining(max_steps);
+
 	for (;;) {
 		JigsawExecutionState state = evaluate_next(err, new_command);
 		new_command = true;

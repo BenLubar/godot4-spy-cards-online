@@ -11,6 +11,8 @@
 		</member>
 	</members>
 	<constants>
+		<constant name="SOUND_INSTANCE" value="-13" enum="Type">
+		</constant>
 		<constant name="CARD_GRID" value="-12" enum="Type">
 		</constant>
 		<constant name="UI_LABEL_INSTANCE" value="-11" enum="Type">

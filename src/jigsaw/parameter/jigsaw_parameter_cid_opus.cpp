@@ -1,5 +1,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_cid_opus.h"
 
+#include "util/base32.h"
+
 void JigsawParameterCIDOpus::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, cid);
 
@@ -7,6 +9,10 @@ void JigsawParameterCIDOpus::_bind_methods() {
 }
 
 IMPLEMENT_PROPERTY(JigsawParameterCIDOpus, PackedByteArray, cid);
+
+String JigsawParameterCIDOpus::_to_string() const {
+	return Base32::encode_cid(get_cid());
+}
 
 Ref<JigsawParameterCIDOpus> JigsawParameterCIDOpus::make(PackedByteArray cid, float loop_start, float loop_end) {
 	Ref<JigsawParameterCIDOpus> param;

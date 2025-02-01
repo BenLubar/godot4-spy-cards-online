@@ -18,6 +18,7 @@ class JigsawVisual;
 #include "jigsaw/jigsaw_input_source.h"
 #include "jigsaw/jigsaw_state.h"
 #include "jigsaw/presentation/jigsaw_audio.h"
+#include "jigsaw/presentation/jigsaw_scene_manipulator.h"
 #include "util/rng.h"
 
 class JigsawGlobal : public Node {
@@ -38,6 +39,7 @@ public:
 	DECLARE_PROPERTY(int32_t, current_side, = 0);
 
 	DECLARE_PROPERTY(Ref<JigsawState>, state);
+	DECLARE_PROPERTY(int64_t, current_frame, = -1);
 
 	DECLARE_PROPERTY(double, time_scale, = 1.0);
 	DECLARE_PROPERTY(uint32_t, pause_frames, = 0);
@@ -47,6 +49,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<QueuedEffect>, queue);
 
 	DECLARE_PROPERTY(TypedArray<JigsawSound>, sounds);
+	DECLARE_PROPERTY(TypedArray<JigsawSceneManipulator>, scenes);
 	DECLARE_PROPERTY(TypedArray<MeshInstance3D>, character_nodes); // TODO
 
 	~JigsawGlobal();

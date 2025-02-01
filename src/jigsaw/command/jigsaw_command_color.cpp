@@ -1,12 +1,14 @@
-#include "jigsaw_command_color.h"
+#include "jigsaw/command/jigsaw_command_color.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"
 #include "jigsaw/parameter/jigsaw_parameter_color.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"
+#include "jigsaw/parameter/jigsaw_parameter_string.h"
 
 void JigsawCommandColor::_bind_methods() {
 	BIND_ENUM_CONSTANT(CREATE_FLOAT);
 	BIND_ENUM_CONSTANT(CREATE_AMOUNT);
+	BIND_ENUM_CONSTANT(CREATE_STRING);
 
 	BIND_PROPERTY_ENUM(JigsawCommandColor::Operation, operation);
 	BIND_PROPERTY_RESOURCE(JigsawParameter, red);
@@ -45,6 +47,12 @@ JigsawExecutionState JigsawCommandColor::evaluate(const Ref<JigsawContext> &cont
 	switch (_operation) {
 	case CREATE_FLOAT:
 	{
+#define CHECK_NAN(m_value, m_name) \
+		if (unlikely(Math::is_nan((m_value)))) { \
+			err = context->create_error(vformat("color %s component is not a number", m_name)); \
+			return JigsawExecutionState::ERROR; \
+		}
+
 		Ref<JigsawParameterFloat> red, green, blue, alpha;
 		err = context->resolve_variable(_red, red, "red");
 		if (unlikely(err.is_valid())) {
@@ -62,6 +70,11 @@ JigsawExecutionState JigsawCommandColor::evaluate(const Ref<JigsawContext> &cont
 		if (unlikely(err.is_valid())) {
 			return JigsawExecutionState::ERROR;
 		}
+
+		CHECK_NAN(red->get_value(), "red");
+		CHECK_NAN(green->get_value(), "green");
+		CHECK_NAN(blue->get_value(), "blue");
+		CHECK_NAN(alpha->get_value(), "alpha");
 
 		return set_command_result(context, err, 0, JigsawParameterColor::make(Color(red->get_value(), green->get_value(), blue->get_value(), alpha->get_value())));
 	}
@@ -90,7 +103,28 @@ JigsawExecutionState JigsawCommandColor::evaluate(const Ref<JigsawContext> &cont
 		float b = amount255_to_float1(blue);
 		float a = amount255_to_float1(alpha);
 
+		CHECK_NAN(r, "red");
+		CHECK_NAN(g, "green");
+		CHECK_NAN(b, "blue");
+		CHECK_NAN(a, "alpha");
+
 		return set_command_result(context, err, 0, JigsawParameterColor::make(Color(r, g, b, a)));
+	}
+#undef CHECK_NAN
+	case CREATE_STRING:
+	{
+		Ref<JigsawParameterString> alpha;
+		err = context->resolve_variable(_alpha, alpha, "alpha");
+		if (unlikely(err.is_valid())) {
+			return JigsawExecutionState::ERROR;
+		}
+
+		if (!Color::html_is_valid(alpha->get_string())) {
+			err = context->create_error("invalid hex color code", Array::make(alpha));
+			return JigsawExecutionState::ERROR;
+		}
+
+		return set_command_result(context, err, 0, JigsawParameterColor::make(Color(alpha->get_string())));
 	}
 	}
 
@@ -128,10 +162,12 @@ PackedStringArray JigsawCommandColor::get_config_options(int64_t i) const {
 	// If these asserts fail, you have broken compatibility with existing game modes.
 	static_assert(CREATE_FLOAT == 0);
 	static_assert(CREATE_AMOUNT == 1);
+	static_assert(CREATE_STRING == 2);
 
 	return PackedStringArray{
 		"Create (float between 0 and 1)",
 		"Create (amount between 0 and 255)",
+		"Create (hexadecimal string)",
 	};
 }
 
@@ -140,9 +176,11 @@ int64_t JigsawCommandColor::get_num_arguments() const {
 	case CREATE_FLOAT:
 	case CREATE_AMOUNT:
 		return 4;
+	case CREATE_STRING:
+		return 1;
 	}
 
-	return 0;
+	ERR_FAIL_V(0);
 }
 Ref<JigsawParameter> JigsawCommandColor::get_argument(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), Ref<JigsawParameter>());
@@ -161,9 +199,15 @@ Ref<JigsawParameter> JigsawCommandColor::get_argument(int64_t i) const {
 		}
 
 		break;
+	case CREATE_STRING:
+		if (i == 0) {
+			return _alpha;
+		}
+
+		break;
 	}
 
-	return Ref<JigsawParameter>();
+	ERR_FAIL_V(Ref<JigsawParameter>());
 }
 TypedArray<JigsawParameter> JigsawCommandColor::get_argument_template(int64_t i, const Ref<JigsawContext> &context) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), TypedArray<JigsawParameter>());
@@ -173,6 +217,8 @@ TypedArray<JigsawParameter> JigsawCommandColor::get_argument_template(int64_t i,
 		return Array::make(JigsawParameterFloat::make(0.0));
 	case CREATE_AMOUNT:
 		return Array::make(JigsawParameterAmount::make(0));
+	case CREATE_STRING:
+		return Array::make(JigsawParameterString::make("#000000"));
 	}
 
 	return TypedArray<JigsawParameter>();
@@ -186,19 +232,33 @@ void JigsawCommandColor::set_argument(int64_t i, const Ref<JigsawParameter> &arg
 		if (i == 0) {
 			_red = arg;
 			emit_changed();
+			return;
 		} else if (i == 1) {
 			_green = arg;
 			emit_changed();
+			return;
 		} else if (i == 2) {
 			_blue = arg;
 			emit_changed();
+			return;
 		} else if (i == 3) {
 			_alpha = arg;
 			emit_changed();
+			return;
+		}
+
+		break;
+	case CREATE_STRING:
+		if (i == 0) {
+			_alpha = arg;
+			emit_changed();
+			return;
 		}
 
 		break;
 	}
+
+	ERR_FAIL();
 }
 String JigsawCommandColor::get_argument_name(int64_t i) const {
 	ERR_FAIL_INDEX_V(i, get_num_arguments(), "");
@@ -217,9 +277,15 @@ String JigsawCommandColor::get_argument_name(int64_t i) const {
 		}
 
 		break;
+	case CREATE_STRING:
+		if (i == 0) {
+			return "code";
+		}
+
+		break;
 	}
 
-	return "";
+	ERR_FAIL_V("");
 }
 
 int64_t JigsawCommandColor::get_num_results() const {

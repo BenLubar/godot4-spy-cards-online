@@ -16,10 +16,10 @@ public:
 	DECLARE_PROPERTY(int64_t, base_frame, = -1);
 	DECLARE_PROPERTY(int64_t, current_frame, = -1);
 
-	virtual void init_node(JigsawVisual *visual) = 0;
 	virtual void kill_node() = 0;
 	virtual void discard_rollback_data(int64_t new_base_frame = -1) = 0;
 	virtual void rollback_to_frame(int64_t frame) = 0;
+	virtual void advance_frames(int64_t frames = 1) = 0;
 };
 
 #endif // JIGSAW_PRESENTATION_DATA_H

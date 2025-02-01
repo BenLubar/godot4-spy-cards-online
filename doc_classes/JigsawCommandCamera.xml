@@ -7,6 +7,36 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandCamera.Operation" default="0">
+		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="17" />
+		<member name="value" type="JigsawParameter" setter="set_value" getter="get_value">
+		</member>
 	</members>
+	<constants>
+		<constant name="RESERVED0" value="0" enum="Operation">
+		</constant>
+		<constant name="RESERVED1" value="1" enum="Operation">
+		</constant>
+		<constant name="RESERVED2" value="2" enum="Operation">
+		</constant>
+		<constant name="RESERVED3" value="3" enum="Operation">
+		</constant>
+		<constant name="RESERVED4" value="4" enum="Operation">
+		</constant>
+		<constant name="RESERVED5" value="5" enum="Operation">
+		</constant>
+		<constant name="RESERVED6" value="6" enum="Operation">
+		</constant>
+		<constant name="RESERVED7" value="7" enum="Operation">
+		</constant>
+		<constant name="RESERVED8" value="8" enum="Operation">
+		</constant>
+		<constant name="RESERVED9" value="9" enum="Operation">
+		</constant>
+		<constant name="SET_BACKGROUND_COLOR" value="10" enum="Operation">
+		</constant>
+		<constant name="SET_AMBIENT_LIGHT_INTENSITY" value="11" enum="Operation">
+		</constant>
+	</constants>
 </class>

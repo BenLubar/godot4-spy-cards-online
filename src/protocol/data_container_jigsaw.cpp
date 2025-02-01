@@ -53,6 +53,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_queued_effect.h"
 #include "jigsaw/parameter/jigsaw_parameter_rank.h"
 #include "jigsaw/parameter/jigsaw_parameter_scene_instance.h"
+#include "jigsaw/parameter/jigsaw_parameter_sound_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_sprite_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_stat.h"
 #include "jigsaw/parameter/jigsaw_parameter_stat_value.h"
@@ -551,6 +552,11 @@ bool DataContainer::_encode_jigsaw_command(const Ref<FormatHelper> &fh, const Re
 bool DataContainer::_decode_jigsaw_parameter(const Ref<FormatHelper> &fh, Ref<JigsawParameter> &parameter) {
 	JigsawParameter::Type type = static_cast<JigsawParameter::Type>(fh->read_svarint());
 	switch (type) {
+	case JigsawParameter::SOUND_INSTANCE:
+	{
+		parameter = JigsawParameterSoundInstance::make(-1);
+		return fh->is_valid();
+	}
 	case JigsawParameter::CARD_GRID:
 	{
 		parameter = JigsawParameterCardGrid::make(-1, true);
@@ -839,6 +845,7 @@ bool DataContainer::_encode_jigsaw_parameter(const Ref<FormatHelper> &fh, const 
 
 	fh->write_svarint(parameter->get_type());
 	switch (parameter->get_type()) {
+	case JigsawParameter::SOUND_INSTANCE:
 	case JigsawParameter::CARD_GRID:
 	case JigsawParameter::UI_LABEL_INSTANCE:
 	case JigsawParameter::UI_ICON_INSTANCE:

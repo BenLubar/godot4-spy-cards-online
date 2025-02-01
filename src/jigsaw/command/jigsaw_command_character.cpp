@@ -1,4 +1,4 @@
-#include "jigsaw_command_character.h"
+#include "jigsaw/command/jigsaw_command_character.h"
 
 #include "jigsaw/jigsaw_global.h"
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"

@@ -1,4 +1,4 @@
-#include "jigsaw_command_rng.h"
+#include "jigsaw/command/jigsaw_command_rng.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"

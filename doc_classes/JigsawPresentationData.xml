@@ -7,15 +7,15 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="discard_rollback_data">
+		<method name="advance_frames">
 			<return type="void" />
-			<param index="0" name="new_base_frame" type="int" default="-1" />
+			<param index="0" name="frames" type="int" default="1" />
 			<description>
 			</description>
 		</method>
-		<method name="init_node">
+		<method name="discard_rollback_data">
 			<return type="void" />
-			<param index="0" name="visual" type="JigsawVisual" />
+			<param index="0" name="new_base_frame" type="int" default="-1" />
 			<description>
 			</description>
 		</method>

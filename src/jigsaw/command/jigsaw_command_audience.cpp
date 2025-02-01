@@ -1,4 +1,4 @@
-#include "jigsaw_command_audience.h"
+#include "jigsaw/command/jigsaw_command_audience.h"
 
 #include "jigsaw/jigsaw_global.h"
 #include "jigsaw/parameter/jigsaw_parameter_audience.h"
@@ -132,17 +132,26 @@ JigsawExecutionState JigsawCommandAudience::evaluate(const Ref<JigsawContext> &c
 		if (back->get_boolean()) {
 			group_number++;
 		}
-		int64_t member_index = audience->_members[group_number].size();
+		int64_t member_index = 0;
+		while (member_index < audience->_members[group_number].size() && !audience->_members[group_number][member_index].reusable) {
+			member_index++;
+		}
+		if (member_index >= audience->_members[group_number].size()) {
+			audience->_members.write[group_number].append(AudienceMember_t{});
+		}
 
-		AudienceMember_t member;
+		AudienceMember_t &member = audience->_members.write[group_number].write[member_index];
 		member.base_position = Vector3(x->get_value(), y->get_value(), z->get_value());
 		member.color = color->get_color();
 		member.excitement = excitement->get_value();
+		member.want_cheer = 0;
+		member.cheering = 0;
 		member.hop_time = Math::fast_ftoi(Math::floor(72 - 60 / (2 - Math::clamp(excitement->get_value(), 0.0, 1.0))));
 		member.hop = audience->_hop_offset++;
 		member.left = left->get_boolean();
 		member.flip = flip->get_boolean();
-		audience->_members.write[group_number].append(member);
+		member.deleted = false;
+		member.reusable = false;
 
 		return set_command_result(context, err, 0, JigsawParameterAudienceInstance::make(group_number, member_index));
 	}

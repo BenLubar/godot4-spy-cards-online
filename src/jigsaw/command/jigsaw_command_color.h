@@ -10,6 +10,7 @@ public:
 	enum Operation {
 		CREATE_FLOAT = 0,
 		CREATE_AMOUNT = 1,
+		CREATE_STRING = 2,
 	};
 
 protected:

@@ -1,4 +1,4 @@
-#include "jigsaw_command_is_same.h"
+#include "jigsaw/command/jigsaw_command_is_same.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_audience.h"
 #include "jigsaw/parameter/jigsaw_parameter_audience_instance.h"

@@ -13,6 +13,7 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 
 	Type get_type() const override { return FILE_ID_OPUS; }
+	String _to_string() const;
 
 	static Ref<JigsawParameterFileIDOpus> make(PackedByteArray file_id, float loop_start, float loop_end);
 };

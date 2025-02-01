@@ -1,4 +1,4 @@
-#include "jigsaw_command_comment.h"
+#include "jigsaw/command/jigsaw_command_comment.h"
 
 void JigsawCommandComment::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawParameter, params);

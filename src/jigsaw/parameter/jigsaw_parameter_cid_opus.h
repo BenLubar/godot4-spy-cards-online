@@ -13,6 +13,7 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, cid);
 
 	Type get_type() const override { return CID_OPUS; }
+	String _to_string() const;
 
 	static Ref<JigsawParameterCIDOpus> make(PackedByteArray cid, float loop_start, float loop_end);
 };

@@ -25,6 +25,7 @@ public:
 		POSITION, // from_pos, to_pos
 		VOLUME, // from_value, to_value (linear scale)
 		PITCH, // from_value, to_value (linear scale)
+		DESTROY, // no duration; no values
 	};
 
 	DECLARE_PROPERTY(int64_t, rollback_frame, = -1);
@@ -64,15 +65,18 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawParameterAudio>, track);
 	DECLARE_PROPERTY(TypedArray<JigsawSoundCommandHistory>, history);
 	DECLARE_PROPERTY_OBJECTID(Node, node);
+	DECLARE_PROPERTY_IS(bool, destroyed, = false);
 
-	void init_node(JigsawVisual *visual) override;
+	void init_node(JigsawVisual *visual);
 	void kill_node() override;
 	void discard_rollback_data(int64_t new_base_frame = -1) override;
 	void rollback_to_frame(int64_t frame) override;
+	void advance_frames(int64_t frames = 1) override;
 
 	void play(float seek = 0.0f, int64_t frame = -1);
 	void pause(int64_t frame = -1);
 	void resume(int64_t frame = -1);
+	void destroy(int64_t frame = -1);
 
 	void set_position(Vector3 position, float duration = 0.0f, int64_t frame = -1);
 	void set_volume(float volume, float duration = 0.0f, int64_t frame = -1);

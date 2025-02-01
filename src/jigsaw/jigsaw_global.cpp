@@ -20,6 +20,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, current_side);
 
 	BIND_PROPERTY_RESOURCE(JigsawState, state);
+	BIND_PROPERTY(Variant::INT, current_frame);
 
 	BIND_PROPERTY(Variant::FLOAT, time_scale);
 	BIND_PROPERTY(Variant::INT, pause_frames);
@@ -29,6 +30,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(QueuedEffect, queue);
 
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSound, sounds);
+	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSceneManipulator, scenes);
 	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
 
 	ADD_SIGNAL(MethodInfo("current_effect_changed"));
@@ -49,12 +51,14 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawInputSource *, input_source);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, JigsawVisual *, visual);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<GameMode>, mode);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<VariantDef>, selected_variant);
+
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<CardInstance>, current_card_instance, emit_signal("current_effect_changed"));
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawGlobal, Ref<EffectInstance>, current_effect_instance, emit_signal("current_effect_changed"));
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<QueuedEffect>, current_queued_effect);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int32_t, current_side);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<JigsawState>, state);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, current_frame);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, double, time_scale);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, uint32_t, pause_frames);
@@ -64,6 +68,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, queue_reset_count);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<QueuedEffect>, queue);
 
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSound>, sounds);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSceneManipulator>, scenes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
 
 JigsawGlobal::~JigsawGlobal() {
@@ -71,6 +76,13 @@ JigsawGlobal::~JigsawGlobal() {
 		Ref<JigsawSound> sound = _sounds[i];
 		if (sound.is_valid()) {
 			sound->kill_node();
+		}
+	}
+
+	for (int64_t i = 0; i < _scenes.size(); i++) {
+		Ref<JigsawSceneManipulator> scene = _scenes[i];
+		if (scene.is_valid()) {
+			scene->kill_node();
 		}
 	}
 }
@@ -110,11 +122,19 @@ void JigsawGlobal::init_sides() {
 }
 
 void JigsawGlobal::next_frame() {
+	for (int64_t i = 0; i < _scenes.size(); i++) {
+		Ref<JigsawSceneManipulator> scene = _scenes[i];
+		if (scene.is_valid()) {
+			scene->advance_frames(1);
+		}
+	}
+
+	int64_t steps_remaining = JigsawContext::DEFAULT_MAX_STEPS;
 	while (!_context_stack.is_empty()) {
 		Ref<JigsawContext> top = _context_stack.back();
 		ERR_FAIL_COND(!top->is_in_progress());
 
-		Ref<JigsawError> err = top->continue_run();
+		Ref<JigsawError> err = top->continue_run(steps_remaining);
 		if (unlikely(err.is_valid())) {
 			_input_source->on_jigsaw_error(err);
 			return;
@@ -124,6 +144,7 @@ void JigsawGlobal::next_frame() {
 			break;
 		}
 
+		steps_remaining = top->get_step_limit_remaining();
 		_context_stack.pop_back();
 	}
 }

@@ -48,6 +48,7 @@
 #include "jigsaw/command/jigsaw_command_cleanup.h"
 
 #include "jigsaw/parameter/jigsaw_parameter.h"
+#include "jigsaw/parameter/jigsaw_parameter_sound_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_card_grid.h"
 #include "jigsaw/parameter/jigsaw_parameter_ui_label_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_ui_icon_instance.h"
@@ -88,6 +89,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_stat_value.h"
 
 #include "jigsaw/presentation/jigsaw_audio.h"
+#include "jigsaw/presentation/jigsaw_scene_manipulator.h"
 
 #include "defs/card_filter.h"
 #include "defs/card_filter_and.h"
@@ -228,6 +230,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawParameter);
 	GDREGISTER_CLASS(JigsawParameterVariable); // variable first so the type property's default value gets recorded as 0 in the docs
+	GDREGISTER_CLASS(JigsawParameterSoundInstance);
 	GDREGISTER_CLASS(JigsawParameterCardGrid);
 	GDREGISTER_CLASS(JigsawParameterUILabelInstance);
 	GDREGISTER_CLASS(JigsawParameterUIIconInstance);
@@ -272,6 +275,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawAudio);
 	GDREGISTER_CLASS(JigsawAudio2D);
 	GDREGISTER_CLASS(JigsawAudio3D);
+	GDREGISTER_CLASS(JigsawSceneCommandHistory);
+	GDREGISTER_CLASS(JigsawSceneManipulator);
 
 	GDREGISTER_ABSTRACT_CLASS(CardFilter);
 	GDREGISTER_CLASS(CardFilterAnd);

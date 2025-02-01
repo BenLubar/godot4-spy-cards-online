@@ -1,6 +1,7 @@
 #include "jigsaw/parameter/jigsaw_parameter.h"
 
 void JigsawParameter::_bind_methods() {
+	BIND_ENUM_CONSTANT(SOUND_INSTANCE);
 	BIND_ENUM_CONSTANT(CARD_GRID);
 	BIND_ENUM_CONSTANT(UI_LABEL_INSTANCE);
 	BIND_ENUM_CONSTANT(UI_ICON_INSTANCE);

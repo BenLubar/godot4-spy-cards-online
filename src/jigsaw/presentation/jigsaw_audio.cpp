@@ -12,6 +12,7 @@ void JigsawSoundCommandHistory::_bind_methods() {
 	BIND_ENUM_CONSTANT(POSITION);
 	BIND_ENUM_CONSTANT(VOLUME);
 	BIND_ENUM_CONSTANT(PITCH);
+	BIND_ENUM_CONSTANT(DESTROY);
 
 	BIND_PROPERTY(Variant::INT, rollback_frame);
 	BIND_PROPERTY_ENUM(JigsawSoundCommandHistory::Command, command);
@@ -54,12 +55,14 @@ void JigsawSound::_bind_methods() {
 	BIND_PROPERTY_RESOURCE(JigsawParameterAudio, track);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSoundCommandHistory, history);
 	BIND_PROPERTY_OBJECTID_NOT_SAVED(Node, node);
+	BIND_PROPERTY_IS(Variant::BOOL, destroyed);
 
 	ClassDB::bind_method(D_METHOD("init_node", "visual"), &JigsawSound::init_node);
 
 	ClassDB::bind_method(D_METHOD("play", "seek", "frame"), &JigsawSound::play, DEFVAL(0.0f), DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("pause", "frame"), &JigsawSound::pause, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("resume", "frame"), &JigsawSound::resume, DEFVAL(-1));
+	ClassDB::bind_method(D_METHOD("destroy", "frame"), &JigsawSound::destroy, DEFVAL(-1));
 
 	ClassDB::bind_method(D_METHOD("set_position", "position", "duration", "frame"), &JigsawSound::set_position, DEFVAL(0.0f), DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("set_volume", "volume", "duration", "frame"), &JigsawSound::set_volume, DEFVAL(0.0f), DEFVAL(-1));
@@ -71,6 +74,7 @@ IMPLEMENT_PROPERTY(JigsawSound, JigsawSound::Type, type);
 IMPLEMENT_PROPERTY(JigsawSound, Ref<JigsawParameterAudio>, track);
 IMPLEMENT_PROPERTY(JigsawSound, TypedArray<JigsawSoundCommandHistory>, history);
 IMPLEMENT_PROPERTY_OBJECTID_SIMPLE(JigsawSound, Node, node);
+IMPLEMENT_PROPERTY_IS(JigsawSound, bool, destroyed);
 
 static StringName get_bus_name(JigsawSound::Type type) {
 	switch (type) {
@@ -164,7 +168,7 @@ void JigsawSound::kill_node() {
 	}
 }
 void JigsawSound::discard_rollback_data(int64_t new_base_frame) {
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND(new_base_frame < -1);
 
 	// special case: moving out of rollback
@@ -207,6 +211,11 @@ void JigsawSound::discard_rollback_data(int64_t new_base_frame) {
 					i--;
 				}
 				last_pitch_entry = i;
+				break;
+			case JigsawSoundCommandHistory::DESTROY:
+				// we can't have more than one destroy entry.
+				// however, exiting rollback means we need to apply it for real.
+				kill_node();
 				break;
 			}
 		}
@@ -296,6 +305,9 @@ void JigsawSound::discard_rollback_data(int64_t new_base_frame) {
 						history->set_duration(remaining * history->get_duration());
 					}
 					break;
+				case JigsawSoundCommandHistory::DESTROY:
+					// don't need to fix anything up.
+					break;
 				}
 			}
 		}
@@ -347,6 +359,9 @@ void JigsawSound::discard_rollback_data(int64_t new_base_frame) {
 			}
 			last_pitch_entry = i;
 			break;
+		case JigsawSoundCommandHistory::DESTROY:
+			kill_node();
+			break;
 		}
 	}
 
@@ -390,7 +405,7 @@ static bool audio_loop_modulo(const Ref<AudioStreamWAV> &track, float &seek) {
 }
 
 void JigsawSound::rollback_to_frame(int64_t frame) {
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND(get_base_frame() == -1);
 	ERR_FAIL_COND(frame < get_base_frame());
 	ERR_FAIL_COND(frame > get_current_frame());
@@ -404,6 +419,7 @@ void JigsawSound::rollback_to_frame(int64_t frame) {
 	bool need_to_revert_position = false;
 	bool need_to_revert_volume = false;
 	bool need_to_revert_pitch = false;
+	bool need_to_revert_destroy = false;
 	for (int64_t i = 0; i < _history.size(); i++) {
 		Ref<JigsawSoundCommandHistory> history = _history[i];
 		if (history->get_rollback_frame() > frame) {
@@ -419,6 +435,10 @@ void JigsawSound::rollback_to_frame(int64_t frame) {
 				break;
 			case JigsawSoundCommandHistory::PITCH:
 				need_to_revert_pitch = true;
+				break;
+			case JigsawSoundCommandHistory::DESTROY:
+				need_to_revert_destroy = true;
+				set_destroyed(false);
 				break;
 			}
 			_history.remove_at(i);
@@ -437,6 +457,8 @@ void JigsawSound::rollback_to_frame(int64_t frame) {
 			case JigsawSoundCommandHistory::PITCH:
 				last_pitch_entry = i;
 				break;
+			case JigsawSoundCommandHistory::DESTROY:
+				break;
 			}
 		}
 	}
@@ -446,7 +468,7 @@ void JigsawSound::rollback_to_frame(int64_t frame) {
 		return;
 	}
 
-	if (need_to_revert_play) {
+	if (need_to_revert_play || need_to_revert_destroy) {
 		audio->call("stop");
 		audio->call("set_stream_paused", false);
 		if (last_play_entry != -1) {
@@ -565,11 +587,16 @@ void JigsawSound::rollback_to_frame(int64_t frame) {
 	}
 }
 
+void JigsawSound::advance_frames(int64_t frames) {
+	// JigsawSound handles time travel at command time, so no fast forward is needed.
+}
+
 void JigsawSound::play(float seek, int64_t frame) {
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> history;
 	for (int64_t i = 0; i < _history.size(); i++) {
@@ -607,10 +634,11 @@ void JigsawSound::play(float seek, int64_t frame) {
 	audio->call("set_stream_paused", false);
 }
 void JigsawSound::pause(int64_t frame) {
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> previous;
 	Ref<JigsawSoundCommandHistory> history;
@@ -657,10 +685,11 @@ void JigsawSound::pause(int64_t frame) {
 	}
 }
 void JigsawSound::resume(int64_t frame) {
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> previous;
 	Ref<JigsawSoundCommandHistory> history;
@@ -712,16 +741,41 @@ void JigsawSound::resume(int64_t frame) {
 	}
 	audio->call("set_stream_paused", false);
 }
+void JigsawSound::destroy(int64_t frame) {
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
+	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
+	ERR_FAIL_COND(frame > get_current_frame());
+	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
+
+	Ref<JigsawSoundCommandHistory> history;
+	history.instantiate();
+	history->set_command(JigsawSoundCommandHistory::DESTROY);
+	history->set_rollback_frame(frame);
+	_history.append(history);
+
+	set_destroyed(true);
+
+	if (frame == -1) {
+		kill_node();
+	} else {
+		Node *audio = get_node();
+		if (audio) {
+			audio->call("stop");
+		}
+	}
+}
 
 void JigsawSound::set_position(Vector3 position, float duration, int64_t frame) {
 	ERR_FAIL_COND(get_space() == GLOBAL);
 	ERR_FAIL_COND((get_space() == STAGE_2D || get_space() == HUD_2D) && !Math::is_zero_approx(position.z));
 	ERR_FAIL_COND(!position.is_finite());
 	ERR_FAIL_COND(duration < 0.0f);
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> previous;
 	Ref<JigsawSoundCommandHistory> history;
@@ -828,10 +882,11 @@ void JigsawSound::set_volume(float volume, float duration, int64_t frame) {
 	ERR_FAIL_COND(Math::is_nan(volume));
 	ERR_FAIL_COND(volume < 0.0f);
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> previous;
 	Ref<JigsawSoundCommandHistory> history;
@@ -908,10 +963,11 @@ void JigsawSound::set_volume(float volume, float duration, int64_t frame) {
 void JigsawSound::set_pitch(float pitch, float duration, int64_t frame) {
 	ERR_FAIL_COND(Math::is_nan(pitch));
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
-	ERR_FAIL_COND(get_base_frame() < get_current_frame()); // invariant
+	ERR_FAIL_COND(get_base_frame() > get_current_frame()); // invariant
 	ERR_FAIL_COND((get_base_frame() == -1) != (frame == -1));
 	ERR_FAIL_COND(frame > get_current_frame());
 	ERR_FAIL_COND(!_history.is_empty() && Object::cast_to<JigsawSoundCommandHistory>(_history.back())->get_rollback_frame() > frame);
+	ERR_FAIL_COND(is_destroyed());
 
 	Ref<JigsawSoundCommandHistory> previous;
 	Ref<JigsawSoundCommandHistory> history;

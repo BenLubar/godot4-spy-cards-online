@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawSceneCommandHistory" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="command" type="int" setter="set_command" getter="get_command" enum="JigsawSceneCommandHistory.Command" default="0">
+		</member>
+		<member name="node_path" type="NodePath" setter="set_node_path" getter="get_node_path" default="NodePath(&quot;&quot;)">
+		</member>
+		<member name="rollback_frame" type="int" setter="set_rollback_frame" getter="get_rollback_frame" default="-1">
+		</member>
+	</members>
+	<constants>
+		<constant name="DESTROY_SCENE" value="0" enum="Command">
+		</constant>
+		<constant name="TOGGLE_VISIBLE" value="1" enum="Command">
+		</constant>
+	</constants>
+</class>

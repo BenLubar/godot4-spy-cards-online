@@ -1,4 +1,4 @@
-#include "jigsaw_command_if.h"
+#include "jigsaw/command/jigsaw_command_if.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_boolean.h"
 #include "util/why_isnt_this_in_godot.h"

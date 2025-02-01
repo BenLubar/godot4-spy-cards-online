@@ -17,6 +17,7 @@ struct AudienceMember_t {
 	bool left{};
 	bool flip{};
 	bool deleted{};
+	bool reusable{};
 };
 
 class Audience : public RefCounted {

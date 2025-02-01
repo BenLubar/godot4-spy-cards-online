@@ -40,5 +40,7 @@
 		</constant>
 		<constant name="PITCH" value="3" enum="Command">
 		</constant>
+		<constant name="DESTROY" value="4" enum="Command">
+		</constant>
 	</constants>
 </class>

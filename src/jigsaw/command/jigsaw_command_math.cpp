@@ -1,4 +1,4 @@
-#include "jigsaw_command_math.h"
+#include "jigsaw/command/jigsaw_command_math.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"
 #include "jigsaw/parameter/jigsaw_parameter_boolean.h"

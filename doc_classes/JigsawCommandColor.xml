@@ -26,5 +26,7 @@
 		</constant>
 		<constant name="CREATE_AMOUNT" value="1" enum="Operation">
 		</constant>
+		<constant name="CREATE_STRING" value="2" enum="Operation">
+		</constant>
 	</constants>
 </class>

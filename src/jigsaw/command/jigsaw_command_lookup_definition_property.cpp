@@ -1,4 +1,4 @@
-#include "jigsaw_command_lookup_definition_property.h"
+#include "jigsaw/command/jigsaw_command_lookup_definition_property.h"
 
 #include "jigsaw/jigsaw_global.h"
 #include "jigsaw/parameter/jigsaw_parameter_amount.h"

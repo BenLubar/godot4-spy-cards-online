@@ -141,8 +141,6 @@
 		</member>
 		<member name="crypto" type="Crypto" setter="set_crypto" getter="get_crypto">
 		</member>
-		<member name="current_frame" type="int" setter="set_current_frame" getter="get_current_frame" default="-1">
-		</member>
 		<member name="display_name" type="String" setter="set_display_name" getter="get_display_name" default="&quot;&quot;">
 		</member>
 		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">

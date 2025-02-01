@@ -75,6 +75,8 @@
 		</member>
 		<member name="current_effect_instance" type="EffectInstance" setter="set_current_effect_instance" getter="get_current_effect_instance">
 		</member>
+		<member name="current_frame" type="int" setter="set_current_frame" getter="get_current_frame" default="-1">
+		</member>
 		<member name="current_queued_effect" type="QueuedEffect" setter="set_current_queued_effect" getter="get_current_queued_effect">
 		</member>
 		<member name="current_side" type="int" setter="set_current_side" getter="get_current_side" default="0">
@@ -88,6 +90,8 @@
 		<member name="queue" type="QueuedEffect[]" setter="set_queue" getter="get_queue" default="[]">
 		</member>
 		<member name="queue_reset_count" type="int" setter="set_queue_reset_count" getter="get_queue_reset_count" default="0">
+		</member>
+		<member name="scenes" type="JigsawSceneManipulator[]" setter="set_scenes" getter="get_scenes" default="[]">
 		</member>
 		<member name="selected_variant" type="VariantDef" setter="set_selected_variant" getter="get_selected_variant">
 		</member>

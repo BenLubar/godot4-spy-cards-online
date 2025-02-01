@@ -7,6 +7,12 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="destroy">
+			<return type="void" />
+			<param index="0" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
 		<method name="init_node">
 			<return type="void" />
 			<param index="0" name="visual" type="JigsawVisual" />
@@ -58,6 +64,8 @@
 		</method>
 	</methods>
 	<members>
+		<member name="destroyed" type="bool" setter="set_destroyed" getter="is_destroyed" default="false">
+		</member>
 		<member name="history" type="JigsawSoundCommandHistory[]" setter="set_history" getter="get_history" default="[]">
 		</member>
 		<member name="node" type="Node" setter="set_node" getter="get_node">

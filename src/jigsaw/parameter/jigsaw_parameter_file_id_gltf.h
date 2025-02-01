@@ -13,6 +13,7 @@ public:
 	DECLARE_PROPERTY(PackedByteArray, file_id);
 
 	Type get_type() const override { return FILE_ID_GLTF; }
+	String _to_string() const;
 
 	static Ref<JigsawParameterFileIDGLTF> make(PackedByteArray file_id, Dictionary json_data);
 };

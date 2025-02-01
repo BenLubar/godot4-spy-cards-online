@@ -6,7 +6,30 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="instantiate_scene" qualifiers="const">
+			<return type="Node" />
+			<param index="0" name="static_lights" type="bool" />
+			<param index="1" name="allow_shadows" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="parse_animation_data" qualifiers="static">
+			<return type="AnimationRootNode" />
+			<param index="0" name="raw" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="serialize_animation_data" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="node" type="AnimationRootNode" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
+		<member name="animation" type="AnimationRootNode" setter="set_animation" getter="get_animation">
+		</member>
 		<member name="json_data" type="Dictionary" setter="set_json_data" getter="get_json_data" default="{}">
 		</member>
 		<member name="scene" type="GLTFState" setter="set_scene" getter="get_scene">

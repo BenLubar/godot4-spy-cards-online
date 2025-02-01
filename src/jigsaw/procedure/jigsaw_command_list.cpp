@@ -1,4 +1,4 @@
-#include "jigsaw_command_list.h"
+#include "jigsaw/procedure/jigsaw_command_list.h"
 
 void JigsawCommandList::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_STRING_ARRAY, local_variable_names);

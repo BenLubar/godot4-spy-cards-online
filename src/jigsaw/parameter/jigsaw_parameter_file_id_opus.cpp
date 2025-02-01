@@ -1,5 +1,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_file_id_opus.h"
 
+#include "util/base32.h"
+
 void JigsawParameterFileIDOpus::_bind_methods() {
 	BIND_PROPERTY(Variant::PACKED_BYTE_ARRAY, file_id);
 
@@ -7,6 +9,10 @@ void JigsawParameterFileIDOpus::_bind_methods() {
 }
 
 IMPLEMENT_PROPERTY(JigsawParameterFileIDOpus, PackedByteArray, file_id);
+
+String JigsawParameterFileIDOpus::_to_string() const {
+	return Base32::encode_crockford(get_file_id());
+}
 
 Ref<JigsawParameterFileIDOpus> JigsawParameterFileIDOpus::make(PackedByteArray file_id, float loop_start, float loop_end) {
 	Ref<JigsawParameterFileIDOpus> param;

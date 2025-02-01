@@ -3,17 +3,41 @@
 
 #include "jigsaw/command/jigsaw_command.h"
 
+class JigsawCommandAudio;
+
+#include "jigsaw/presentation/jigsaw_audio.h"
+
 class JigsawCommandAudio : public JigsawCommand {
 	GDCLASS(JigsawCommandAudio, JigsawCommand);
 
 public:
 	enum Operation {
+		CREATE = 0,
+		DESTROY = 1,
+		PLAY = 2,
+		SET_PAUSED = 3,
+		SET_POSITION = 4,
+		SET_VOLUME = 5,
+		SET_PITCH = 6,
 	};
 
 protected:
 	static void _bind_methods();
 
 public:
+	DECLARE_PROPERTY(Operation, operation, = CREATE);
+	DECLARE_PROPERTY(JigsawSound::Type, mixer, = JigsawSound::OTHER);
+	DECLARE_PROPERTY(JigsawSound::Space, space, = JigsawSound::GLOBAL);
+
+	DECLARE_PROPERTY(Ref<JigsawParameter>, sound);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, paused);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, x);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, y);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, z);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, value);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, duration);
+	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, created_sound);
+
 	Type get_type() const override { return AUDIO; }
 	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;
 	JigsawExecutionState evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const override;

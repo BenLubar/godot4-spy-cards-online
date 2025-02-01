@@ -1,4 +1,4 @@
-#include "jigsaw_command_function.h"
+#include "jigsaw/command/jigsaw_command_function.h"
 
 void JigsawCommandFunction::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_NOT_SAVED(JigsawGlobal, editor_global);

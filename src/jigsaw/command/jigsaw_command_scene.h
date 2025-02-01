@@ -10,7 +10,10 @@ public:
 	enum Operation {
 		GET_PROPERTY_STRING = 0,
 		GET_PROPERTY_FLOAT = 1,
-		INSTANTIATE = 2,
+		CREATE_IN_STAGE = 2,
+		CREATE_IN_HUD = 3,
+		DESTROY = 4,
+		SET_VISIBLE = 5,
 	};
 
 protected:
@@ -21,6 +24,12 @@ public:
 	DECLARE_PROPERTY(Ref<JigsawParameter>, scene);
 	DECLARE_PROPERTY(Ref<JigsawParameter>, property_name);
 	DECLARE_PROPERTY(Ref<JigsawParameter>, default_value);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, x);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, y);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, z);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, pitch);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, yaw);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, roll);
 	DECLARE_PROPERTY(Ref<JigsawParameterLocalVariable>, output);
 
 	Type get_type() const override { return SCENE; }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="JigsawSceneManipulator" inherits="JigsawPresentationData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="destroy">
+			<return type="void" />
+			<param index="0" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="get_root_rollback" qualifiers="const">
+			<return type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="set_visible">
+			<return type="void" />
+			<param index="0" name="path" type="NodePath" />
+			<param index="1" name="visible" type="bool" />
+			<param index="2" name="frame" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animation_tree" type="AnimationTree" setter="set_animation_tree" getter="get_animation_tree">
+		</member>
+		<member name="history" type="JigsawSceneCommandHistory[]" setter="set_history" getter="get_history" default="[]">
+		</member>
+		<member name="root" type="Node" setter="set_root" getter="get_root">
+		</member>
+		<member name="scene_id" type="JigsawParameterScene" setter="set_scene_id" getter="get_scene_id">
+		</member>
+	</members>
+</class>

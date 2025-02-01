@@ -1,4 +1,4 @@
-#include "jigsaw_command_set_variable.h"
+#include "jigsaw/command/jigsaw_command_set_variable.h"
 
 #include "jigsaw/parameter/jigsaw_parameter_variable.h"
 
