@@ -87,5 +87,7 @@
 		</constant>
 		<constant name="STAT_VALUE" value="24" enum="Type">
 		</constant>
+		<constant name="EXPRESSION" value="25" enum="Type">
+		</constant>
 	</constants>
 </class>

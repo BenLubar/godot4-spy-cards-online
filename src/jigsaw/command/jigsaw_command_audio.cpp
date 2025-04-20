@@ -198,7 +198,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 
 		sound->destroy(global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	case PLAY:
 	{
@@ -222,7 +222,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 
 		sound->play(seek->get_value(), global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	case SET_PAUSED:
 	{
@@ -240,7 +240,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 			sound->resume(global->get_current_frame());
 		}
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 #define GET_DURATION \
 		Ref<JigsawParameterFloat> duration; \
@@ -307,7 +307,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 
 		sound->set_position(Vector3(x->get_value(), y->get_value(), z->get_value()), duration->get_value(), global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	case SET_VOLUME:
 	{
@@ -330,7 +330,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 
 		sound->set_volume(volume->get_value(), duration->get_value(), global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	case SET_PITCH:
 	{
@@ -353,7 +353,7 @@ JigsawExecutionState JigsawCommandAudio::evaluate(const Ref<JigsawContext> &cont
 
 		sound->set_pitch(pitch->get_value(), duration->get_value(), global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	}
 

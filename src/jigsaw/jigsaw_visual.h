@@ -6,7 +6,7 @@
 class JigsawVisual;
 
 #include "active/audience.h"
-#include "jigsaw/parameter/jigsaw_parameter_audio.h"
+#include "jigsaw/parameter/jigsaw_parameter_expression.h"
 
 #include <godot_cpp/classes/audio_effect_spectrum_analyzer_instance.hpp>
 #include <godot_cpp/classes/camera_attributes_practical.hpp>
@@ -18,7 +18,6 @@ class JigsawVisual;
 #include <godot_cpp/classes/world3d.hpp>
 
 namespace godot {
-	class AudioStreamPlayer;
 	class Camera3D;
 	class CanvasLayer;
 	class DirectionalLight3D;
@@ -76,6 +75,16 @@ public:
 	DECLARE_PROPERTY(Ref<Audience>, audience);
 	DECLARE_PROPERTY(bool, force_simple_background, = false);
 
+	DECLARE_PROPERTY(double, camera_time, = 0.0);
+	DECLARE_PROPERTY(Ref<JigsawParameterExpression>, stage_camera_target_position_expr);
+	DECLARE_PROPERTY(PackedFloat64Array, stage_camera_target_position_expr_args);
+	DECLARE_PROPERTY(Ref<JigsawParameterExpression>, stage_camera_target_rotation_expr);
+	DECLARE_PROPERTY(PackedFloat64Array, stage_camera_target_rotation_expr_args);
+	DECLARE_PROPERTY(Ref<JigsawParameterExpression>, stage_camera_offset_expr);
+	DECLARE_PROPERTY(PackedFloat64Array, stage_camera_offset_expr_args);
+	DECLARE_PROPERTY(Ref<JigsawParameterExpression>, stage_camera_rotation_offset_expr);
+	DECLARE_PROPERTY(PackedFloat64Array, stage_camera_rotation_offset_expr_args);
+
 	JigsawVisual();
 
 	void _ready() override;
@@ -83,6 +92,9 @@ public:
 	void _physics_process(double p_delta) override;
 	void _init_audience();
 
+	DEFAULT_TO_STRING();
+
+	void force_camera_update();
 	Node3D *get_picked_object() const;
 	SubViewport *get_stage_viewport() const;
 
@@ -94,6 +106,18 @@ public:
 	void set_scene_background_color(Color new_color);
 	float get_ambient_light_intensity() const;
 	void set_ambient_light_intensity(float new_intensity);
+	Vector3 get_stage_camera_target_position() const;
+	void set_stage_camera_target_position(Vector3 new_position);
+	Vector3 get_stage_camera_target_rotation() const;
+	void set_stage_camera_target_rotation(Vector3 new_rotation);
+	Vector3 get_stage_camera_target_rotation_degrees() const;
+	void set_stage_camera_target_rotation_degrees(Vector3 new_rotation);
+	Vector3 get_stage_camera_offset() const;
+	void set_stage_camera_offset(Vector3 new_position);
+	Vector3 get_stage_camera_rotation_offset() const;
+	void set_stage_camera_rotation_offset(Vector3 new_rotation);
+	Vector3 get_stage_camera_rotation_offset_degrees() const;
+	void set_stage_camera_rotation_offset_degrees(Vector3 new_rotation);
 };
 
 #endif // JIGSAW_VISUAL_H

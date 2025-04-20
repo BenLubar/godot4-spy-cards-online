@@ -20,3 +20,6 @@ if ! test -f ../doc_classes/CardDef.xml; then
 	git checkout ./doc_classes
 	false
 fi
+
+cd ../doc_classes
+ln -sf ../godot4-squirrel/doc_classes/Squirrel*.xml .

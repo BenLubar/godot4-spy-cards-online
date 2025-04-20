@@ -192,6 +192,7 @@ bool DataContainer::_decode_game_mode(const Ref<FormatHelper> &fh) {
 	design.instantiate();
 	ERR_FAIL_COND_V(!_decode_card_design(fh, design), false);
 	_mode->set_default_card_design(design);
+	_mode->set_default_simple_background(fh->read_id<enums::IconDef::Icon>());
 
 	TypedArray<JigsawTriggerVariant> base_triggers;
 	base_triggers.resize(fh->read_uvarint());
@@ -371,6 +372,7 @@ bool DataContainer::_encode_game_mode(const Ref<FormatHelper> &fh) const {
 		design.instantiate();
 	}
 	ERR_FAIL_COND_V(!_encode_card_design(fh, design), false);
+	fh->write_id(_mode->get_default_simple_background());
 
 	TypedArray<JigsawTriggerVariant> triggers = _mode->get_base_triggers();
 	fh->write_uvarint(triggers.size());

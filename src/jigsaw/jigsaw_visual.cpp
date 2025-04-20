@@ -17,7 +17,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_file_id_opus.h"
 #include "util/player_preferences_helper.h"
 
-#define MUSIC_BUS "Music"
+static LazyStringName MUSIC_BUS{ "Music" };
 
 const double JigsawVisual::STAGE_FOV_VERTICAL = Math::rad_to_deg(2 * Math::atan(Math::tan(Math::deg_to_rad(JigsawVisual::STAGE_FOV_HORIZONTAL) / 2) * JigsawVisual::FORCE_ASPECT));
 const double JigsawVisual::HUD_FOV_HORIZONTAL = Math::rad_to_deg(2 * Math::atan(Math::tan(Math::deg_to_rad(JigsawVisual::HUD_FOV_VERTICAL) / 2) / JigsawVisual::FORCE_ASPECT));
@@ -32,11 +32,44 @@ void JigsawVisual::_bind_methods() {
 	BIND_PROPERTY(Variant::COLOR, scene_background_color);
 	BIND_PROPERTY(Variant::FLOAT, ambient_light_intensity);
 
+	BIND_PROPERTY(Variant::VECTOR3, stage_camera_target_position);
+	BIND_PROPERTY(Variant::VECTOR3, stage_camera_target_rotation);
+	BIND_PROPERTY_NOT_SAVED(Variant::VECTOR3, stage_camera_target_rotation_degrees);
+	BIND_PROPERTY(Variant::VECTOR3, stage_camera_offset);
+	BIND_PROPERTY(Variant::VECTOR3, stage_camera_rotation_offset);
+	BIND_PROPERTY_NOT_SAVED(Variant::VECTOR3, stage_camera_rotation_offset_degrees);
+
+	BIND_PROPERTY(Variant::FLOAT, camera_time);
+	BIND_PROPERTY_RESOURCE(JigsawParameterExpression, stage_camera_target_position_expr);
+	BIND_PROPERTY(Variant::PACKED_FLOAT64_ARRAY, stage_camera_target_position_expr_args);
+	BIND_PROPERTY_RESOURCE(JigsawParameterExpression, stage_camera_target_rotation_expr);
+	BIND_PROPERTY(Variant::PACKED_FLOAT64_ARRAY, stage_camera_target_rotation_expr_args);
+	BIND_PROPERTY_RESOURCE(JigsawParameterExpression, stage_camera_offset_expr);
+	BIND_PROPERTY(Variant::PACKED_FLOAT64_ARRAY, stage_camera_offset_expr_args);
+	BIND_PROPERTY_RESOURCE(JigsawParameterExpression, stage_camera_rotation_offset_expr);
+	BIND_PROPERTY(Variant::PACKED_FLOAT64_ARRAY, stage_camera_rotation_offset_expr_args);
+
+	ClassDB::bind_method(D_METHOD("force_camera_update"), &JigsawVisual::force_camera_update);
 	ClassDB::bind_method(D_METHOD("get_picked_object"), &JigsawVisual::get_picked_object);
+}
+
+void JigsawVisual::_set_use_simple_background(bool force_2d) {
+	_stage_simple_background->set_visible(force_2d);
+	_stage_viewport->set_disable_3d(force_2d);
 }
 
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawVisual, Ref<Audience>, audience, _init_audience());
 IMPLEMENT_PROPERTY_ONCHANGE(JigsawVisual, bool, force_simple_background, _set_use_simple_background(PlayerPreferences::disable_3d() || new_force_simple_background));
+
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, double, camera_time);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, Ref<JigsawParameterExpression>, stage_camera_target_position_expr);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, PackedFloat64Array, stage_camera_target_position_expr_args);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, Ref<JigsawParameterExpression>, stage_camera_target_rotation_expr);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, PackedFloat64Array, stage_camera_target_rotation_expr_args);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, Ref<JigsawParameterExpression>, stage_camera_offset_expr);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, PackedFloat64Array, stage_camera_offset_expr_args);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, Ref<JigsawParameterExpression>, stage_camera_rotation_offset_expr);
+IMPLEMENT_PROPERTY_SIMPLE(JigsawVisual, PackedFloat64Array, stage_camera_rotation_offset_expr_args);
 
 JigsawVisual::JigsawVisual() {
 	_stage_layer = memnew(CanvasLayer);
@@ -70,6 +103,7 @@ JigsawVisual::JigsawVisual() {
 
 	// certain features are only available on the Vulkan/WebGPU backend
 	if (RenderingServer::get_singleton()->get_current_rendering_method() == "forward_plus") {
+		_stage_environment->set_ssr_enabled(true);
 		_stage_camera_attributes->set_dof_blur_near_enabled(true);
 	}
 
@@ -159,11 +193,51 @@ void JigsawVisual::_ready() {
 
 	_stage_viewport_container->set_texture(_stage_viewport->get_texture());
 
-	_process(0.0); // force camera update
+	force_camera_update();
 }
 
 void JigsawVisual::_process(double p_delta) {
-	// TODO: camera animation
+	_camera_time += p_delta;
+
+	if (_stage_camera_target_position_expr.is_valid()) {
+		Ref<Expression> expr = _stage_camera_target_position_expr->get_parsed_expression();
+		if (likely(expr.is_valid())) {
+			Variant camera_target_position = expr->execute(Array::make(_camera_time, _stage_camera_target_position_expr_args), nullptr, true, true);
+			if (likely(!expr->has_execute_failed())) {
+				set_stage_camera_target_position(camera_target_position);
+			}
+		}
+	}
+
+	if (_stage_camera_target_rotation_expr.is_valid()) {
+		Ref<Expression> expr = _stage_camera_target_rotation_expr->get_parsed_expression();
+		if (likely(expr.is_valid())) {
+			Variant camera_target_rotation = expr->execute(Array::make(_camera_time, _stage_camera_target_rotation_expr_args), nullptr, true, true);
+			if (likely(!expr->has_execute_failed())) {
+				set_stage_camera_target_rotation_degrees(camera_target_rotation);
+			}
+		}
+	}
+
+	if (_stage_camera_offset_expr.is_valid()) {
+		Ref<Expression> expr = _stage_camera_offset_expr->get_parsed_expression();
+		if (likely(expr.is_valid())) {
+			Variant camera_offset = expr->execute(Array::make(_camera_time, _stage_camera_offset_expr_args), nullptr, true, true);
+			if (likely(!expr->has_execute_failed())) {
+				set_stage_camera_offset(camera_offset);
+			}
+		}
+	}
+
+	if (_stage_camera_rotation_offset_expr.is_valid()) {
+		Ref<Expression> expr = _stage_camera_rotation_offset_expr->get_parsed_expression();
+		if (likely(expr.is_valid())) {
+			Variant camera_rotation_offset = expr->execute(Array::make(_camera_time, _stage_camera_rotation_offset_expr_args), nullptr, true, true);
+			if (likely(!expr->has_execute_failed())) {
+				set_stage_camera_rotation_offset_degrees(camera_rotation_offset);
+			}
+		}
+	}
 
 	Window *window = get_window();
 	Vector2i size = window->get_size();
@@ -245,6 +319,10 @@ void JigsawVisual::_init_audience() {
 	}
 }
 
+void JigsawVisual::force_camera_update() {
+	_process(0.0);
+}
+
 Node3D *JigsawVisual::get_picked_object() const {
 	// only allow picking objects if the window has focus so we don't do weird things in the background
 	if (!get_window()->has_focus()) {
@@ -293,6 +371,10 @@ void JigsawVisual::set_scene_background_color(Color new_color) {
 	if (_stage_compatibility_background_color) {
 		// we need to make glow not affect the background color, just like in the higher fidelity render modes
 		_stage_compatibility_background_color->set_color(new_color);
+
+		// we do need the default clear color to affect the ambient light, though, for consistency
+		_stage_environment->set_ambient_source(new_color.a <= 0.0f ? Environment::AMBIENT_SOURCE_COLOR : Environment::AMBIENT_SOURCE_BG);
+		_stage_environment->set_ambient_light_color(RenderingServer::get_singleton()->get_default_clear_color());
 	}
 }
 float JigsawVisual::get_ambient_light_intensity() const {
@@ -302,7 +384,39 @@ void JigsawVisual::set_ambient_light_intensity(float new_intensity) {
 	_stage_environment->set_ambient_light_sky_contribution(new_intensity);
 }
 
-void JigsawVisual::_set_use_simple_background(bool force_2d) {
-	_stage_simple_background->set_visible(force_2d);
-	_stage_viewport->set_disable_3d(force_2d);
+Vector3 JigsawVisual::get_stage_camera_target_position() const {
+	return _stage_camera_target->get_position();
+}
+void JigsawVisual::set_stage_camera_target_position(Vector3 new_position) {
+	_stage_camera_target->set_position(new_position);
+}
+Vector3 JigsawVisual::get_stage_camera_target_rotation() const {
+	return _stage_camera_target->get_rotation();
+}
+void JigsawVisual::set_stage_camera_target_rotation(Vector3 new_rotation) {
+	_stage_camera_target->set_rotation(new_rotation);
+}
+Vector3 JigsawVisual::get_stage_camera_target_rotation_degrees() const {
+	return _stage_camera_target->get_rotation_degrees();
+}
+void JigsawVisual::set_stage_camera_target_rotation_degrees(Vector3 new_rotation) {
+	_stage_camera_target->set_rotation_degrees(new_rotation);
+}
+Vector3 JigsawVisual::get_stage_camera_offset() const {
+	return _stage_camera->get_position();
+}
+void JigsawVisual::set_stage_camera_offset(Vector3 new_position) {
+	_stage_camera->set_position(new_position);
+}
+Vector3 JigsawVisual::get_stage_camera_rotation_offset() const {
+	return _stage_camera->get_rotation();
+}
+void JigsawVisual::set_stage_camera_rotation_offset(Vector3 new_rotation) {
+	_stage_camera->set_rotation(new_rotation);
+}
+Vector3 JigsawVisual::get_stage_camera_rotation_offset_degrees() const {
+	return _stage_camera->get_rotation_degrees();
+}
+void JigsawVisual::set_stage_camera_rotation_offset_degrees(Vector3 new_rotation) {
+	_stage_camera->set_rotation_degrees(new_rotation);
 }

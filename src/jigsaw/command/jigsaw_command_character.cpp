@@ -91,7 +91,8 @@ JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &
 		int64_t i = character_nodes.size();
 
 		if (likely(mode.is_valid())) {
-			if (unlikely(def->get_character() < 0 || def->get_character() >= mode->get_characters().size())) {
+			Ref<CharacterDef> character = mode->get_character(def->get_character());
+			if (unlikely(character.is_null())) {
 				err = context->create_error(vformat("invalid character id %d", def->get_character()));
 				return JigsawExecutionState::ERROR;
 			}
@@ -104,7 +105,7 @@ JigsawExecutionState JigsawCommandCharacter::evaluate(const Ref<JigsawContext> &
 			}
 
 			sprite->set("mode", mode);
-			sprite->set("def", mode->get_characters()[def->get_character()]);
+			sprite->set("def", character);
 			sprite->set("player_number", player_number->is_nan() || player_number->get_amount_inf() != 0 ? 0 : player_number->get_amount());
 			sprite->set("flip", flip->get_boolean());
 			sprite->set_position(Vector3(x->get_value(), y->get_value(), z->get_value()));

@@ -5,6 +5,7 @@ void GameMode::_bind_methods() {
 	BIND_PROPERTY_RESOURCE_ARRAY(CharacterDef, characters);
 
 	BIND_PROPERTY_RESOURCE(CardDesign, default_card_design);
+	BIND_PROPERTY_ENUM(enums::IconDef::Icon, default_simple_background);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawTriggerVariant, base_triggers);
 	BIND_PROPERTY_RESOURCE_ARRAY(VariantDef, variants);
 
@@ -42,6 +43,7 @@ IMPLEMENT_PROPERTY(GameMode, TypedArray<AudienceDef>, audience);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<CharacterDef>, characters);
 
 IMPLEMENT_PROPERTY(GameMode, Ref<CardDesign>, default_card_design);
+IMPLEMENT_PROPERTY(GameMode, enums::IconDef::Icon, default_simple_background);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<JigsawTriggerVariant>, base_triggers);
 IMPLEMENT_PROPERTY(GameMode, TypedArray<VariantDef>, variants);
 

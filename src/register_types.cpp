@@ -1,3 +1,8 @@
+#include <gdextension_interface.h>
+#include <godot_cpp/godot.hpp>
+
+#include "godot_squirrel_register_types.h"
+
 #include "util/format_helper.h"
 #include "util/rng.h"
 #include "util/base32.h"
@@ -87,8 +92,10 @@
 #include "jigsaw/parameter/jigsaw_parameter_audience.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance_parameter.h"
 #include "jigsaw/parameter/jigsaw_parameter_stat_value.h"
+#include "jigsaw/parameter/jigsaw_parameter_expression.h"
 
 #include "jigsaw/presentation/jigsaw_audio.h"
+#include "jigsaw/presentation/jigsaw_generic_node.h"
 #include "jigsaw/presentation/jigsaw_scene_manipulator.h"
 
 #include "defs/card_filter.h"
@@ -141,10 +148,9 @@
 #include "protocol/deck.h"
 #include "protocol/dedicated_server_rpc.h"
 
-#include <gdextension_interface.h>
-#include <godot_cpp/godot.hpp>
-
 void initialize_gdextension_types(ModuleInitializationLevel p_level) {
+	initialize_squirrel_module(p_level);
+
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
@@ -268,6 +274,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawParameterAudience);
 	GDREGISTER_CLASS(JigsawParameterEffectInstanceParameter);
 	GDREGISTER_CLASS(JigsawParameterStatValue);
+	GDREGISTER_CLASS(JigsawParameterExpression);
 
 	GDREGISTER_ABSTRACT_CLASS(JigsawPresentationData);
 	GDREGISTER_CLASS(JigsawSoundCommandHistory);
@@ -275,6 +282,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(JigsawAudio);
 	GDREGISTER_CLASS(JigsawAudio2D);
 	GDREGISTER_CLASS(JigsawAudio3D);
+	GDREGISTER_CLASS(JigsawGenericNodeCommandHistory);
+	GDREGISTER_CLASS(JigsawGenericNode);
 	GDREGISTER_CLASS(JigsawSceneCommandHistory);
 	GDREGISTER_CLASS(JigsawSceneManipulator);
 
@@ -335,6 +344,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 
 Vector<std::function<void()>> _free_lazy_globals;
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
+	uninitialize_squirrel_module(p_level);
+
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}

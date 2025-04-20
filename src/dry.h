@@ -256,23 +256,26 @@ public:
 	void operator=(T *node) { _node = node ? node->get_instance_id() : ObjectID(); }
 };
 
-class LazyStringName {
-	const char * const _text;
-	mutable StringName *_string_name = nullptr;
+template<typename V, typename T>
+class LazyVariant {
+	const T _init;
+	mutable V *_variant = nullptr;
 
 public:
-	LazyStringName(const char *text) : _text(text) {}
+	LazyVariant(T init) : _init(init) {}
 
-	_FORCE_INLINE_ operator StringName() const {
-		if (likely(_string_name)) {
-			return *_string_name;
+	_FORCE_INLINE_ operator V() const {
+		if (likely(_variant)) {
+			return *_variant;
 		}
 
-		_string_name = memnew(StringName(_text));
-		_free_lazy_globals.append([this]() -> void { memdelete(_string_name); _string_name = nullptr; });
-		return *_string_name;
+		_variant = memnew(V(_init));
+		_free_lazy_globals.append([this]() -> void { memdelete(_variant); _variant = nullptr; });
+		return *_variant;
 	}
 };
+
+using LazyStringName = LazyVariant<StringName, const char *>;
 
 template<typename TEnum, size_t TSize = sizeof(TEnum)>
 struct PackedArrayHelper {};

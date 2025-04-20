@@ -7,6 +7,11 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="force_camera_update">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
 		<method name="get_picked_object" qualifiers="const">
 			<return type="Node3D" />
 			<description>
@@ -18,6 +23,8 @@
 		</member>
 		<member name="audience" type="Audience" setter="set_audience" getter="get_audience">
 		</member>
+		<member name="camera_time" type="float" setter="set_camera_time" getter="get_camera_time" default="0.0">
+		</member>
 		<member name="force_simple_background" type="bool" setter="set_force_simple_background" getter="get_force_simple_background" default="false">
 		</member>
 		<member name="scene_background_color" type="Color" setter="set_scene_background_color" getter="get_scene_background_color" default="Color(0.3, 0.3, 0.3, 1)">
@@ -25,6 +32,34 @@
 		<member name="simple_background" type="Texture2D" setter="set_simple_background" getter="get_simple_background">
 		</member>
 		<member name="simple_background_stretch" type="bool" setter="set_simple_background_stretch" getter="get_simple_background_stretch" default="true">
+		</member>
+		<member name="stage_camera_offset" type="Vector3" setter="set_stage_camera_offset" getter="get_stage_camera_offset" default="Vector3(0, 3.5, 5.5)">
+		</member>
+		<member name="stage_camera_offset_expr" type="JigsawParameterExpression" setter="set_stage_camera_offset_expr" getter="get_stage_camera_offset_expr">
+		</member>
+		<member name="stage_camera_offset_expr_args" type="PackedFloat64Array" setter="set_stage_camera_offset_expr_args" getter="get_stage_camera_offset_expr_args" default="PackedFloat64Array()">
+		</member>
+		<member name="stage_camera_rotation_offset" type="Vector3" setter="set_stage_camera_rotation_offset" getter="get_stage_camera_rotation_offset" default="Vector3(0, 0, 0)">
+		</member>
+		<member name="stage_camera_rotation_offset_degrees" type="Vector3" setter="set_stage_camera_rotation_offset_degrees" getter="get_stage_camera_rotation_offset_degrees">
+		</member>
+		<member name="stage_camera_rotation_offset_expr" type="JigsawParameterExpression" setter="set_stage_camera_rotation_offset_expr" getter="get_stage_camera_rotation_offset_expr">
+		</member>
+		<member name="stage_camera_rotation_offset_expr_args" type="PackedFloat64Array" setter="set_stage_camera_rotation_offset_expr_args" getter="get_stage_camera_rotation_offset_expr_args" default="PackedFloat64Array()">
+		</member>
+		<member name="stage_camera_target_position" type="Vector3" setter="set_stage_camera_target_position" getter="get_stage_camera_target_position" default="Vector3(5, 0, 0)">
+		</member>
+		<member name="stage_camera_target_position_expr" type="JigsawParameterExpression" setter="set_stage_camera_target_position_expr" getter="get_stage_camera_target_position_expr">
+		</member>
+		<member name="stage_camera_target_position_expr_args" type="PackedFloat64Array" setter="set_stage_camera_target_position_expr_args" getter="get_stage_camera_target_position_expr_args" default="PackedFloat64Array()">
+		</member>
+		<member name="stage_camera_target_rotation" type="Vector3" setter="set_stage_camera_target_rotation" getter="get_stage_camera_target_rotation" default="Vector3(-0.279253, 0, 0)">
+		</member>
+		<member name="stage_camera_target_rotation_degrees" type="Vector3" setter="set_stage_camera_target_rotation_degrees" getter="get_stage_camera_target_rotation_degrees">
+		</member>
+		<member name="stage_camera_target_rotation_expr" type="JigsawParameterExpression" setter="set_stage_camera_target_rotation_expr" getter="get_stage_camera_target_rotation_expr">
+		</member>
+		<member name="stage_camera_target_rotation_expr_args" type="PackedFloat64Array" setter="set_stage_camera_target_rotation_expr_args" getter="get_stage_camera_target_rotation_expr_args" default="PackedFloat64Array()">
 		</member>
 	</members>
 </class>

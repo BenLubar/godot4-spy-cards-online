@@ -5,8 +5,11 @@ libname = "spycardsonlinenative"
 
 env = SConscript("godot-cpp/SConstruct")
 
-env.Append(CPPPATH=["src/"])
+env.Append(CPPPATH=["src/", "godot4-squirrel/src/"])
 sources = Glob("src/*.cpp") + Glob("src/*/*.cpp") + Glob("src/*/*/*.cpp")
+
+sources += SConscript("godot4-squirrel/SCsub", {"env": env})
+
 
 if env["target"] == "template_debug":
     if env.get("is_msvc", False):

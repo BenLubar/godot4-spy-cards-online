@@ -251,16 +251,16 @@ bool LegacyParse::field_vanilla_version(const Ref<DataContainer> &container, con
 	int64_t vanilla_version = fh->read_uvarint();
 	switch (vanilla_version) {
 	case 0:
-		vanilla = VANILLA_1_0_5;
+		vanilla = VANILLA_1_0_5->get_mode();
 		break;
 	case 1:
-		vanilla = VANILLA_1_1;
+		vanilla = VANILLA_1_1->get_mode();
 		break;
 	case 2:
-		vanilla = VANILLA_1_1_1;
+		vanilla = VANILLA_1_1_1->get_mode();
 		break;
 	case 3:
-		vanilla = VANILLA_1_2_1;
+		vanilla = VANILLA_1_2_1->get_mode();
 		break;
 	default:
 		ERR_FAIL_V_MSG(false, vformat("out of range value for vanilla version: %d", vanilla_version));
@@ -292,31 +292,31 @@ bool LegacyParse::field_special_flags(const Ref<DataContainer> &container, const
 		switch (flag) {
 		case 1:
 			// TODO: Allow Subtracting Infinities
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Allow Subtracting Infinities)");
 			break;
 		case 2:
 			// TODO: Use Effect Card Back
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Use Effect Card Back)");
 			break;
 		case 3:
 			// TODO: No Damage on Win
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (No Damage on Win)");
 			break;
 		case 4:
 			// TODO: Reveal Card Selection
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Reveal Card Selection)");
 			break;
 		case 5:
 			// TODO: Both Players are Player 1
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Both Players are Player 1)");
 			break;
 		case 6:
 			// TODO: Auto-Ready if Negative TP
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Auto-Ready if Negative TP)");
 			break;
 		case 7:
 			// TODO: Hide Game Log
-			WARN_PRINT_ONCE("TODO: field_special_flags");
+			WARN_PRINT_ONCE("TODO: field_special_flags (Hide Game Log)");
 			break;
 		default:
 			ERR_FAIL_V_MSG(false, vformat("undefined legacy special flag %d", flag));

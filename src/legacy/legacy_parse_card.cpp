@@ -127,7 +127,7 @@ String LegacyParse::card_name(enums::CardDef::Card id) {
 		}
 	}
 
-	Ref<CardDef> vanilla_card = VANILLA_1_2_1->get_card(id);
+	Ref<CardDef> vanilla_card = VANILLA_1_2_1->get_mode()->get_card(id);
 	if (vanilla_card.is_valid()) {
 		return vanilla_card->get_name();
 	}

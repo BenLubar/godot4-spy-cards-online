@@ -1,5 +1,11 @@
 #include "jigsaw/command/jigsaw_command_sprite.h"
 
+#include "jigsaw/jigsaw_global.h"
+#include "jigsaw/jigsaw_visual.h"
+
+#include <godot_cpp/classes/sprite3d.hpp>
+#include <godot_cpp/classes/sub_viewport.hpp>
+
 void JigsawCommandSprite::_bind_methods() {
 }
 
@@ -8,6 +14,7 @@ bool JigsawCommandSprite::allowed_in_mode(enums::JigsawProcedure::Mode mode, boo
 
 	switch (mode) {
 	case FUNCTIONAL:
+		return false;
 	case INIT:
 	case MAIN:
 	case SELECT:
@@ -15,12 +22,19 @@ bool JigsawCommandSprite::allowed_in_mode(enums::JigsawProcedure::Mode mode, boo
 	case CHOICE_PREVIEW:
 	case REALTIME_LOGIC:
 	case REALTIME_VISUAL:
-		break; // TODO
+		return true;
 	}
 
 	ERR_FAIL_V(false);
 }
 JigsawExecutionState JigsawCommandSprite::evaluate(const Ref<JigsawContext> &context, Ref<JigsawError> &err, bool first) const {
+	Sprite3D *sprite = memnew(Sprite3D);
+	sprite->set_texture(context->get_global()->get_mode()->get_icon_texture(enums::IconDef::CARD_BATTLE_BACKGROUND));
+	sprite->set_modulate(Color(1.0f, 1.0f, 1.0f, 0.25f));
+	sprite->set_position(Vector3(5.0f, 4.0f, 2.0f));
+	sprite->set_scale(Vector3(1.6f, 1.0f, 1.0f));
+	context->get_global()->get_visual()->get_stage_viewport()->add_child(sprite);
+
 	return JigsawExecutionState::CONTINUE; // TODO
 }
 

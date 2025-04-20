@@ -6,7 +6,16 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="init_playback">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
 	<members>
+		<member name="global" type="JigsawGlobal" setter="set_global" getter="get_global">
+		</member>
 		<member name="recording" type="DataContainer" setter="set_recording" getter="get_recording">
 		</member>
 	</members>

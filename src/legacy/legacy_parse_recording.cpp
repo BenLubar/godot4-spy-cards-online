@@ -66,6 +66,8 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 
 	if (mode_name.is_empty()) {
 		ERR_FAIL_COND_V(!cards_raw.is_empty(), Ref<DataContainer>());
+
+		mode_public_name = "vanilla";
 	} else {
 		ERR_FAIL_COND_V(cards_raw.is_empty(), Ref<DataContainer>());
 		if (mode_name != "custom") {
@@ -91,22 +93,38 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 	}
 
 	if (game_version.x == 0 && game_version.y <= 2) {
-		mode = card_set(cards_raw, VANILLA_1_0_5, p1_spoiler_guard, p2_spoiler_guard);
+		mode = card_set(cards_raw, VANILLA_1_0_5->get_mode(), p1_spoiler_guard, p2_spoiler_guard);
+		if (mode_name.is_empty()) {
+			mode_public_revision = 1;
+		}
 	} else if (game_version.x == 0 && game_version.y == 3 && game_version.z <= 8) {
-		mode = card_set(cards_raw, VANILLA_1_1, p1_spoiler_guard, p2_spoiler_guard);
+		mode = card_set(cards_raw, VANILLA_1_1->get_mode(), p1_spoiler_guard, p2_spoiler_guard);
+		if (mode_name.is_empty()) {
+			mode_public_revision = 2;
+		}
 	} else if (game_version.x == 0 && game_version.y == 3 && game_version.z <= 26) {
-		mode = card_set(cards_raw, VANILLA_1_1_1, p1_spoiler_guard, p2_spoiler_guard);
+		mode = card_set(cards_raw, VANILLA_1_1_1->get_mode(), p1_spoiler_guard, p2_spoiler_guard);
+		if (mode_name.is_empty()) {
+			mode_public_revision = 3;
+		}
 	} else {
-		mode = card_set(cards_raw, VANILLA_1_2_1, p1_spoiler_guard, p2_spoiler_guard);
+		mode = card_set(cards_raw, VANILLA_1_2_1->get_mode(), p1_spoiler_guard, p2_spoiler_guard);
+		if (mode_name.is_empty()) {
+			mode_public_revision = 4;
+		}
 	}
 
 	ERR_FAIL_COND_V(mode.is_null(), Ref<DataContainer>());
 
-	if (selected_variant_index != -1) {
-		TypedArray<VariantDef> variants = mode->get_mode()->get_variants();
-		ERR_FAIL_INDEX_V(selected_variant_index, variants.size(), Ref<DataContainer>());
-		selected_variant = variants[selected_variant_index];
+	if (selected_variant_index == -1) {
+		selected_variant_index = 0;
+		mode->get_mode()->set_variants(Array::make(memnew(VariantDef)));
 	}
+
+	TypedArray<VariantDef> variants = mode->get_mode()->get_variants();
+	ERR_FAIL_INDEX_V(selected_variant_index, variants.size(), Ref<DataContainer>());
+	selected_variant = variants[selected_variant_index];
+
 	if (p1_character_name == "lanya") {
 		p1_character_name = "layna";
 	}
@@ -149,7 +167,7 @@ Ref<DataContainer> LegacyParse::card_recording(const PackedByteArray &buf) {
 	ERR_FAIL_COND_V(p2_initial_deck.is_empty() && !packed_deck.is_empty(), Ref<DataContainer>());
 
 	// undo NPCs (legacy recordings contain their cards played)
-	TypedArray<VariantDef> variants = mode->get_mode()->get_variants();
+	variants = mode->get_mode()->get_variants();
 	for (int64_t i = 0; i < variants.size(); i++) {
 		Ref<VariantDef> variant = variants[i];
 		if (!variant->get_npcs().is_empty()) {

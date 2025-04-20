@@ -18,10 +18,10 @@ protected:
 public:
 	static Ref<DataContainer> card_set(const PackedStringArray &buf, const Ref<GameMode> &vanilla_default, const PackedByteArray &p1_spoiler_guard = PackedByteArray(), const PackedByteArray &p2_spoiler_guard = PackedByteArray());
 private:
-	static LazyPredefined<GameMode> VANILLA_1_0_5;
-	static LazyPredefined<GameMode> VANILLA_1_1;
-	static LazyPredefined<GameMode> VANILLA_1_1_1;
-	static LazyPredefined<GameMode> VANILLA_1_2_1;
+	static LazyPredefined<DataContainer> VANILLA_1_0_5;
+	static LazyPredefined<DataContainer> VANILLA_1_1;
+	static LazyPredefined<DataContainer> VANILLA_1_1_1;
+	static LazyPredefined<DataContainer> VANILLA_1_2_1;
 
 	static LazyStringName meta_legacy_exile;
 	static LazyStringName meta_legacy_npc;

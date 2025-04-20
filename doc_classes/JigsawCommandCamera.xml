@@ -7,36 +7,54 @@
 	<tutorials>
 	</tutorials>
 	<members>
+		<member name="duration" type="JigsawParameter" setter="set_duration" getter="get_duration">
+		</member>
+		<member name="expression" type="JigsawParameter" setter="set_expression" getter="get_expression">
+		</member>
+		<member name="force" type="JigsawParameter" setter="set_force" getter="get_force">
+		</member>
 		<member name="operation" type="int" setter="set_operation" getter="get_operation" enum="JigsawCommandCamera.Operation" default="0">
+		</member>
+		<member name="pitch" type="JigsawParameter" setter="set_pitch" getter="get_pitch">
+		</member>
+		<member name="roll" type="JigsawParameter" setter="set_roll" getter="get_roll">
+		</member>
+		<member name="stretch" type="JigsawParameter" setter="set_stretch" getter="get_stretch">
 		</member>
 		<member name="type" type="int" setter="" getter="get_type" overrides="JigsawCommand" enum="JigsawCommand.Type" default="17" />
 		<member name="value" type="JigsawParameter" setter="set_value" getter="get_value">
 		</member>
+		<member name="x" type="JigsawParameter" setter="set_x" getter="get_x">
+		</member>
+		<member name="y" type="JigsawParameter" setter="set_y" getter="get_y">
+		</member>
+		<member name="yaw" type="JigsawParameter" setter="set_yaw" getter="get_yaw">
+		</member>
+		<member name="z" type="JigsawParameter" setter="set_z" getter="get_z">
+		</member>
 	</members>
 	<constants>
-		<constant name="RESERVED0" value="0" enum="Operation">
+		<constant name="SET_TARGET_POSITION" value="0" enum="Operation">
 		</constant>
-		<constant name="RESERVED1" value="1" enum="Operation">
+		<constant name="SET_TARGET_ROTATION" value="1" enum="Operation">
 		</constant>
-		<constant name="RESERVED2" value="2" enum="Operation">
+		<constant name="SET_CAMERA_OFFSET" value="2" enum="Operation">
 		</constant>
-		<constant name="RESERVED3" value="3" enum="Operation">
+		<constant name="SET_CAMERA_ROTATION_OFFSET" value="3" enum="Operation">
 		</constant>
-		<constant name="RESERVED4" value="4" enum="Operation">
+		<constant name="SET_TARGET_POSITION_EXPRESSION" value="4" enum="Operation">
 		</constant>
-		<constant name="RESERVED5" value="5" enum="Operation">
+		<constant name="SET_TARGET_ROTATION_EXPRESSION" value="5" enum="Operation">
 		</constant>
-		<constant name="RESERVED6" value="6" enum="Operation">
+		<constant name="SET_CAMERA_OFFSET_EXPRESSION" value="6" enum="Operation">
 		</constant>
-		<constant name="RESERVED7" value="7" enum="Operation">
+		<constant name="SET_CAMERA_ROTATION_OFFSET_EXPRESSION" value="7" enum="Operation">
 		</constant>
-		<constant name="RESERVED8" value="8" enum="Operation">
+		<constant name="SET_SIMPLE_BACKGROUND" value="8" enum="Operation">
 		</constant>
-		<constant name="RESERVED9" value="9" enum="Operation">
+		<constant name="SET_BACKGROUND_COLOR" value="9" enum="Operation">
 		</constant>
-		<constant name="SET_BACKGROUND_COLOR" value="10" enum="Operation">
-		</constant>
-		<constant name="SET_AMBIENT_LIGHT_INTENSITY" value="11" enum="Operation">
+		<constant name="SET_AMBIENT_LIGHT_INTENSITY" value="10" enum="Operation">
 		</constant>
 	</constants>
 </class>

@@ -8,26 +8,35 @@ class JigsawCommandCamera : public JigsawCommand {
 
 public:
 	enum Operation {
-		RESERVED0 = 0,
-		RESERVED1 = 1,
-		RESERVED2 = 2,
-		RESERVED3 = 3,
-		RESERVED4 = 4,
-		RESERVED5 = 5,
-		RESERVED6 = 6,
-		RESERVED7 = 7,
-		RESERVED8 = 8,
-		RESERVED9 = 9,
-		SET_BACKGROUND_COLOR = 10,
-		SET_AMBIENT_LIGHT_INTENSITY = 11,
+		SET_TARGET_POSITION = 0,
+		SET_TARGET_ROTATION = 1,
+		SET_CAMERA_OFFSET = 2,
+		SET_CAMERA_ROTATION_OFFSET = 3,
+		SET_TARGET_POSITION_EXPRESSION = 4,
+		SET_TARGET_ROTATION_EXPRESSION = 5,
+		SET_CAMERA_OFFSET_EXPRESSION = 6,
+		SET_CAMERA_ROTATION_OFFSET_EXPRESSION = 7,
+		SET_SIMPLE_BACKGROUND = 8,
+		SET_BACKGROUND_COLOR = 9,
+		SET_AMBIENT_LIGHT_INTENSITY = 10,
 	};
 
 protected:
 	static void _bind_methods();
 
 public:
-	DECLARE_PROPERTY(Operation, operation, = RESERVED0);
+	DECLARE_PROPERTY(Operation, operation, = SET_TARGET_POSITION);
 	DECLARE_PROPERTY(Ref<JigsawParameter>, value);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, stretch);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, force);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, expression);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, x);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, y);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, z);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, pitch);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, yaw);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, roll);
+	DECLARE_PROPERTY(Ref<JigsawParameter>, duration);
 
 	Type get_type() const override { return CAMERA; }
 	bool allowed_in_mode(enums::JigsawProcedure::Mode mode, bool any_config) const override;

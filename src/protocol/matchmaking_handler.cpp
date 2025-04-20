@@ -355,12 +355,14 @@ void MatchmakingHandler::_on_game_mode_assets_loaded() {
 	_global = memnew(JigsawGlobal);
 	_global->set_input_source(this);
 
-	_global->set_mode(_recording->get_mode());
-	TypedArray<VariantDef> variants = _recording->get_mode()->get_variants();
+	Ref<GameMode> mode = _recording->get_mode();
+	_global->set_mode(mode);
+	TypedArray<VariantDef> variants = mode->get_variants();
 	_global->set_selected_variant(variants[_recording->get_selected_variant()]);
 	add_child(_global, true);
 
 	JigsawVisual *visual = memnew(JigsawVisual);
+	visual->set_simple_background(mode->get_icon_texture(mode->get_default_simple_background()));
 	add_child(visual, true);
 	_global->set_visual(visual);
 

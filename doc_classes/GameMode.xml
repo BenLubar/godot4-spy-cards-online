@@ -81,6 +81,8 @@
 		</member>
 		<member name="default_card_design" type="CardDesign" setter="set_default_card_design" getter="get_default_card_design">
 		</member>
+		<member name="default_simple_background" type="int" setter="set_default_simple_background" getter="get_default_simple_background" enum="IconDef.Icon" default="509">
+		</member>
 		<member name="effects" type="PackedInt32Array" setter="set_effects" getter="get_effects" default="PackedInt32Array()">
 		</member>
 		<member name="modifiers" type="PackedInt32Array" setter="set_modifiers" getter="get_modifiers" default="PackedInt32Array()">

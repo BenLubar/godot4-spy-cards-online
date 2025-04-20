@@ -35,6 +35,7 @@ public:
 	DECLARE_PROPERTY(TypedArray<CharacterDef>, characters);
 
 	DECLARE_PROPERTY(Ref<CardDesign>, default_card_design);
+	DECLARE_PROPERTY(enums::IconDef::Icon, default_simple_background, = enums::IconDef::CARD_BATTLE_BACKGROUND);
 	DECLARE_PROPERTY(TypedArray<JigsawTriggerVariant>, base_triggers);
 	DECLARE_PROPERTY(TypedArray<VariantDef>, variants);
 

@@ -29,6 +29,7 @@ void JigsawGlobal::_bind_methods() {
 	BIND_PROPERTY(Variant::INT, queue_reset_count);
 	BIND_PROPERTY_RESOURCE_ARRAY(QueuedEffect, queue);
 
+	BIND_PROPERTY_RESOURCE(JigsawGenericNode, visual_rollback);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSound, sounds);
 	BIND_PROPERTY_RESOURCE_ARRAY(JigsawSceneManipulator, scenes);
 	BIND_PROPERTY_RESOURCE_ARRAY(MeshInstance3D, character_nodes);
@@ -67,6 +68,7 @@ IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawContext>, context_stack
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, int64_t, queue_reset_count);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<QueuedEffect>, queue);
 
+IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, Ref<JigsawGenericNode>, visual_rollback);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSound>, sounds);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<JigsawSceneManipulator>, scenes);
 IMPLEMENT_PROPERTY_SIMPLE(JigsawGlobal, TypedArray<MeshInstance3D>, character_nodes);
@@ -119,6 +121,10 @@ void JigsawGlobal::init_sides() {
 	}
 
 	_state->set_sides(sides);
+
+	_visual_rollback.instantiate();
+	_visual_rollback->set_owns_node(false);
+	_visual_rollback->set_node(get_visual());
 }
 
 void JigsawGlobal::next_frame() {

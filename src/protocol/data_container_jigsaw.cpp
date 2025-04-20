@@ -40,6 +40,7 @@
 #include "jigsaw/parameter/jigsaw_parameter_color.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance.h"
 #include "jigsaw/parameter/jigsaw_parameter_effect_instance_parameter.h"
+#include "jigsaw/parameter/jigsaw_parameter_expression.h"
 #include "jigsaw/parameter/jigsaw_parameter_file_id_gltf.h"
 #include "jigsaw/parameter/jigsaw_parameter_file_id_opus.h"
 #include "jigsaw/parameter/jigsaw_parameter_float.h"
@@ -833,6 +834,15 @@ bool DataContainer::_decode_jigsaw_parameter(const Ref<FormatHelper> &fh, Ref<Ji
 		parameter = param;
 		return fh->is_valid();
 	}
+	case JigsawParameter::EXPRESSION:
+	{
+		Ref<JigsawParameterExpression> param;
+		param.instantiate();
+		DECODE_VARIANT(param, expression);
+		DECODE_VARIANT(param, input_names);
+		(void)param->get_parsed_expression();
+		return fh->is_valid();
+	}
 	}
 
 	ERR_FAIL_V_MSG(false, vformat("DataContainer cannot decode Jigsaw parameter type %s (not implemented)", WhyIsntThisInGodot::find_builtin_enum_key_name("JigsawParameter", "Type", type)));
@@ -1055,6 +1065,13 @@ bool DataContainer::_encode_jigsaw_parameter(const Ref<FormatHelper> &fh, const 
 		Ref<JigsawParameterStatValue> param = parameter;
 		ENCODE_VARIANT(param, stat);
 		ERR_FAIL_COND_V(!_encode_amount(fh, param), false);
+		return fh->is_valid();
+	}
+	case JigsawParameter::EXPRESSION:
+	{
+		Ref<JigsawParameterExpression> param = parameter;
+		ENCODE_VARIANT(param, expression);
+		ENCODE_VARIANT(param, input_names);
 		return fh->is_valid();
 	}
 	}

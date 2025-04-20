@@ -284,7 +284,7 @@ JigsawExecutionState JigsawCommandScene::evaluate(const Ref<JigsawContext> &cont
 
 		manipulator->destroy(global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	case SET_VISIBLE:
 	{
@@ -323,7 +323,7 @@ JigsawExecutionState JigsawCommandScene::evaluate(const Ref<JigsawContext> &cont
 
 		manipulator->set_visible(node_path, visible->get_boolean(), global->get_current_frame());
 
-		return JigsawExecutionState::DONE;
+		return JigsawExecutionState::CONTINUE;
 	}
 	}
 

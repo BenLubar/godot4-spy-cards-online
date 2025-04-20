@@ -101,6 +101,7 @@ void JigsawSound::init_node(JigsawVisual *visual) {
 		set_node(audio);
 		audio->set_bus(get_bus_name(_type));
 		audio->set_sound(this);
+		audio->set_stream(_track->get_audio());
 		visual->add_child(audio);
 
 		break;
@@ -116,6 +117,7 @@ void JigsawSound::init_node(JigsawVisual *visual) {
 		set_node(audio);
 		audio->set_bus(get_bus_name(_type));
 		audio->set_sound(this);
+		audio->set_stream(_track->get_audio());
 		visual->get_stage_viewport()->add_child(audio);
 
 		break;
@@ -127,6 +129,7 @@ void JigsawSound::init_node(JigsawVisual *visual) {
 		set_node(audio);
 		audio->set_bus(get_bus_name(_type));
 		audio->set_sound(this);
+		audio->set_stream(_track->get_audio());
 		visual->add_child(audio);
 
 		break;
@@ -142,6 +145,7 @@ void JigsawSound::init_node(JigsawVisual *visual) {
 		set_node(audio);
 		audio->set_bus(get_bus_name(_type));
 		audio->set_sound(this);
+		audio->set_stream(_track->get_audio());
 		visual->get_stage_viewport()->add_child(audio);
 
 		break;
@@ -153,6 +157,7 @@ void JigsawSound::init_node(JigsawVisual *visual) {
 		set_node(audio);
 		audio->set_bus(get_bus_name(_type));
 		audio->set_sound(this);
+		audio->set_stream(_track->get_audio());
 		visual->add_child(audio);
 
 		break;

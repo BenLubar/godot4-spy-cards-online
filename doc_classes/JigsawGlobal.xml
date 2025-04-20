@@ -103,6 +103,8 @@
 		</member>
 		<member name="visual" type="JigsawVisual" setter="set_visual" getter="get_visual">
 		</member>
+		<member name="visual_rollback" type="JigsawGenericNode" setter="set_visual_rollback" getter="get_visual_rollback">
+		</member>
 	</members>
 	<signals>
 		<signal name="current_effect_changed">

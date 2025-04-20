@@ -48,6 +48,7 @@ public:
 		AUDIENCE = 22,
 		EFFECT_INSTANCE_PARAMETER = 23,
 		STAT_VALUE = 24,
+		EXPRESSION = 25,
 	};
 
 protected:

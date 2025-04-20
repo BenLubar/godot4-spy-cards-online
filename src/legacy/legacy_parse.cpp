@@ -15,10 +15,10 @@
 
 #include <godot_cpp/classes/marshalls.hpp>
 
-LazyPredefined<GameMode> LegacyParse::VANILLA_1_0_5{ "VANILLA_1_0_5" };
-LazyPredefined<GameMode> LegacyParse::VANILLA_1_1{ "VANILLA_1_1" };
-LazyPredefined<GameMode> LegacyParse::VANILLA_1_1_1{ "VANILLA_1_1_1" };
-LazyPredefined<GameMode> LegacyParse::VANILLA_1_2_1{ "VANILLA_1_2_1" };
+LazyPredefined<DataContainer> LegacyParse::VANILLA_1_0_5{ "VANILLA_1_0_5" };
+LazyPredefined<DataContainer> LegacyParse::VANILLA_1_1{ "VANILLA_1_1" };
+LazyPredefined<DataContainer> LegacyParse::VANILLA_1_1_1{ "VANILLA_1_1_1" };
+LazyPredefined<DataContainer> LegacyParse::VANILLA_1_2_1{ "VANILLA_1_2_1" };
 
 LazyStringName LegacyParse::meta_legacy_exile{ "legacy_exile" };
 LazyStringName LegacyParse::meta_legacy_npc{ "legacy_npc" };
