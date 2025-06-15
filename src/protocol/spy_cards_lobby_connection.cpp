@@ -457,6 +457,10 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 
 	const PackedStringArray commands = _matchmaking_poll[p_peer]->get_body().get_string_from_utf8().split("\n");
 	for (const String &command : commands) {
+		if (command.is_empty()) {
+			continue;
+		}
+
 		print_line("command received from player ", index, ": ", command.c_escape());
 		const int64_t command_number = command.unicode_at(0);
 		const Variant command_payload = JSON::parse_string(command.substr(1));
