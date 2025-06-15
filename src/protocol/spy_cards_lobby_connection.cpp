@@ -192,11 +192,10 @@ void SpyCardsLobbyConnection::_on_lobby_creator_session_description_created(cons
 		return;
 	}
 
-	const String pending_ice_candidates = String("\n").join(_peers[0].pending_matchmaking_commands);
-	_peers.write[0].pending_matchmaking_commands.clear();
-
-	_matchmaking_init = SpyCardsClient::get_singleton()->matchmaking_create_session(vformat("o%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates), _max_players);
+	_peers.write[0].pending_matchmaking_commands.insert(0, "o" + JSON::stringify(Array::make(p_sdp));
+	_matchmaking_init = SpyCardsClient::get_singleton()->matchmaking_create_session(String("\n").join(_peers[0].pending_matchmaking_commands), _max_players);
 	_matchmaking_init->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_create_session));
+	_peers.write[0].pending_matchmaking_commands.clear();
 }
 
 void SpyCardsLobbyConnection::_on_offer_session_description_created(const String &p_type, const String &p_sdp, int32_t p_peer) {
@@ -211,10 +210,9 @@ void SpyCardsLobbyConnection::_on_offer_session_description_created(const String
 		return;
 	}
 
-	const String pending_ice_candidates = String("\n").join(_peers[p_peer].pending_matchmaking_commands);
+	_peers.write[p_peer].pending_matchmaking_commands.insert(0, "o" + JSON::stringify(Array::make(p_sdp)));
+	_start_send(p_peer, String("\n").join(_peers[p_peer].pending_matchmaking_commands));
 	_peers.write[p_peer].pending_matchmaking_commands.clear();
-
-	_start_send(p_peer, vformat("o%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates));
 }
 
 void SpyCardsLobbyConnection::_on_answer_session_description_created(const String &p_type, const String &p_sdp, int32_t p_peer) {
@@ -229,10 +227,9 @@ void SpyCardsLobbyConnection::_on_answer_session_description_created(const Strin
 		return;
 	}
 
-	const String pending_ice_candidates = String("\n").join(_peers[p_peer].pending_matchmaking_commands);
+	_peers.write[p_peer].pending_matchmaking_commands.insert(0, "a" + JSON::stringify(Array::make(p_sdp)));
+	_start_send(p_peer, String("\n").join(_peers[p_peer].pending_matchmaking_commands));
 	_peers.write[p_peer].pending_matchmaking_commands.clear();
-
-	_start_send(p_peer, vformat("a%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates));
 }
 
 void SpyCardsLobbyConnection::_on_fatal_error(const String &p_message, bool p_forwarded) {
