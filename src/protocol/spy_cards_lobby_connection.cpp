@@ -192,7 +192,7 @@ void SpyCardsLobbyConnection::_on_lobby_creator_session_description_created(cons
 		return;
 	}
 
-	_peers.write[0].pending_matchmaking_commands.insert(0, "o" + JSON::stringify(Array::make(p_sdp));
+	_peers.write[0].pending_matchmaking_commands.insert(0, "o" + JSON::stringify(Array::make(p_sdp)));
 	_matchmaking_init = SpyCardsClient::get_singleton()->matchmaking_create_session(String("\n").join(_peers[0].pending_matchmaking_commands), _max_players);
 	_matchmaking_init->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_create_session));
 	_peers.write[0].pending_matchmaking_commands.clear();
