@@ -14,9 +14,8 @@ if env["target"] == "template_debug":
     if env.get("is_msvc", False):
         env.Append(CXXFLAGS=["/WX"])
     else:
-        env.Append(CXXFLAGS=["-Werror"])
-        if env["CXXVERSION"].startswith("13."):
-            env.Append(CXXFLAGS=["-Wno-attributes"])
+        if not env["CXXVERSION"].startswith("13."):
+            env.Append(CXXFLAGS=["-Werror"])
 
 if env["target"] in ["editor", "template_debug"]:
     try:
