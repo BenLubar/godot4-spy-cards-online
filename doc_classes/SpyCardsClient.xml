@@ -7,7 +7,7 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="base_url" type="String" setter="set_base_url" getter="get_base_url" default="&quot;&lt;null&gt;&quot;">
+		<member name="base_url" type="String" setter="set_base_url" getter="get_base_url" default="&quot;https://spy-cards.lubar.me&quot;">
 		</member>
 	</members>
 </class>

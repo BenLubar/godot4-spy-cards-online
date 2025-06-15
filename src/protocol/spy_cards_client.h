@@ -46,6 +46,7 @@ private:
 	Ref<SpyCardsClientRequest> matchmaking_join(const String &p_code) const;
 	Ref<SpyCardsClientRequest> matchmaking_poll(const String &p_code, int32_t p_from, int32_t p_to, const String &p_verify) const;
 	Ref<SpyCardsClientRequest> matchmaking_send(const String &p_code, int32_t p_from, int32_t p_to, const String &p_verify, const String &p_command) const;
+	Ref<SpyCardsClientRequest> matchmaking_get_configuration() const;
 	friend class SpyCardsLobbyConnection;
 
 public:

@@ -123,6 +123,15 @@ Ref<SpyCardsClientRequest> SpyCardsClient::matchmaking_send(const String &p_code
 	return request;
 }
 
+Ref<SpyCardsClientRequest> SpyCardsClient::matchmaking_get_configuration() const {
+	const Ref<SpyCardsClientRequest> request = create_request();
+
+	const String url = _base_url + String("/spy-cards/matchmaking/get-configuration");
+	request->get_request()->request(url);
+
+	return request;
+}
+
 Ref<SpyCardsClientRequest> SpyCardsClient::fetch_file_ipfs(const PackedByteArray &p_cid, ResourceLoader::CacheMode p_cache_mode) const {
 	// TODO: p_cache_mode
 

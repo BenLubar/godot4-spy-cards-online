@@ -13,14 +13,21 @@
 			<description>
 			</description>
 		</method>
-		<method name="is_empty" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
 		<method name="join_lobby">
 			<return type="void" />
 			<param index="0" name="lobby_id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="net_ping">
+			<return type="void" />
+			<param index="0" name="sequence_number" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="net_pong">
+			<return type="void" />
+			<param index="0" name="sequence_number" type="int" />
 			<description>
 			</description>
 		</method>

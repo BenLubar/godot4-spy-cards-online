@@ -11,3 +11,13 @@ config_version=5
 [application]
 
 config/features=PackedStringArray("4.5")
+
+[spy_cards_online]
+
+base_url="https://spy-cards.lubar.me"
+webrtc_config={
+"iceServers": [{
+"urls": ["stun:stun.cloudflare.com:3478"]
+}],
+"iceTransportPolicy": "all"
+}

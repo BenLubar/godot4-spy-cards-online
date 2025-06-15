@@ -20,21 +20,31 @@ private:
 	int32_t _player_index = 0;
 	int32_t _max_players = 0;
 
+	bool _waiting_for_configuration = false;
 	bool _waiting_to_create = false;
 	bool _waiting_to_join = false;
+
+	bool _is_turn_available = false;
+	bool _is_turn_forced = false;
 
 	String _matchmaking_error;
 	Ref<MultiplayerPeer> _multiplyer_peer;
 	Vector<Ref<SpyCardsClientRequest>> _matchmaking_poll;
 	Vector<Ref<SpyCardsClientRequest>> _matchmaking_send;
+	Ref<SpyCardsClientRequest> _matchmaking_configuration;
 	Ref<SpyCardsClientRequest> _matchmaking_init;
+	Dictionary _rtc_config;
+	constexpr static uint64_t PING_HISTORY_LENGTH = 64;
 	struct PeerConnection {
-		PeerConnection();
-
 		Ref<WebRTCPeerConnection> conn;
-		String pending_ice_candidates;
+		PackedStringArray pending_matchmaking_commands;
+		uint64_t ping_sent[PING_HISTORY_LENGTH];
+		uint64_t ping_received[PING_HISTORY_LENGTH];
 	};
 	Vector<PeerConnection> _peers;
+
+	double _ping_timer = 0.0;
+	uint64_t _ping_sequence_number = 0;
 
 public:
 	SpyCardsLobbyConnection();
@@ -54,17 +64,18 @@ private:
 	void _on_lobby_creator_session_description_created(const String &p_type, const String &p_sdp);
 	void _on_offer_session_description_created(const String &p_type, const String &p_sdp, int32_t p_peer);
 	void _on_answer_session_description_created(const String &p_type, const String &p_sdp, int32_t p_peer);
-	void _on_fatal_error(const String &p_message);
+	void _on_fatal_error(const String &p_message, bool p_forwarded = false);
 	void _on_join_lobby();
 	void _start_poll(int32_t p_peer);
 	void _start_send(int32_t p_peer, const String &p_command);
 	bool _check_http_response(const String &p_request_name, const Ref<SpyCardsClientRequest> &p_request, HTTPClient::ResponseCode p_expected_response);
+	void _on_init_config();
 	void _on_init_create_session();
 	void _on_init_join();
 	void _on_send_completed(int32_t p_peer);
 	void _on_poll_completed(int32_t p_peer);
 
 public:
-	void net_ping(int64_t p_sequence_number);
-	void net_pong(int64_t p_sequence_number);
+	void net_ping(uint64_t p_sequence_number);
+	void net_pong(uint64_t p_sequence_number);
 };

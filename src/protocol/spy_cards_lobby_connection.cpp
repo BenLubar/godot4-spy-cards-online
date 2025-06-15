@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/json.hpp>
 #include <godot_cpp/classes/offline_multiplayer_peer.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/web_rtc_multiplayer_peer.hpp>
 
 const static LazyStringName FATAL_ERROR{"fatal_error"};
@@ -16,10 +17,7 @@ const static LazyStringName SESSION_DESCRIPTION_CREATED{"session_description_cre
 const static LazyStringName NET_PING{"net_ping"};
 const static LazyStringName NET_PONG{"net_pong"};
 
-SpyCardsLobbyConnection::PeerConnection::PeerConnection() {
-	conn.instantiate();
-	conn->initialize(ProjectSettings::get_singleton()->get_setting_with_override("spy_cards_online/webrtc_config"));
-}
+constexpr static double PING_INTERVAL = 1.0;
 
 void SpyCardsLobbyConnection::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("create_lobby", "max_players"), &SpyCardsLobbyConnection::create_lobby);
@@ -36,8 +34,8 @@ void SpyCardsLobbyConnection::_bind_methods() {
 }
 
 SpyCardsLobbyConnection::SpyCardsLobbyConnection() {
-	rpc_config(NET_PING, make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TransferMode::TRANSFER_MODE_UNRELIABLE));
-	rpc_config(NET_PONG, make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TransferMode::TRANSFER_MODE_UNRELIABLE));
+	rpc_config(NET_PING, make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TRANSFER_MODE_UNRELIABLE, false, 1));
+	rpc_config(NET_PONG, make_rpc_config(MultiplayerAPI::RPC_MODE_ANY_PEER, MultiplayerPeer::TRANSFER_MODE_UNRELIABLE, false, 1));
 }
 
 Dictionary SpyCardsLobbyConnection::make_rpc_config(MultiplayerAPI::RPCMode p_rpc_mode, MultiplayerPeer::TransferMode p_transfer_mode, bool p_call_local, int32_t p_channel) {
@@ -49,14 +47,28 @@ Dictionary SpyCardsLobbyConnection::make_rpc_config(MultiplayerAPI::RPCMode p_rp
 	return config;
 }
 
+static Array get_channels_config() {
+	return {{
+		MultiplayerPeer::TRANSFER_MODE_UNRELIABLE, // channel 1: PING
+	}};
+}
+
 void SpyCardsLobbyConnection::_physics_process(double p_delta) {
+	bool should_ping = false;
+	if (!is_empty() && !_waiting_to_create && !_waiting_to_join) {
+		_ping_timer += p_delta;
+		if (_ping_timer >= PING_INTERVAL) {
+			_ping_timer -= PING_INTERVAL;
+			_ping_sequence_number++;
+			should_ping = true;
+		}
+	}
+
 	for (int64_t i = 0; i < _peers.size(); i++) {
 		_peers[i].conn->poll();
-		if (_peers[i].conn->get_connection_state() != WebRTCPeerConnection::ConnectionState::STATE_NEW && _peers[i].conn->get_signaling_state() == WebRTCPeerConnection::SIGNALING_STATE_STABLE && !_peers[i].pending_ice_candidates.is_empty() && (_matchmaking_send[i].is_null() || !_matchmaking_send[i]->get_request())) {
-			String pending_ice_candidates;
-			std::swap(pending_ice_candidates, _peers.write[i].pending_ice_candidates);
-
-			_start_send(i, pending_ice_candidates);
+		if (_peers[i].conn->get_connection_state() != WebRTCPeerConnection::ConnectionState::STATE_NEW && _peers[i].conn->get_signaling_state() == WebRTCPeerConnection::SIGNALING_STATE_STABLE && !_peers[i].pending_matchmaking_commands.is_empty() && (_matchmaking_send[i].is_null() || !_matchmaking_send[i]->get_request())) {
+			_start_send(i, String("\n").join(_peers[i].pending_matchmaking_commands));
+			_peers.write[i].pending_matchmaking_commands.clear();
 		}
 
 		int32_t index = i + 1;
@@ -64,10 +76,22 @@ void SpyCardsLobbyConnection::_physics_process(double p_delta) {
 			index++;
 		}
 
+		if (should_ping) {
+			_peers.write[i].ping_received[_ping_sequence_number % PING_HISTORY_LENGTH] = 0;
+			if (get_multiplayer()->get_peers().has(index)) {
+				_peers.write[i].ping_sent[_ping_sequence_number % PING_HISTORY_LENGTH] = Time::get_singleton()->get_ticks_usec();
+				rpc_id(index, NET_PING, _ping_sequence_number);
+			} else {
+				_peers.write[i].ping_sent[_ping_sequence_number % PING_HISTORY_LENGTH] = 0;
+			}
+		}
+
+#if 0
 		print_line(vformat("p%d->%d %s %s %s", _player_index, index,
 			WhyIsntThisInGodot::find_builtin_enum_key_name("WebRTCPeerConnection", "ConnectionState", _peers[i].conn->get_connection_state()),
 			WhyIsntThisInGodot::find_builtin_enum_key_name("WebRTCPeerConnection", "GatheringState", _peers[i].conn->get_gathering_state()),
 			WhyIsntThisInGodot::find_builtin_enum_key_name("WebRTCPeerConnection", "SignalingState", _peers[i].conn->get_signaling_state())));
+#endif
 	}
 }
 
@@ -115,30 +139,17 @@ void SpyCardsLobbyConnection::create_lobby(int32_t p_max_players) {
 	multiplayer_peer.instantiate();
 	_multiplyer_peer = multiplayer_peer;
 
-	Error err = multiplayer_peer->create_mesh(1);
+	Error err = multiplayer_peer->create_mesh(1, get_channels_config());
 	if (unlikely(err != OK)) {
 		_on_fatal_error(vformat("Failed to create lobby: creating mesh network: %s", UtilityFunctions::error_string(err)));
 		return;
 	}
 
-	_peers.resize(p_max_players - 1);
-	for (int64_t i = 0; i < _peers.size(); i++) {
-		_peers[i].conn->connect(ICE_CANDIDATE_CREATED, callable_mp(this, &SpyCardsLobbyConnection::_on_ice_candidate_created).bind(i));
-		err = multiplayer_peer->add_peer(_peers[i].conn, i + 2);
-		if (unlikely(err != OK)) {
-			_on_fatal_error(vformat("Failed to create lobby: pre-adding peer for player %d: %s", i + 2, UtilityFunctions::error_string(err)));
-			return;
-		}
-	}
-
-	_peers[0].conn->connect(SESSION_DESCRIPTION_CREATED, callable_mp(this, &SpyCardsLobbyConnection::_on_lobby_creator_session_description_created), CONNECT_ONE_SHOT);
-	err = _peers[0].conn->create_offer();
-	if (unlikely(err != OK)) {
-		_on_fatal_error(vformat("Failed to create lobby: creating WebRTC offer: %s", UtilityFunctions::error_string(err)));
-		return;
-	}
-
+	_waiting_for_configuration = true;
 	_waiting_to_create = true;
+
+	_matchmaking_configuration = SpyCardsClient::get_singleton()->matchmaking_get_configuration();
+	_matchmaking_configuration->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_config));
 }
 
 void SpyCardsLobbyConnection::join_lobby(const String &p_lobby_id) {
@@ -151,7 +162,11 @@ void SpyCardsLobbyConnection::join_lobby(const String &p_lobby_id) {
 	}
 
 	_lobby_id = p_lobby_id;
+	_waiting_for_configuration = true;
 	_waiting_to_join = true;
+
+	_matchmaking_configuration = SpyCardsClient::get_singleton()->matchmaking_get_configuration();
+	_matchmaking_configuration->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_config));
 
 	_matchmaking_init = SpyCardsClient::get_singleton()->matchmaking_join(p_lobby_id);
 	_matchmaking_init->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_join));
@@ -162,7 +177,7 @@ String SpyCardsLobbyConnection::get_lobby_id() const {
 }
 
 void SpyCardsLobbyConnection::_on_ice_candidate_created(const String &p_media, int32_t p_index, const String &p_name, int32_t p_peer) {
-	_peers.write[p_peer].pending_ice_candidates = vformat("%si%s\n", _peers[p_peer].pending_ice_candidates, JSON::stringify(Array::make(p_media, p_index, p_name)));
+	_peers.write[p_peer].pending_matchmaking_commands.append("i" + JSON::stringify(Array::make(p_media, p_index, p_name)));
 }
 
 void SpyCardsLobbyConnection::_on_lobby_creator_session_description_created(const String &p_type, const String &p_sdp) {
@@ -177,8 +192,8 @@ void SpyCardsLobbyConnection::_on_lobby_creator_session_description_created(cons
 		return;
 	}
 
-	String pending_ice_candidates;
-	std::swap(pending_ice_candidates, _peers.write[0].pending_ice_candidates);
+	const String pending_ice_candidates = String("\n").join(_peers[0].pending_matchmaking_commands);
+	_peers.write[0].pending_matchmaking_commands.clear();
 
 	_matchmaking_init = SpyCardsClient::get_singleton()->matchmaking_create_session(vformat("o%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates), _max_players);
 	_matchmaking_init->connect_request_completed(callable_mp(this, &SpyCardsLobbyConnection::_on_init_create_session));
@@ -196,8 +211,8 @@ void SpyCardsLobbyConnection::_on_offer_session_description_created(const String
 		return;
 	}
 
-	String pending_ice_candidates;
-	std::swap(pending_ice_candidates, _peers.write[p_peer].pending_ice_candidates);
+	const String pending_ice_candidates = String("\n").join(_peers[p_peer].pending_matchmaking_commands);
+	_peers.write[p_peer].pending_matchmaking_commands.clear();
 
 	_start_send(p_peer, vformat("o%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates));
 }
@@ -214,23 +229,30 @@ void SpyCardsLobbyConnection::_on_answer_session_description_created(const Strin
 		return;
 	}
 
-	String pending_ice_candidates;
-	std::swap(pending_ice_candidates, _peers.write[p_peer].pending_ice_candidates);
+	const String pending_ice_candidates = String("\n").join(_peers[p_peer].pending_matchmaking_commands);
+	_peers.write[p_peer].pending_matchmaking_commands.clear();
 
 	_start_send(p_peer, vformat("a%s\n%s", JSON::stringify(Array::make(p_sdp)), pending_ice_candidates));
 }
 
-void SpyCardsLobbyConnection::_on_fatal_error(const String &p_message) {
+void SpyCardsLobbyConnection::_on_fatal_error(const String &p_message, bool p_forwarded) {
 	ERR_FAIL_COND_MSG(!_matchmaking_error.is_empty(), vformat("%s: Additional matchmaking error: %s", this, p_message));
 	ERR_PRINT(vformat("%s: Matchmaking error: %s", this, p_message));
 	_matchmaking_error = p_message;
 	emit_signal(FATAL_ERROR, p_message);
+
+	if (!p_forwarded) {
+		const String error_notification = "f" + JSON::stringify(p_message);
+		for (PeerConnection &peer : _peers) {
+			peer.pending_matchmaking_commands.append(error_notification);
+		}
+	}
 }
 
 void SpyCardsLobbyConnection::_on_join_lobby() {
 	DEV_ASSERT(!_lobby_id.is_empty());
 
-	set_name("LOBBY_" + _lobby_id);
+	set_name("Lobby_" + _lobby_id);
 
 	Ref<MultiplayerAPI> multiplayer = MultiplayerAPI::create_default_interface();
 	multiplayer->set_multiplayer_peer(_multiplyer_peer);
@@ -309,6 +331,49 @@ bool SpyCardsLobbyConnection::_check_http_response(const String &p_request_name,
 	return true;
 }
 
+static bool is_ice_server_credentialed(const Dictionary &p_server) {
+	return p_server.has("credential");
+}
+
+void SpyCardsLobbyConnection::_on_init_config() {
+	if (_matchmaking_configuration->get_result() == HTTPRequest::RESULT_SUCCESS && _matchmaking_configuration->get_response_code() == HTTPClient::RESPONSE_OK) {
+		_rtc_config = JSON::parse_string(_matchmaking_configuration->get_body().get_string_from_utf8());
+	}
+
+	if (_rtc_config.is_empty()) {
+		_rtc_config = ProjectSettings::get_singleton()->get_setting_with_override("spy_cards_online/webrtc_config");
+	}
+
+	_is_turn_available = _rtc_config["iceServers"].operator Array().any(callable_mp_static(&is_ice_server_credentialed));
+	_is_turn_forced = _rtc_config["iceTransportPolicy"] == "relay";
+
+	_waiting_for_configuration = false;
+
+	if (_waiting_to_create) {
+		const Ref<WebRTCMultiplayerPeer> multiplayer_peer = _multiplyer_peer;
+		_peers.resize(_max_players - 1);
+		for (int64_t i = 0; i < _peers.size(); i++) {
+			_peers.write[i].conn.instantiate();
+			_peers[i].conn->initialize(_rtc_config);
+			_peers[i].conn->connect(ICE_CANDIDATE_CREATED, callable_mp(this, &SpyCardsLobbyConnection::_on_ice_candidate_created).bind(i));
+			const Error err = multiplayer_peer->add_peer(_peers[i].conn, i + 2);
+			if (unlikely(err != OK)) {
+				_on_fatal_error(vformat("Failed to create lobby: pre-adding peer for player %d: %s", i + 2, UtilityFunctions::error_string(err)));
+				return;
+			}
+		}
+
+		_peers[0].conn->connect(SESSION_DESCRIPTION_CREATED, callable_mp(this, &SpyCardsLobbyConnection::_on_lobby_creator_session_description_created), CONNECT_ONE_SHOT);
+		const Error err = _peers[0].conn->create_offer();
+		if (unlikely(err != OK)) {
+			_on_fatal_error(vformat("Failed to create lobby: creating WebRTC offer: %s", UtilityFunctions::error_string(err)));
+			return;
+		}
+	} else if (_waiting_to_join && _matchmaking_init.is_valid() && !_matchmaking_init->get_request()) {
+		_on_init_join();
+	}
+}
+
 void SpyCardsLobbyConnection::_on_init_create_session() {
 	if (!_check_http_response("create-lobby", _matchmaking_init, HTTPClient::RESPONSE_CREATED)) {
 		return;
@@ -325,6 +390,10 @@ void SpyCardsLobbyConnection::_on_init_create_session() {
 }
 
 void SpyCardsLobbyConnection::_on_init_join() {
+	if (_waiting_for_configuration) {
+		return;
+	}
+
 	if (!_check_http_response("join-lobby", _matchmaking_init, HTTPClient::RESPONSE_OK)) {
 		return;
 	}
@@ -344,7 +413,7 @@ void SpyCardsLobbyConnection::_on_init_join() {
 	multiplayer_peer.instantiate();
 	_multiplyer_peer = multiplayer_peer;
 
-	Error err = multiplayer_peer->create_mesh(_player_index);
+	Error err = multiplayer_peer->create_mesh(_player_index, get_channels_config());
 	if (unlikely(err != OK)) {
 		_on_fatal_error(vformat("Failed to join lobby: creating mesh network: %s", UtilityFunctions::error_string(err)));
 		return;
@@ -352,6 +421,8 @@ void SpyCardsLobbyConnection::_on_init_join() {
 
 	_peers.resize(_max_players - 1);
 	for (int64_t i = 0; i < _peers.size(); i++) {
+		_peers.write[i].conn.instantiate();
+		_peers[i].conn->initialize(_rtc_config);
 		_peers[i].conn->connect(ICE_CANDIDATE_CREATED, callable_mp(this, &SpyCardsLobbyConnection::_on_ice_candidate_created).bind(i));
 
 		int64_t index = i + 1;
@@ -387,8 +458,11 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 		index++;
 	}
 
-	const PackedStringArray commands = _matchmaking_poll[p_peer]->get_body().get_string_from_utf8().split("\n", false);
+	const PackedStringArray commands = _matchmaking_poll[p_peer]->get_body().get_string_from_utf8().split("\n");
 	for (const String &command : commands) {
+		if (command.is_empty()) {
+			continue;
+		}
 		const int64_t command_number = command.unicode_at(0);
 		const Variant command_payload = JSON::parse_string(command.substr(1));
 		Array a;
@@ -401,7 +475,7 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 		}
 
 		switch (command_number) {
-		case 'o':
+		case 'o': // SDP offer
 			if (index > _player_index) {
 				_on_fatal_error(vformat("From player %d: unexpected SDP offer", index));
 				return;
@@ -421,7 +495,7 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 			}
 
 			break;
-		case 'a':
+		case 'a': // SDP answer
 			if (index < _player_index) {
 				_on_fatal_error(vformat("From player %d: unexpected SDP answer", index));
 				return;
@@ -441,7 +515,7 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 			}
 
 			break;
-		case 'i':
+		case 'i': // ICE candidate
 			CHECK_PAYLOAD_TYPE(ARRAY);
 			a = command_payload;
 			if (a.size() != 3 || a[0].get_type() != Variant::STRING || a[1].get_type() != Variant::FLOAT || a[2].get_type() != Variant::STRING) {
@@ -456,6 +530,10 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 			}
 
 			break;
+		case 'f': // fatal error
+			CHECK_PAYLOAD_TYPE(STRING);
+			_on_fatal_error(vformat("Player %d encountered a fatal error: \"%s\"", index, command_payload), true);
+			return;
 		default:
 			_on_fatal_error(vformat("From player %d: unknown command number %d", index, command_number));
 			return;
@@ -469,17 +547,23 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 	}
 }
 
-void SpyCardsLobbyConnection::net_ping(int64_t p_sequence_number) {
+void SpyCardsLobbyConnection::net_ping(uint64_t p_sequence_number) {
 	const int32_t peer = get_multiplayer()->get_remote_sender_id();
 	ERR_FAIL_COND_MSG(peer == 0, "net_ping should only be called via RPC!");
 
-	print_line(peer, " -> ", _player_index, " PING! ", p_sequence_number);
 	rpc_id(peer, NET_PONG, p_sequence_number);
 }
 
-void SpyCardsLobbyConnection::net_pong(int64_t p_sequence_number) {
+void SpyCardsLobbyConnection::net_pong(uint64_t p_sequence_number) {
 	const int32_t peer = get_multiplayer()->get_remote_sender_id();
 	ERR_FAIL_COND_MSG(peer == 0, "net_pong should only be called via RPC!");
 
-	print_line(peer, " -> ", _player_index, " pong! ", p_sequence_number);
+	ERR_FAIL_COND_MSG(_ping_sequence_number < p_sequence_number, vformat("received a reply to a ping we haven't sent yet (%d > %d) from player %d", p_sequence_number, _ping_sequence_number, peer));
+
+	if (_ping_sequence_number < PING_HISTORY_LENGTH || p_sequence_number > _ping_sequence_number - PING_HISTORY_LENGTH) {
+		const int32_t i = peer - (peer > _player_index ? 2 : 1);
+		ERR_FAIL_COND_MSG(_peers[i].ping_sent[p_sequence_number % PING_HISTORY_LENGTH] == 0, vformat("received a reply to a ping we didn't send (%d/%d) from player %d", p_sequence_number, _ping_sequence_number, peer));
+		ERR_FAIL_COND_MSG(_peers[i].ping_received[p_sequence_number % PING_HISTORY_LENGTH] != 0, vformat("received duplicate reply to ping %d/%d from player %d", p_sequence_number, _ping_sequence_number, peer));
+		_peers.write[i].ping_received[p_sequence_number % PING_HISTORY_LENGTH] = Time::get_singleton()->get_ticks_usec();
+	}
 }
