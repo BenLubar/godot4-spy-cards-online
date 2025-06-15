@@ -1,5 +1,4 @@
-#ifndef DEDICATED_SERVER_RPC_H
-#define DEDICATED_SERVER_RPC_H
+#pragma once
 
 #include "dry.h"
 
@@ -35,13 +34,11 @@ private:
 
 public:
 	explicit DedicatedServerRPCConnection() {} // for doc generator
-	DedicatedServerRPCConnection(int socket);
+	DedicatedServerRPCConnection(int p_socket);
 	~DedicatedServerRPCConnection();
 
 	void _physics_process(double p_delta) override;
-	PackedByteArray process_command(const PackedByteArray &request);
+	PackedByteArray process_command(const PackedByteArray &p_request);
 };
 
 #endif
-
-#endif // DEDICATED_SERVER_RPC_H

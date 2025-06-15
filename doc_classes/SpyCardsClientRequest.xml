@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SpyCardsClientRequest" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="body" type="PackedByteArray" setter="set_body" getter="get_body" default="PackedByteArray()">
+		</member>
+		<member name="headers" type="PackedStringArray" setter="set_headers" getter="get_headers" default="PackedStringArray()">
+		</member>
+		<member name="request" type="HTTPRequest" setter="set_request" getter="get_request">
+		</member>
+		<member name="response_code" type="int" setter="set_response_code" getter="get_response_code" enum="HTTPClient.ResponseCode" default="0">
+		</member>
+		<member name="result" type="int" setter="set_result" getter="get_result" enum="HTTPRequest.Result" default="6">
+		</member>
+	</members>
+	<signals>
+		<signal name="request_completed">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

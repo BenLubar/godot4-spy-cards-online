@@ -62,7 +62,7 @@ void DedicatedServerRPC::_physics_process(double p_delta) {
 void DedicatedServerRPCConnection::_bind_methods() {
 }
 
-DedicatedServerRPCConnection::DedicatedServerRPCConnection(int socket) : _socket(socket) {
+DedicatedServerRPCConnection::DedicatedServerRPCConnection(int p_socket) : _socket(p_socket) {
 }
 
 DedicatedServerRPCConnection::~DedicatedServerRPCConnection() {
@@ -120,8 +120,8 @@ void DedicatedServerRPCConnection::_physics_process(double p_delta) {
 	}
 }
 
-PackedByteArray DedicatedServerRPCConnection::process_command(const PackedByteArray &request) {
-	ERR_PRINT(vformat("TODO: do something with buffer (%d bytes)", request.size())); // TODO: oops
+PackedByteArray DedicatedServerRPCConnection::process_command(const PackedByteArray &p_request) {
+	ERR_PRINT(vformat("TODO: do something with buffer (%d bytes)", p_request.size())); // TODO: oops
 
 	// for now, just write a zero.
 	return PackedByteArray{0};

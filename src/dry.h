@@ -1,28 +1,39 @@
-#ifndef DRY_H
-#define DRY_H
+#pragma once
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-parameter"
+#endif
+#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/templates/hash_map.hpp>
+#include <godot_cpp/templates/hash_set.hpp>
+#include <godot_cpp/templates/local_vector.hpp>
+#include <godot_cpp/variant/typed_dictionary.hpp>
+#include <godot_cpp/variant/variant.hpp>
+
+#include <godot_cpp/core/binder_common.hpp>
+#include <godot_cpp/core/gdvirtual.gen.inc>
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+#include <functional>
 
 #if defined(__GNUC__) && defined(DEBUG_ENABLED)
 // some warnings that are very useful in development
-// TODO: https://github.com/godotengine/godot-cpp/pull/1693
-//#pragma GCC diagnostic error "-Wdouble-promotion"
 #pragma GCC diagnostic error "-Wimplicit-fallthrough"
 #pragma GCC diagnostic error "-Winit-self"
 #pragma GCC diagnostic error "-Wsequence-point"
 #pragma GCC diagnostic error "-Wswitch"
 #endif
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/classes/resource_loader.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/gdvirtual.gen.inc>
-#include <godot_cpp/variant/variant_internal.hpp>
-#include <godot_cpp/variant/typed_dictionary.hpp>
-
-#include <functional>
-
 using namespace godot;
+
+#define DEV_ASSERT_ASSUME(m_cond) \
+	DEV_ASSERT((m_cond)); \
+	[[assume((m_cond))]]
 
 #define DECLARE_PROPERTY(m_type, m_name, ...) \
 private: \
@@ -52,10 +63,12 @@ public: \
 	m_type *get_##m_name() const; \
 	void set_##m_name(m_type *new_##m_name)
 
-#define BIND_PROPERTY(m_type, m_name) \
+String _spy_cards_enum_property_hint(const String &type_name, bool is_bitfield);
+
+#define BIND_PROPERTY(m_type, m_name, ...) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(m_type, #m_name), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(m_type, #m_name __VA_OPT__(,) __VA_ARGS__), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_NOT_SAVED(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
@@ -65,22 +78,27 @@ public: \
 #define BIND_PROPERTY_BITFIELD(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::INT, #m_name, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CLASS_IS_BITFIELD, enum_qualified_name_to_class_info_name(#m_type)), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::INT, #m_name, PROPERTY_HINT_FLAGS, _spy_cards_enum_property_hint(enum_qualified_name_to_class_info_name(#m_type), true), PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CLASS_IS_BITFIELD, enum_qualified_name_to_class_info_name(#m_type)), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_ENUM(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::INT, #m_name, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CLASS_IS_ENUM, enum_qualified_name_to_class_info_name(#m_type)), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::INT, #m_name, PROPERTY_HINT_ENUM, _spy_cards_enum_property_hint(enum_qualified_name_to_class_info_name(#m_type), false), PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CLASS_IS_ENUM, enum_qualified_name_to_class_info_name(#m_type)), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_RESOURCE(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type), "set_" #m_name, "get_" #m_name)
 
+#define BIND_PROPERTY_NODE(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_NODE_TYPE, #m_type), "set_" #m_name, "get_" #m_name)
+
 #define BIND_PROPERTY_RESOURCE_NOT_SAVED(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_NONE), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_EDITOR), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_MULTILINE_TEXT(m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
@@ -90,32 +108,22 @@ public: \
 #define BIND_PROPERTY_VARIANT_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(m_type) + ":"), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, itos(m_type) + ":"), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_ENUM_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::INT) + ":"), "set_" #m_name, "get_" #m_name)
-
-#define BIND_PROPERTY_PACKED_ENUM_ARRAY(m_type, m_name) \
-	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
-	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(PackedArrayHelper<m_type>::variant, #m_name), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, itos(Variant::INT) + "/" + itos(PROPERTY_HINT_ENUM) + ":" + _mm_enum_property_hint(enum_qualified_name_to_class_info_name(#m_type), false)), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_RESOURCE_ARRAY(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, itos(Variant::OBJECT) + "/" + itos(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
 
-#define BIND_PROPERTY_VARIANT_DICTIONARY_RESOURCE(m_key, m_type, m_name) \
+#define BIND_PROPERTY_RESOURCE_ARRAY_NOT_SAVED(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, #m_name, PROPERTY_HINT_DICTIONARY_TYPE, String::num(m_key) + ":;" + String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
-
-#define BIND_PROPERTY_ENUM_DICTIONARY_RESOURCE(m_enum, m_type, m_name) \
-	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
-	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, #m_name, PROPERTY_HINT_DICTIONARY_TYPE, String::num(Variant::INT) + ":;" + String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, #m_name, PROPERTY_HINT_TYPE_STRING, itos(Variant::OBJECT) + "/" + itos(PROPERTY_HINT_RESOURCE_TYPE) + ":" #m_type, PROPERTY_USAGE_EDITOR), "set_" #m_name, "get_" #m_name)
 
 #define BIND_PROPERTY_IS(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("is_" #m_name), &self_type::is_##m_name); \
@@ -125,7 +133,12 @@ public: \
 #define BIND_PROPERTY_OBJECTID_NOT_SAVED(m_type, m_name) \
 	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
 	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_NONE), "set_" #m_name, "get_" #m_name)
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_RESOURCE_TYPE, #m_type, PROPERTY_USAGE_EDITOR), "set_" #m_name, "get_" #m_name)
+
+#define BIND_PROPERTY_OBJECTID_NODE_NOT_SAVED(m_type, m_name) \
+	ClassDB::bind_method(D_METHOD("get_" #m_name), &self_type::get_##m_name); \
+	ClassDB::bind_method(D_METHOD("set_" #m_name, #m_name), &self_type::set_##m_name); \
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, #m_name, PROPERTY_HINT_NODE_TYPE, #m_type, PROPERTY_USAGE_EDITOR), "set_" #m_name, "get_" #m_name)
 
 #define IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, m_onchange) \
 	m_type m_class::get_##m_name() const { return _##m_name; } \
@@ -151,219 +164,165 @@ public: \
 	IMPLEMENT_PROPERTY_ONCHANGE(m_class, m_type, m_name, )
 #define IMPLEMENT_PROPERTY_SIMPLE_IS(m_class, m_type, m_name) \
 	IMPLEMENT_PROPERTY_ONCHANGE_IS(m_class, m_type, m_name, )
-#define IMPLEMENT_PROPERTY_OBJECTID_SIMPLE(m_class, m_type, m_name) \
+#define IMPLEMENT_PROPERTY_OBJECTID_ONCHANGE(m_class, m_type, m_name, m_onchange) \
 	m_type *m_class::get_##m_name() const { return Object::cast_to<m_type>(ObjectDB::get_instance(_##m_name)); } \
 	void m_class::set_##m_name(m_type *new_##m_name) { \
 		_##m_name = new_##m_name ? new_##m_name->get_instance_id() : ObjectID(); \
+		m_onchange; /* always calls onchange for now; decide whether this needs to check the old value eventually */ \
 	}
-
-// TODO: https://github.com/godotengine/godot-cpp/issues/1584
-#define DECLARE_ENUM(m_enum) \
-	VARIANT_ENUM_CAST(m_enum) \
-	namespace godot { \
-	/* MAKE_TYPED_ARRAY_INFO */ \
-	template<> \
-	struct GetTypeInfo<TypedArray<m_enum>> { \
-		static constexpr GDExtensionVariantType VARIANT_TYPE = GDEXTENSION_VARIANT_TYPE_ARRAY; \
-		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE; \
-		static inline PropertyInfo get_class_info() { \
-			return make_property_info(Variant::ARRAY, "", PROPERTY_HINT_ARRAY_TYPE, Variant::get_type_name(Variant::INT).utf8().get_data()); \
+#define IMPLEMENT_PROPERTY_OBJECTID_SIMPLE(m_class, m_type, m_name) \
+	IMPLEMENT_PROPERTY_OBJECTID_ONCHANGE(m_class, m_type, m_name, )
+#define IMPLEMENT_PROPERTY_ONSET(m_class, m_type, m_name, m_onset) \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		_##m_name = new_##m_name; \
+		m_onset; \
+	}
+#define IMPLEMENT_PROPERTY_ONCHANGE_SIGNAL(m_class, m_type, m_name, m_onchange) \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		if (_##m_name != new_##m_name) { \
+			if (_##m_name.is_valid()) { \
+				_##m_name->disconnect(CHANGED, callable_mp(this, &m_class::m_onchange)); \
+			} \
+			_##m_name = new_##m_name; \
+			if (_##m_name.is_valid()) { \
+				_##m_name->connect(CHANGED, callable_mp(this, &m_class::m_onchange)); \
+			} \
+			m_onchange(); \
 		} \
-	}; \
-	template<> \
-	struct GetTypeInfo<const TypedArray<m_enum> &> { \
-		static constexpr GDExtensionVariantType VARIANT_TYPE = GDEXTENSION_VARIANT_TYPE_ARRAY; \
-		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE; \
-		static inline PropertyInfo get_class_info() { \
-			return make_property_info(Variant::ARRAY, "", PROPERTY_HINT_ARRAY_TYPE, Variant::get_type_name(Variant::INT).utf8().get_data()); \
-		} \
-	}; \
-	/* MAKE_TYPED_ARRAY */ \
-	template<> \
-	class TypedArray<m_enum> : public Array { \
-	public: \
-		_FORCE_INLINE_ void operator=(const Array &p_array) { \
-			ERR_FAIL_COND_MSG(!is_same_typed(p_array), "Cannot assign an array with a different element type."); \
-			_ref(p_array); \
-		} \
-		_FORCE_INLINE_ TypedArray(const Variant &p_variant) : \
-			TypedArray(Array(p_variant)) { \
-		} \
-		_FORCE_INLINE_ TypedArray(const Array &p_array) { \
-			set_typed(Variant::INT, StringName(), Variant()); \
-			if (is_same_typed(p_array)) { \
-				_ref(p_array); \
-			} else { \
-				assign(p_array); \
+	}
+#define IMPLEMENT_PROPERTY_SIGNAL(m_class, m_type, m_name, m_signal, m_callback) \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		if (_##m_name != new_##m_name) { \
+			if (_##m_name) { \
+				_##m_name->disconnect(m_signal, callable_mp(this, m_callback)); \
+			} \
+			_##m_name = new_##m_name; \
+			if (_##m_name) { \
+				_##m_name->connect(m_signal, callable_mp(this, m_callback)); \
 			} \
 		} \
-		_FORCE_INLINE_ TypedArray() { \
-			set_typed(Variant::INT, StringName(), Variant()); \
+	}
+#define IMPLEMENT_PROPERTY_ARRAY_CHANGED(m_class, m_type, m_name, m_callback) \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		for (int64_t i = 0; i < _##m_name.size(); i++) { \
+			Object *item = _##m_name[i]; \
+			if (item) { \
+				item->disconnect(CHANGED, callable_mp(this, m_callback)); \
+			} \
 		} \
-	}; \
+		_##m_name = new_##m_name; \
+		for (int64_t i = 0; i < _##m_name.size(); i++) { \
+			Object *item = _##m_name[i]; \
+			if (item) { \
+				item->connect(CHANGED, callable_mp(this, m_callback)); \
+			} \
+		} \
+		callable_mp(this, m_callback).call(); \
+	}
+#define IMPLEMENT_PROPERTY_ARRAY_CHANGED_ITEM(m_class, m_type, m_name, m_callback) \
+	m_type m_class::get_##m_name() const { return _##m_name; } \
+	void m_class::set_##m_name(m_type new_##m_name) { \
+		for (int64_t i = 0; i < _##m_name.size(); i++) { \
+			Object *item = _##m_name[i]; \
+			if (item) { \
+				item->disconnect(CHANGED, callable_mp(this, m_callback).bind(item)); \
+			} \
+		} \
+		_##m_name = new_##m_name; \
+		for (int64_t i = 0; i < _##m_name.size(); i++) { \
+			Object *item = _##m_name[i]; \
+			if (item) { \
+				item->connect(CHANGED, callable_mp(this, m_callback).bind(item)); \
+				callable_mp(this, m_callback).call(item); \
+			} \
+		} \
 	}
 
-#define DEFAULT_TO_STRING() \
-	String _to_string() const { return vformat("<%s#%d>", get_class(), get_instance_id()); }
-
 extern Vector<std::function<void()>> _free_lazy_globals;
+extern thread_local bool lazy_globals_must_be_first_used_from_the_main_thread;
 template<typename T>
 class LazyGlobal {
 	std::function<Ref<T>()> _init;
 	mutable Ref<T> _ref;
+	mutable bool _initialized = false;
 
 	void _maybe_init() const {
-		if (_ref.is_null()) {
+		if (unlikely(!_initialized)) {
+			DEV_ASSERT(lazy_globals_must_be_first_used_from_the_main_thread);
+
+			_initialized = true;
 			_ref = _init();
-			_free_lazy_globals.append([this]() -> void { _ref = Ref<T>(); });
+			_free_lazy_globals.append([this]() -> void { _ref = Ref<T>(); _initialized = false; });
 		}
 	}
 public:
-	LazyGlobal(const std::function<Ref<T>()> &init) : _init(init) {}
+	explicit LazyGlobal(const std::function<Ref<T>()> &init) : _init(init) {}
 
-	operator Ref<T>() const { _maybe_init(); return _ref; }
+	operator Ref<T> () const { _maybe_init(); return _ref; }
 	T *operator*() const { _maybe_init(); return _ref.ptr(); }
 	T *operator->() const { _maybe_init(); return _ref.ptr(); }
-	void operator=(const Ref<T> &ref) { _ref = ref; }
+	void operator=(const Ref<T> &value) { _maybe_init(); _ref = value; }
 };
 
+extern std::vector<std::function<void()>> _lazy_init;
+
 template<typename T>
-class LazyGlobalFile : public LazyGlobal<T> {
+class LazyResource : public LazyGlobal<T> {
 public:
-	LazyGlobalFile(const char *const path) : LazyGlobal<T>([path]() -> Ref<T> {
+	explicit LazyResource(const char *path) : LazyGlobal<T>{ [path]() -> Ref<T> {
 		return ResourceLoader::get_singleton()->load(path, T::get_class_static());
-	}) {}
+	} } {}
 };
 
-template<typename T>
-class LazyGlobalNode {
-	std::function<T *()> _init;
-	mutable ObjectID _node;
+template<typename T, typename M>
+class LazyVariant {
+	const M _init;
+	mutable T *_variant = nullptr;
 
 	void _maybe_init() const {
-		if (_node.is_null()) {
-			T *node = _init();
-			_node = node ? node->get_instance_id() : ObjectID();
-			_free_lazy_globals.append([this]() -> void { if (_node.is_valid()) (*this)->queue_free(); });
+		if (unlikely(!_variant)) {
+			DEV_ASSERT(lazy_globals_must_be_first_used_from_the_main_thread);
+
+			_variant = memnew(T(_init));
+			_free_lazy_globals.append([this]() -> void { if (_variant) { memdelete(_variant); _variant = nullptr; } });
 		}
 	}
 public:
-	LazyGlobalNode(const std::function<T *()> &init) : _init(init) {}
+	LazyVariant(const M &init) : _init(init) {}
 
-	operator T *() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
-	T *operator*() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
-	T *operator->() const { _maybe_init(); return Object::cast_to<T>(ObjectDB::get_instance(_node)); }
-	void operator=(T *node) { _node = node ? node->get_instance_id() : ObjectID(); }
+	operator T &() const { _maybe_init(); return *_variant; }
+	T &operator*() const { _maybe_init(); return *_variant; }
+	T *operator->() const { _maybe_init(); return _variant; }
 };
 
-template<typename V, typename T>
-class LazyVariant {
-	const T _init;
-	mutable V *_variant = nullptr;
+template<typename T>
+class LazyVariant<T, void> {
+	mutable T *_variant = nullptr;
 
-public:
-	LazyVariant(T init) : _init(init) {}
+	void _maybe_init() const {
+		if (unlikely(!_variant)) {
+			DEV_ASSERT(lazy_globals_must_be_first_used_from_the_main_thread);
 
-	_FORCE_INLINE_ operator V() const {
-		if (likely(_variant)) {
-			return *_variant;
+			_variant = memnew(T);
+			_free_lazy_globals.append([this]() -> void { if (_variant) { memdelete(_variant); _variant = nullptr; } });
 		}
-
-		_variant = memnew(V(_init));
-		_free_lazy_globals.append([this]() -> void { memdelete(_variant); _variant = nullptr; });
-		return *_variant;
 	}
+public:
+	LazyVariant() {}
+
+	operator T &() const { _maybe_init(); return *_variant; }
+	T &operator*() const { _maybe_init(); return *_variant; }
+	T *operator->() const { _maybe_init(); return _variant; }
 };
 
 using LazyStringName = LazyVariant<StringName, const char *>;
+using LazyNodePath = LazyVariant<NodePath, const char *>;
 
-template<typename TEnum, size_t TSize = sizeof(TEnum)>
-struct PackedArrayHelper {};
-
-template<typename TEnum>
-struct PackedArrayHelper<TEnum, 4> {
-	typedef PackedInt32Array base_type;
-	static constexpr Variant::Type variant = Variant::PACKED_INT32_ARRAY;
-	static constexpr GDExtensionVariantType extension_variant = GDEXTENSION_VARIANT_TYPE_PACKED_INT32_ARRAY;
-};
-
-template<typename TEnum>
-struct PackedArrayHelper<TEnum, 8> {
-	typedef PackedInt64Array base_type;
-	static constexpr Variant::Type variant = Variant::PACKED_INT64_ARRAY;
-	static constexpr GDExtensionVariantType extension_variant = GDEXTENSION_VARIANT_TYPE_PACKED_INT64_ARRAY;
-};
-
-template<typename TEnum, typename TBase = typename PackedArrayHelper<TEnum>::base_type>
-class PackedArray : public TBase {
-public:
-	_FORCE_INLINE_ PackedArray() : TBase() {};
-	_FORCE_INLINE_ PackedArray(const TBase &p_from) : TBase(p_from) {}
-	_FORCE_INLINE_ PackedArray(const Array &p_from) : TBase(p_from) {}
-	_FORCE_INLINE_ PackedArray(TBase &&p_other) : TBase(p_other) {}
-	_FORCE_INLINE_ PackedArray(std::initializer_list<TEnum> p_init) : TBase(*reinterpret_cast<const std::initializer_list<decltype(*TBase::ptrw())> *>(&p_init)) {}
-
-	_FORCE_INLINE_ const TEnum &operator[](int64_t p_index) const { return reinterpret_cast<const TEnum &>(TBase::operator[](p_index)); }
-	_FORCE_INLINE_ TEnum &operator[](int64_t p_index) { return reinterpret_cast<TEnum &>(TBase::operator[](p_index)); }
-};
-
-namespace godot {
-	template<typename TEnum, typename TBase>
-	struct GetTypeInfo<PackedArray<TEnum, TBase>> {
-		static constexpr GDExtensionVariantType VARIANT_TYPE = GetTypeInfo<TBase>::VARIANT_TYPE;
-		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
-		static inline PropertyInfo get_class_info() {
-			return make_property_info((Variant::Type)VARIANT_TYPE, "");
-		}
-	};
-	template<typename TEnum, typename TBase>
-	struct GetTypeInfo<const PackedArray<TEnum, TBase> &> {
-		static constexpr GDExtensionVariantType VARIANT_TYPE = GetTypeInfo<const TBase &>::VARIANT_TYPE;
-		static constexpr GDExtensionClassMethodArgumentMetadata METADATA = GDEXTENSION_METHOD_ARGUMENT_METADATA_NONE;
-		static inline PropertyInfo get_class_info() {
-			return make_property_info((Variant::Type)VARIANT_TYPE, "");
-		}
-	};
-	template<typename TEnum, typename TBase>
-	struct PtrToArg<PackedArray<TEnum, TBase>> {
-		_FORCE_INLINE_ static PackedArray<TEnum, TBase> convert(const void *p_ptr) {
-			return *reinterpret_cast<const PackedArray<TEnum, TBase> *>(p_ptr);
-		}
-		typedef PackedArray<TEnum, TBase> EncodeT;
-		_FORCE_INLINE_ static void encode(PackedArray<TEnum, TBase> p_val, void *p_ptr) {
-			*reinterpret_cast<PackedArray<TEnum, TBase> *>(p_ptr) = p_val;
-		}
-	};
-	template<typename TEnum, typename TBase>
-	struct PtrToArg<const PackedArray<TEnum, TBase> &> {
-		_FORCE_INLINE_ static PackedArray<TEnum, TBase> convert(const void *p_ptr) {
-			return *reinterpret_cast<const PackedArray<TEnum, TBase> *>(p_ptr);
-		}
-		typedef PackedArray<TEnum, TBase> EncodeT;
-		_FORCE_INLINE_ static void encode(PackedArray<TEnum, TBase> p_val, void *p_ptr) {
-			*reinterpret_cast<PackedArray<TEnum, TBase> *>(p_ptr) = p_val;
-		}
-	};
-	template<typename TEnum, typename TBase>
-	struct VariantCaster<PackedArray<TEnum, TBase>> {
-		static _FORCE_INLINE_ PackedArray<TEnum, TBase> cast(const Variant &p_variant) {
-			return static_cast<PackedArray<TEnum, TBase>>(p_variant.operator TBase());
-		}
-	};
-	template<typename TEnum, typename TBase>
-	struct VariantCaster<const PackedArray<TEnum, TBase> &> {
-		static _FORCE_INLINE_ PackedArray<TEnum, TBase> cast(const Variant &p_variant) {
-			return static_cast<PackedArray<TEnum, TBase>>(p_variant.operator TBase());
-		}
-	};
-	namespace internal {
-		template<typename TEnum, typename TBase>
-		struct VariantInternalType<PackedArray<TEnum, TBase>> {
-			static constexpr Variant::Type type = VariantInternalType<TBase>::type;
-		};
-	}
-}
-
-#include "predefined.hpp"
-
-#endif // DRY_H
+Pair<uint64_t, int64_t> uvarint(const PackedByteArray &p_buffer, int64_t p_offset = 0);
+Pair<int64_t, int64_t> svarint(const PackedByteArray &p_buffer, int64_t p_offset = 0);
+void append_uvarint(PackedByteArray &p_buffer, uint64_t p_value);
+void append_svarint(PackedByteArray &p_buffer, int64_t p_value);

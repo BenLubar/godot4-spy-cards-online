@@ -8,7 +8,7 @@ custom.py
 compile_commands.json
 
 # Ignore files generated for documentation
-/src/gen
+/gen
 
 # Ignore build caches
 /.cache

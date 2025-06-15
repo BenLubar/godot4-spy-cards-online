@@ -1,5 +1,4 @@
-#ifndef RNG_H
-#define RNG_H
+#pragma once
 
 #include "dry.h"
 
@@ -20,7 +19,7 @@ private:
 
 public:
 	RNG();
-	RNG(PackedByteArray seed);
+	explicit RNG(const PackedByteArray &p_seed);
 	~RNG();
 
 	DECLARE_PROPERTY(PackedByteArray, bug_separate_update_seed);
@@ -29,7 +28,7 @@ public:
 	DECLARE_PROPERTY(bool, bug_max_value_shift, = false);
 
 private:
-	uint64_t _next_multi(int64_t num_bytes);
+	uint64_t _next_multi(int64_t p_num_bytes);
 	uint8_t _next();
 
 public:
@@ -37,14 +36,10 @@ public:
 	Ref<RNG> duplicate() const;
 	double next_cheap_float();
 	double next_float();
-	int64_t next_range_int(int64_t min, int64_t max);
-	double next_range_int_float(double min, double max);
-	double next_range_float(double min, double max);
+	int64_t next_range_int(int64_t p_min, int64_t p_max);
+	double next_range_int_float(double p_min, double p_max);
+	double next_range_float(double p_min, double p_max);
 	int64_t fintn(double n);
 
-	DEFAULT_TO_STRING();
-
-	static Ref<RNG> with_seed(PackedByteArray seed);
+	static Ref<RNG> with_seed(PackedByteArray p_seed);
 };
-
-#endif

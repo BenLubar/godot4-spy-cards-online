@@ -18,15 +18,18 @@ void RNG::_bind_methods() {
 }
 
 RNG::RNG() : RNG(PackedByteArray()) {}
-RNG::RNG(PackedByteArray seed) {
-	_seed = seed;
+RNG::RNG(const PackedByteArray &p_seed) {
+	_seed = p_seed;
+
 	_hash.instantiate();
 	Error error = _hash->start(_hash_type);
 	ERR_FAIL_COND(error != OK);
+
 	if (!_seed.is_empty()) {
 		error = _hash->update(_seed);
 		ERR_FAIL_COND(error != OK);
 	}
+
 	_buf = _hash->finish();
 }
 RNG::~RNG() {}
@@ -36,10 +39,10 @@ IMPLEMENT_PROPERTY_SIMPLE(RNG, bool, bug_reverse_float);
 IMPLEMENT_PROPERTY_SIMPLE(RNG, bool, bug_max_value_fencepost);
 IMPLEMENT_PROPERTY_SIMPLE(RNG, bool, bug_max_value_shift);
 
-uint64_t RNG::_next_multi(int64_t num_bytes) {
+uint64_t RNG::_next_multi(int64_t p_num_bytes) {
 	uint64_t x = 0;
 
-	for (int64_t i = 0; i < num_bytes; i++) {
+	for (int64_t i = 0; i < p_num_bytes; i++) {
 		x |= uint64_t(_next()) << (i << 3);
 	}
 
@@ -49,24 +52,28 @@ uint8_t RNG::_next() {
 	if (_index >= _buf.size()) {
 		Error error = _hash->start(_hash_type);
 		ERR_FAIL_COND_V(error != OK, 0);
+
 		if (unlikely(!_bug_separate_update_seed.is_empty())) {
 			error = _hash->update(_bug_separate_update_seed);
 			ERR_FAIL_COND_V(error != OK, 0);
+
 			error = _hash->update(_buf);
 			ERR_FAIL_COND_V(error != OK, 0);
 		} else {
 			error = _hash->update(_buf);
 			ERR_FAIL_COND_V(error != OK, 0);
+
 			if (!_seed.is_empty()) {
 				error = _hash->update(_seed);
 				ERR_FAIL_COND_V(error != OK, 0);
 			}
 		}
+
 		_buf = _hash->finish();
 		_index = 0;
 	}
 
-	uint8_t n = _buf[_index];
+	const uint8_t n = _buf[_index];
 	_index++;
 
 	return n;
@@ -99,8 +106,8 @@ double RNG::next_float() {
 
 	return double(_next_multi(4)) / 4294967296.0;
 }
-int64_t RNG::next_range_int(int64_t min, int64_t max) {
-	int64_t diff = max - min;
+int64_t RNG::next_range_int(int64_t p_min, int64_t p_max) {
+	const int64_t diff = p_max - p_min;
 	ERR_FAIL_COND_V_MSG(diff <= 0, 0, "invalid random range");
 
 	int64_t num_bytes = 0;
@@ -123,12 +130,12 @@ int64_t RNG::next_range_int(int64_t min, int64_t max) {
 		value = _next_multi(num_bytes);
 	}
 
-	return (value % diff) + min;
+	return (value % diff) + p_min;
 }
-double RNG::next_range_int_float(double min, double max) {
-	ERR_FAIL_COND_V_MSG(!Math::is_finite(min), 0.0, "invalid random range minimum");
-	ERR_FAIL_COND_V_MSG(!Math::is_finite(max), 0.0, "invalid random range maximum");
-	double diff = max - min;
+double RNG::next_range_int_float(double p_min, double p_max) {
+	ERR_FAIL_COND_V_MSG(!Math::is_finite(p_min), 0.0, "invalid random range minimum");
+	ERR_FAIL_COND_V_MSG(!Math::is_finite(p_max), 0.0, "invalid random range maximum");
+	const double diff = p_max - p_min;
 	ERR_FAIL_COND_V_MSG(diff <= 0.0, 0.0, "invalid random range");
 
 	int64_t num_bytes = 0;
@@ -148,20 +155,20 @@ double RNG::next_range_int_float(double min, double max) {
 		value = double(_next_multi(num_bytes));
 	}
 
-	return Math::fmod(value, diff) + min;
+	return Math::fmod(value, diff) + p_min;
 }
-double RNG::next_range_float(double min, double max) {
-	ERR_FAIL_COND_V_MSG(!Math::is_finite(min), 0.0, "invalid random range minimum");
-	ERR_FAIL_COND_V_MSG(!Math::is_finite(max), 0.0, "invalid random range maximum");
-	double diff = max - min;
+double RNG::next_range_float(double p_min, double p_max) {
+	ERR_FAIL_COND_V_MSG(!Math::is_finite(p_min), 0.0, "invalid random range minimum");
+	ERR_FAIL_COND_V_MSG(!Math::is_finite(p_max), 0.0, "invalid random range maximum");
+	double diff = p_max - p_min;
 	ERR_FAIL_COND_V_MSG(diff <= 0.0, 0.0, "invalid random range");
 
-	return diff * next_float() + min;
+	return diff * next_float() + p_min;
 }
 int64_t RNG::fintn(double n) {
 	return int64_t(Math::floor(next_float() * n));
 }
 
-Ref<RNG> RNG::with_seed(PackedByteArray seed) {
-	return memnew(RNG(seed));
+Ref<RNG> RNG::with_seed(PackedByteArray p_seed) {
+	return memnew(RNG(p_seed));
 }

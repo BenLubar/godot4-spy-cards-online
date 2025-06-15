@@ -10,23 +10,23 @@ void WhyIsntThisInGodot::_bind_methods() {
 	ClassDB::bind_static_method("WhyIsntThisInGodot", D_METHOD("get_project_version_vector"), &WhyIsntThisInGodot::get_project_version_vector);
 }
 
-String WhyIsntThisInGodot::find_builtin_enum_key_name(const StringName &type, const StringName &enum_name, int64_t enum_value) {
-	PackedStringArray names = ClassDB::class_get_enum_constants(type, enum_name);
+String WhyIsntThisInGodot::find_builtin_enum_key_name(const StringName &p_type, const StringName &p_enum_name, int64_t p_enum_value) {
+	const PackedStringArray names = ClassDB::class_get_enum_constants(p_type, p_enum_name);
 	for (int64_t i = 0; i < names.size(); i++) {
-		if (ClassDB::class_get_integer_constant(type, names[i]) == enum_value) {
+		if (ClassDB::class_get_integer_constant(p_type, names[i]) == p_enum_value) {
 			return names[i];
 		}
 	}
 
 	// failsafe: just use the number if we couldn't find any keys
-	return vformat("%s.%s(%d)", type, enum_name, enum_value);
+	return vformat("%s.%s(%d)", p_type, p_enum_name, p_enum_value);
 }
 
-static uint64_t get_path_size_recursive(const std::filesystem::path &path) {
+static uint64_t get_path_size_recursive(const std::filesystem::path &p_path) {
 	std::error_code ec;
 
 	uint64_t total_size = 0;
-	for (const std::filesystem::directory_entry &entry : std::filesystem::directory_iterator{path, ec}) {
+	for (const std::filesystem::directory_entry &entry : std::filesystem::directory_iterator{p_path, ec}) {
 		if (entry.is_directory(ec)) {
 			total_size += get_path_size_recursive(entry);
 		}
@@ -38,8 +38,8 @@ static uint64_t get_path_size_recursive(const std::filesystem::path &path) {
 	return total_size;
 }
 
-uint64_t WhyIsntThisInGodot::get_directory_size(const String &path) {
-	return get_path_size_recursive(path.utf8().ptr());
+uint64_t WhyIsntThisInGodot::get_directory_size(const String &p_path) {
+	return get_path_size_recursive(p_path.utf8().ptr());
 }
 
 Vector3i WhyIsntThisInGodot::get_project_version_vector() {
