@@ -456,7 +456,8 @@ void SpyCardsLobbyConnection::_on_poll_completed(int32_t p_peer) {
 	}
 
 	const PackedStringArray commands = _matchmaking_poll[p_peer]->get_body().get_string_from_utf8().split("\n");
-	for (const String &command : commands) {
+	for (int64_t i = 0; i < commands.size(); i++) {
+		const String command = commands[i];
 		if (command.is_empty()) {
 			continue;
 		}
